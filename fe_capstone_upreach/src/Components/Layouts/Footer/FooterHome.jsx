@@ -1,6 +1,6 @@
 import React from 'react'
 import { Space, Typography } from "antd"
-import { ReactComponent as Logo } from "../../../Assets/Image/LogoLogo.svg"
+// import { ReactComponent as Logo } from "../../../Assets/Image/LogoLogo.svg"
 import './FooterHome.css'
 import { FooterCompany, FooterContact, FooterMore } from '../../Constant/ConstFooter'
 
@@ -33,7 +33,7 @@ function FooterHome() {
         <div className='FooterHomePage'>
             <Space>
                 <Space direction="vertical">
-                    <Logo />
+                    {/* <Logo /> */}
                     <Typography.Text
                         style={{ color: "#FFFFFF", fontFamily: "Poppins" }}
                     >
