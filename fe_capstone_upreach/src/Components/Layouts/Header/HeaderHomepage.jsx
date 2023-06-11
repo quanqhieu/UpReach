@@ -1,6 +1,6 @@
 import React from 'react'
 import { Space, Typography } from "antd"
-import { ReactComponent as Logo } from "../../../Assets/Image/LogoLogo.svg"
+// import { ReactComponent as Logo } from "../../../Assets/Image/LogoLogo.svg"
 import Buttons from '../../UI/Buttons'
 import './HeaderHomepage.css'
 
@@ -8,7 +8,6 @@ const HeaderHomepage = () => {
     return (
         <div className='HeaderHomepage'>
             <Space>
-                <Logo />
                 <div className='Menu'>
                     <Space align='center'>
                         <Typography.Text>Home</Typography.Text>

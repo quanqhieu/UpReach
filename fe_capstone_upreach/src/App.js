@@ -5,16 +5,20 @@ import Buttons from './Components/UI/Buttons';
 import HeaderHomepage from './Components/Layouts/Header/HeaderHomepage';
 import FooterHome from './Components/Layouts/Footer/FooterHome';
 import { Slider } from 'antd';
-
+import './CSS/Theme.css'
+import './bootstrap/css/bootstrap.css'
+import Card_hot_list from './Pages/Homepage/Card_hot_list';
+import Login from './Pages/Login/Login';
 
 function App() {
   return (
     <div>
-      <HeaderHomepage />
+      {/* <HeaderHomepage />
       <div className='Content'>
-
+        <Card_hot_list/>
       </div>
-      <FooterHome/>
+      <FooterHome/> */}
+      <Login/>
     </div>
   );
 }
