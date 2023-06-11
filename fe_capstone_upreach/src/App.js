@@ -3,22 +3,19 @@ import './App.css';
 import Layout, { Content, Footer, Header } from 'antd/es/layout/layout';
 import Buttons from './Components/UI/Buttons';
 import HeaderHomepage from './Components/Layouts/Header/HeaderHomepage';
+import Index_Homepage from './Pages/Homepage/Index_Homepage'
 import FooterHome from './Components/Layouts/Footer/FooterHome';
 import { Slider } from 'antd';
 import './CSS/Theme.css'
-import './bootstrap/css/bootstrap.css'
-import Card_hot_list from './Pages/Homepage/Card_hot_list';
-import Login from './Pages/Login/Login';
+import './bootstrap-5.3.0-dist/css/bootstrap.css'
+
 
 function App() {
   return (
     <div>
-      {/* <HeaderHomepage />
-      <div className='Content'>
-        <Card_hot_list/>
-      </div>
-      <FooterHome/> */}
-      <Login/>
+      <HeaderHomepage />
+      <Index_Homepage />
+      <FooterHome/>
     </div>
   );
 }
