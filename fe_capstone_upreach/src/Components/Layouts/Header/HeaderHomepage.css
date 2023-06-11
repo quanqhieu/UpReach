@@ -1,5 +1,12 @@
 .HeaderHomepage {
+    position: fixed;
+    top: 0;
+    height: 60px;
+    width: 100%;
+    background-color: white;
     border-bottom: 1px solid rgba(0, 0, 0, 0.5);
+    padding-top: 5px;
+    z-index: 1000;
 }
 
 .HeaderHomepage .Menu {
@@ -8,6 +15,5 @@
     font-weight: 400;
     font-size: 22px;
     line-height: 24px;
-    color: #9c3535;
-
+    color: #222222;
 }
