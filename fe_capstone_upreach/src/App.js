@@ -14,8 +14,10 @@ function App() {
   return (
     <div>
       <HeaderHomepage />
-      <Index_Homepage />
-      <FooterHome/>
+      {/* <Index_Homepage /> */}
+      Bỏ cái bạn viết vô đây
+      VD: <abc />
+      <FooterHome />
     </div>
   );
 }
