@@ -1,25 +1,37 @@
-import 'antd/dist/reset.css';
-import './App.css';
-import Layout, { Content, Footer, Header } from 'antd/es/layout/layout';
-import Buttons from './Components/UI/Buttons';
-import HeaderHomepage from './Components/Layouts/Header/HeaderHomepage';
-import Index_Homepage from './Pages/Homepage/Index_Homepage'
-import FooterHome from './Components/Layouts/Footer/FooterHome';
-import { Slider } from 'antd';
-import './CSS/Theme.css'
-import './bootstrap-5.3.0-dist/css/bootstrap.css'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "antd/dist/reset.css";
+import "./App.css";
 
+import "./CSS/Theme.css";
+import "./bootstrap-5.3.0-dist/css/bootstrap.css";
+import Login from "./Pages/Login/Login";
+import HomePage from "./Pages/Homepage/HomePage";
 
 function App() {
-  return (
-    <div>
-      <HeaderHomepage />
-      {/* <Index_Homepage /> */}
-      Bỏ cái bạn viết vô đây
-      VD: <abc />
-      <FooterHome />
-    </div>
-  );
+	return (
+		<BrowserRouter>
+			<div className="App">
+				<Routes>
+					<Route
+						path="/"
+						element={
+							<>
+								<HomePage/>
+							</>
+						}
+					/>
+					<Route
+						path="/login"
+						element={
+							<>
+								<Login />
+							</>
+						}
+					/>
+				</Routes>
+			</div>
+		</BrowserRouter>
+	);
 }
 
 export default App;

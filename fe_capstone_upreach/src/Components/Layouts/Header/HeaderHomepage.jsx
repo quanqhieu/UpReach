@@ -1,35 +1,37 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Space, Typography } from "antd";
-import Buttons from "../../UI/Buttons";
+import { Button } from "antd";
+
 import "./HeaderHomepage.css";
 
 const HeaderHomepage = () => {
   return (
     <div className="HeaderHomepage">
-      <div className="row">
-        <div className="col-1 h3 fw-bold ms-4 me-5 mt-2 logoText">UpReach</div>
-        <div className="col-7 ms-5">
-          <div className="row">
-            <a href="####" className="col-2 navHeader mt-3">
-              Home
-            </a>
-            <a href="#####" className="col-2 navHeader mt-3">
-              Explore
-            </a>
-            <a href="######" className="col-2 navHeader mt-3">
-              How it work
-            </a>
-            <a href="#######" className="col-2 navHeader mt-3">
-              Blog
-            </a>
-          </div>
-        </div>
-        <div className="col-3 ms-1 text-center mt-2">
-          <Buttons text="Login" type="link" />
-          <Buttons text="Join as brand" shape="round" type="primary" />
+      <div className="headerContent">
+        <div className="logoText">UpReach</div>
+        <div className="navBar">
+          <div className="nav">Home</div>
+          <div className="nav">Explore</div>
+          <div className="nav">How it work</div>
+          <div className="nav">Blogs</div>
         </div>
       </div>
-      <div className="Menu"></div>
+      <div className="authBtn">
+        <Link to="/login">
+          <Button className="loginBtn" type="link">
+            <p style={{ fontWeight: "700", marginTop: "-2px" }}>Login</p>
+          </Button>
+        </Link>
+        <Button
+          style={{ height: "35px" }}
+          className="joinBtn"
+          shape="round"
+          type="primary"
+        >
+          Join as brand
+        </Button>
+      </div>
     </div>
   );
 };
