@@ -1,0 +1,21 @@
+.hotListItems {
+    width: 370px;
+    height: 460px;
+    background: #FFFFFF;
+    border-radius: 30px;
+    justify-content: space-between;
+    align-items: center;
+    display: inherit;
+    box-shadow: 7px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.hotListName{
+    font-weight: 600;
+    padding-left: 20px;
+    font-size: 22px;
+    font-family: initial;
+}
+
+.hotListTopics {
+    padding-left: 35px;
+}

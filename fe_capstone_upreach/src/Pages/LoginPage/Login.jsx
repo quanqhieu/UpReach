@@ -1,13 +1,16 @@
 import { Button, Checkbox, Form, Input } from "antd";
 import React from "react";
+import HeaderHomepage from "../../Components/Layouts/Header/HeaderHomepage";
 
 function Login() {
   return (
     <div>
+      <HeaderHomepage />
       <Form
         name="normal_login"
         className="login-form"
         initialValues={{ remember: true }}
+        style={{ marginTop: "80px" }}
       >
         <Form.Item
           name="username"

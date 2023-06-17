@@ -4,13 +4,16 @@ import "./App.css";
 
 import "./CSS/Theme.css";
 import "./bootstrap-5.3.0-dist/css/bootstrap.css";
-import Login from "./Pages/Login/Login";
+import Login from "./Pages/LoginPage/Login";
 import HomePage from "./Pages/Homepage/HomePage";
-
+import JoinAsBrand from "./Pages/JoinAsBrandPage/JoinAsBrand";
+import SignUp from "./Pages/SignUpPage/SignUp"
 function App() {
 	return (
+		<>
+		
 		<BrowserRouter>
-			<div className="App">
+			
 				<Routes>
 					<Route
 						path="/"
@@ -28,9 +31,25 @@ function App() {
 							</>
 						}
 					/>
+					<Route
+						path="/join-as-brand"
+						element={
+							<>
+								<JoinAsBrand />
+							</>
+						}
+					/>
+					<Route
+						path="/sign-up"
+						element={
+							<>
+								<SignUp />
+							</>
+						}
+					/>
 				</Routes>
-			</div>
 		</BrowserRouter>
+		</>
 	);
 }
 
