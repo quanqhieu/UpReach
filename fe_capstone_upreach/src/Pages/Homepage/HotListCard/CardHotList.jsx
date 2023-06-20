@@ -1,7 +1,6 @@
 import { Col, Row } from "antd";
 import React from "react";
 import HotListCardComponents from "../../../Components/Layouts/HotListCardComponent/HotListCardComponents";
-import handleImgLoadingError from "../../../Components/Layouts/handleImgLoadingError/handleImgLoadingError";
 import HotListCard1 from "../../../Assets/Image/Hot_list/HotListCard1.jpg";
 import HotListCard2 from "../../../Assets/Image/Hot_list/HotListCard2.jpg";
 import HotListCard3 from "../../../Assets/Image/Hot_list/HotListCard3.jpg";
@@ -17,90 +16,41 @@ const CardHotList = () => {
       </div>
 
       <div className="hotListCards">
-        <Row gutter={445}>
-          <Col span={1}>
+        <Row gutter={80}>
+          <Col span={6}>
             <HotListCardComponents
               className="hotListCard"
-              image={
-                <img
-                  src={HotListCard1}
-                  alt="hotListCard"
-                  style={{
-                    width: "370px",
-                    height: "380px",
-                    objectFit: "cover",
-                    borderTopLeftRadius: 20,
-                    borderTopRightRadius: 20,
-                  }}
-                />
-              }
+              image={HotListCard1}
               name={"Giang Ơi"}
               topics={"Instagram, Youtube"}
             />
           </Col>
-          <Col span={1}>
+          <Col span={6}>
             <HotListCardComponents
               className="hotListCard"
-              image={
-                <img
-                  src={HotListCard2}
-                  alt="hotListCard"
-                  style={{
-                    width: "370px",
-                    height: "380px",
-                    objectFit: "cover",
-                    borderTopLeftRadius: 20,
-                    borderTopRightRadius: 20,
-                  }}
-                />
-              }
+              image={HotListCard2}
               name={"Chao Đây"}
               topics={"Facebook, Instagram, Tiktok"}
             />
           </Col>
-          <Col span={1}>
+          <Col span={6}>
             <HotListCardComponents
               className="hotListCard"
-              image={
-                <img
-                  src={HotListCard3}
-                  alt="hotListCard"
-                  style={{
-                    width: "370px",
-                    height: "380px",
-                    objectFit: "cover",
-                    borderTopLeftRadius: 20,
-                    borderTopRightRadius: 20,
-                  }}
-                />
-              }
+              image={HotListCard3}
               name={"Vũ Dino"}
               topics={"Facebook, Tiktok"}
             />
           </Col>
-          <Col span={1}>
+          <Col span={6}>
             <HotListCardComponents
               className="hotListCard"
-              image={
-                <img
-                  src={HotListCard4}
-                  alt="hotListCard"
-                  style={{
-                    width: "370px",
-                    height: "380px",
-                    objectFit: "cover",
-                    borderTopLeftRadius: 20,
-                    borderTopRightRadius: 20,
-                  }}
-                />
-              }
-              name={"Linh Ngọc Đàm"}
-              topics={"Instagram ,Youtube, Tiktok"}
+              image={HotListCard4}
+              name={"DEC AO"}
+              topics={"Instagram , Facebook"}
             />
           </Col>
         </Row>
       </div>
-      <handleImgLoadingError />
     </div>
   );
 };

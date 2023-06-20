@@ -10,7 +10,7 @@ const TotalUserCard = () => {
   return (
     <div className="totalUserCards">
       <Row gutter={150}>
-        <Col span={3.6}>
+        <Col span={6}>
           <StatusCardComponents
             title={"Influencers"}
             value={12.001}
@@ -18,7 +18,7 @@ const TotalUserCard = () => {
             icon={<Influencers />}
           />
         </Col>
-        <Col span={3.6}>
+        <Col span={6}>
           <StatusCardComponents
             title={"Lists"}
             value={2.074}
@@ -26,7 +26,7 @@ const TotalUserCard = () => {
             icon={<Lists />}
           />
         </Col>
-        <Col span={3.6}>
+        <Col span={6}>
           <StatusCardComponents
             title={"Channels"}
             value={16.701}
@@ -34,7 +34,7 @@ const TotalUserCard = () => {
             icon={<Channels />}
           />
         </Col>
-        <Col span={3.6}>
+        <Col span={6}>
           <StatusCardComponents
             title={"Activated Users"}
             value={10.121}

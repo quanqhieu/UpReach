@@ -1,25 +1,19 @@
-.hotListLayout{
-    padding-top: 50px;
+.hotListLayout {
 }
 
-.hotListContent{
-    display: flex;
-    justify-content: space-between;
+.hotListContent {
+	display: flex;
+	justify-content: space-between;
 }
 
 .hotListTitle {
-    padding-left: 0;
-    margin-left: 20px;
-    margin-right: 20px;
-    font-weight: 700;
-    font-size: 35px;
-    line-height: 54px;
-    color: rgba(34, 34, 34, 0.3);
-    text-shadow: 2px 3px rgba(34, 34, 34, 0.15);
+	padding-left: 0;
+	font-weight: 700;
+	font-size: 35px;
+	line-height: 54px;
+	color: rgba(34, 34, 34, 0.3);
+	text-shadow: 2px 3px rgba(34, 34, 34, 0.15);
 }
 
-.hotListCards{
-    margin-left: 50px;
+.hotListCards {
 }
-
-

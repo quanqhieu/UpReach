@@ -37,6 +37,10 @@
 	);
 }
 
+.text-lineHeight-30 {
+	line-height: 30px;
+}
+
 .contentHomePage {
 	height: 275vh;
 	width: 100%;
