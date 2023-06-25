@@ -4,51 +4,13 @@ import "./App.css";
 
 import "./CSS/Theme.css";
 import "./bootstrap-5.3.0-dist/css/bootstrap.css";
-import Login from "./Pages/LoginPage/Login";
-import HomePage from "./Pages/Homepage/HomePage";
-import JoinAsBrand from "./Pages/JoinAsBrandPage/JoinAsBrand";
-import SignUp from "./Pages/SignUpPage/SignUp"
+import Pages_Index from "./Pages/Pages_Index";
 function App() {
 	return (
 		<>
-		
-		<BrowserRouter>
-			
-				<Routes>
-					<Route
-						path="/"
-						element={
-							<>
-								<HomePage/>
-							</>
-						}
-					/>
-					<Route
-						path="/login"
-						element={
-							<>
-								<Login />
-							</>
-						}
-					/>
-					<Route
-						path="/join-as-brand"
-						element={
-							<>
-								<JoinAsBrand />
-							</>
-						}
-					/>
-					<Route
-						path="/sign-up"
-						element={
-							<>
-								<SignUp />
-							</>
-						}
-					/>
-				</Routes>
-		</BrowserRouter>
+			<BrowserRouter>
+				<Pages_Index />
+			</BrowserRouter>
 		</>
 	);
 }

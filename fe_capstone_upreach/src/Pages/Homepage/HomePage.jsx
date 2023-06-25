@@ -1,11 +1,11 @@
 import FooterHome from "../../Components/Layouts/Footer/FooterHome";
 import HeaderHomepage from "../../Components/Layouts/Header/HeaderHomepage";
 import Index_Homepage from "./Index_Homepage";
-const HomePage = () => {
+const HomePage = ({ navigateHome, navigateLogin }) => {
   return (
     <div className="coverMain">
-      <HeaderHomepage />
-      <Index_Homepage />
+      <HeaderHomepage handleClickHomePage={navigateHome} />
+      <Index_Homepage handleClickLogin={navigateLogin} />
       <FooterHome />
     </div>
   );
