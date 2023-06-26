@@ -8,18 +8,28 @@ import "./HeaderHomepage.css";
 function RenderContent({ onClick }) {
   return (
     <div className="headerContent">
-      <div className="logoText" onClick={onClick}>UpReach</div>
+      <div className="logoText" onClick={onClick}>
+        UpReach
+      </div>
       <div className="navBar">
-        <div className="nav" onClick={onClick}>Home</div>
-        <div className="nav" onClick={onClick}>Explore</div>
-        <div className="nav" onClick={onClick}>How it work</div>
-        <div className="nav" onClick={onClick}>Blogs</div>
+        <div className="nav" onClick={onClick}>
+          Home
+        </div>
+        <div className="nav" onClick={onClick}>
+          Explore
+        </div>
+        <div className="nav" onClick={onClick}>
+          How it work
+        </div>
+        <div className="nav" onClick={onClick}>
+          Blogs
+        </div>
       </div>
     </div>
-  )
+  );
 }
 
-const HeaderHomepage = ({ handleClickHomePage }) => {
+const HeaderHomepage = ({ handleClickHomePage, handleCLickIntroduce }) => {
   return (
     <div className="HeaderHomepage">
       <RenderContent onClick={handleClickHomePage} />
