@@ -13,6 +13,7 @@ import {
   Checkbox,
 } from "antd";
 import { DownOutlined } from "@ant-design/icons";
+import Selects from "../../../Components/UI/Selects";
 
 const FilterSearch = () => {
   const options = [];
@@ -337,13 +338,12 @@ const FilterSearch = () => {
                   <div className="col-12 mt-3">
                     <div className="fw-bold">Audience Locations</div>
                     <div className="selectFilterAudiance">
-                      <Select
+                      <Selects
                         className="inputSelect"
-                        // placeholder="searchTitle"
                         mode="multiple"
                         options={options}
                         placeholder="Location"
-                      ></Select>
+                      />
                     </div>
                   </div>
                   <div className="col-4">

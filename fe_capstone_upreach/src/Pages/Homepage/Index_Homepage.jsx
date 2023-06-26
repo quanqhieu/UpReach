@@ -3,55 +3,31 @@ import "../../CSS/Theme.css";
 import { SUB_TITLE } from "../IntroducePage/Constant";
 import "./HomePage.css";
 import CardInfo from "./CardInfo/CardInfo";
-import {
-  Button,
-  Select,
-  Dropdown,
-  Space,
-  Slider,
-  Row,
-  Col,
-  Checkbox,
-} from "antd";
+import { Button, Select } from "antd";
 import FilterSearch from "../HomePage/FilterSearch/FilterSearch";
+import { LIST_SELECT_SEARCH } from "./ConstHomePage";
+import Selects from "../../Components/UI/Selects";
+
+function RenderSelectSearch({ className, options, title, description }) {
+  return (
+    <Selects
+      className={"searchCategoryBtn " + className}
+      mode="multiple"
+      options={options}
+      placeholder={
+        <>
+          <p className="searchTitle">{title}</p>
+          <p className="searchDescription">
+            {description}
+          </p>
+        </>
+      }
+    />
+  )
+}
 
 const Index_HomePage = () => {
-  const options = [];
-  for (let i = 10; i < 36; i++) {
-    options.push({
-      value: i.toString(36) + i,
-      label: i.toString(36) + i,
-    });
-  }
 
-  const handleMenuClick = (e) => {
-    console.log("click", e);
-  };
-  const items = [
-    {
-      label: "1st menu item",
-      key: "1",
-    },
-    {
-      label: "2nd menu item",
-      key: "2",
-    },
-    {
-      label: "3rd menu item",
-      key: "3",
-      danger: true,
-    },
-    {
-      label: "4rd menu item",
-      key: "4",
-      danger: true,
-      disabled: true,
-    },
-  ];
-  const menuProps = {
-    items,
-    onClick: handleMenuClick,
-  };
   return (
     <div className="contentHomePage backgroundMainPage">
       <div className="row">
@@ -70,38 +46,9 @@ const Index_HomePage = () => {
         <div className="col-1"></div>
         <div className="col-10">
           <div className="searchBtns">
-            <Select
-              className="searchCategoryBtn leftButton"
-              // placeholder="searchTitle"
-              mode="multiple"
-              options={options}
-              placeholder={
-                <>
-                  <p className="searchTitle">Category</p>
-                  <p className="searchDescription">
-                    Search for categories, keywords, hashtags or influencers
-                  </p>
-                </>
-              }
-            ></Select>
-            <Select
-              className="searchCategoryBtn rightButton"
-              mode="multiple"
-              placeholder={
-                <>
-                  <p className="searchTitle">Category</p>
-                  <p className="searchDescription">
-                    Search for categories, keywords, hashtags or influencers
-                  </p>
-                </>
-              }
-              options={options}
-            >
-              <p className="searchTitle">Category</p>
-              <p className="searchDescription">
-                Search for categories, keywords, hashtags or influencers
-              </p>
-            </Select>
+            {LIST_SELECT_SEARCH.map((item) => (
+              <RenderSelectSearch className={item.className} options={item.options} title={item.title} description={item.description} />
+            ))}
             <Button className="bntSreach ms-3">Search</Button>
           </div>
         </div>
