@@ -42,15 +42,43 @@ export const LIST_SELECT_SEARCH = [
 ];
 
 export const LIST_TYPE_SEARCH = [
-    {name: "Celebrity", value: "Celebrity"},
-    {name: "Talent", value: "Talent"},
-    {name: "Professional", value: "Professional"},
-    {name: "Citizen", value: "Citizen"},
-    {name: "Community", value: "Community"},
+    { name: "Celebrity", value: "Celebrity" },
+    { name: "Talent", value: "Talent" },
+    { name: "Professional", value: "Professional" },
+    { name: "Citizen", value: "Citizen" },
+    { name: "Community", value: "Community" },
 ]
 
 export const LIST_CONTENT_FORMATS_SEARCH = [
-    {name: "Text", value: "Text"},
-    {name: "Picture", value: "Picture"},
-    {name: "Video", value: "Video"},
+    { name: "Text", value: "Text" },
+    { name: "Picture", value: "Picture" },
+    { name: "Video", value: "Video" },
+]
+
+// marks for slider
+export const MARKS = {
+    0: {
+        style: {
+            paddingTop: "10px",
+        },
+        label: <strong>0(%)</strong>,
+    },
+    100: {
+        style: {
+            paddingTop: "10px",
+        },
+        label: <strong>100(%)</strong>,
+    },
+};
+
+export const GENDER_OF_AUDIANCE = [
+    { name: "Male", value: "Male" },
+    { name: "Female", value: "Female" },
+    { name: "Other", value: "Other" },
+]
+
+export const LOCATION_OF_AUDIANCE = [
+    { name: "Hà Nội", value: "Hà Nội" },
+    { name: "Hồ Chí Minh", value: "Hồ Chí Minh" },
+    { name: "Huế", value: "Huế" },
 ]
