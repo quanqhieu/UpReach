@@ -2,7 +2,6 @@ import React from "react";
 import "../../CSS/Theme.css";
 import { SUB_TITLE } from "../IntroducePage/Constant";
 import "./HomePage.css";
-import CardInfo from "./CardInfo/CardInfo";
 import {
   Button,
   Select,
@@ -13,7 +12,8 @@ import {
   Col,
   Checkbox,
 } from "antd";
-import FilterSearch from "../HomePage/FilterSearch/FilterSearch";
+import FilterSearch from "./FilterSearch/FilterSearch.jsx";
+import ProfileCardLayout from "./ProfileCardLayout/ProfileCardLayout";
 
 const Index_HomePage = () => {
   const options = [];
@@ -83,7 +83,7 @@ const Index_HomePage = () => {
                   </p>
                 </>
               }
-            ></Select>
+            />
             <Select
               className="searchCategoryBtn rightButton"
               mode="multiple"
@@ -130,7 +130,7 @@ const Index_HomePage = () => {
           <div className="col-4"></div>
         </div>
       </div>
-      <CardInfo />
+      <ProfileCardLayout />
     </div>
   );
 };

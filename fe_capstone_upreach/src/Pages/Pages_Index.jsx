@@ -4,7 +4,7 @@ import Login from "./LoginPage/Login";
 import JoinAsBrand from "./JoinAsBrandPage/JoinAsBrand";
 import SignUp from "./SignUpPage/SignUp";
 import Introduce from "./IntroducePage/Introduce";
-import HomePage from "../Pages/HomePage/HomePage";
+import HomePage from "./Homepage/HomePage.jsx";
 
 function Pages_Index() {
   const navigate = useNavigate();
@@ -13,7 +13,7 @@ function Pages_Index() {
   const navigateLogin = () => {
     navigate("/login");
   };
-  //click button will go to homee page not logged in yet
+  //click button will go to home page not logged in yet
   const navigateIntroduce = () => {
     navigate("/");
   };
