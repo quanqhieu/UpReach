@@ -41,4 +41,16 @@ export const LIST_SELECT_SEARCH = [
     },
 ];
 
+export const LIST_TYPE_SEARCH = [
+    {name: "Celebrity", value: "Celebrity"},
+    {name: "Talent", value: "Talent"},
+    {name: "Professional", value: "Professional"},
+    {name: "Citizen", value: "Citizen"},
+    {name: "Community", value: "Community"},
+]
 
+export const LIST_CONTENT_FORMATS_SEARCH = [
+    {name: "Text", value: "Text"},
+    {name: "Picture", value: "Picture"},
+    {name: "Video", value: "Video"},
+]

@@ -5,29 +5,8 @@ import "./HomePage.css";
 import CardInfo from "./CardInfo/CardInfo";
 import { Button, Select } from "antd";
 import FilterSearch from "../HomePage/FilterSearch/FilterSearch";
-import { LIST_SELECT_SEARCH } from "./ConstHomePage";
-import Selects from "../../Components/UI/Selects";
-
-function RenderSelectSearch({ className, options, title, description }) {
-  return (
-    <Selects
-      className={"searchCategoryBtn " + className}
-      mode="multiple"
-      options={options}
-      placeholder={
-        <>
-          <p className="searchTitle">{title}</p>
-          <p className="searchDescription">
-            {description}
-          </p>
-        </>
-      }
-    />
-  )
-}
 
 const Index_HomePage = () => {
-
   return (
     <div className="contentHomePage backgroundMainPage">
       <div className="row">
@@ -42,17 +21,6 @@ const Index_HomePage = () => {
         <div className="col-8 contentSubTitle text-dark my-4 text-center">
           {SUB_TITLE}
         </div>
-        <div className="col-2 backgroundMainPage"></div>
-        <div className="col-1"></div>
-        <div className="col-10">
-          <div className="searchBtns">
-            {LIST_SELECT_SEARCH.map((item) => (
-              <RenderSelectSearch className={item.className} options={item.options} title={item.title} description={item.description} />
-            ))}
-            <Button className="bntSreach ms-3">Search</Button>
-          </div>
-        </div>
-        <div className="col-1"></div>
         <FilterSearch />
       </div>
       <div className="row text-center">

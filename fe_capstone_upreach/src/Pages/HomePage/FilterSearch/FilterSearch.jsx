@@ -2,28 +2,100 @@ import React from "react";
 import "./FilterSearch.css";
 import "../../../CSS/Theme.css";
 import "../HomePage.css";
-import {
-  Button,
-  Select,
-  Dropdown,
-  Space,
-  Slider,
-  Row,
-  Col,
-  Checkbox,
-} from "antd";
+import { Button, Dropdown, Space, Slider, Row, Col, Checkbox } from "antd";
 import { DownOutlined } from "@ant-design/icons";
 import Selects from "../../../Components/UI/Selects";
+import {
+  LIST_CONTENT_FORMATS_SEARCH,
+  LIST_SELECT_SEARCH,
+  LIST_TYPE_SEARCH,
+} from "../ConstHomePage";
 
-const FilterSearch = () => {
-  const options = [];
-  for (let i = 10; i < 36; i++) {
-    options.push({
-      value: i.toString(36) + i,
-      label: i.toString(36) + i,
-    });
-  }
+function RenderSelectSearch({
+  className,
+  options,
+  title,
+  description,
+  onChange,
+}) {
+  return (
+    <Selects
+      className={"searchCategoryBtn " + className}
+      mode="multiple"
+      options={options}
+      onChange={onChange}
+      placeholder={
+        <>
+          <p className="searchTitle">{title}</p>
+          <p className="searchDescription">{description}</p>
+        </>
+      }
+    />
+  );
+}
 
+function RenderListCheckbox({ valueCheckbox, titleCheckbox }) {
+  return (
+    <Col span={24}>
+      <Checkbox value={valueCheckbox}>{titleCheckbox}</Checkbox>
+    </Col>
+  );
+}
+
+function RenderCheckBoxGroup({ listItemCheckBox }) {
+  return (
+    <>
+      <Checkbox.Group
+        style={{
+          width: "100%",
+        }}
+      >
+        <Row>
+          {listItemCheckBox.map((item) => (
+            <RenderListCheckbox
+              valueCheckbox={item.value}
+              titleCheckbox={item.name}
+            />
+          ))}
+        </Row>
+      </Checkbox.Group>
+      <Button className="fw-bold mt-4">Clear</Button>
+    </>
+  );
+}
+
+function ButtonDropdow({ titleBtn }) {
+  return (
+    <Button
+      className="dropdowSlider bg-white"
+      style={{
+        width: "100%",
+      }}
+    >
+      <Space>
+        {titleBtn} <DownOutlined />
+      </Space>
+    </Button>
+  );
+}
+
+function RenderDropdownOfCheckBox({ listItemCheckBox, titleBtn, className }) {
+  return (
+    <Dropdown
+      dropdownRender={() => (
+        <div className={"popupFilter mt-2 shadowBox" + className}>
+          <RenderCheckBoxGroup listItemCheckBox={listItemCheckBox} />
+        </div>
+      )}
+    >
+      <a onClick={(e) => e.preventDefault()}>
+        <ButtonDropdow titleBtn={titleBtn} />
+      </a>
+    </Dropdown>
+  );
+}
+
+function RenderFilter() {
   // marks for slider
   const marks = {
     0: {
@@ -39,56 +111,16 @@ const FilterSearch = () => {
       label: <strong>100(%)</strong>,
     },
   };
-
   return (
     <>
       <div className="col-1"></div>
       <div className="col-10 d-flex">
-        {/* Filter 1 */}
+        {/* Filter of Type */}
         <div className="mt-4 backgroundMainPage">
-          <Dropdown
-            dropdownRender={() => (
-              <div className="popupFilter mt-2 shadowBox">
-                <Checkbox.Group
-                  style={{
-                    width: "100%",
-                  }}
-                >
-                  <Row>
-                    <Col span={24}>
-                      <Checkbox value="A">Celebrity</Checkbox>
-                    </Col>
-                    <Col span={24}>
-                      <Checkbox value="B">Talent</Checkbox>
-                    </Col>
-                    <Col span={24}>
-                      <Checkbox value="C">Professional</Checkbox>
-                    </Col>
-                    <Col span={24}>
-                      <Checkbox value="D">Citizen</Checkbox>
-                    </Col>
-                    <Col span={24}>
-                      <Checkbox value="E">Community</Checkbox>
-                    </Col>
-                  </Row>
-                </Checkbox.Group>
-                <Button className="fw-bold mt-4">Clear</Button>
-              </div>
-            )}
-          >
-            <a onClick={(e) => e.preventDefault()}>
-              <Button
-                className="dropdowSlider bg-white"
-                style={{
-                  width: "100%",
-                }}
-              >
-                <Space>
-                  Type <DownOutlined />
-                </Space>
-              </Button>
-            </a>
-          </Dropdown>
+          <RenderDropdownOfCheckBox
+            listItemCheckBox={LIST_TYPE_SEARCH}
+            titleBtn="Type"
+          />
         </div>
         {/* Filter 2 */}
         <div className="mt-4 ms-2 backgroundMainPage">
@@ -231,45 +263,13 @@ const FilterSearch = () => {
             </a>
           </Dropdown>
         </div>
-        {/* Filter 7 */}
+        {/* Filter of Content Formats */}
         <div className="mt-4 ms-2 backgroundMainPage">
-          <Dropdown
-            dropdownRender={() => (
-              <div className="popupFilter mt-2 width-100-percent shadowBox">
-                <Checkbox.Group
-                  style={{
-                    width: "100%",
-                  }}
-                >
-                  <Row>
-                    <Col span={24}>
-                      <Checkbox value="Text">Text</Checkbox>
-                    </Col>
-                    <Col span={24}>
-                      <Checkbox value="Picture">Picture</Checkbox>
-                    </Col>
-                    <Col span={24}>
-                      <Checkbox value="Video">Video</Checkbox>
-                    </Col>
-                  </Row>
-                </Checkbox.Group>
-                <Button className="fw-bold mt-4">Clear</Button>
-              </div>
-            )}
-          >
-            <a onClick={(e) => e.preventDefault()}>
-              <Button
-                className="dropdowSlider bg-white shadowBox"
-                style={{
-                  width: "100%",
-                }}
-              >
-                <Space>
-                  Content Formats <DownOutlined />
-                </Space>
-              </Button>
-            </a>
-          </Dropdown>
+          <RenderDropdownOfCheckBox
+            className="width-100-percent"
+            listItemCheckBox={LIST_CONTENT_FORMATS_SEARCH}
+            titleBtn="Content Formats"
+          />
         </div>
         {/* Filter 8 */}
         <div className="mt-4 ms-2 backgroundMainPage">
@@ -313,7 +313,7 @@ const FilterSearch = () => {
                       <Selects
                         className="inputSelect"
                         mode="multiple"
-                        options={options}
+                        // options={options}
                         placeholder="Location"
                       />
                     </div>
@@ -342,6 +342,35 @@ const FilterSearch = () => {
         </div>
       </div>
       <div className="col-1"></div>
+    </>
+  );
+}
+
+const FilterSearch = () => {
+  const handleChange = (value) => {
+    console.log(`selected: ${value}`);
+  };
+
+  return (
+    <>
+      <div className="col-2 backgroundMainPage"></div>
+      <div className="col-1"></div>
+      <div className="col-10">
+        <div className="searchBtns">
+          {LIST_SELECT_SEARCH.map((item) => (
+            <RenderSelectSearch
+              className={item.className}
+              options={item.options}
+              title={item.title}
+              description={item.description}
+              onChange={handleChange}
+            />
+          ))}
+          <Button className="bntSreach ms-3">Search</Button>
+        </div>
+      </div>
+      <div className="col-1"></div>
+      <RenderFilter />
     </>
   );
 };
