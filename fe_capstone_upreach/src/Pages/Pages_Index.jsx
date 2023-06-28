@@ -4,7 +4,7 @@ import Login from "./LoginPage/Login";
 import JoinAsBrand from "./JoinAsBrandPage/JoinAsBrand";
 import SignUp from "./SignUpPage/SignUp";
 import Introduce from "./IntroducePage/Introduce";
-import HomePage from "./Homepage/HomePage.jsx";
+import HomePage from "./HomePage/HomePage";
 
 function Pages_Index() {
   const navigate = useNavigate();
