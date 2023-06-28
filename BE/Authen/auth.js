@@ -23,7 +23,8 @@ function initialize(passport, getUserByEmail, getUserById){
     }
 
     passport.use( new LocalStrategy({usernameField: 'email'}, authenticateUser))
-    passport.serializeUser((user,done)=> done (null, user.id)) // save infor user into session
+    // save infor user into session
+    passport.serializeUser((user,done)=> done (null, user.id)) 
     
     // save infor user into session
     // use data in session to get data of users

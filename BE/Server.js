@@ -1,17 +1,21 @@
 if(process.env.NODE_ENV !== "production") require("dotenv").config()
 
-const express = require('express');
 // Declare param was install from npm
+const express = require('express');
 const bycrypt = require('bcrypt');
 const bodyParser = require('body-parser');
 const {v4 : uuidv4} = require("uuid")
 const passport = require('passport');
 const methodOverride = require("method-override")
-
-const userLogin = require('./Router/userLogin');
-const auth = require('./Authen/auth');
 const flash = require('express-flash');
 const session = require('express-session');
+const sql = require('mssql');
+
+const config = require('./Config/dbConfig')
+const userLogin = require('./Router/userLogin');
+const auth = require('./Authen/auth');
+
+
 
 const app = express();
 
@@ -38,18 +42,39 @@ app.use(passport.initialize())
 app.use(passport.session())
 app.use(methodOverride("_method"))
 
+//connect to your database
+const pool = new sql.ConnectionPool(config);
 
 // Function : register 
 app.post("/register", async (req,res) => {
-    // console.log(req.body)
     try{
+        
         const hashedPassword = await bycrypt.hash(req.body.password,10)
-        users.push({
+        const dataUsers = {
             id : uuidv4(),
             email : req.body.email,
-            password: hashedPassword,
-        })
-        console.log(users);
+            password: hashedPassword,}
+        users.push(dataUsers)
+        console.log(dataUsers)
+        const insertQuery = "INSERT INTO Users VALUES ('" + dataUsers.id + "','" + 1 + "', '" + dataUsers.email + "', '" + dataUsers.password + "')";
+        
+        pool.connect(function (err) {
+            if (err) {
+                console.log('Lỗi kết nối:', err);
+                return;
+            }
+            // INSERT
+            pool
+            .request()
+            .query(insertQuery)
+            .then(function (result) {
+            console.log('Dữ liệu đã được thêm thành công');
+            })
+            .catch(function (err) {
+            console.log('Lỗi khi thêm dữ liệu:', err);
+            });
+
+        });
         res.redirect("/login");
     }catch (e){
         console.log(e)
