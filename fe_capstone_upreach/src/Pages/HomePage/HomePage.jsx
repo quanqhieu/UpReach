@@ -1,6 +1,6 @@
 import FooterHome from "../../Components/Layouts/Footer/FooterHome";
 import HeaderLoginHompape from "../../Components/Layouts/Header/HeaderLoginHompape";
-import Index_HomePage from "./Index_Homepage.jsx";
+import Index_HomePage from "./Index_Homepage";
 import React from "react";
 
 const HomePage = () => {
