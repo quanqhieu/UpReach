@@ -1,7 +1,7 @@
 import FooterHome from "../../Components/Layouts/Footer/FooterHome";
 import HeaderLoginHompape from "../../Components/Layouts/Header/HeaderLoginHompape";
-import Index_HomePage from "./Index_Homepage";
 import React from "react";
+import Index_HomePage from "./Index_HomePage";
 
 const HomePage = () => {
   return (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./FilterSearch.css";
 import "../../../CSS/Theme.css";
 import "../HomePage.css";
@@ -46,34 +46,59 @@ function RenderFilter() {
       <div className="col-10 d-flex">
         {/* Filter of Type */}
         <div className="mt-4 backgroundMainPage">
-          <DropdownOfCheckBox listItemCheckBox={LIST_TYPE_SEARCH} titleBtn="Type" />
+          <DropdownOfCheckBox
+            listItemCheckBox={LIST_TYPE_SEARCH}
+            titleBtn="Type"
+          />
         </div>
         {/* Filter of Cost Estimate */}
         <div className="mt-4 ms-2 backgroundMainPage">
-          <DropdownOfSlider titleBtn="Cost Estimate" isDraggable={true} defaultValue={[20, 50]} marks={MARKS} />
+          <DropdownOfSlider
+            titleBtn="Cost Estimate"
+            isDraggable={true}
+            defaultValue={[20, 50]}
+            marks={MARKS}
+          />
         </div>
         {/* Filter of Age */}
         <div className="mt-4 ms-2 backgroundMainPage">
-          <DropdownOfSlider titleBtn="Age" isDraggable={true} defaultValue={[0, 60]} />
+          <DropdownOfSlider
+            titleBtn="Age"
+            isDraggable={true}
+            defaultValue={[0, 60]}
+          />
         </div>
         {/* Filter of Followers */}
         <div className="mt-4 ms-2 backgroundMainPage">
-          <DropdownOfSlider titleBtn="Followers" isDraggable={true} defaultValue={[20, 50]} />
+          <DropdownOfSlider
+            titleBtn="Followers"
+            isDraggable={true}
+            defaultValue={[20, 50]}
+          />
         </div>
         {/* Filter of Engagement */}
         <div className="mt-4 ms-2 backgroundMainPage">
-          <DropdownOfSlider titleBtn="Engagement" isDraggable={true} defaultValue={[20, 50]} />
+          <DropdownOfSlider
+            titleBtn="Engagement"
+            isDraggable={true}
+            defaultValue={[20, 50]}
+          />
         </div>
         {/* Filter of Publications */}
         <div className="mt-4 ms-2 backgroundMainPage">
-          <DropdownOfSlider titleBtn="Publications" isDraggable={true} defaultValue={[20, 50]} />
+          <DropdownOfSlider
+            titleBtn="Publications"
+            isDraggable={true}
+            defaultValue={[20, 50]}
+          />
         </div>
         {/* Filter of Content Formats */}
         <div className="mt-4 ms-2 backgroundMainPage">
           <DropdownOfCheckBox
             className="width-100-percent"
             listItemCheckBox={LIST_CONTENT_FORMATS_SEARCH}
-            titleBtn="Content Formats" />
+            titleBtn="Content Formats"
+          />
         </div>
         {/* Filter of Audience */}
         <div className="mt-4 ms-2 backgroundMainPage">
@@ -86,8 +111,11 @@ function RenderFilter() {
 }
 
 const FilterSearch = () => {
-  const handleChange = (value) => {
-    console.log(`selected: ${value}`);
+  const [value, setValue] = useState();
+
+  const handleChange = (selectValue) => {
+    console.log(`selected: ${selectValue}`);
+    setValue(selectValue);
   };
 
   return (

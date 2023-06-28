@@ -2,9 +2,8 @@ import React from "react";
 import "../../CSS/Theme.css";
 import { SUB_TITLE } from "../IntroducePage/Constant";
 import "./HomePage.css";
-import CardInfo from "./CardInfo/CardInfo";
-import { Button, Select } from "antd";
-import FilterSearch from "../HomePage/FilterSearch/FilterSearch";
+import FilterSearch from "./FilterSearch/FilterSearch";
+import ProfileCardLayout from "./ProfileCardLayout/ProfileCardLayout";
 
 const Index_HomePage = () => {
   return (
@@ -45,7 +44,7 @@ const Index_HomePage = () => {
           <div className="col-4"></div>
         </div>
       </div>
-      <CardInfo />
+      <ProfileCardLayout />
     </div>
   );
 };
