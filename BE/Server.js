@@ -25,7 +25,7 @@ auth.initialize(
     id => users.find(user => user.id === id)
 )
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000;
 const users = []
 
 // for parsing application/json
@@ -55,27 +55,39 @@ app.post("/register", async (req,res) => {
             email : req.body.email,
             password: hashedPassword,}
         users.push(dataUsers)
-        console.log(dataUsers)
-        const insertQuery = "INSERT INTO Users VALUES ('" + dataUsers.id + "','" + 1 + "', '" + dataUsers.email + "', '" + dataUsers.password + "')";
-        
+        const insertQuery = "INSERT INTO Users VALUES ('" + dataUsers.id + "','" + 1 + "', '" + dataUsers.email + "', '" + req.body.password + "')";
+        const searchEmail = "SELECT * FROM Users WHERE Email = '" + dataUsers.email + "'";
         pool.connect(function (err) {
             if (err) {
                 console.log('Lỗi kết nối:', err);
                 return;
             }
-            // INSERT
-            pool
-            .request()
-            .query(insertQuery)
-            .then(function (result) {
-            console.log('Dữ liệu đã được thêm thành công');
+            // Check Existed Email
+            pool.request().query(searchEmail).then(function (result) {
+                console.log(result);
+                if(result.recordset.length > 0 ){
+                    console.log("Email nãy đã được xử dụng");
+                    res.send(false);
+                    res.redirect('/register');
+                }
+                else{
+                    // INSERT
+                    pool.request().query(insertQuery).then(function (result) {
+                        console.log('Dữ liệu đã được thêm thành công');
+                        res.send(false);
+                        res.redirect("/login");
+                    })
+                    .catch(function (err) {
+                        console.log('Lỗi khi thêm dữ liệu:', err);
+                        res.send(false);
+                    });
+                }
             })
             .catch(function (err) {
-            console.log('Lỗi khi thêm dữ liệu:', err);
+                console.log('Lỗi khi xử lý câu lệnh :', err);
+                res.send(false);
             });
-
         });
-        res.redirect("/login");
     }catch (e){
         console.log(e)
         res.redirect('/register');
@@ -83,11 +95,41 @@ app.post("/register", async (req,res) => {
 })
 
 // Function : register 
-app.post("/login", passport.authenticate("local",{
-    successRedirect: "/",
-    failureRedirect: "/login",
-    failureFlash: true
-}))
+app.post("/login", async (req,res) => {
+    try{
+        const dataUsers = {
+            id : uuidv4(),
+            email : req.body.email,
+            password: req.body.password,
+        }
+        users.push(dataUsers)
+        const searchEmail = "SELECT * FROM Users WHERE Email = '" + dataUsers.email + "' AND password = '" + dataUsers.password + "'";
+        pool.connect(function (err) {
+            if (err) {
+                console.log('Lỗi kết nối:', err);
+                return;
+            }
+            // Check Existed Email
+            pool.request().query(searchEmail).then(function (result) {
+                console.log(result.recordset);
+                if(result.recordset.length > 0){
+                    console.log("Đăng nhập thành công");
+                    res.redirect('/');
+                }
+                else{
+                    console.log('Sai Email hoặc là password');
+                    res.redirect("/login");
+                }
+            })
+            .catch(function (err) {
+                console.log('Lỗi khi xử lý câu lệnh :', err);
+            });
+        });
+    }catch (e){
+        console.log(e)
+        res.redirect('/login');
+    }
+})
 
 app.delete("/logout", (req, res) => {
     req.logout(req.user, err => {
@@ -97,8 +139,6 @@ app.delete("/logout", (req, res) => {
 })
 
 app.use('/',userLogin);
-//Connect DB
-// const pool = new sql.ConnectionPool(config);
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 
