@@ -21,8 +21,8 @@ const app = express();
 
 auth.initialize(
     passport,
-    email => users.find(user => user.email === email),
-    id => users.find(user => user.id === id)
+    id => users.find(user => user.id === id),
+    email => users.find(user => user.email === email)
 )
 
 const PORT = process.env.PORT || 4000;
@@ -53,9 +53,10 @@ app.post("/register", async (req,res) => {
         const dataUsers = {
             id : uuidv4(),
             email : req.body.email,
-            password: hashedPassword,}
+            password: hashedPassword,
+        }
         users.push(dataUsers)
-        const insertQuery = "INSERT INTO Users VALUES ('" + dataUsers.id + "','" + 1 + "', '" + dataUsers.email + "', '" + req.body.password + "')";
+        const insertQuery = "INSERT INTO Users VALUES ('" + dataUsers.id + "','" + 1 + "', '" + dataUsers.email + "', '" + dataUsers.password + "')";
         const searchEmail = "SELECT * FROM Users WHERE Email = '" + dataUsers.email + "'";
         pool.connect(function (err) {
             if (err) {
@@ -64,17 +65,14 @@ app.post("/register", async (req,res) => {
             }
             // Check Existed Email
             pool.request().query(searchEmail).then(function (result) {
-                console.log(result);
                 if(result.recordset.length > 0 ){
                     console.log("Email nãy đã được xử dụng");
-                    res.send(false);
                     res.redirect('/register');
                 }
                 else{
                     // INSERT
                     pool.request().query(insertQuery).then(function (result) {
                         console.log('Dữ liệu đã được thêm thành công');
-                        res.send(false);
                         res.redirect("/login");
                     })
                     .catch(function (err) {
@@ -85,7 +83,6 @@ app.post("/register", async (req,res) => {
             })
             .catch(function (err) {
                 console.log('Lỗi khi xử lý câu lệnh :', err);
-                res.send(false);
             });
         });
     }catch (e){
@@ -94,42 +91,14 @@ app.post("/register", async (req,res) => {
     }
 })
 
-// Function : register 
-app.post("/login", async (req,res) => {
-    try{
-        const dataUsers = {
-            id : uuidv4(),
-            email : req.body.email,
-            password: req.body.password,
-        }
-        users.push(dataUsers)
-        const searchEmail = "SELECT * FROM Users WHERE Email = '" + dataUsers.email + "' AND password = '" + dataUsers.password + "'";
-        pool.connect(function (err) {
-            if (err) {
-                console.log('Lỗi kết nối:', err);
-                return;
-            }
-            // Check Existed Email
-            pool.request().query(searchEmail).then(function (result) {
-                console.log(result.recordset);
-                if(result.recordset.length > 0){
-                    console.log("Đăng nhập thành công");
-                    res.redirect('/');
-                }
-                else{
-                    console.log('Sai Email hoặc là password');
-                    res.redirect("/login");
-                }
-            })
-            .catch(function (err) {
-                console.log('Lỗi khi xử lý câu lệnh :', err);
-            });
-        });
-    }catch (e){
-        console.log(e)
-        res.redirect('/login');
-    }
-})
+// Function : Login 
+
+
+app.post("/login", passport.authenticate("local",{
+    successRedirect: "/",
+    failureRedirect: "/login",
+    failureFlash: true
+}))
 
 app.delete("/logout", (req, res) => {
     req.logout(req.user, err => {
@@ -137,6 +106,19 @@ app.delete("/logout", (req, res) => {
         res.redirect("/")
     })
 })
+
+app.get("/", (req, res) => {
+    // Kiểm tra trạng thái đăng nhập từ session
+    if (req.isAuthenticated()) {
+      // Người dùng đã đăng nhập, có thể truy cập thông tin phiên từ req.session
+      const username = req.session.username;
+      console.log(req.session);
+      console.log(username);
+
+    } else {
+      console.log("Not login")
+    }
+  });
 
 app.use('/',userLogin);
 

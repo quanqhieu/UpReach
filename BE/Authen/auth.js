@@ -1,26 +1,54 @@
 const passport = require('passport');
-const bycrypt = require('bcrypt');
-const e = require('express');
+const bcrypt = require('bcrypt');
 const LocalStrategy = require('passport-local').Strategy;
+const sql = require('mssql');
 
-function initialize(passport, getUserByEmail, getUserById){
+const config = require('../Config/dbConfig');
+
+const pool = new sql.ConnectionPool(config);
+
+function initialize(passport, getUserById, getUserByEmail){
     // Function : Authenticate users
-    const authenticateUser = async (email,password,done) =>{
-        const user = getUserByEmail(email);
-        if(user == null){
-            return done (null,false,{message : "No user found with that email"})
+
+    const authenticateUser = async (email, password, done) => {
+        try {
+            
+            pool.connect(async function (err,connection) {
+                
+                if (err) {
+                    console.log('Lỗi kết nối:', err);
+                    return;
+                }
+                const query = `SELECT * FROM Users WHERE Email = '${email}'`;
+                connection.query(query, async function (err, result) {
+                    
+                    if (err) {
+                        console.log('Lỗi truy vấn:', err);
+                        return done(err);
+                    }
+                    const user = result.recordset[0];
+                    console.log(user);
+                    if (!user) {
+                        return done(null, false, { message: "No user found with that email" });
+                    }
+                    const passwordMatch = await bcrypt.compare(password, user.Password);
+                    // console.log('trước passwordMatch');
+                    // console.log(typeof user.Password)
+                    // console.log(typeof password)
+                    if (passwordMatch) {
+                        console.log('vô passwordMatch');
+                        return done(null, user);
+                    } else {
+                        return done(null, false, { message: "Incorrect password" });
+                    }
+                })
+            })
         }
-        try{
-            if(await bycrypt.compare(password,user.password)){
-                return done (null, user)
-            }else{
-                return dont (null, false, {message : "Password Incorrect"})
-            }
-        }catch (e){
-            console.log(e)
-            return done(e);
+        catch (e) {
+          console.log(e);
+          return done(e);
         }
-    }
+      };
 
     passport.use( new LocalStrategy({usernameField: 'email'}, authenticateUser))
     // save infor user into session
