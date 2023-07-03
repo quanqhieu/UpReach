@@ -1,4 +1,3 @@
-const passport = require('passport');
 const bcrypt = require('bcrypt');
 const LocalStrategy = require('passport-local').Strategy;
 const sql = require('mssql');
@@ -24,7 +23,6 @@ function initialize(passport, getUserById, getUserByEmail){
                         return done(err);
                     }
                     const user = result.recordset[0];
-                    console.log(user);
                     if (!user) {
                         return done(null, false, { message: "No user found with that email" });
                     }
@@ -38,31 +36,40 @@ function initialize(passport, getUserById, getUserByEmail){
                 })
                 
             })
-            
         }
         catch (e) {
-          console.log(e);
-          return done(e);
+            console.log(e);
+            return done(e);
         }
-        
-        
-        
-        
     };
 
     passport.use( new LocalStrategy({usernameField: 'email'}, authenticateUser))
         
     // save infor user into session
     passport.serializeUser((user, done) => {
-        done(null, user.id);
+        done(null, user.User_ID);
     });
     // save infor user into session
     // use data in session to get data of users
     passport.deserializeUser(async (id, done) => {
         try {
-        const user = await getUserById(id);
-        done(null, user);
+            pool.connect(async function (err,connection) {
+                if (err) {
+                    console.log('Lỗi kết nối:', err);
+                    return;
+                }
+                const query = `SELECT * FROM Users WHERE User_ID = '${id}'`;
+                connection.query(query, async function (err, result) {
+                    if (err) {
+                        console.log('Lỗi truy vấn:', err);
+                        return done(err);
+                    }
+                    const user = result.recordset[0];
+                    return done(null, user);
+                })
+            })
         } catch (e) {
+            console.log('123')
         done(e);
         }
     });

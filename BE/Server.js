@@ -108,18 +108,15 @@ app.delete("/logout", (req, res) => {
     })
 })
 
-app.get("/", (req, res) => {
-    // Kiểm tra trạng thái đăng nhập từ session
-    if (req.isAuthenticated()) {
-      // Người dùng đã đăng nhập, có thể truy cập thông tin phiên từ req.session
-      const username = req.session.username;
-      console.log(req.session);
-      console.log(username);
-
-    } else {
-      console.log("Not login")
-    }
-  });
+// app.get("/", (req, res) => {
+//     // Kiểm tra trạng thái đăng nhập từ session
+//     if (req.isAuthenticated()) {
+//       // Người dùng đã đăng nhập, có thể truy cập thông tin phiên từ req.session
+//         const username = req.session.username;
+//     } else {
+//         console.log("Not login")
+//     }
+// });
 
 app.use('/',userLogin);
 
