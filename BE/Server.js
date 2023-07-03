@@ -66,39 +66,58 @@ app.post("/register", async (req,res) => {
             // Check Existed Email
             pool.request().query(searchEmail).then(function (result) {
                 if(result.recordset.length > 0 ){
-                    console.log("Email nãy đã được xử dụng");
-                    res.redirect('/register');
+                    res.json({ message: "Email nãy đã được xử dụng"});
+                    // res.redirect('/register');
                 }
                 else{
                     // INSERT
                     pool.request().query(insertQuery).then(function (result) {
-                        console.log('Dữ liệu đã được thêm thành công');
-                        res.redirect("/login");
+                        res.json({ message: "Dữ liệu đã được thêm thành công"});
+                        // res.redirect("/login");
                     })
                     .catch(function (err) {
-                        console.log('Lỗi khi thêm dữ liệu:', err);
-                        res.send(false);
+                        res.json({ message: "Lỗi khi thêm dữ liệu : ",err});
+                        // res.send(false);
                     });
                 }
             })
             .catch(function (err) {
-                console.log('Lỗi khi xử lý câu lệnh :', err);
+                res.json({ message: "Lỗi khi xử lý câu lệnh : ",err});
             });
         });
     }catch (e){
         console.log(e)
-        res.redirect('/register');
+        // res.redirect('/register');
     }
 })
 
 // Function : Login 
 
 
-app.post("/login", passport.authenticate("local",{
-    successRedirect: "/",
-    failureRedirect: "/login",
-    failureFlash: true
-}))
+// app.post("/login", passport.authenticate("local",{
+//     // successRedirect: "/",
+//     failureRedirect: "/login",
+//     failureFlash: true
+// }),(req,res) =>{
+//     res.json({ message: "Login successful" });
+// })
+
+app.post("/login", (req, res, next) => {
+    passport.authenticate("local", (err, user, info) => {
+    if (err) {
+        return res.status(500).json({ message: "Internal server error" });
+    }
+    if (!user) {
+        return res.status(401).json({ message: "Sai email hoặc sai mật khẩu" });
+    }
+    req.logIn(user, (err) => {
+        if (err) {
+            return res.status(500).json({ message: "Internal server error" });
+        }
+        return res.status(200).json({ message: "Login successful" });
+    });
+    })(req, res, next);
+});
 
 
 app.delete("/logout", (req, res) => {
@@ -108,15 +127,6 @@ app.delete("/logout", (req, res) => {
     })
 })
 
-// app.get("/", (req, res) => {
-//     // Kiểm tra trạng thái đăng nhập từ session
-//     if (req.isAuthenticated()) {
-//       // Người dùng đã đăng nhập, có thể truy cập thông tin phiên từ req.session
-//         const username = req.session.username;
-//     } else {
-//         console.log("Not login")
-//     }
-// });
 
 app.use('/',userLogin);
 
