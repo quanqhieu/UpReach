@@ -12,16 +12,13 @@ function initialize(passport, getUserById, getUserByEmail){
 
     const authenticateUser = async (email, password, done) => {
         try {
-            
             pool.connect(async function (err,connection) {
-                
                 if (err) {
                     console.log('Lỗi kết nối:', err);
                     return;
                 }
                 const query = `SELECT * FROM Users WHERE Email = '${email}'`;
                 connection.query(query, async function (err, result) {
-                    
                     if (err) {
                         console.log('Lỗi truy vấn:', err);
                         return done(err);
@@ -32,33 +29,43 @@ function initialize(passport, getUserById, getUserByEmail){
                         return done(null, false, { message: "No user found with that email" });
                     }
                     const passwordMatch = await bcrypt.compare(password, user.Password);
-                    // console.log('trước passwordMatch');
-                    // console.log(typeof user.Password)
-                    // console.log(typeof password)
                     if (passwordMatch) {
-                        console.log('vô passwordMatch');
                         return done(null, user);
                     } else {
                         return done(null, false, { message: "Incorrect password" });
                     }
+                    
                 })
+                
             })
+            
         }
         catch (e) {
           console.log(e);
           return done(e);
         }
-      };
+        
+        
+        
+        
+    };
 
     passport.use( new LocalStrategy({usernameField: 'email'}, authenticateUser))
+        
     // save infor user into session
-    passport.serializeUser((user,done)=> done (null, user.id)) 
-    
+    passport.serializeUser((user, done) => {
+        done(null, user.id);
+    });
     // save infor user into session
     // use data in session to get data of users
-    passport.deserializeUser((id,done)=> {
-        return done(null, getUserById(id))
-    })
+    passport.deserializeUser(async (id, done) => {
+        try {
+        const user = await getUserById(id);
+        done(null, user);
+        } catch (e) {
+        done(e);
+        }
+    });
 }
 
 function checkAuthenticated(req, res, next) {

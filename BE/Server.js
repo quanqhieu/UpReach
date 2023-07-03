@@ -100,6 +100,7 @@ app.post("/login", passport.authenticate("local",{
     failureFlash: true
 }))
 
+
 app.delete("/logout", (req, res) => {
     req.logout(req.user, err => {
         if (err) return next(err)
