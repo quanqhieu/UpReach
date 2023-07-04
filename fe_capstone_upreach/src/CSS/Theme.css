@@ -41,13 +41,22 @@
 	line-height: 30px;
 }
 
-.contentHomePage {
+.contentIntroducePage {
 	height: 275vh;
 	width: 100%;
 	font-size: 24px;
 	font-weight: bold;
 	margin-top: 60px;
-	padding: 0 50px 0 50px;
+	padding: 100px 50px;
+}
+
+.contentHomePage {
+	--height: 275vh;
+	width: 100%;
+	font-size: 24px;
+	font-weight: bold;
+	margin-top: 60px;
+	padding: 100px 50px;
 	background-color: #ececec;
 }
 

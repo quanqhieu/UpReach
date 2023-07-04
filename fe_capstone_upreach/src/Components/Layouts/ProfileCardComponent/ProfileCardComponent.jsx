@@ -6,8 +6,9 @@ import { ReactComponent as Youtube } from "../../../Assets/Icon/Youtube.svg";
 import { ReactComponent as Tiktok } from "../../../Assets/Icon/Tiktok.svg";
 import { ReactComponent as Location } from "../../../Assets/Icon/Location.svg";
 import { ReactComponent as Addlist } from "../../../Assets/Icon/Addlist.svg";
+import { Tooltip } from "antd";
 
-const ProfileCardComponent = () => {
+const ProfileCardComponent = ({ profileInflu }) => {
   return (
     <>
       <div className="profile-layout">
@@ -15,12 +16,22 @@ const ProfileCardComponent = () => {
           <div className="profile-avatar-content">
             <img className="profile-avatar" src={default_img} alt="" />
             <div className="profile-content">
-              <p className="profile-name">fullName</p>
+              <p className="profile-name">{profileInflu.fullName}</p>
               <div className="profile-location">
                 <Location style={{ marginRight: "8px" }} />
-                <p>Da Nang</p>
+                <p>{profileInflu.address}</p>
               </div>
-              <div className="profile-topic">topic</div>
+              <div className="profile-topics">
+                {profileInflu.topics.slice(0, 3).map((topic, index) => (
+                  <div key={index} className="profile-topic">
+                    <Tooltip placement="top" title={topic}>
+                      <div>
+                        {topic.length > 8 ? `${topic.slice(0, 8)}...` : topic}
+                      </div>
+                    </Tooltip>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
           <div className="profile-add-list">
