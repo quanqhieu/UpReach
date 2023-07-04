@@ -77,12 +77,6 @@ export const GENDER_OF_AUDIANCE = [
     { name: "Other", value: "Other" },
 ];
 
-export const LOCATION_OF_AUDIANCE = [
-    { name: "Hà Nội", value: "Hà Nội" },
-    { name: "Hồ Chí Minh", value: "Hồ Chí Minh" },
-    { name: "Huế", value: "Huế" },
-];
-
 export const PROFILE_INFLUS = [
     {
         id: "1",
@@ -195,3 +189,5 @@ export const PROFILE_INFLUS = [
         topics: ["Game", "Beauty", "Any"],
     },
 ];
+
+export const URL_API_CITY = 'https://provinces.open-api.vn/api/p/';
