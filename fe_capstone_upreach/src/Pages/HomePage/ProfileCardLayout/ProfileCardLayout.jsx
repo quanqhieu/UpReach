@@ -40,6 +40,7 @@ const ProfileCardLayout = () => {
       type: "Celebrity",
       address: "Ha Noi",
       topics: ["Beuaty", "Education"],
+      email: "trangpro123@gmail.com",
     },
     {
       id: "3",
