@@ -12,6 +12,7 @@ import {
 } from "@ant-design/icons";
 import "react-slideshow-image/dist/styles.css";
 import { Slide } from "react-slideshow-image";
+import { LIST_HOTLIST } from "./ConstCardHotList";
 const CardHotList = () => {
   const [isHoveredArrow, setIsHoveredArrow] = React.useState("");
   const properties = {
@@ -42,6 +43,20 @@ const CardHotList = () => {
       </button>
     ),
   };
+
+  function RenderHotList({ image, name, topics }) {
+    return (
+      <div className="hotCard">
+        <HotListCardComponents
+          className="hotListCard"
+          image={image}
+          name={name}
+          topics={topics}
+        />
+      </div>
+    )
+  };
+
   return (
     <div className="hotListLayout">
       <div className="hotListContent">
@@ -60,7 +75,10 @@ const CardHotList = () => {
           indicators={true}
           duration={2000}
         >
-          <div className="hotCard">
+          {LIST_HOTLIST.map((item) => (
+            <RenderHotList image={item.image} name={item.name} topics={item.topics} />
+          ))}
+          {/* <div className="hotCard">
             <HotListCardComponents
               className="hotListCard"
               image={HotListCard1}
@@ -101,7 +119,7 @@ const CardHotList = () => {
               name={"DEC AO"}
               topics={"Instagram , Facebook"}
             />
-          </div>
+          </div> */}
         </Slide>
       </div>
     </div>

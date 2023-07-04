@@ -4,11 +4,13 @@ import { Col, Row } from "antd";
 import ProfileCardComponent from "../../../Components/Layouts/ProfileCardComponent/ProfileCardComponent";
 import InfluProfile from "../../../Components/InfluProfileModal/InfluProfile";
 import { Modal, Pagination } from "antd";
+import { PROFILE_INFLUS } from "../ConstHomePage";
 
 const ProfileCardLayout = () => {
   const [influInfo, setInfluInfo] = useState("");
   const [isOpenProfileInflu, setIsOpenProfileInflu] = useState(false);
 
+<<<<<<< HEAD
   const [profileInflus, setProfileInflus] = useState([
     {
       id: "1",
@@ -122,6 +124,9 @@ const ProfileCardLayout = () => {
       topics: ["Game", "Beauty", "Any"],
     },
   ]);
+=======
+  const [profileInflus, setProfileInflus] = useState(PROFILE_INFLUS);
+>>>>>>> e2d1113d14a684237dd7cbb4506a9a69b868e631
 
   const handleOpenModal = (info) => {
     setInfluInfo(info);
