@@ -8,9 +8,11 @@ import AuthBackground from "../../Components/Layouts/AuthBackground/AuthBackgrou
 
 const Login = () => {
   const [message, setMessage] = React.useState("");
+
   const handleSubmit = (data) => {
     console.log(data);
   };
+
   return (
     <>
       <AuthBackground>
@@ -22,6 +24,10 @@ const Login = () => {
             initialValues={{ remember: true }}
             onFinish={handleSubmit}
           >
+            <Button type="primary" className="login-google">
+              <div className="GoogleIcon">{<IconGoogle />}</div>
+              <p style={{ fontWeight: "600" }}>Login with Google</p>
+            </Button>
             <div className="logInSubTitle">
               <p className="logInSubTitleContent">Email address </p>
               <p className="logInSubChar">*</p>
@@ -65,14 +71,10 @@ const Login = () => {
             <Button type="primary" htmlType="submit" className="logInBtn">
               <span className="logInBtnText">Login</span>
             </Button>
-            <div className="logInWithGoogle">
-              <div className="GoogleIcon">{<IconGoogle />}</div>
-              <p style={{ fontWeight: "600" }}>Login with Google</p>
-              {/* <Link to="/forgot-password">
+            <div className="feature-block">
               <Button className="logInToForgotPasswordLink" type="link">
                 <p>Forgot password?</p>
               </Button>
-            </Link> */}
             </div>
             <div className="logInToSignUp">
               <p>New to UpReach?</p>

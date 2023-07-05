@@ -1,9 +1,9 @@
-import HeaderHomepage from "../../Layouts/Header/HeaderHomepage";
+import HeaderLoginHompape from "../Header/HeaderLoginHompape";
 import "./AuthBackground.css";
 const AuthBackground = ({ children }) => {
   return (
     <>
-      <HeaderHomepage />
+      <HeaderLoginHompape />
       <div className="auth-background">
         <div className="auth-form-cover">
           <div className="auth-custom-bg">
