@@ -46,7 +46,7 @@ const HeaderHomepage = () => {
 
   return (
     <div className="HeaderHomepage">
-      <RenderContent oncClickIntroduce={navigateIntroduce} onClickHomeMain={navigateHomeMain} />
+      <RenderContent onClickIntroduce={navigateIntroduce} onClickHomeMain={navigateHomeMain} />
       <div className="authBtn">
         <Link to="/login">
           <Button className="loginBtn" type="link">
