@@ -69,8 +69,7 @@ function initialize(passport, getUserById, getUserByEmail){
                 })
             })
         } catch (e) {
-            console.log('123')
-        done(e);
+            done(e);
         }
     });
 }

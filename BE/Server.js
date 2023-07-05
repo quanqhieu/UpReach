@@ -14,7 +14,7 @@ const sql = require('mssql');
 const config = require('./Config/dbConfig')
 const userLogin = require('./Router/userLogin');
 const auth = require('./Authen/auth');
-
+const sendMail = require('./sendMail')
 
 
 const app = express();
@@ -46,6 +46,53 @@ app.use(methodOverride("_method"))
 const pool = new sql.ConnectionPool(config);
 
 // Function : register 
+// app.post("/register", async (req,res) => {
+//     try{
+        
+//         const hashedPassword = await bycrypt.hash(req.body.password,10)
+//         const dataUsers = {
+//             id : uuidv4(),
+//             email : req.body.email,
+//             password: hashedPassword,
+//         }
+//         users.push(dataUsers)
+//         const insertQuery = "INSERT INTO Users VALUES ('" + dataUsers.id + "','" + 1 + "', '" + dataUsers.email + "', '" + dataUsers.password + "')";
+//         const searchEmail = "SELECT * FROM Users WHERE Email = '" + dataUsers.email + "'";
+//         pool.connect(function (err) {
+//             if (err) {
+//                 console.log('Lỗi kết nối:', err);
+//                 return;
+//             }
+//             // Check Existed Email
+//             pool.request().query(searchEmail).then(function (result) {
+//                 if(result.recordset.length > 0 ){
+//                     res.json({ message: "Email nãy đã được xử dụng"});
+//                     // res.redirect('/register');
+//                 }
+//                 else{
+//                     // INSERT
+//                     pool.request().query(insertQuery).then(function (result) {
+//                         res.json({ message: "Dữ liệu đã được thêm thành công"});
+//                         // res.redirect("/login");
+//                     })
+//                     .catch(function (err) {
+//                         res.json({ message: "Lỗi khi thêm dữ liệu : ",err});
+//                         // res.send(false);
+//                     });
+//                 }
+//             })
+//             .catch(function (err) {
+//                 res.json({ message: "Lỗi khi xử lý câu lệnh : ",err});
+//             });
+//         });
+//     }catch (e){
+//         console.log(e)
+//         // res.redirect('/register');
+//     }
+// })
+
+
+
 app.post("/register", async (req,res) => {
     try{
         
@@ -56,7 +103,6 @@ app.post("/register", async (req,res) => {
             password: hashedPassword,
         }
         users.push(dataUsers)
-        const insertQuery = "INSERT INTO Users VALUES ('" + dataUsers.id + "','" + 1 + "', '" + dataUsers.email + "', '" + dataUsers.password + "')";
         const searchEmail = "SELECT * FROM Users WHERE Email = '" + dataUsers.email + "'";
         pool.connect(function (err) {
             if (err) {
@@ -70,14 +116,24 @@ app.post("/register", async (req,res) => {
                     // res.redirect('/register');
                 }
                 else{
-                    // INSERT
-                    pool.request().query(insertQuery).then(function (result) {
-                        res.json({ message: "Dữ liệu đã được thêm thành công"});
-                        // res.redirect("/login");
-                    })
-                    .catch(function (err) {
-                        res.json({ message: "Lỗi khi thêm dữ liệu : ",err});
-                        // res.send(false);
+                    // Send Mail
+                    const mailOptions = {
+                        from: 'thienndde150182@gmail.com', // Địa chỉ email người gửi
+                        to: dataUsers.email, // Địa chỉ email người nhận
+                        subject: 'OTP for Registration', // Tiêu đề email
+                        text: `Your OTP for registration is: ${sendMail.otp}` // Nội dung email
+                    };
+                    
+                    sendMail.sendMailToUser(mailOptions)
+                    .then((info) => {
+                            // Xử lý khi gửi email thành công
+                            console.log('Email sent:', info.response);
+                            res.json({ message: sendMail.otp});
+
+                        })
+                        .catch((error) => {
+                            // Xử lý khi gửi email gặp lỗi
+                            console.log('Error:', error);
                     });
                 }
             })
@@ -91,16 +147,10 @@ app.post("/register", async (req,res) => {
     }
 })
 
+app.post("/confirm", (req, res, next) => {
+
+})
 // Function : Login 
-
-
-// app.post("/login", passport.authenticate("local",{
-//     // successRedirect: "/",
-//     failureRedirect: "/login",
-//     failureFlash: true
-// }),(req,res) =>{
-//     res.json({ message: "Login successful" });
-// })
 
 app.post("/login", (req, res, next) => {
     passport.authenticate("local", (err, user, info) => {
@@ -114,7 +164,14 @@ app.post("/login", (req, res, next) => {
         if (err) {
             return res.status(500).json({ message: "Internal server error" });
         }
-        return res.status(200).json({ message: "Login successful" });
+        return res.status(200).json({ 
+            message: "Login successful" ,
+            data: {
+                User_ID: user.User_ID,
+                Email: user.Email,
+                // Include other desired user properties here
+            }
+        });
     });
     })(req, res, next);
 });
