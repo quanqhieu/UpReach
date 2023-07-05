@@ -26,20 +26,19 @@ export const CATEGORY = [
     { value: "Fashion", label: "Fashion" }
 ];
 
-export const LIST_SELECT_SEARCH = [
-    {
-        className: "leftButton",
-        options: PLATFORM,
-        title: "Platform",
-        description: "Choose a platform"
-    },
-    {
-        className: "rightButton",
-        options: CATEGORY,
-        title: "Category",
-        description: "Search for categories, keywords, hashtags or influencers"
-    },
-];
+export const LIST_LEFT_BUTTON_SELECT_SEARCH = {
+    className: "leftButton",
+    options: PLATFORM,
+    title: "Platform",
+    description: "Choose a platform"
+};
+
+export const LIST_RIGHT_BUTTON_SELECT_SEARCH = {
+    className: "rightButton",
+    options: CATEGORY,
+    title: "Category",
+    description: "Search for categories, keywords, hashtags or influencers"
+};
 
 export const LIST_TYPE_SEARCH = [
     { name: "Celebrity", value: "Celebrity" },

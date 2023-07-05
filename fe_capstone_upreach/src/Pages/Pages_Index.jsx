@@ -13,25 +13,14 @@ function Pages_Index() {
   const navigateLogin = () => {
     navigate("/login");
   };
-  //click button will go to home page not logged in yet
-  const navigateIntroduce = () => {
-    navigate("/");
-  };
 
-  //click button will go to home page have token
-  const navigateHomeMain = () => {
-    navigate("/homepage");
-  };
   return (
     <Routes>
       <Route
         path="/"
         element={
           <>
-            <Introduce
-              navigateHome={navigateHomeMain}
-              navigateLogin={navigateLogin}
-            />
+            <Introduce navigateLogin={navigateLogin} />
           </>
         }
       />
@@ -39,7 +28,7 @@ function Pages_Index() {
         path="/login"
         element={
           <>
-            <Login navigateHome={navigateIntroduce} />
+            <Login />
           </>
         }
       />
@@ -47,7 +36,7 @@ function Pages_Index() {
         path="/join-as-brand"
         element={
           <>
-            <JoinAsBrand navigateHome={navigateIntroduce} />
+            <JoinAsBrand />
           </>
         }
       />
@@ -55,7 +44,7 @@ function Pages_Index() {
         path="/sign-up"
         element={
           <>
-            <SignUp navigateHome={navigateIntroduce} />
+            <SignUp />
           </>
         }
       />
