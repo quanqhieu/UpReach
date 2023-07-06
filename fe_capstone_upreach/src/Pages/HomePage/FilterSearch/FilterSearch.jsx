@@ -114,10 +114,16 @@ function RenderFilter() {
 
 const FilterSearch = () => {
   const [platform, setPlatform] = useState();
+  const [category, setCategory] = useState();
 
   const handleChangePlatform = (selectPlatfrom) => {
     console.log(`selected: ${selectPlatfrom}`);
     setPlatform(selectPlatfrom);
+  };
+
+  const handleChangeCategory = (selectCategory) => {
+    console.log(`selected: ${selectCategory}`);
+    setCategory(selectCategory);
   };
 
   return (
@@ -138,6 +144,7 @@ const FilterSearch = () => {
             options={LIST_RIGHT_BUTTON_SELECT_SEARCH.options}
             title={LIST_RIGHT_BUTTON_SELECT_SEARCH.title}
             description={LIST_RIGHT_BUTTON_SELECT_SEARCH.description}
+            onChange={handleChangeCategory}
           />
           <Button className="bntSreach ms-3">Search</Button>
         </div>
