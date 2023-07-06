@@ -47,62 +47,10 @@ app.use(methodOverride("_method"))
 const pool = new sql.ConnectionPool(config);
 
 // Function : register 
-// app.post("/register", async (req,res) => {
-//     try{
-        
-//         const hashedPassword = await bycrypt.hash(req.body.password,10)
-//         const dataUser = {
-//             id : uuidv4(),
-//             email : req.body.email,
-//             password: hashedPassword,
-//         }
-//         users.push(dataUser)
-//         const insertQuery = "INSERT INTO Users VALUES ('" + dataUser.id + "','" + 1 + "', '" + dataUser.email + "', '" + dataUser.password + "')";
-//         const searchEmail = "SELECT * FROM Users WHERE Email = '" + dataUser.email + "'";
-//         pool.connect(function (err) {
-//             if (err) {
-//                 console.log('Lỗi kết nối:', err);
-//                 return;
-//             }
-//             // Check Existed Email
-//             pool.request().query(searchEmail).then(function (result) {
-//                 if(result.recordset.length > 0 ){
-//                     res.json({ message: "Email nãy đã được xử dụng"});
-//                     // res.redirect('/register');
-//                 }
-//                 else{
-//                     // INSERT
-//                     pool.request().query(insertQuery).then(function (result) {
-//                         res.json({ message: "Dữ liệu đã được thêm thành công"});
-//                         // res.redirect("/login");
-//                     })
-//                     .catch(function (err) {
-//                         res.json({ message: "Lỗi khi thêm dữ liệu : ",err});
-//                         // res.send(false);
-//                     });
-//                 }
-//             })
-//             .catch(function (err) {
-//                 res.json({ message: "Lỗi khi xử lý câu lệnh : ",err});
-//             });
-//         });
-//     }catch (e){
-//         console.log(e)
-//         // res.redirect('/register');
-//     }
-// })
-
-
-
 app.post("/register", async (req,res) => {
     try{
         
         const hashedPassword = await bycrypt.hash(req.body.password,10)
-        // dataUser = {
-        //     id : uuidv4(),
-        //     email : req.body.email,
-        //     password: hashedPassword,
-        // }
         dataUser.id = uuidv4();
         dataUser.email = req.body.email;
         dataUser.password = hashedPassword;
@@ -204,13 +152,22 @@ app.post("/login", (req, res, next) => {
 });
 
 
-app.delete("/logout", (req, res) => {
-    req.logout(req.user, err => {
-        if (err) return next(err)
-        res.redirect("/")
-    })
-})
+// app.delete("/logout", (req, res) => {
+//     req.logout(req.user, err => {
+//         if (err) return next(err)
+//         res.redirect("/")
+//     })
+// })
 
+app.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        if (err) {
+            // Handle error
+        } else {
+            res.redirect('/login');
+        }
+    });
+});
 
 app.use('/',userLogin);
 
