@@ -14,7 +14,7 @@ const sql = require('mssql');
 const config = require('./Config/dbConfig')
 const userLogin = require('./Router/userLogin');
 const auth = require('./Authen/auth');
-const sendMail = require('./sendMail')
+const sendMail = require('./sendMail/sendMail')
 
 
 const app = express();
@@ -27,6 +27,7 @@ auth.initialize(
 
 const PORT = process.env.PORT || 4000;
 const users = []
+const dataUser ={}
 
 // for parsing application/json
 // for parsing application/xwww-
@@ -50,14 +51,14 @@ const pool = new sql.ConnectionPool(config);
 //     try{
         
 //         const hashedPassword = await bycrypt.hash(req.body.password,10)
-//         const dataUsers = {
+//         const dataUser = {
 //             id : uuidv4(),
 //             email : req.body.email,
 //             password: hashedPassword,
 //         }
-//         users.push(dataUsers)
-//         const insertQuery = "INSERT INTO Users VALUES ('" + dataUsers.id + "','" + 1 + "', '" + dataUsers.email + "', '" + dataUsers.password + "')";
-//         const searchEmail = "SELECT * FROM Users WHERE Email = '" + dataUsers.email + "'";
+//         users.push(dataUser)
+//         const insertQuery = "INSERT INTO Users VALUES ('" + dataUser.id + "','" + 1 + "', '" + dataUser.email + "', '" + dataUser.password + "')";
+//         const searchEmail = "SELECT * FROM Users WHERE Email = '" + dataUser.email + "'";
 //         pool.connect(function (err) {
 //             if (err) {
 //                 console.log('Lỗi kết nối:', err);
@@ -97,13 +98,16 @@ app.post("/register", async (req,res) => {
     try{
         
         const hashedPassword = await bycrypt.hash(req.body.password,10)
-        const dataUsers = {
-            id : uuidv4(),
-            email : req.body.email,
-            password: hashedPassword,
-        }
-        users.push(dataUsers)
-        const searchEmail = "SELECT * FROM Users WHERE Email = '" + dataUsers.email + "'";
+        // dataUser = {
+        //     id : uuidv4(),
+        //     email : req.body.email,
+        //     password: hashedPassword,
+        // }
+        dataUser.id = uuidv4();
+        dataUser.email = req.body.email;
+        dataUser.password = hashedPassword;
+
+        const searchEmail = "SELECT * FROM Users WHERE Email = '" + dataUser.email + "'";
         pool.connect(function (err) {
             if (err) {
                 console.log('Lỗi kết nối:', err);
@@ -119,7 +123,7 @@ app.post("/register", async (req,res) => {
                     // Send Mail
                     const mailOptions = {
                         from: 'thienndde150182@gmail.com', // Địa chỉ email người gửi
-                        to: dataUsers.email, // Địa chỉ email người nhận
+                        to: dataUser.email, // Địa chỉ email người nhận
                         subject: 'OTP for Registration', // Tiêu đề email
                         text: `Your OTP for registration is: ${sendMail.otp}` // Nội dung email
                     };
@@ -127,7 +131,6 @@ app.post("/register", async (req,res) => {
                     sendMail.sendMailToUser(mailOptions)
                     .then((info) => {
                             // Xử lý khi gửi email thành công
-                            console.log('Email sent:', info.response);
                             res.json({ message: sendMail.otp});
 
                         })
@@ -141,14 +144,38 @@ app.post("/register", async (req,res) => {
                 res.json({ message: "Lỗi khi xử lý câu lệnh : ",err});
             });
         });
-    }catch (e){
-        console.log(e)
+    }catch (err){
+        res.json({ message: "Lỗi ",err});
         // res.redirect('/register');
     }
 })
 
 app.post("/confirm", (req, res, next) => {
-
+    try{
+        const otp = req.body.otp;
+        if (otp === sendMail.otp){
+            const insertQuery = "INSERT INTO Users VALUES ('" + dataUser.id + "','" + 1 + "', '" + dataUser.email + "', '" + dataUser.password + "')";
+            pool.connect(function (err) {
+                if (err) {
+                    console.log('Lỗi kết nối:', err);
+                    return;
+                }
+                pool.request().query(insertQuery).then(function (result) {
+                    res.json({ message: "Dữ liệu đã được thêm thành công"});
+                    // res.redirect("/login");
+                })
+                .catch(function (err) {
+                    res.json({ message: "Lỗi khi thêm dữ liệu : ",err});
+                    // res.send(false);
+                })
+                .catch(function (err) {
+                    res.json({ message: "Lỗi khi xử lý câu lệnh : ",err});
+                });
+            });
+        }
+    }catch (err){
+        res.json({ message: "Lỗi ",err});
+    }
 })
 // Function : Login 
 
