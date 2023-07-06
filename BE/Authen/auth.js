@@ -11,17 +11,16 @@ function initialize(passport, getUserById, getUserByEmail){
 
     const authenticateUser = async (email, password, done) => {
         try {
-            pool.connect(async function (err,connection) {
+            const searchUserByEmail = "getInfoUserByEmail";
+            pool.connect(async function (err, connection) {
                 if (err) {
                     console.log('Lỗi kết nối:', err);
                     return;
                 }
-                const query = `SELECT * FROM Users WHERE Email = '${email}'`;
-                connection.query(query, async function (err, result) {
-                    if (err) {
-                        console.log('Lỗi truy vấn:', err);
-                        return done(err);
-                    }
+                const request = connection.request();
+                request.input('EmailUser', sql.VarChar, email);
+
+                request.execute(searchUserByEmail).then(async (result) => {
                     const user = result.recordset[0];
                     if (!user) {
                         return done(null, false, { message: "No user found with that email" });
@@ -32,9 +31,7 @@ function initialize(passport, getUserById, getUserByEmail){
                     } else {
                         return done(null, false, { message: "Incorrect password" });
                     }
-                    
                 })
-                
             })
         }
         catch (e) {
@@ -53,13 +50,17 @@ function initialize(passport, getUserById, getUserByEmail){
     // use data in session to get data of users
     passport.deserializeUser(async (id, done) => {
         try {
+            const searchUserById = "getInfoUserById";
             pool.connect(async function (err,connection) {
                 if (err) {
                     console.log('Lỗi kết nối:', err);
                     return;
                 }
-                const query = `SELECT * FROM Users WHERE User_ID = '${id}'`;
-                connection.query(query, async function (err, result) {
+
+                const request = connection.request();
+                request.input('EmailUser', sql.VarChar, email);
+
+                request.execute(searchUserById).then(async (err,result) => {
                     if (err) {
                         console.log('Lỗi truy vấn:', err);
                         return done(err);

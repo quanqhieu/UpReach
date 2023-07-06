@@ -2,7 +2,7 @@ if(process.env.NODE_ENV !== "production") require("dotenv").config()
 
 // Declare param was install from npm
 const express = require('express');
-const bycrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
 const {v4 : uuidv4} = require("uuid")
 const passport = require('passport');
@@ -26,7 +26,6 @@ auth.initialize(
 )
 
 const PORT = process.env.PORT || 4000;
-const users = []
 const dataUser ={}
 
 // for parsing application/json
@@ -47,86 +46,87 @@ app.use(methodOverride("_method"))
 const pool = new sql.ConnectionPool(config);
 
 // Function : register 
-app.post("/register", async (req,res) => {
-    try{
-        
-        const hashedPassword = await bycrypt.hash(req.body.password,10)
+
+app.post("/register", async (req, res) => {
+    try {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
         dataUser.id = uuidv4();
         dataUser.email = req.body.email;
         dataUser.password = hashedPassword;
+        const searchUserByEmail = "getInfoUserByEmail"; // Thay thế thành tên stored procedure tìm kiếm email
+        
+        pool.connect().then(() => {
+            const request = pool.request();
+            request.input('EmailUser', sql.VarChar, dataUser.email);
+            request.execute(searchUserByEmail).then((result) => {
+            const existingEmail = result.recordset.length > 0;
+            if (existingEmail) {
+                return res.json({ message: "Email đã được sử dụng" });
+            } else {
+                const mailOptions = {
+                from: 'thienndde150182@gmail.com', // Địa chỉ email người gửi
+                to: dataUser.email, // Địa chỉ email người nhận
+                subject: 'OTP for Registration', // Tiêu đề email
+                text: `Your OTP for registration is: ${sendMail.otp}` // Nội dung email
+                };
 
-        const searchEmail = "SELECT * FROM Users WHERE Email = '" + dataUser.email + "'";
-        pool.connect(function (err) {
-            if (err) {
-                console.log('Lỗi kết nối:', err);
-                return;
+                sendMail.sendMailToUser(mailOptions)
+                .then(() => {
+                    // Xử lý khi gửi email thành công
+                    res.json({ message: sendMail.otp });
+                })
+                .catch((error) => {
+                    // Xử lý khi gửi email gặp lỗi
+                    console.log('Error:', error);
+                });
             }
-            // Check Existed Email
-            pool.request().query(searchEmail).then(function (result) {
-                if(result.recordset.length > 0 ){
-                    res.json({ message: "Email nãy đã được xử dụng"});
-                    // res.redirect('/register');
-                }
-                else{
-                    // Send Mail
-                    const mailOptions = {
-                        from: 'thienndde150182@gmail.com', // Địa chỉ email người gửi
-                        to: dataUser.email, // Địa chỉ email người nhận
-                        subject: 'OTP for Registration', // Tiêu đề email
-                        text: `Your OTP for registration is: ${sendMail.otp}` // Nội dung email
-                    };
-                    
-                    sendMail.sendMailToUser(mailOptions)
-                    .then((info) => {
-                            // Xử lý khi gửi email thành công
-                            res.json({ message: sendMail.otp});
-
-                        })
-                        .catch((error) => {
-                            // Xử lý khi gửi email gặp lỗi
-                            console.log('Error:', error);
-                    });
-                }
-            })
-            .catch(function (err) {
-                res.json({ message: "Lỗi khi xử lý câu lệnh : ",err});
+            pool.close();
+            }).catch((err) => {
+                console.log('Lỗi thực thi stored procedure:', err);
+                res.json({ message: "Lỗi khi xử lý câu lệnh: " + err });
+                pool.close();
             });
+        }).catch((err) => {
+            console.log('Lỗi kết nối:', err);
+            res.json({ message: "Lỗi kết nối: " + err });
         });
-    }catch (err){
-        res.json({ message: "Lỗi ",err});
-        // res.redirect('/register');
-    }
-})
+        } catch (err) {
+            res.json({ message: "Lỗi ", err });
+        }
+});
 
 app.post("/confirm", (req, res, next) => {
-    try{
+    try {
         const otp = req.body.otp;
-        if (otp === sendMail.otp){
-            const insertQuery = "INSERT INTO Users VALUES ('" + dataUser.id + "','" + 1 + "', '" + dataUser.email + "', '" + dataUser.password + "')";
-            pool.connect(function (err) {
+        if (otp === sendMail.otp) {
+            const insertQuery = "InsertInfoUser";
+            pool.connect(async function (err, connection) {
                 if (err) {
                     console.log('Lỗi kết nối:', err);
-                    return;
+                    return res.json({ message: "Lỗi kết nối: " + err });
                 }
-                pool.request().query(insertQuery).then(function (result) {
-                    res.json({ message: "Dữ liệu đã được thêm thành công"});
-                    // res.redirect("/login");
-                })
-                .catch(function (err) {
-                    res.json({ message: "Lỗi khi thêm dữ liệu : ",err});
-                    // res.send(false);
-                })
-                .catch(function (err) {
-                    res.json({ message: "Lỗi khi xử lý câu lệnh : ",err});
+                const request = connection.request();
+                request.input('UserId', sql.VarChar, dataUser.id);
+                request.input('UserRole', sql.VarChar, "1");
+                request.input('UserEmail', sql.VarChar, dataUser.email);
+                request.input('UserPassword', sql.VarChar, dataUser.password);
+                
+                request.execute(insertQuery).then((result) => {
+                    console.log('Dữ liệu đã được thêm thành công');
+                    res.json({ message: "Dữ liệu đã được thêm thành công" });
+                }).catch((err) => {
+                    console.log('Lỗi thực thi stored procedure:', err);
+                    res.json({ message: "Lỗi thực thi stored procedure: " + err });
+                    pool.close();
                 });
-            });
+            })
         }
-    }catch (err){
-        res.json({ message: "Lỗi ",err});
+    } catch (err) {
+        res.json({ message: "Lỗi ", err });
     }
-})
-// Function : Login 
+});
 
+// Function : Login 
 app.post("/login", (req, res, next) => {
     passport.authenticate("local", (err, user, info) => {
     if (err) {
@@ -150,14 +150,6 @@ app.post("/login", (req, res, next) => {
     });
     })(req, res, next);
 });
-
-
-// app.delete("/logout", (req, res) => {
-//     req.logout(req.user, err => {
-//         if (err) return next(err)
-//         res.redirect("/")
-//     })
-// })
 
 app.get('/logout', (req, res) => {
     req.session.destroy((err) => {
