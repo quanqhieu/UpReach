@@ -5,6 +5,9 @@ import JoinAsBrand from "./JoinAsBrandPage/JoinAsBrand";
 import SignUp from "./SignUpPage/SignUp";
 import Introduce from "./IntroducePage/Introduce";
 import HomePage from "./HomePage/HomePage";
+import ForgotPasswordPage from "./ForgotPassword/ForgotPasswordPage";
+import VerifyRegisterPage from "./VerifyRegister/VerifyRegisterPage";
+import ClientProfilePage from "./ClientProfilePage/ClientProfilePage";
 
 function Pages_Index() {
   const navigate = useNavigate();
@@ -53,6 +56,30 @@ function Pages_Index() {
         element={
           <>
             <HomePage />
+          </>
+        }
+      />
+      <Route
+        path="/forgot-password"
+        element={
+          <>
+            <ForgotPasswordPage />
+          </>
+        }
+      />
+      <Route
+        path="/verify-register"
+        element={
+          <>
+            <VerifyRegisterPage />
+          </>
+        }
+      />
+      <Route
+        path="/client-profile"
+        element={
+          <>
+            <ClientProfilePage />
           </>
         }
       />
