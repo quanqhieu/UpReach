@@ -5,6 +5,7 @@ import JoinAsBrand from "./JoinAsBrandPage/JoinAsBrand";
 import SignUp from "./SignUpPage/SignUp";
 import Introduce from "./IntroducePage/Introduce";
 import HomePage from "./HomePage/HomePage";
+import Upgrade from "./UpgradePage/Upgrade";
 
 function Pages_Index() {
   const navigate = useNavigate();
@@ -21,6 +22,11 @@ function Pages_Index() {
   //click button will go to home page have token
   const navigateHomeMain = () => {
     navigate("/homepage");
+  };
+
+  //click button will go to upgrade page
+  const navigateUpgrade = () => {
+    navigate("/upgrade");
   };
   return (
     <Routes>
@@ -64,6 +70,14 @@ function Pages_Index() {
         element={
           <>
             <HomePage />
+          </>
+        }
+      />
+      <Route
+        path="/upgrade"
+        element={
+          <>
+            <Upgrade navigateHome={navigateUpgrade} />
           </>
         }
       />
