@@ -1,21 +1,19 @@
-import { Button, Col, Collapse, Form, Input, Row } from "antd";
+import { Avatar, Button, Col, Collapse, Form, Input, Row } from "antd";
 import FormItem from "antd/es/form/FormItem";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import "./ClientProfilePage.css";
-import { DownCircleOutlined, EditOutlined } from "@ant-design/icons";
+import { DownCircleOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import UpdateEmail from "./UpdateEmail";
 import ChangePassword from "./ChangePassword";
 
 const Index_ClientProfile = () => {
-  //   const [isCollapsed, setIsCollapsed] = useState(true);
   const [isModalOpenUpdateEmail, setIsModalOpenUpdateEmail] = useState(false);
   const [isSubModel, setSubModel] = useState(false);
-  const [isModalOpenChangePassword, setIsModalOpenChangePassword] =
-    useState(false);
-  //   const toggleCollapse = () => {
-  //     setIsCollapsed(!isCollapsed);
-  //   };
+  const [isModalOpenChangePassword, setIsModalOpenChangePassword] = useState(false);
   const [data, setData] = useState();
+  const inputRef = useRef(null);
+  const [image, setImage] = useState("")
+
   function onFinish(value) {
     setData(value);
   }
@@ -26,6 +24,14 @@ const Index_ClientProfile = () => {
   }
   function handleClickShowDialogChangePassword() {
     setIsModalOpenChangePassword(true);
+  }
+  const handleImageClick = () => {
+    inputRef.current.click();
+  }
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    console.log(file);
+    setImage(file)
   }
 
   const items = [
@@ -56,6 +62,13 @@ const Index_ClientProfile = () => {
     },
   ];
 
+  const uploadButton = (
+    <div>
+      <PlusOutlined size={10} />
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  )
+
   return (
     <Row style={{ marginTop: "4%" }}>
       <Col span={6}>
@@ -65,7 +78,7 @@ const Index_ClientProfile = () => {
       </Col>
       <Col span={18}>
         <Row>
-          <Col span={24} style={{ borderLeft: "1px solid black" }}>
+          <Col span={16} style={{ borderLeft: "1px solid black" }}>
             <div>
               <Form
                 className="client-form"
@@ -125,6 +138,12 @@ const Index_ClientProfile = () => {
               style={{ width: "10%" }}
               items={items}
             />
+          </Col>
+          <Col span={8}>
+            <div onClick={handleImageClick}>
+              {image ? <Avatar shape="square" src={URL.createObjectURL(image)} size={400} /> : <Avatar shape="square" icon={uploadButton} size={400} />}
+              <input type="file" ref={inputRef} onChange={handleImageChange} style={{ display: "none" }} />
+            </div>
           </Col>
         </Row>
       </Col>
