@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const JoinAsBrand = ({ navigateHome }) => {
   return (
     <>
-      <HeaderHomepage handleClickHomePage={navigateHome} />
+      <HeaderHomepage />
       <div className="joinAsBrandContent">
         <p>The Easy Way to Generate</p>
         <p>

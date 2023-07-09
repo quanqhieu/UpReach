@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const axiosClient = axios.create({
-    baseURL: "https://provinces.open-api.vn/api/p/"
+    baseURL: ""
 });
 
 // Add a request interceptor

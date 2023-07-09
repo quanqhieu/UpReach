@@ -26,20 +26,19 @@ export const CATEGORY = [
     { value: "Fashion", label: "Fashion" }
 ];
 
-export const LIST_SELECT_SEARCH = [
-    {
-        className: "leftButton",
-        options: PLATFORM,
-        title: "Platform",
-        description: "Choose a platform"
-    },
-    {
-        className: "rightButton",
-        options: CATEGORY,
-        title: "Category",
-        description: "Search for categories, keywords, hashtags or influencers"
-    },
-];
+export const LIST_LEFT_BUTTON_SELECT_SEARCH = {
+    className: "leftButton",
+    options: PLATFORM,
+    title: "Platform",
+    description: "Choose a platform"
+};
+
+export const LIST_RIGHT_BUTTON_SELECT_SEARCH = {
+    className: "rightButton",
+    options: CATEGORY,
+    title: "Category",
+    description: "Search for categories, keywords, hashtags or influencers"
+};
 
 export const LIST_TYPE_SEARCH = [
     { name: "Celebrity", value: "Celebrity" },
@@ -75,12 +74,6 @@ export const GENDER_OF_AUDIANCE = [
     { name: "Male", value: "Male" },
     { name: "Female", value: "Female" },
     { name: "Other", value: "Other" },
-];
-
-export const LOCATION_OF_AUDIANCE = [
-    { name: "Hà Nội", value: "Hà Nội" },
-    { name: "Hồ Chí Minh", value: "Hồ Chí Minh" },
-    { name: "Huế", value: "Huế" },
 ];
 
 export const PROFILE_INFLUS = [
@@ -196,3 +189,5 @@ export const PROFILE_INFLUS = [
         topics: ["Game", "Beauty", "Any"],
     },
 ];
+
+export const URL_API_CITY = 'https://provinces.open-api.vn/api/p/';

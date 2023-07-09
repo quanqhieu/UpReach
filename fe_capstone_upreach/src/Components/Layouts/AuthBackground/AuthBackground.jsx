@@ -1,9 +1,9 @@
-import HeaderLoginHompape from "../Header/HeaderLoginHompape";
+import HeaderHomepage from "../Header/HeaderHomepage";
 import "./AuthBackground.css";
 const AuthBackground = ({ children }) => {
   return (
     <>
-      <HeaderLoginHompape />
+      <HeaderHomepage />
       <div className="auth-background">
         <div className="auth-form-cover">
           <div className="auth-custom-bg">

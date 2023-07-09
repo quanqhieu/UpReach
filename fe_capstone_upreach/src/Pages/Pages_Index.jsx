@@ -6,6 +6,9 @@ import SignUp from "./SignUpPage/SignUp";
 import Introduce from "./IntroducePage/Introduce";
 import HomePage from "./HomePage/HomePage";
 import Upgrade from "./UpgradePage/Upgrade";
+import ForgotPasswordPage from "./ForgotPassword/ForgotPasswordPage";
+import VerifyRegisterPage from "./VerifyRegister/VerifyRegisterPage";
+import ClientProfilePage from "./ClientProfilePage/ClientProfilePage";
 
 function Pages_Index() {
   const navigate = useNavigate();
@@ -13,15 +16,6 @@ function Pages_Index() {
   //click button will go to login
   const navigateLogin = () => {
     navigate("/login");
-  };
-  //click button will go to home page not logged in yet
-  const navigateIntroduce = () => {
-    navigate("/");
-  };
-
-  //click button will go to home page have token
-  const navigateHomeMain = () => {
-    navigate("/homepage");
   };
 
   //click button will go to upgrade page
@@ -34,10 +28,7 @@ function Pages_Index() {
         path="/"
         element={
           <>
-            <Introduce
-              navigateHome={navigateHomeMain}
-              navigateLogin={navigateLogin}
-            />
+            <Introduce navigateLogin={navigateLogin} />
           </>
         }
       />
@@ -45,7 +36,7 @@ function Pages_Index() {
         path="/login"
         element={
           <>
-            <Login navigateHome={navigateIntroduce} />
+            <Login />
           </>
         }
       />
@@ -53,7 +44,7 @@ function Pages_Index() {
         path="/join-as-brand"
         element={
           <>
-            <JoinAsBrand navigateHome={navigateIntroduce} />
+            <JoinAsBrand />
           </>
         }
       />
@@ -61,7 +52,7 @@ function Pages_Index() {
         path="/sign-up"
         element={
           <>
-            <SignUp navigateHome={navigateIntroduce} />
+            <SignUp />
           </>
         }
       />
@@ -74,10 +65,34 @@ function Pages_Index() {
         }
       />
       <Route
+        path="/forgot-password"
+        element={
+          <>
+            <ForgotPasswordPage />
+          </>
+        }
+      />
+      <Route
+        path="/verify-register"
+        element={
+          <>
+            <VerifyRegisterPage />
+          </>
+        }
+      />
+      <Route
+        path="/client-profile"
+        element={
+          <>
+            <ClientProfilePage />
+          </>
+        }
+      />
+      <Route
         path="/upgrade"
         element={
           <>
-            <Upgrade navigateHome={navigateUpgrade} />
+            <Upgrade />
           </>
         }
       />

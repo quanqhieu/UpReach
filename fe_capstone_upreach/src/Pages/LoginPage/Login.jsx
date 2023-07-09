@@ -5,6 +5,7 @@ import { ReactComponent as IconGoogle } from "../../../src/Assets/Icon/google-ic
 import { Link } from "react-router-dom";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import AuthBackground from "../../Components/Layouts/AuthBackground/AuthBackground";
+import { UPREACH } from "../../Components/Constant/Const";
 
 const Login = () => {
   const [message, setMessage] = React.useState("");
@@ -17,7 +18,7 @@ const Login = () => {
     <>
       <AuthBackground>
         <div className="logInLayout">
-          <p className="logInTitle">UpReach</p>
+          <p className="logInTitle">{UPREACH}</p>
           <Form
             name="login"
             className="logInForm"
@@ -71,10 +72,14 @@ const Login = () => {
             <Button type="primary" htmlType="submit" className="logInBtn">
               <span className="logInBtnText">Login</span>
             </Button>
-            <div className="feature-block">
-              <Button className="logInToForgotPasswordLink" type="link">
-                <p>Forgot password?</p>
-              </Button>
+            <div className="logInWithGoogle">
+              <div className="GoogleIcon">{<IconGoogle />}</div>
+              <p style={{ fontWeight: "600" }}>Login with Google</p>
+              <Link to="/forgot-password">
+                <Button className="logInToForgotPasswordLink" type="link">
+                  <p>Forgot password?</p>
+                </Button>
+              </Link>
             </div>
             <div className="logInToSignUp">
               <p>New to UpReach?</p>
