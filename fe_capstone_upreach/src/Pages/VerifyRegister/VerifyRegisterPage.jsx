@@ -23,9 +23,11 @@ const VerifyRegisterPage = () => {
                 type="Verify"
                 placeholder="Enter 6-Digit Code"
               ></Input>
-              <Button className="submit btn">
-                <Link to="/client-profile">Continue</Link>
-              </Button>
+              <Link to="/client-profile">
+                <Button className="submit btn">
+                  Continue
+                </Button>
+              </Link>
               <div className="login-forgot">I didn't receive an email</div>
             </Form>
           </div>

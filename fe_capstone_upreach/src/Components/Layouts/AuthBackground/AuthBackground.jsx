@@ -1,4 +1,4 @@
-import HeaderHomepage from "../../Layouts/Header/HeaderHomepage";
+import HeaderHomepage from "../Header/HeaderHomepage";
 import "./AuthBackground.css";
 const AuthBackground = ({ children }) => {
   return (

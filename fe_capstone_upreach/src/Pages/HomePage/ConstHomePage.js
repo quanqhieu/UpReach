@@ -100,6 +100,7 @@ export const PROFILE_INFLUS = [
         bio: "Sang som thuc day bong thay minh qua dep trai, tieng hot thanh thot cua nhung chu chim vua sang, ngay vui lai len...",
         email: "hieupro123@gmail.com",
         phone: "0398357123",
+
     },
     {
         id: "2",

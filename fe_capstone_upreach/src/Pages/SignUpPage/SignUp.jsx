@@ -1,4 +1,5 @@
-import { Button, Checkbox, Form, Input } from "antd";
+import React from "react";
+import { Button, Form, Input } from "antd";
 import { ReactComponent as IconGoogle } from "../../../src/Assets/Icon/google-icon.svg";
 import "./SignUp.css";
 import { Link } from "react-router-dom";
@@ -112,11 +113,11 @@ const SignUp = () => {
             />
           </Form.Item>
 
-          <Button type="primary" htmlType="submit" className="signUpBtn">
-            <Link className="signUpBtnText" to="/verify-register">
+          <Link className="signUpBtnText" to="/verify-register">
+            <Button type="primary" htmlType="submit" className="signUpBtn">
               Sign Up
-            </Link>
-          </Button>
+            </Button>
+          </Link>
           <div className="signUpToLogin">
             <p>Already have an account? </p>
             <div className="loginLink">

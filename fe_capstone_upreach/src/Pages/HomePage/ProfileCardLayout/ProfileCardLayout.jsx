@@ -3,7 +3,7 @@ import "./ProfileCardLayout.css";
 import { Col, Row } from "antd";
 import ProfileCardComponent from "../../../Components/Layouts/ProfileCardComponent/ProfileCardComponent";
 import InfluProfile from "../../../Components/InfluProfileModal/InfluProfile";
-import { Modal, Pagination } from "antd";
+import { Modal, Pagination, List } from "antd";
 import { PROFILE_INFLUS } from "../ConstHomePage";
 
 const ProfileCardLayout = () => {
@@ -30,7 +30,7 @@ const ProfileCardLayout = () => {
   return (
     <>
       <Modal
-        style={{ backgroundColor: "#ccc", borderRadius: "30px" }}
+        className="custom-modal"
         centered
         open={isOpenProfileInflu}
         footer={null}
@@ -42,24 +42,33 @@ const ProfileCardLayout = () => {
       </Modal>
 
       <div className="profile-card-layout">
-        <Row gutter={[16, 16]}>
-          {profileInflus.map((profileInflu, index) => (
-            <Col
-              key={index}
-              span={5.5}
-              className="profile-card"
-              onClick={() => handleOpenModal(profileInflu)}
+        <List
+          grid={{
+            xs: 1,
+            sm: 2,
+            md: 3,
+            lg: 3,
+            xl: 3,
+            xxl: 4,
+          }}
+          pagination={{
+            onChange: (page) => {
+              console.log(page);
+            },
+
+            pageSize: 12,
+            position: "bottom",
+            align: "center",
+          }}
+          dataSource={profileInflus}
+          renderItem={(item) => (
+            <List.Item
+              style={{ display: "flex", flexDirection: "column" }}
+              onClick={() => handleOpenModal(item)}
             >
-              <ProfileCardComponent profileInflu={profileInflu} />
-            </Col>
-          ))}
-        </Row>
-        <Pagination
-          itemRender={itemRender}
-          total={profileInflus.length}
-          pageSize={12}
-          showSizeChanger={false}
-          className="profile-pagination"
+              <ProfileCardComponent profileInflu={item} />
+            </List.Item>
+          )}
         />
       </div>
     </>

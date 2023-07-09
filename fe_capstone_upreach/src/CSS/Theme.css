@@ -99,3 +99,7 @@ select::-ms-expand {
 .backgroundDark {
 	background-color: black;
 }
+
+p {
+	margin-bottom: 0 !important;
+}

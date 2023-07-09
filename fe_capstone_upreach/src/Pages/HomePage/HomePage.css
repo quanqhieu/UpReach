@@ -86,8 +86,8 @@
 
 .searchTitle {
 	font-size: 16px;
-	margin-top: 16px;
 	margin-left: 10px;
+	margin-bottom: 16px !important;
 }
 
 .searchDescription {
@@ -251,7 +251,7 @@
 	border-radius: 10px;
 }
 
-.dropdowSlider{
+.dropdownSlider{
 	height: 40px;
 	width: auto !important;
 	line-height: 10px;

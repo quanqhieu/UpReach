@@ -9,9 +9,11 @@ import { UPREACH } from "../../Components/Constant/Const";
 
 const Login = () => {
   const [message, setMessage] = React.useState("");
+
   const handleSubmit = (data) => {
     console.log(data);
   };
+
   return (
     <>
       <AuthBackground>
@@ -23,6 +25,10 @@ const Login = () => {
             initialValues={{ remember: true }}
             onFinish={handleSubmit}
           >
+            <Button type="primary" className="login-google">
+              <div className="GoogleIcon">{<IconGoogle />}</div>
+              <p style={{ fontWeight: "600" }}>Login with Google</p>
+            </Button>
             <div className="logInSubTitle">
               <p className="logInSubTitleContent">Email address </p>
               <p className="logInSubChar">*</p>

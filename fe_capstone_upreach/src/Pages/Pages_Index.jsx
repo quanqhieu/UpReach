@@ -5,6 +5,7 @@ import JoinAsBrand from "./JoinAsBrandPage/JoinAsBrand";
 import SignUp from "./SignUpPage/SignUp";
 import Introduce from "./IntroducePage/Introduce";
 import HomePage from "./HomePage/HomePage";
+import Upgrade from "./UpgradePage/Upgrade";
 import ForgotPasswordPage from "./ForgotPassword/ForgotPasswordPage";
 import VerifyRegisterPage from "./VerifyRegister/VerifyRegisterPage";
 import ClientProfilePage from "./ClientProfilePage/ClientProfilePage";
@@ -17,6 +18,10 @@ function Pages_Index() {
     navigate("/login");
   };
 
+  //click button will go to upgrade page
+  const navigateUpgrade = () => {
+    navigate("/upgrade");
+  };
   return (
     <Routes>
       <Route
@@ -80,6 +85,14 @@ function Pages_Index() {
         element={
           <>
             <ClientProfilePage />
+          </>
+        }
+      />
+      <Route
+        path="/upgrade"
+        element={
+          <>
+            <Upgrade />
           </>
         }
       />
