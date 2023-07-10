@@ -56,18 +56,15 @@ function initialize(passport, getUserById, getUserByEmail){
                     console.log('Lỗi kết nối:', err);
                     return;
                 }
-
                 const request = connection.request();
-                request.input('EmailUser', sql.VarChar, email);
-
-                request.execute(searchUserById).then(async (err,result) => {
-                    if (err) {
-                        console.log('Lỗi truy vấn:', err);
-                        return done(err);
-                    }
+                request.input('EmailId', sql.NVarChar, id);
+                request.execute(searchUserById).then(async (result) => {
                     const user = result.recordset[0];
                     return done(null, user);
-                })
+                }).catch((err) => {
+                    console.log('Lỗi truy vấn :', err);
+                    return done(err);
+                });
             })
         } catch (e) {
             done(e);

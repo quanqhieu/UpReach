@@ -5,7 +5,7 @@ const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
     user: 'thienndde150182@fpt.edu.vn', // Địa chỉ email của bạn
-    pass: 'ddfrcnsmtpumncid' // Mật khẩu email của bạn
+    pass: 'jxjjsbmdqksfgcuk' // Mật khẩu email của bạn
     }
 });
 
