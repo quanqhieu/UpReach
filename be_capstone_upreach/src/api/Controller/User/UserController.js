@@ -12,7 +12,7 @@ const router = express.Router();
 router.post('/api/login', login);
 router.post('/api/register', register);
 router.post('/api/confirm', confirm);
-router.get('/api/logout', logout);
+router.post('/api/logout', logout);
 
 auth.initialize(
     passport,
@@ -77,31 +77,37 @@ async function login(req,res,next){
         const sessionId = req.sessionID;
         const maxAge = req.session.cookie.maxAge; // Thời gian tồn tại của session (đơn vị tính bằng mili giây)
         const expiry = new Date(Date.now() + maxAge); // Thời gian hết hạn của session
-        passport.authenticate("local", (err, user, info) => {
+        const email = req.body.email;
+        const user = await userService.getUserByEmail(email);
+        const userId = user[0].User_ID;
+        passport.authenticate("local",async (err, user, info) => {
+            
             if (err) {
                 return res.status(500).json({ message: "Internal server error" });
             }
             if (!user) {
                 return res.status(401).json({ message: "Sai email hoặc sai mật khẩu" });
             }
+            const existedUserId = await userService.getSessionUser(userId);
+            if(existedUserId.length > 0){
+                return res.status(500).json({ message: "User Id tồn tại" });
+            }
             req.logIn(user, (err) => {
                 if (err) {
                     return res.status(500).json({ message: "Internal server error" });
                 }
-                const userId = user.User_ID
-                result = userService.insertSessionUser(sessionId,userId,maxAge,expiry);
+                result = userService.insertSessionUser(sessionId,userId,maxAge.toString(),expiry.toISOString());
                 if(!result){
                     console.log('fails add session');
                     res.json({message :'Fails Add Session'});
                 }
-                res.json({message : "Them session vao db thanh cong"})
-                res.status(200).json({ 
-                    message: "Login successful" ,
+                res.json({
+                    message : "Them session vao db thanh cong",
                     data: {
-                        User_ID: userId,
+                        User_ID: user.User_ID,
                         Email: user.Email,
                     }
-                });
+                })
             });
         })(req, res, next);
     }catch(err){
@@ -109,15 +115,25 @@ async function login(req,res,next){
     }
 }
 
-async function logout(req, res) {
-    req.session.destroy((err) => {
-        if (err) {
-            console.log('Fails Logout')
-            res.json({message :'Fails Logout'})
-        } else {
-            res.json({message :'Success Logout'})
+
+
+async function logout(req,res,next){
+    try{
+        const email = req.body.email;
+        const user = await userService.getUserByEmail(email);
+        const userId = user[0].User_ID;
+        console.log('userId : ' + userId);
+        const result = await userService.deleteSessionUserById(userId);
+        console.log('Result : ' + result)
+        if(result){
+            req.logout();
+            res.json({message : "Xoa session khoi db thanh cong"})
         }
-    });
+        console.log('fails delete session');
+        res.json({message :'Fails Delete Session'});
+    }catch(err){
+        res.json({message : err});
+    }
 }
 
 module.exports = router;

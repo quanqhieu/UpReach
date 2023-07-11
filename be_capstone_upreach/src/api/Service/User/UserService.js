@@ -12,12 +12,10 @@ async function getAll(){
             return result.recordset;
         }).catch((err) => {
             console.log('Lỗi thực thi stored procedure:', err);
-            res.json({ message: "Lỗi khi xử lý câu lệnh: " + err });
             pool.close();
         })
     }).catch((err) => {
         console.log('Lỗi kết nối:', err);
-        res.json({ message: "Lỗi kết nối: " + err });
     });
 }
 
@@ -30,12 +28,10 @@ async function getUserById(id){
             return result.recordset;
         }).catch((err) => {
             console.log('Lỗi thực thi stored procedure:', err);
-            res.json({ message: "Lỗi khi xử lý câu lệnh: " + err });
             pool.close();
         })
     }).catch((err) => {
         console.log('Lỗi kết nối:', err);
-        res.json({ message: "Lỗi kết nối: " + err });
     });
 }
 
@@ -46,9 +42,25 @@ async function getUserByEmail(email){
         const request = connection.request();
         request.input('EmailUser', sql.NVarChar, email);
         const result = await request.execute(searchUserByEmail);
-        console.log(result.recordset);
+        const userStore = result.recordset;
         connection.close();
-        return result.recordset;
+        return userStore;
+    } catch (err) {
+        console.log('Lỗi thực thi stored procedure:', err);
+        throw err;
+    }
+}
+
+async function getDataForUser(){
+    try {
+        const getDataForUser = "getDataForUser";
+        const connection = await pool.connect();
+        const request = connection.request();
+        const result = await request.execute(getDataForUser);
+        const userStore = result;
+        console.log('userStore : ' + userStore)
+        connection.close();
+        return userStore;
     } catch (err) {
         console.log('Lỗi thực thi stored procedure:', err);
         throw err;
@@ -74,27 +86,81 @@ async function insertInfoUser(id, role, email, password){
     }
 }
 
-async function insertSessionUser(sessionId,maxAge,expiry){
+async function insertSessionUser(sessionId,userID,maxAge,expired){
     const insertSession = "insertSessionQuery"
     pool.connect(async function (err, connection) {
         if (err) {
             console.log('Lỗi kết nối:', err);
-            return res.json({ message: "Lỗi kết nối: " + err });
         }
         const request = connection.request();
         request.input('sessionId', sql.NVarChar, sessionId);
-        request.input('maxAge', sql.NVarChar, maxAge);
-        request.input('expiry', sql.NVarChar, expiry);
+        request.input('userID', sql.NVarChar, userID);
+        request.input('duration', sql.NVarChar, maxAge);
+        request.input('expired', sql.NVarChar, expired);
         
         request.execute(insertSession).then((result) => {
             return true;
         }).catch((err) => {
             console.log('Lỗi thực thi stored procedure:', err);
-            res.json({ message: "Lỗi thực thi stored procedure: " + err });
             pool.close();
             return false;
         });
     })
 }
 
-module.exports ={getAll,getUserByEmail,getUserById,insertInfoUser,insertSessionUser};
+async function deleteSessionUser(sessionId){
+    const deleteSessionUser = "insertSessionQuery"
+    pool.connect(async function (err, connection) {
+        if (err) {
+            console.log('Lỗi kết nối:', err);
+        }
+        const request = connection.request();
+        request.input('sessionId', sql.NVarChar, sessionId);
+        
+        request.execute(deleteSessionUser).then((result) => {
+            return true;
+        }).catch((err) => {
+            console.log('Lỗi thực thi stored procedure:', err);
+            pool.close();
+            return false;
+        });
+    })
+}
+
+async function deleteSessionUserById(userId){
+    const deleteSessionUser = "deleteSessionUserById"
+    pool.connect(async function (err, connection) {
+        if (err) {
+            console.log('Lỗi kết nối:', err);
+        }
+        const request = connection.request();
+        request.input('userID', sql.NVarChar, userId);
+        request.execute(deleteSessionUser).then((result) => {
+            pool.close();
+            console.log(123)
+            return true;
+        }).catch((err) => {
+            console.log('Lỗi thực thi stored procedure:', err);
+            pool.close();
+            return false;
+        });
+    })
+}
+
+async function getSessionUser(userId){
+    try {
+        const getSessionUser = "getSessionUserId"
+        const connection = await pool.connect();
+        const request = connection.request();
+        request.input('userID', sql.NVarChar, userId);
+        const result = await request.execute(getSessionUser);
+        const userStore = result.recordset;
+        connection.close();
+        return userStore;
+    } catch (err) {
+        console.log('Lỗi thực thi stored procedure:', err);
+        throw err;
+    }
+}
+
+module.exports ={getAll,getUserByEmail,getUserById,insertInfoUser,insertSessionUser,deleteSessionUser,getSessionUser,deleteSessionUserById,getDataForUser};

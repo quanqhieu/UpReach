@@ -3,7 +3,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const sql = require('mssql');
 
 const config = require('../Config/dbConfig');
-
+const userService = require('../Service/User/UserService')
 const pool = new sql.ConnectionPool(config);
 
 function initialize(passport, getUserById, getUserByEmail){
@@ -50,22 +50,24 @@ function initialize(passport, getUserById, getUserByEmail){
     // use data in session to get data of users
     passport.deserializeUser(async (id, done) => {
         try {
-            const searchUserById = "getInfoUserById";
-            pool.connect(async function (err,connection) {
-                if (err) {
-                    console.log('Lỗi kết nối:', err);
-                    return;
-                }
-                const request = connection.request();
-                request.input('EmailId', sql.NVarChar, id);
-                request.execute(searchUserById).then(async (result) => {
-                    const user = result.recordset[0];
-                    return done(null, user);
-                }).catch((err) => {
-                    console.log('Lỗi truy vấn :', err);
-                    return done(err);
-                });
-            })
+            // const searchUserById = "getInfoUserById";
+            // pool.connect(async function (err,connection) {
+            //     if (err) {
+            //         console.log('Lỗi kết nối:', err);
+            //         return;
+            //     }
+            //     const request = connection.request();
+            //     request.input('EmailId', sql.NVarChar, id);
+            //     request.execute(searchUserById).then(async (result) => {
+            //         const user = result.recordset[0];
+            //         return done(null, user);
+            //     }).catch((err) => {
+            //         console.log('Lỗi truy vấn :', err);
+            //         return done(err);
+            //     });
+            // })
+            const infoUser = await userService.getDataForUser()
+            return done(null,infoUser)
         } catch (e) {
             done(e);
         }
