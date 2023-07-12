@@ -42,9 +42,8 @@ async function getUserByEmail(email){
         const request = connection.request();
         request.input('EmailUser', sql.NVarChar, email);
         const result = await request.execute(searchUserByEmail);
-        const userStore = result.recordset;
         connection.close();
-        return userStore;
+        return result.recordset;
     } catch (err) {
         console.log('Lỗi thực thi stored procedure:', err);
         throw err;
@@ -59,7 +58,7 @@ async function getDataForUser(email){
         request.input('emailUser', sql.NVarChar, email);
         const result = await request.execute(getDataForUser);
         connection.close();
-        return result.recordset[0];
+        return result.recordset;
     } catch (err) {
         console.log('Lỗi thực thi stored procedure:', err);
         throw err;

@@ -55,20 +55,55 @@ async function register(req, res, next){
 
 async function confirm(req, res, next){
     try{
+        const sessionId = req.sessionID;
+        const maxAge = req.session.cookie.maxAge; // Thời gian tồn tại của session (đơn vị tính bằng mili giây)
+        const expiry = new Date(Date.now() + maxAge); // Thời gian hết hạn của session
         const otp = req.body.otp;
+        console.log('Session : ' + sessionId)
+
+        const infoUser = await userService.getDataForUser(userModels.email);
         if(otp === sendMail.otp){
             result = userService.insertInfoUser(userModels.id,userService.role,userModels.email,userModels.password);
             if(result){
-                console.log('Dữ liệu đã được thêm thành công');
-                res.json({ message: "Dữ liệu đã được thêm thành công" });
+                passport.authenticate("local",async (err, user, info) => {
+                    if (err) {
+                        return res.status(500).json({ message: "Internal server error" });
+                    }
+                    if (!user) {
+                        return res.status(401).json({ message: "Sai email hoặc sai mật khẩu" });
+                    }
+                    
+                    if(existedUserId.length > 0){
+                        return res.status(200).json({ 
+                            message: "User Id tồn tại",
+                            data: infoUser
+                        });
+                    }
+                    req.logIn(user,async (err) => {
+                        if (err){
+                            return res.status(500).json({ message: "Internal server error" });
+                        }
+                        const result = await userService.insertSessionUser(sessionId,userModels.id,maxAge.toString(),expiry.toString());
+                        if(!result){
+                            console.log('fails add session');
+                            return res.json({message :'Fails Add Session'});
+                        }
+                        const infoUser = await userService.getDataForUser(userModels.email);
+                        return res.status(200).json({
+                            message: "Them Dữ liệu và session vao db thanh cong",
+                            data : infoUser 
+                        });
+                    });
+        
+                })(req, res, next);
             }else{
                 console.log('Dữ liệu đã được thêm Fails');
-                res.json({ message: "Dữ liệu add Fails" });
+                return res.json({ message: "Dữ liệu add Fails" });
             }
         }
     }catch(err){
         console.log(err);
-        res.json({ message: "Lỗi ", err });
+        return res.json({ message: "Lỗi ", err });
     }
 }
 
@@ -80,7 +115,9 @@ async function login(req,res,next){
         const email = req.body.email;
         const user = await userService.getUserByEmail(email);
         const userId = user[0].User_ID;
-        
+        const existedUserId = await userService.getSessionUserById(userId);
+
+        const infoUser = await userService.getDataForUser(email);
         
         passport.authenticate("local",async (err, user, info) => {
             if (err) {
@@ -89,18 +126,15 @@ async function login(req,res,next){
             if (!user) {
                 return res.status(401).json({ message: "Sai email hoặc sai mật khẩu" });
             }
-
-            const existedUserId = await userService.getSessionUserById(userId);
-            const infoUser = await userService.getDataForUser(email);
             
             if(existedUserId.length > 0){
-                return res.status(500).json({ 
+                return res.status(200).json({ 
                     message: "User Id tồn tại",
-                    data: {infoUser}
+                    data: infoUser
                 });
             }
-
             req.logIn(user,async (err) => {
+                console.log('U : '+ user)
                 if (err){
                     return res.status(500).json({ message: "Internal server error" });
                 }
@@ -109,10 +143,11 @@ async function login(req,res,next){
                     console.log('fails add session');
                     return res.json({message :'Fails Add Session'});
                 }
-                return res.json({
-                    message : "Them session vao db thanh cong",
-                    data: {infoUser}
-                })                
+                const infoUser = await userService.getDataForUser(email);
+                return res.status(200).json({
+                    message: "Them session vao db thanh cong",
+                    data : infoUser 
+                });
             });
 
         })(req, res, next);
@@ -120,6 +155,7 @@ async function login(req,res,next){
         res.json({message : err});
     }
 }
+
 
 async function logout(req,res,next){
     try{

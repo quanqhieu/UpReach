@@ -20,14 +20,14 @@ function initialize(passport, getUserById, getUserByEmail){
             const user = result.recordset[0];
     
             if (!user) {
-            return done(null, false, { message: "No user found with that email" });
+                return done(null, false, { message: "No user found with that email" });
             }
     
             const passwordMatch = await bcrypt.compare(password, user.Password);
             if (passwordMatch) {
-            return done(null, user);
+                return done(null, user);
             } else {
-            return done(null, false, { message: "Incorrect password" });
+                return done(null, false, { message: "Incorrect password" });
             }
         } catch (err) {
             console.log(err);
@@ -45,22 +45,12 @@ function initialize(passport, getUserById, getUserByEmail){
     // use data in session to get data of users
     passport.deserializeUser(async (id, done) => {
         try {
-            const searchUserById = "getInfoUserById";
-            pool.connect(async function (err,connection) {
-                if (err) {
-                    console.log('Lỗi kết nối:', err);
-                    return;
-                }
-                const request = connection.request();
-                request.input('EmailId', sql.NVarChar, id);
-                request.execute(searchUserById).then(async (result) => {
-                    const user = result.recordset[0];
-                    return done(null, user);
-                }).catch((err) => {
-                    console.log('Lỗi truy vấn :', err);
-                    return done(err);
-                });
-            })
+            const infoUser = await userService.getDataForUser(email)
+            console.log(infoUser);
+            const result = infoUser[0]
+            if (id === result.User_ID){
+                return done(null, result);
+            }
         } catch (e) {
             done(e);
         }

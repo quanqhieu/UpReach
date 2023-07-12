@@ -35,16 +35,6 @@ app.use(session({
 app.use(passport.initialize()) 
 app.use(passport.session())
 
-app.get('/', async function(req, res) {
-    try {
-        const infoUser = await userService.getDataForUser();
-        console.log('data:', infoUser);
-        res.json(infoUser); // Trả về dữ liệu dưới dạng JSON
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ error: 'Đã xảy ra lỗi trong quá trình xử lý' });
-    }
-});
 app.use('', controllerUser);
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
