@@ -80,59 +80,66 @@ async function login(req,res,next){
         const email = req.body.email;
         const user = await userService.getUserByEmail(email);
         const userId = user[0].User_ID;
+        
+        
         passport.authenticate("local",async (err, user, info) => {
-            
             if (err) {
                 return res.status(500).json({ message: "Internal server error" });
             }
             if (!user) {
                 return res.status(401).json({ message: "Sai email hoặc sai mật khẩu" });
             }
-            const existedUserId = await userService.getSessionUser(userId);
+
+            const existedUserId = await userService.getSessionUserById(userId);
+            const infoUser = await userService.getDataForUser(email);
+            
             if(existedUserId.length > 0){
-                return res.status(500).json({ message: "User Id tồn tại" });
+                return res.status(500).json({ 
+                    message: "User Id tồn tại",
+                    data: {infoUser}
+                });
             }
-            req.logIn(user, (err) => {
-                if (err) {
+
+            req.logIn(user,async (err) => {
+                if (err){
                     return res.status(500).json({ message: "Internal server error" });
                 }
-                result = userService.insertSessionUser(sessionId,userId,maxAge.toString(),expiry.toISOString());
+                const result = await userService.insertSessionUser(sessionId,userId,maxAge.toString(),expiry.toString());
                 if(!result){
                     console.log('fails add session');
-                    res.json({message :'Fails Add Session'});
+                    return res.json({message :'Fails Add Session'});
                 }
-                res.json({
+                return res.json({
                     message : "Them session vao db thanh cong",
-                    data: {
-                        User_ID: user.User_ID,
-                        Email: user.Email,
-                    }
-                })
+                    data: {infoUser}
+                })                
             });
+
         })(req, res, next);
     }catch(err){
         res.json({message : err});
     }
 }
 
-
-
 async function logout(req,res,next){
     try{
         const email = req.body.email;
         const user = await userService.getUserByEmail(email);
         const userId = user[0].User_ID;
-        console.log('userId : ' + userId);
         const result = await userService.deleteSessionUserById(userId);
-        console.log('Result : ' + result)
-        if(result){
-            req.logout();
-            res.json({message : "Xoa session khoi db thanh cong"})
+        if (result.rowsAffected[0] === 1) {
+            req.logout(() =>{
+                return res.json({ message: "Xóa session khỏi db thành công" });
+            })
+        }else if (result.rowsAffected[0] === 0) {
+            console.log('User đang không đăng nhập');
+            return res.json({ message: 'User đang không đăng nhập' });
+        }else{
+            console.log('Fails Delete Session');
+            return res.json({ message: 'Fails Delete Session' });
         }
-        console.log('fails delete session');
-        res.json({message :'Fails Delete Session'});
     }catch(err){
-        res.json({message : err});
+        return res.json({message : ' ' + err});
     }
 }
 

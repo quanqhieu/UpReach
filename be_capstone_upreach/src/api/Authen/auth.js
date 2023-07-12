@@ -12,31 +12,26 @@ function initialize(passport, getUserById, getUserByEmail){
     const authenticateUser = async (email, password, done) => {
         try {
             const searchUserByEmail = "getInfoUserByEmail";
-            pool.connect(async function (err, connection) {
-                if (err) {
-                    console.log('Lỗi kết nối:', err);
-                    return;
-                }
-                const request = connection.request();
-                request.input('EmailUser', sql.VarChar, email);
-
-                request.execute(searchUserByEmail).then(async (result) => {
-                    const user = result.recordset[0];
-                    if (!user) {
-                        return done(null, false, { message: "No user found with that email" });
-                    }
-                    const passwordMatch = await bcrypt.compare(password, user.Password);
-                    if (passwordMatch) {
-                        return done(null, user);
-                    } else {
-                        return done(null, false, { message: "Incorrect password" });
-                    }
-                })
-            })
-        }
-        catch (e) {
-            console.log(e);
-            return done(e);
+            const connection = await pool.connect();
+            const request = connection.request();
+            request.input('EmailUser', sql.VarChar, email);
+    
+            const result = await request.execute(searchUserByEmail);
+            const user = result.recordset[0];
+    
+            if (!user) {
+            return done(null, false, { message: "No user found with that email" });
+            }
+    
+            const passwordMatch = await bcrypt.compare(password, user.Password);
+            if (passwordMatch) {
+            return done(null, user);
+            } else {
+            return done(null, false, { message: "Incorrect password" });
+            }
+        } catch (err) {
+            console.log(err);
+            return done(err);
         }
     };
 
@@ -50,24 +45,22 @@ function initialize(passport, getUserById, getUserByEmail){
     // use data in session to get data of users
     passport.deserializeUser(async (id, done) => {
         try {
-            // const searchUserById = "getInfoUserById";
-            // pool.connect(async function (err,connection) {
-            //     if (err) {
-            //         console.log('Lỗi kết nối:', err);
-            //         return;
-            //     }
-            //     const request = connection.request();
-            //     request.input('EmailId', sql.NVarChar, id);
-            //     request.execute(searchUserById).then(async (result) => {
-            //         const user = result.recordset[0];
-            //         return done(null, user);
-            //     }).catch((err) => {
-            //         console.log('Lỗi truy vấn :', err);
-            //         return done(err);
-            //     });
-            // })
-            const infoUser = await userService.getDataForUser()
-            return done(null,infoUser)
+            const searchUserById = "getInfoUserById";
+            pool.connect(async function (err,connection) {
+                if (err) {
+                    console.log('Lỗi kết nối:', err);
+                    return;
+                }
+                const request = connection.request();
+                request.input('EmailId', sql.NVarChar, id);
+                request.execute(searchUserById).then(async (result) => {
+                    const user = result.recordset[0];
+                    return done(null, user);
+                }).catch((err) => {
+                    console.log('Lỗi truy vấn :', err);
+                    return done(err);
+                });
+            })
         } catch (e) {
             done(e);
         }
