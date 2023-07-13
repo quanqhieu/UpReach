@@ -27,7 +27,7 @@ async function getUserById(id){
         request.execute(searchUserById).then((result) => {
             return result.recordset;
         }).catch((err) => {
-            console.log('Lỗi thực thi stored procedure:', err);
+            console.log('Lỗi thực thi getInfoUserById:', err);
             pool.close();
         })
     }).catch((err) => {
@@ -45,7 +45,7 @@ async function getUserByEmail(email){
         connection.close();
         return result.recordset;
     } catch (err) {
-        console.log('Lỗi thực thi stored procedure:', err);
+        console.log('Lỗi thực thi getInfoUserByEmail:', err);
         throw err;
     }
 }
@@ -60,7 +60,7 @@ async function getDataForUser(email){
         connection.close();
         return result.recordset;
     } catch (err) {
-        console.log('Lỗi thực thi stored procedure:', err);
+        console.log('Lỗi thực thi getDataForUser:', err);
         throw err;
     }
 }
@@ -76,16 +76,17 @@ async function insertInfoUser(id, role, email, password){
         request.input('UserPassword', sql.NVarChar, password);
     
         request.execute(insertQuery).then((result) => {
+            console.log('Đã thêm thành công user')
             connection.close();
             return true;
         }).catch((err) => {
-            console.log('Lỗi thực thi stored procedure:', err);
+            console.log('Lỗi thực thi InsertInfoUser:', err);
             pool.close();
             return false;
         });
         
     } catch (err) {
-        console.log('Lỗi thực thi stored procedure:', err);
+        console.log('Lỗi thực thi InsertInfoUser:', err);
         throw err;
     }
 
@@ -102,17 +103,18 @@ async function insertSessionUser(sessionId, userID, maxAge, expired) {
         request.input('expired', sql.NVarChar, expired);
     
         const result = await request.execute(insertSession);
+        console.log('Đã Thêm thành công session')
         connection.close();
         return true;
     } catch (err) {
-        console.log('Lỗi thực thi stored procedure:', err);
+        console.log('Lỗi thực thi insertSessionQuery:', err);
         return false;
     }
 }
 
 async function deleteSessionUser(sessionId){
     try {
-        const deleteSessionUser = "insertSessionQuery"
+        const deleteSessionUser = "deleteSessionUserBySessionId"
         const connection = await pool.connect();
         const request = connection.request();
         request.input('sessionId', sql.NVarChar, sessionId);
@@ -121,13 +123,13 @@ async function deleteSessionUser(sessionId){
             connection.close();
             return true;
         }).catch((err) => {
-            console.log('Lỗi thực thi stored procedure:', err);
+            console.log('Lỗi thực thi deleteSessionUserBySessionId:', err);
             pool.close();
             return false;
         });
         
     } catch (err) {
-        console.log('Lỗi thực thi stored procedure:', err);
+        console.log('Lỗi thực thi deleteSessionUserBySessionId:', err);
         throw err;
     }
 
@@ -143,7 +145,7 @@ async function deleteSessionUserById(userId){
         connection.close();
         return result;
     } catch (err) {
-        console.log('Lỗi thực thi stored procedure:', err);
+        console.log('Lỗi thực thi deleteSessionUserById:', err);
         throw err;
     }
 }
@@ -160,7 +162,7 @@ async function getSessionUserById(userId){
         connection.close();
         return userStore;
     } catch (err) {
-        console.log('Lỗi thực thi stored procedure:', err);
+        console.log('Lỗi thực thi getSessionUserId:', err);
         throw err;
     }
 }
