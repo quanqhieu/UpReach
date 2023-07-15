@@ -4,12 +4,13 @@ import { Space, Typography } from "antd";
 import { Button } from "antd";
 
 import "./HeaderHomepage.css";
+import { UPREACH } from "../../Constant/Const";
 
 function RenderContent({ onClick }) {
   return (
     <div className="headerContent">
       <div className="logoText" onClick={onClick}>
-        UpReach
+        {UPREACH}
       </div>
       <div className="navBar">
         <div className="nav" onClick={onClick}>

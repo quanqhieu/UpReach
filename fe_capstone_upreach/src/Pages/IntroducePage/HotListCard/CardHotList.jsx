@@ -1,9 +1,5 @@
 import React from "react";
 import HotListCardComponents from "../../../Components/Layouts/HotListCardComponent/HotListCardComponents";
-import HotListCard1 from "../../../Assets/Image/Hot_list/HotListCard1.jpg";
-import HotListCard2 from "../../../Assets/Image/Hot_list/HotListCard2.jpg";
-import HotListCard3 from "../../../Assets/Image/Hot_list/HotListCard3.jpg";
-import HotListCard4 from "../../../Assets/Image/Hot_list/HotListCard4.jpg";
 import "./CardHotList.css";
 import {
   RightCircleTwoTone,
@@ -78,48 +74,6 @@ const CardHotList = () => {
           {LIST_HOTLIST.map((item) => (
             <RenderHotList image={item.image} name={item.name} topics={item.topics} />
           ))}
-          {/* <div className="hotCard">
-            <HotListCardComponents
-              className="hotListCard"
-              image={HotListCard1}
-              name={"Giang Ơi"}
-              topics={"Instagram, Youtube"}
-            />
-          </div>
-
-          <div className="hotCard">
-            <HotListCardComponents
-              className="hotListCard"
-              image={HotListCard2}
-              name={"Chao Đây"}
-              topics={"Facebook, Instagram, Tiktok"}
-            />
-          </div>
-          <div className="hotCard">
-            <HotListCardComponents
-              className="hotListCard"
-              image={HotListCard1}
-              name={"Giang Ơi"}
-              topics={"Instagram, Youtube"}
-            />
-          </div>
-          <div className="hotCard">
-            <HotListCardComponents
-              className="hotListCard"
-              image={HotListCard3}
-              name={"Vũ Dino"}
-              topics={"Facebook, Tiktok"}
-            />
-          </div>
-
-          <div className="hotCard">
-            <HotListCardComponents
-              className="hotListCard"
-              image={HotListCard4}
-              name={"DEC AO"}
-              topics={"Instagram , Facebook"}
-            />
-          </div> */}
         </Slide>
       </div>
     </div>

@@ -7,6 +7,8 @@ import Selects from "../../../Components/UI/Selects";
 import {
   GENDER_OF_AUDIANCE,
   LIST_CONTENT_FORMATS_SEARCH,
+  LIST_LEFT_BUTTON_SELECT_SEARCH,
+  LIST_RIGHT_BUTTON_SELECT_SEARCH,
   LIST_SELECT_SEARCH,
   LIST_TYPE_SEARCH,
   MARKS,
@@ -111,11 +113,17 @@ function RenderFilter() {
 }
 
 const FilterSearch = () => {
-  const [value, setValue] = useState();
+  const [platform, setPlatform] = useState();
+  const [category, setCategory] = useState();
 
-  const handleChange = (selectValue) => {
-    console.log(`selected: ${selectValue}`);
-    setValue(selectValue);
+  const handleChangePlatform = (selectPlatfrom) => {
+    console.log(`selected: ${selectPlatfrom}`);
+    setPlatform(selectPlatfrom);
+  };
+
+  const handleChangeCategory = (selectCategory) => {
+    console.log(`selected: ${selectCategory}`);
+    setCategory(selectCategory);
   };
 
   return (
@@ -124,15 +132,20 @@ const FilterSearch = () => {
       <div className="col-1"></div>
       <div className="col-10">
         <div className="searchBtns">
-          {LIST_SELECT_SEARCH.map((item) => (
-            <RenderSelectSearch
-              className={item.className}
-              options={item.options}
-              title={item.title}
-              description={item.description}
-              onChange={handleChange}
-            />
-          ))}
+          <RenderSelectSearch
+            className={LIST_LEFT_BUTTON_SELECT_SEARCH.className}
+            options={LIST_LEFT_BUTTON_SELECT_SEARCH.options}
+            title={LIST_LEFT_BUTTON_SELECT_SEARCH.title}
+            description={LIST_LEFT_BUTTON_SELECT_SEARCH.description}
+            onChange={handleChangePlatform}
+          />
+          <RenderSelectSearch
+            className={LIST_RIGHT_BUTTON_SELECT_SEARCH.className}
+            options={LIST_RIGHT_BUTTON_SELECT_SEARCH.options}
+            title={LIST_RIGHT_BUTTON_SELECT_SEARCH.title}
+            description={LIST_RIGHT_BUTTON_SELECT_SEARCH.description}
+            onChange={handleChangeCategory}
+          />
           <Button className="bntSreach ms-3">Search</Button>
         </div>
       </div>

@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ButtonDropdow from './ButtonDropdow';
 import { Button, Dropdown, Slider, Checkbox, Row, Col } from "antd";
-import { GENDER_OF_AUDIANCE, LOCATION_OF_AUDIANCE } from '../ConstHomePage';
+import { GENDER_OF_AUDIANCE, LOCATION_OF_AUDIANCE, URL_API_CITY } from '../ConstHomePage';
 import Selects from '../../../Components/UI/Selects';
+import axios from 'axios';
 
 const DropdownOfAudience = () => {
     const [valueAge, setValueAge] = useState([20, 50]);
     const [valueGender, setValueGender] = useState();
     const [valueLocation, setValuelocation] = useState();
+    const [city, setCity] = useState([])
 
     function handleOnChangeAge(sliderValue) {
         setValueAge(sliderValue);
@@ -26,6 +28,25 @@ const DropdownOfAudience = () => {
         setValueGender()
         setValuelocation()
     }
+
+    //func call api tỉnh thành Việt Nam
+    const fetchDataCity = async () => {
+        try {
+            const response = await axios.get(URL_API_CITY);
+            console.log(response.data)
+            const newDataCity = response.data.map(item => ({
+                value: item.name,
+                label: item.name
+            }));
+            setCity(newDataCity);
+        } catch (error) {
+            console.log('Error fetching data:', error)
+        }
+    }
+
+    useEffect(() => {
+        fetchDataCity();
+    }, [])
 
     return (
         <Dropdown
@@ -67,7 +88,7 @@ const DropdownOfAudience = () => {
                                 <Selects
                                     className="inputSelect"
                                     mode="multiple"
-                                    options={LOCATION_OF_AUDIANCE}
+                                    options={city}
                                     placeholder="Location"
                                     value={valueLocation}
                                     onChange={handleOnChangelocation}

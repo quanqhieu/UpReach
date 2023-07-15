@@ -1,20 +1,20 @@
-import { Button, Space } from 'antd'
+import { Button, Space } from "antd";
 import { DownOutlined } from "@ant-design/icons";
-import React from 'react'
+import React from "react";
 
 const ButtonDropdow = ({ titleBtn }) => {
-    return (
-        <Button
-            className="dropdowSlider bg-white"
-            style={{
-                width: "100%",
-            }}
-        >
-            <Space>
-                {titleBtn} <DownOutlined />
-            </Space>
-        </Button>
-    )
-}
+  return (
+    <Button
+      className="dropdownSlider bg-white"
+      style={{
+        width: "100%",
+      }}
+    >
+      <Space>
+        {titleBtn} <DownOutlined />
+      </Space>
+    </Button>
+  );
+};
 
-export default ButtonDropdow
+export default ButtonDropdow;

@@ -1,9 +1,13 @@
+import React from "react";
+import default_img from "../../../Assets/Image/Default/DefaultImg.jpg";
 import "./InfluImage.css";
 const InfluImage = () => {
   return (
     <>
       <div className="influ-images">
-        <div></div>
+        <img className="influ-image" src={default_img} alt="" />
+        <img className="influ-image" src={default_img} alt="" />
+        <img className="influ-image" src={default_img} alt="" />
       </div>
     </>
   );
