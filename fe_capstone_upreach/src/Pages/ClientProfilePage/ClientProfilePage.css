@@ -58,7 +58,7 @@
     border-radius: 20px;
     background: #FFF;
 }
-.ant-modal-body{
+.basicInformation .ant-modal-body{
     text-align: center;
     font-family: Volkhov;
     font-weight: 700;
