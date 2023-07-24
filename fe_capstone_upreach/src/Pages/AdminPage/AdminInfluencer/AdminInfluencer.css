@@ -1,4 +1,4 @@
-.dashboard-page-bg {
+.admin-influencer-page-bg {
     width: 100%;
 	font-size: 24px;
 	font-weight: bold;
@@ -6,13 +6,13 @@
 	display: flex;
 }
 
-.dashboard-page-bg .dashboard-page-sidebar {
+.admin-influencer-page-bg .admin-influencer-page-sidebar {
     width: 13%;
     height: 100vh;
 }
 
 
-.dashboard-page-bg .dashboard-page-content {
+.admin-influencer-page-bg .admin-influencer-page-content {
     width: 87%;
     height: 100vh;
     padding-top: 60px ;

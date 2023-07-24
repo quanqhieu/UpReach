@@ -238,7 +238,7 @@
 	text-decoration: none;
 }
 
-.ant-modal-content{
+.custom-modal .ant-modal-content{
 	padding: 0px !important;
 	background-color: transparent !important;
 	border-radius: 30px !important;

@@ -10,10 +10,12 @@ import { ExclamationCircleOutlined } from "@ant-design/icons";
 import Buttons from "../../../../Components/UI/Buttons";
 import { VERSION_PROFILE_INFLU } from "../../../HomePage/ConstHomePage";
 import { useInfluStore } from "../../../../Stores/influencer";
+import { useUserStore } from "../../../../Stores/user";
 
 const InfluencerReportLayout = () => {
-  const [influ] = useInfluStore((state) => [state.influ]);
-  const [previewInflu, setPreviewInflu] = React.useState(influ);
+  // const [influ] = useInfluStore((state) => [state.influ]);
+  const [user] = useUserStore((state) => [state.user]);
+  const [previewInflu, setPreviewInflu] = React.useState(user);
   const [isChange, setIsChange] = React.useState(false);
   // const [isClose, setIsClose] = React.useState(false);
   const [openConfirmForm, setOpenConfirmForm] = React.useState(false);
@@ -58,7 +60,6 @@ const InfluencerReportLayout = () => {
       key: "1",
     },
   ];
-  console.log("change", isChange);
   const handleClose = () => {
     // setIsClose(true);
     if (isChange) {
@@ -69,11 +70,11 @@ const InfluencerReportLayout = () => {
     }
   };
 
-  const handleeCloseConfirmForm = () => {
+  const handleCloseConfirmForm = () => {
     setOpenConfirmForm(false);
     setIsChange(false);
     setIsOpenProfileInflu(false);
-    setPreviewInflu(influ);
+    setPreviewInflu(user);
   };
   return (
     <>
@@ -89,14 +90,14 @@ const InfluencerReportLayout = () => {
           </div>
         }
         open={openConfirmForm}
-        onOk={handleeCloseConfirmForm}
+        onOk={handleCloseConfirmForm}
         onCancel={() => setOpenConfirmForm(false)}
         okText="Ok"
         cancelText="Cancel"
         width="400px"
       >
         <div style={{ padding: "10px 40px" }}>
-          <p>You sure??????</p>
+          <p>Sure to cancel?</p>
         </div>
       </Modal>
       <Modal
@@ -111,7 +112,7 @@ const InfluencerReportLayout = () => {
       >
         <InfluUpdateProfileModal
           setIsChange={setIsChange}
-          influ={influ}
+          // user={user}
           previewInflu={previewInflu}
           setPreviewInflu={setPreviewInflu}
         />
@@ -160,7 +161,7 @@ const InfluencerReportLayout = () => {
               align: "center",
             }}
             dataSource={versionProfile}
-            renderItem={(item, index) => (
+            renderItem={(item) => (
               <List.Item
                 style={{
                   display: "flex",
@@ -169,13 +170,7 @@ const InfluencerReportLayout = () => {
                   height: "270px",
                 }}
               >
-                <div>
-                  {index === 0 ? (
-                    <InfluencerProfileCard profileInflu={influ} />
-                  ) : (
-                    <InfluencerProfileCard profileInflu={item} />
-                  )}
-                </div>
+                <InfluencerProfileCard profileInflu={item} />
               </List.Item>
             )}
           />

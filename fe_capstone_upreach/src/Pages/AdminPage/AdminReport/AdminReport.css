@@ -1,4 +1,4 @@
-.dashboard-page-bg {
+.report-management-page-bg {
     width: 100%;
 	font-size: 24px;
 	font-weight: bold;
@@ -6,13 +6,13 @@
 	display: flex;
 }
 
-.dashboard-page-bg .dashboard-page-sidebar {
+.report-management-page-bg .report-management-page-sidebar {
     width: 13%;
     height: 100vh;
 }
 
 
-.dashboard-page-bg .dashboard-page-content {
+.report-management-page-bg .report-management-page-content {
     width: 87%;
     height: 100vh;
     padding-top: 60px ;

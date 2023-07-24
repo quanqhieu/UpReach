@@ -4,8 +4,9 @@ import InfluUpdateImage from "./InfluUpdateImage/InfluUpdateImage";
 import InfluUpdateReport from "./InfluUpdateReport/InfluUpdateReport";
 import React from "react";
 import axios from "axios";
+// import { useInfluStore } from "../../Stores/influencer";
+import { useUserStore } from "../../Stores/user";
 import { useInfluStore } from "../../Stores/influencer";
-
 const InfluUpdateProfileModal = ({
   setIsChange,
   previewInflu,
@@ -15,37 +16,40 @@ const InfluUpdateProfileModal = ({
     state.influ,
     state.setInfluInfo,
   ]);
+  // const [user, setUserInfo] = useUserStore((state) => [state.user]);
   const handleSave = () => {
-    setInfluInfo(previewInflu);
     setIsChange(false);
-    console.log(influ);
-    const formData = new FormData();
-    formData.append("image", JSON.stringify(influ.image));
+    // const formData = new FormData();
+    // formData.append("user", JSON.stringify(previewInflu));
 
-    axios
-      .put("http://localhost:4000/api/influ/update", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((response) => {})
-      .catch((error) => {
-        console.error("Lỗi khi cập nhật thông tin:", error);
-      });
+    // axios
+    //   .put("influ/update", formData, {
+    //     headers: {
+    //       "Content-Type": "multipart/form-data",
+    //     },
+    //   })
+    //   .then((response) => {
+    //     setInfluInfo(previewInflu);
+    //     console.log(response.data);
+    //   })
+    //   .catch((error) => {
+    //     console.error("Lỗi khi cập nhật thông tin:", error);
+    //   });
+    console.log(previewInflu);
   };
   return (
     <>
       <div className="influ-update-profile">
         <div className="influ-update-side-bar">
-          <InfluUpdateSideBar influInfo={influ} />
+          <InfluUpdateSideBar influInfo={previewInflu} />
         </div>
         <div className="cover-influ-update-image-report">
           <div className="influ-update-image">
-            <InfluUpdateImage
+            {/* <InfluUpdateImage
               setIsChange={setIsChange}
-              influInfo={previewInflu}
+              influInfo={user}
               setInfluInfo={setPreviewInflu}
-            />
+            /> */}
           </div>
           <div className="influ-update-report">
             <InfluUpdateReport

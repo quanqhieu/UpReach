@@ -150,6 +150,7 @@ const UpdateReportAudience = () => {
   const fileHandler = (event, chartName) => {
     if (event.target.files[0]) {
       let fileObj = event.target.files[0];
+      console.log(chartName);
 
       ExcelRenderer(fileObj, (err, resp) => {
         if (err) {
@@ -166,7 +167,6 @@ const UpdateReportAudience = () => {
             setDataFollower(data);
           } else if (chartName === "gender") {
             const rows = resp.rows.slice(1);
-
             const data = rows.map((row) => {
               return {
                 sex: row[0],

@@ -1,4 +1,4 @@
-.dashboard-page-bg {
+.admin-upgrade-page-bg {
     width: 100%;
 	font-size: 24px;
 	font-weight: bold;
@@ -6,13 +6,13 @@
 	display: flex;
 }
 
-.dashboard-page-bg .dashboard-page-sidebar {
+.admin-upgrade-page-bg .admin-upgrade-page-sidebar {
     width: 13%;
     height: 100vh;
 }
 
 
-.dashboard-page-bg .dashboard-page-content {
+.admin-upgrade-page-bg .admin-upgrade-page-content {
     width: 87%;
     height: 100vh;
     padding-top: 60px ;

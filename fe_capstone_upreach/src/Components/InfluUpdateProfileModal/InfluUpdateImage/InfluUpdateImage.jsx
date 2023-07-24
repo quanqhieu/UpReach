@@ -10,11 +10,14 @@ import ImgCrop from "antd-img-crop";
 import "./InfluUpdateImage.css";
 import DraggableUploadListItem from "./DraggableUploadListItem/DraggableUploadListItem";
 import { useInfluStore } from "../../../Stores/influencer";
+import { useUserStore } from "../../../Stores/user";
+
 const InfluUpdateImage = ({ influInfo, setInfluInfo, setIsChange }) => {
-  const [fileList, setFileList] = React.useState(influInfo.image);
+  const [fileList, setFileList] = React.useState(influInfo.Image);
   const [previewOpen, setPreviewOpen] = React.useState(false);
   const [previewImage, setPreviewImage] = React.useState("");
   const [influ] = useInfluStore((state) => [state.influ]);
+  const [user] = useUserStore((state) => [state.user]);
 
   const getBase64 = (file) =>
     new Promise((resolve, reject) => {
@@ -53,15 +56,15 @@ const InfluUpdateImage = ({ influInfo, setInfluInfo, setIsChange }) => {
   React.useEffect(() => {
     setInfluInfo({
       ...influInfo,
-      image: fileList,
+      Image: fileList,
     });
   }, [fileList]);
   const checkImages = (arr1, arr2) => {
-    if (arr1.length !== arr2.length) {
+    if (arr1?.length !== arr2?.length) {
       return false;
     }
 
-    for (let i = 0; i < arr1.length; i++) {
+    for (let i = 0; i < arr1?.length; i++) {
       if (arr1[i].uid !== arr2[i].uid) {
         return false;
       }
@@ -70,7 +73,7 @@ const InfluUpdateImage = ({ influInfo, setInfluInfo, setIsChange }) => {
     return true;
   };
   React.useEffect(() => {
-    if (!checkImages(influInfo.image, influ.image)) {
+    if (!checkImages(influInfo.Image, user.Image)) {
       setIsChange(true);
     }
   }, [influInfo]);
@@ -93,7 +96,7 @@ const InfluUpdateImage = ({ influInfo, setInfluInfo, setIsChange }) => {
       <div className="influ-update-images">
         <DndContext sensors={[sensor]} onDragEnd={onDragEnd}>
           <SortableContext
-            items={fileList.map((i) => i.uid)}
+            items={fileList ? fileList.map((i) => i.uid) : []} // Use an empty array if fileList is undefined or null
             strategy={verticalListSortingStrategy}
           >
             <ImgCrop rotationSlider>
@@ -106,7 +109,7 @@ const InfluUpdateImage = ({ influInfo, setInfluInfo, setIsChange }) => {
                 beforeUpload={() => true}
                 onChange={onChange}
                 onPreview={onPreview}
-                data={influInfo.image}
+                data={influInfo?.Image}
                 itemRender={(originNode, file) => (
                   <DraggableUploadListItem
                     originNode={originNode}
@@ -114,7 +117,8 @@ const InfluUpdateImage = ({ influInfo, setInfluInfo, setIsChange }) => {
                   />
                 )}
               >
-                {fileList.length < 3 && "+ Upload"}
+                {fileList && fileList.length < 3 && "+ Upload"}
+                {!fileList && "+ Upload"}
               </Upload>
             </ImgCrop>
           </SortableContext>

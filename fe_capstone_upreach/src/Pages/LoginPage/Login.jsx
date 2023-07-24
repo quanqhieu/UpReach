@@ -2,16 +2,51 @@ import { Button, Form, Input } from "antd";
 import React from "react";
 import "./Login.css";
 import { ReactComponent as IconGoogle } from "../../../src/Assets/Icon/google-icon.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import AuthBackground from "../../Components/Layouts/AuthBackground/AuthBackground";
 import { UPREACH } from "../../Components/Constant/Const";
+import axiosClient from "../../Api/AxiosClient";
+import { useUserStore } from "../../Stores/user";
+import { useCookies } from "react-cookie";
 
 const Login = () => {
+  const [setUserInfo] = useUserStore((state) => [state.setUserInfo]);
+
   const [message, setMessage] = React.useState("");
+  const [cookies, setCookie] = useCookies();
+  let navigate = useNavigate();
 
   const handleSubmit = (data) => {
-    console.log(data);
+    axiosClient
+      .post("/login", {
+        email: data.email,
+        password: data.password,
+      })
+      .then(
+        (response) => {
+          console.log(response);
+          if (response.data.User.Role_ID == 2) {
+            setUserInfo(response.data.User);
+          }
+          if (response.data.User.Role_ID == 3) {
+            setUserInfo(response.data.Influencer);
+          }
+          setCookie("token", response.data.User.Sessions_ID, {
+            path: "/",
+            maxAge: 30 * 24 * 60 * 60,
+          });
+          if (response.data.User.Role_ID == 2) {
+            navigate("/homepage");
+          }
+          if (response.data.User.Role_ID == 3) {
+            navigate("/influencer/my-report");
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
   };
 
   return (
@@ -56,7 +91,7 @@ const Login = () => {
               name="password"
               rules={[
                 { required: true, message: "Please input your password!" },
-                { min: 8, message: "Enter as least 8 characters" },
+                { min: 5, message: "Enter as least 8 characters" },
               ]}
             >
               <Input.Password
@@ -72,14 +107,10 @@ const Login = () => {
             <Button type="primary" htmlType="submit" className="logInBtn">
               <span className="logInBtnText">Login</span>
             </Button>
-            <div className="logInWithGoogle">
-              <div className="GoogleIcon">{<IconGoogle />}</div>
-              <p style={{ fontWeight: "600" }}>Login with Google</p>
-              <Link to="/forgot-password">
-                <Button className="logInToForgotPasswordLink" type="link">
-                  <p>Forgot password?</p>
-                </Button>
-              </Link>
+            <div className="feature-block">
+              <Button className="logInToForgotPasswordLink" type="link">
+                <p>Forgot password?</p>
+              </Button>
             </div>
             <div className="logInToSignUp">
               <p>New to UpReach?</p>

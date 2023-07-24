@@ -14,7 +14,7 @@ import { HeartOutlined, MailFilled, PhoneFilled } from "@ant-design/icons";
 const InfluSideBar = ({ influInfo }) => {
   const [badgeColor, setBadgeColor] = React.useState("");
   React.useEffect(() => {
-    switch (influInfo.type) {
+    switch (influInfo.influencerTypeName) {
       case "Professional":
         setBadgeColor("#C837AB");
         break;
@@ -33,7 +33,7 @@ const InfluSideBar = ({ influInfo }) => {
       default:
         return;
     }
-  }, [influInfo.type]);
+  }, [influInfo.influencerTypeName]);
 
   return (
     <>
@@ -41,7 +41,7 @@ const InfluSideBar = ({ influInfo }) => {
         <div className="side-bar-header-body">
           <div className="influ-side-bar-header">
             <img className="profile-avatar" src={default_img} alt="" />
-            <p className="profile-name">{influInfo.fullName}</p>
+            <p className="profile-name">{influInfo.influencerfullName}</p>
             <div className="badge-block">
               <div
                 style={{
@@ -56,25 +56,25 @@ const InfluSideBar = ({ influInfo }) => {
                     marginRight: "8px",
                   }}
                 />
-                {influInfo.type}
+                {influInfo.influencerTypeName}
               </div>
             </div>
             <div className="profile-socials">
               <div className="profile-social">
                 <Facebook />
-                <p>{roundNumber(influInfo.facebook.followers)}</p>
+                <p>{roundNumber(influInfo.influencerFollowFb)}</p>
               </div>
               <div className="profile-social">
                 <Instagram />
-                <p>{roundNumber(influInfo.instagram.followers)}</p>
+                <p>{roundNumber(influInfo.influencerFollowInsta)}</p>
               </div>
               <div className="profile-social">
                 <Youtube />
-                <p>{roundNumber(influInfo.youtube.followers)}</p>
+                <p>{roundNumber(influInfo.influencerFollowYoutube)}</p>
               </div>
               <div className="profile-social">
                 <Tiktok />
-                <p>{roundNumber(influInfo.tiktok.followers)}</p>
+                <p>{roundNumber(influInfo.influencerFollowTikTok)}</p>
               </div>
             </div>
           </div>
@@ -83,37 +83,59 @@ const InfluSideBar = ({ influInfo }) => {
             <div className="profile-contents">
               <div className="profile-content">
                 <div className="profile-topics">
-                  {influInfo.topics.map((topic, index) => (
-                    <div key={index} className="profile-topic">
-                      <Tooltip placement="top" title={topic}>
+                  {Array.isArray(influInfo.influencerContentTopicName) ? (
+                    influInfo.influencerContentTopicName.map((topic, index) => (
+                      <div key={index} className="profile-topic">
+                        <Tooltip placement="top" title={topic}>
+                          <div>
+                            {topic.length > 8
+                              ? `${topic.slice(0, 8)}...`
+                              : topic}
+                          </div>
+                        </Tooltip>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="profile-topic">
+                      <Tooltip
+                        placement="top"
+                        title={influInfo.influencerContentTopicName}
+                      >
                         <div>
-                          {topic.length > 8 ? `${topic.slice(0, 8)}...` : topic}
+                          {influInfo.influencerContentTopicName.length > 8
+                            ? `${influInfo.influencerContentTopicName.slice(
+                                0,
+                                8
+                              )}...`
+                            : influInfo.influencerContentTopicName}
                         </div>
                       </Tooltip>
                     </div>
-                  ))}
+                  )}
                 </div>
                 <div className="profile-location">
                   <Location style={{ marginRight: "8px" }} />
-                  <p>{influInfo.address}</p>
+                  <p>{influInfo.influencerAddress}</p>
                 </div>
                 <div className="profile-gender">
                   <p style={{ marginRight: "5px" }}>Gender:</p>
-                  <p>{influInfo.gender}</p>
+                  <p>{influInfo.influencerGender}</p>
                 </div>
                 <div className="profile-age">
                   <p style={{ marginRight: "5px" }}>Age:</p>
-                  <p>{influInfo.age}</p>
+                  <p>{influInfo.influencerAge}</p>
                 </div>
                 <div className="profile-marriage-status">
                   <HeartOutlined style={{ marginRight: "8px" }} />
 
-                  <p>{influInfo.relationship}</p>
+                  <p>{influInfo.influencerRelationship}</p>
                 </div>
               </div>
               <div className="profile-biography">
                 <p className="profile-biography-title">Biography</p>
-                <p className="profile-biography-content">{influInfo.bio}</p>
+                <p className="profile-biography-content">
+                  {influInfo.influencerBio}
+                </p>
               </div>
             </div>
           </div>
@@ -124,11 +146,11 @@ const InfluSideBar = ({ influInfo }) => {
             <div className="contact-info ">
               <div className={"contact-email"}>
                 <MailFilled style={{ marginRight: "8px" }} />
-                <p className="contact-text">{influInfo.email}</p>
+                <p className="contact-text">{influInfo.influencerEmail}</p>
               </div>
               <div className={"contact-phone"}>
                 <PhoneFilled style={{ marginRight: "8px" }} />
-                <p className="contact-text">{influInfo.phone}</p>
+                <p className="contact-text">{influInfo.influencerPhone}</p>
               </div>
             </div>
           </div>

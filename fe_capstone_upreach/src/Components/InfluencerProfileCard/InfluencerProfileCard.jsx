@@ -7,7 +7,6 @@ import { ReactComponent as Tiktok } from "../../Assets/Icon/Tiktok.svg";
 import { ReactComponent as Location } from "../../Assets/Icon/Location.svg";
 import { Tooltip } from "antd";
 import { EyeOutlined } from "@ant-design/icons";
-import roundNumber from "../InfluUpdateProfileModal/roundNumber";
 
 const InfluencerProfileCard = ({ profileInflu }) => {
   const currentDate = new Date();
@@ -69,19 +68,19 @@ const InfluencerProfileCard = ({ profileInflu }) => {
         <div className="profile-socials">
           <div className="profile-social">
             <Facebook />
-            <p>{roundNumber(profileInflu.facebook?.followers)}</p>
+            <p>1M</p>
           </div>
           <div className="profile-social">
             <Instagram />
-            <p>{roundNumber(profileInflu.instagram?.followers)}</p>
+            <p>1M</p>
           </div>
           <div className="profile-social">
             <Youtube />
-            <p>{roundNumber(profileInflu.youtube?.followers)}</p>
+            <p>1M</p>
           </div>
           <div className="profile-social">
             <Tiktok />
-            <p>{roundNumber(profileInflu.tiktok?.followers)}</p>
+            <p>1M</p>
           </div>
         </div>
         <div className="profile-images">
