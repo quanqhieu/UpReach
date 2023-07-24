@@ -1,24 +1,19 @@
-*{
-    padding: 0;
-    margin: 0;
-    font-family: unset;
-}
-.sub-title{
+.verify-background .sub-title{
     padding-left: 40px;
     margin-bottom: 4%;
 }
-.form-holder {
+.verify-background .form-holder {
     margin: 10% auto;
     width: 500px;
     min-width: 400px;
 }
-.verify-background{
+.verify-background .verify-background{
     padding: 60px;
     height: 100vh;
     background: linear-gradient(45deg, #96cbf0, #fbc7d4);
     position: relative;
 }
-.verify-custom-bg{
+.verify-background .verify-custom-bg{
     background-color: #fff;
     width: 40vw;
     height: 60vh;

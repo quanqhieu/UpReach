@@ -4,7 +4,7 @@ import Index_ClientProfile from "./Index_ClientProfile";
 
 const ClientProfilePage = () => {
   return (
-    <div className="coverMain">
+    <div className="coverMain-client-profile">
       <HeaderLoginHompape />
       <Index_ClientProfile />
     </div>

@@ -88,8 +88,8 @@ const CreatInfluencerProfilePage = () => {
   };
   return (
     <>
-      <div className="creat-page">
-        <div className="step-creat-page">
+      <div className="create-page">
+        <div className="step-create-page">
           <Steps onChange={setCurrent} current={current}>
             <Steps.Step
               disabled={isStepDisabled(0)}
