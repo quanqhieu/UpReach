@@ -31,7 +31,6 @@ function RenderContent({ onClickIntroduce, onClickHomeMain }) {
 }
 
 const HeaderHomepage = () => {
-
   const navigate = useNavigate();
 
   //click button will go to home page not logged in yet
@@ -46,7 +45,10 @@ const HeaderHomepage = () => {
 
   return (
     <div className="HeaderHomepage">
-      <RenderContent onClickIntroduce={navigateIntroduce} onClickHomeMain={navigateHomeMain} />
+      <RenderContent
+        onClickIntroduce={navigateIntroduce}
+        onClickHomeMain={navigateHomeMain}
+      />
       <div className="authBtn">
         <Link to="/login">
           <Button className="loginBtn" type="link">
@@ -61,6 +63,16 @@ const HeaderHomepage = () => {
             type="primary"
           >
             Join as brand
+          </Button>
+        </Link>
+        <Link to="/join-as-influencer">
+          <Button
+            style={{ height: "35px" }}
+            className="joinBtn"
+            shape="round"
+            type="primary"
+          >
+            Join as Influencer
           </Button>
         </Link>
       </div>

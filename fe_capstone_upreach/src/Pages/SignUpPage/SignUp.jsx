@@ -114,7 +114,15 @@ const SignUp = () => {
           </Form.Item>
 
           <Link className="signUpBtnText" to="/verify-register">
-            <Button type="primary" htmlType="submit" className="signUpBtn">
+            <Button
+              style={{
+                width: "100%",
+                height: "50px",
+              }}
+              type="primary"
+              htmlType="submit"
+              className="signUpBtn"
+            >
               Sign Up
             </Button>
           </Link>

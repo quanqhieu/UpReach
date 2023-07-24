@@ -2,17 +2,22 @@ import { Avatar, Button, Col, Collapse, Form, Input, Row } from "antd";
 import FormItem from "antd/es/form/FormItem";
 import React, { useRef, useState } from "react";
 import "./ClientProfilePage.css";
-import { DownCircleOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  DownCircleOutlined,
+  EditOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 import UpdateEmail from "./UpdateEmail";
 import ChangePassword from "./ChangePassword";
 
 const Index_ClientProfile = () => {
   const [isModalOpenUpdateEmail, setIsModalOpenUpdateEmail] = useState(false);
   const [isSubModel, setSubModel] = useState(false);
-  const [isModalOpenChangePassword, setIsModalOpenChangePassword] = useState(false);
+  const [isModalOpenChangePassword, setIsModalOpenChangePassword] =
+    useState(false);
   const [data, setData] = useState();
   const inputRef = useRef(null);
-  const [image, setImage] = useState("")
+  const [image, setImage] = useState("");
 
   function onFinish(value) {
     setData(value);
@@ -27,12 +32,12 @@ const Index_ClientProfile = () => {
   }
   const handleImageClick = () => {
     inputRef.current.click();
-  }
+  };
   const handleImageChange = (event) => {
     const file = event.target.files[0];
     console.log(file);
-    setImage(file)
-  }
+    setImage(file);
+  };
 
   const items = [
     {
@@ -67,7 +72,7 @@ const Index_ClientProfile = () => {
       <PlusOutlined size={10} />
       <div style={{ marginTop: 8 }}>Upload</div>
     </div>
-  )
+  );
 
   return (
     <Row style={{ marginTop: "4%" }}>
@@ -97,10 +102,28 @@ const Index_ClientProfile = () => {
                 }}
               >
                 <div>
-                  <Form.Item name="fullname" label="Full Name">
+                  <Form.Item
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your Full Name!",
+                      },
+                    ]}
+                    name="fullname"
+                    label="Full Name"
+                  >
                     <Input style={{ border: "1px solid #9B9A9A" }} />
                   </Form.Item>
-                  <Form.Item name="brandname" label="Brand Name">
+                  <Form.Item
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input your Brand Name!",
+                      },
+                    ]}
+                    name="brandname"
+                    label="Brand Name"
+                  >
                     <Input style={{ border: "1px solid #9B9A9A" }} />
                   </Form.Item>
                   <Form.Item name="location" label="Location">
@@ -109,7 +132,18 @@ const Index_ClientProfile = () => {
                   <Form.Item name="email" label="Email">
                     <Input style={{ border: "1px solid #9B9A9A" }} />
                   </Form.Item>
-                  <Form.Item name="phonenumber" label="Phone Number">
+                  <Form.Item
+                    rules={[
+                      {
+                        min: 10,
+                        max: 10,
+                        required: true,
+                        message: "Please input your phone number",
+                      },
+                    ]}
+                    name="phonenumber"
+                    label="Phone Number"
+                  >
                     <Input style={{ border: "1px solid #9B9A9A" }} />
                   </Form.Item>
                 </div>
@@ -141,8 +175,21 @@ const Index_ClientProfile = () => {
           </Col>
           <Col span={8}>
             <div onClick={handleImageClick}>
-              {image ? <Avatar shape="square" src={URL.createObjectURL(image)} size={400} /> : <Avatar shape="square" icon={uploadButton} size={400} />}
-              <input type="file" ref={inputRef} onChange={handleImageChange} style={{ display: "none" }} />
+              {image ? (
+                <Avatar
+                  shape="square"
+                  src={URL.createObjectURL(image)}
+                  size={400}
+                />
+              ) : (
+                <Avatar shape="square" icon={uploadButton} size={400} />
+              )}
+              <input
+                type="file"
+                ref={inputRef}
+                onChange={handleImageChange}
+                style={{ display: "none" }}
+              />
             </div>
           </Col>
         </Row>
