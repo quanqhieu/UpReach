@@ -19,6 +19,10 @@ import InfluencerReportPage from "./InfluencerPage/InfluencerReportPage/Influenc
 import ForgotPasswordPage from "./ForgotPassword/ForgotPasswordPage";
 import VerifyRegisterPage from "./VerifyRegister/VerifyRegisterPage";
 import ClientProfilePage from "./ClientProfilePage/ClientProfilePage";
+import SignUpInfluencerPage from "./SignUpInfluencer/SignUpInfluencerPage";
+import VerifyInfluencerRegister from "./SignUpInfluencer/VerifyInfluencerRegister";
+import CreatInfluencerProfilePage from "./CreateInfluencer/CreatInfluencerProfilePage";
+import ResetPasswordPage from "./ForgotPassword/ResetPasswordPage";
 
 function Pages_Index() {
   const navigate = useNavigate();
@@ -168,6 +172,46 @@ function Pages_Index() {
         element={
           <>
             <InfluencerBookingPage navigateHome={navigateInfluencer} />
+          </>
+        }
+      />
+      <Route
+        path="/upgrade"
+        element={
+          <>
+            <Upgrade />
+          </>
+        }
+      />
+      <Route
+        path="/reset-password"
+        element={
+          <>
+            <ResetPasswordPage />
+          </>
+        }
+      />
+      <Route
+        path="/join-as-influencer"
+        element={
+          <>
+            <SignUpInfluencerPage />
+          </>
+        }
+      />
+      <Route
+        path="/verify-influencer-register"
+        element={
+          <>
+            <VerifyInfluencerRegister />
+          </>
+        }
+      />
+      <Route
+        path="/create-influencer-page"
+        element={
+          <>
+            <CreatInfluencerProfilePage />
           </>
         }
       />
