@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form, Input } from "antd";
+import { Button, Form, Input, InputNumber } from "antd";
 import { Link } from "react-router-dom";
 import "./VerifyRegisterPage.css";
 
@@ -17,14 +17,24 @@ const VerifyRegisterPage = () => {
               </p>
             </div>
             <Form className="form">
-              <Input
+              <InputNumber
+                style={{
+                  width: "500px",
+                  height: "50px",
+                }}
                 name="Verify-email"
                 className="input"
                 type="Verify"
                 placeholder="Enter 6-Digit Code"
-              ></Input>
+              ></InputNumber>
               <Link to="/client-profile">
-                <Button className="submit btn">
+                <Button
+                  style={{
+                    width: "500px",
+                    height: "50px",
+                  }}
+                  className="submit btn"
+                >
                   Continue
                 </Button>
               </Link>

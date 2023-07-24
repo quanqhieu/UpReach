@@ -26,22 +26,13 @@ const UpdateEmail = ({
         centered
         onCancel={handleCancel}
       >
-        <h1>Update login email</h1>
+        <h2>Update login email</h2>
         <p>Change the email address that you use to log in to Upsearch</p>
         <Form
           className="update_email"
           name="validateOnly"
           layout="vertical"
           autoComplete="off"
-          labelCol={{
-            span: 4,
-          }}
-          wrapperCol={{
-            span: 14,
-          }}
-          style={{
-            maxWidth: 800,
-          }}
         >
           <div>
             <Form.Item name="newaddressemail">
