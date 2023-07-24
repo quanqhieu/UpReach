@@ -9,7 +9,7 @@ import { List, Modal } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import Buttons from "../../../../Components/UI/Buttons";
 import { VERSION_PROFILE_INFLU } from "../../../HomePage/ConstHomePage";
-import { useInfluStore } from "../../../../Stores/influencer";
+// import { useInfluStore } from "../../../../Stores/influencer";
 import { useUserStore } from "../../../../Stores/user";
 
 const InfluencerReportLayout = () => {

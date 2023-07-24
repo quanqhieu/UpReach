@@ -45,11 +45,11 @@ const InfluUpdateProfileModal = ({
         </div>
         <div className="cover-influ-update-image-report">
           <div className="influ-update-image">
-            {/* <InfluUpdateImage
+            <InfluUpdateImage
               setIsChange={setIsChange}
-              influInfo={user}
+              influInfo={previewInflu}
               setInfluInfo={setPreviewInflu}
-            /> */}
+            />
           </div>
           <div className="influ-update-report">
             <InfluUpdateReport
