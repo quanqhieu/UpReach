@@ -6,7 +6,11 @@ import { Button } from "antd";
 import "./HeaderHomepage.css";
 import { UPREACH } from "../../Constant/Const";
 
-function RenderContent({ onClickIntroduce, onClickHomeMain }) {
+function RenderContent({
+  onClickIntroduce,
+  onClickHomeMain,
+  onClickMyInfluencer,
+}) {
   return (
     <div className="headerContent">
       <div className="logoText" onClick={onClickIntroduce}>
@@ -16,7 +20,7 @@ function RenderContent({ onClickIntroduce, onClickHomeMain }) {
         <div className="nav" onClick={onClickHomeMain}>
           Home
         </div>
-        <div className="nav" onClick={onClickIntroduce}>
+        <div className="nav" onClick={onClickMyInfluencer}>
           Explore
         </div>
         <div className="nav" onClick={onClickIntroduce}>
@@ -43,11 +47,16 @@ const HeaderHomepage = () => {
     navigate("/homepage");
   };
 
+  const navigateMyInfluencer = () => {
+    navigate("/myinfluencer");
+  };
+
   return (
     <div className="HeaderHomepage">
       <RenderContent
-        onClickIntroduce={navigateIntroduce}
+        oncClickIntroduce={navigateIntroduce}
         onClickHomeMain={navigateHomeMain}
+        onClickMyInfluencer={navigateMyInfluencer}
       />
       <div className="authBtn">
         <Link to="/login">
@@ -58,9 +67,9 @@ const HeaderHomepage = () => {
         <Link to="/join-as-brand">
           <Button
             style={{ height: "35px" }}
-            className="joinBtn"
+            className="joinBrandBtn"
             shape="round"
-            type="primary"
+            // type="primary"
           >
             Join as brand
           </Button>
@@ -68,9 +77,9 @@ const HeaderHomepage = () => {
         <Link to="/join-as-influencer">
           <Button
             style={{ height: "35px" }}
-            className="joinBtn"
+            className="joinInfluBtn"
             shape="round"
-            type="primary"
+            // type="primary"
           >
             Join as Influencer
           </Button>
