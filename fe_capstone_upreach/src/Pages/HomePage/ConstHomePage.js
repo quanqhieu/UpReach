@@ -55,18 +55,39 @@ export const LIST_CONTENT_FORMATS_SEARCH = [
 ]
 
 // marks for slider
-export const MARKS = {
+export const COST = {
     0: {
         style: {
             paddingTop: "10px",
+            paddingLeft: "10px",
         },
-        label: <strong>0(%)</strong>,
+        label: <strong>0{" "}(VND)</strong>,
+    },
+    5000000: {
+        style: {
+            width:"150px",
+            paddingTop: "10px",
+            paddingRight: "40px",
+        },
+        label: <strong>5M+{" "}(VND)</strong>,
+    },
+};
+
+export const AGE = {
+    0: {
+        style: {
+            paddingTop: "10px",
+            paddingLeft: "50px",
+        },
+        label: <strong>0{" "}(year old)</strong>,
     },
     100: {
         style: {
+            width:"160px",
             paddingTop: "10px",
+            paddingRight: "50px",
         },
-        label: <strong>100(%)</strong>,
+        label: <strong>100{" "}(year old)</strong>,
     },
 };
 

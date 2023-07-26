@@ -60,3 +60,12 @@
 	opacity: 100%;
 	cursor: pointer;
 }
+
+.hinden-scroll{
+	overflow-y: hidden;
+	overflow-x: hidden;
+}
+.filterSearch{
+	padding: 15px;
+	border-radius: 15px;
+}

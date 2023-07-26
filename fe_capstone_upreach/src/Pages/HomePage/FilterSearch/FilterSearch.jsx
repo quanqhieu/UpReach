@@ -11,7 +11,8 @@ import {
   LIST_RIGHT_BUTTON_SELECT_SEARCH,
   LIST_SELECT_SEARCH,
   LIST_TYPE_SEARCH,
-  MARKS,
+  COST,
+  AGE,
 } from "../ConstHomePage";
 import DropdownOfCheckBox from "./DropdownOfCheckBox";
 import DropdownOfSlider from "./DropdownOfSlider";
@@ -44,34 +45,37 @@ function RenderSelectSearch({
 function RenderFilter() {
   return (
     <>
-      <div className="col-1"></div>
-      <div className="col-10 d-flex">
+      <div className="d-flex flex-wrap justify-content-sm-start">
         {/* Filter of Type */}
-        <div className="mt-4 backgroundMainPage">
+        <div className="ms-1 mt-4 backgroundMainPage">
           <DropdownOfCheckBox
             listItemCheckBox={LIST_TYPE_SEARCH}
             titleBtn="Type"
           />
         </div>
         {/* Filter of Cost Estimate */}
-        <div className="mt-4 ms-2 backgroundMainPage">
+        <div className="ms-1 mt-4 backgroundMainPage">
           <DropdownOfSlider
             titleBtn="Cost Estimate"
+            min={0}
+            max={5000000}
+            step={500000}
             isDraggable={true}
-            defaultValue={[20, 50]}
-            marks={MARKS}
+            defaultValue={[0, 500000]}
+            marks={COST}
           />
         </div>
         {/* Filter of Age */}
-        <div className="mt-4 ms-2 backgroundMainPage">
+        <div className="ms-1 mt-4 backgroundMainPage">
           <DropdownOfSlider
             titleBtn="Age"
             isDraggable={true}
             defaultValue={[0, 60]}
+            marks={AGE}
           />
         </div>
         {/* Filter of Followers */}
-        <div className="mt-4 ms-2 backgroundMainPage">
+        <div className="ms-1 mt-4 backgroundMainPage">
           <DropdownOfSlider
             titleBtn="Followers"
             isDraggable={true}
@@ -79,7 +83,7 @@ function RenderFilter() {
           />
         </div>
         {/* Filter of Engagement */}
-        <div className="mt-4 ms-2 backgroundMainPage">
+        <div className="ms-1 mt-4 backgroundMainPage">
           <DropdownOfSlider
             titleBtn="Engagement"
             isDraggable={true}
@@ -87,7 +91,7 @@ function RenderFilter() {
           />
         </div>
         {/* Filter of Publications */}
-        <div className="mt-4 ms-2 backgroundMainPage">
+        <div className=" mt-4 backgroundMainPage">
           <DropdownOfSlider
             titleBtn="Publications"
             isDraggable={true}
@@ -95,7 +99,7 @@ function RenderFilter() {
           />
         </div>
         {/* Filter of Content Formats */}
-        <div className="mt-4 ms-2 backgroundMainPage">
+        <div className=" mt-4 backgroundMainPage">
           <DropdownOfCheckBox
             className="width-100-percent"
             listItemCheckBox={LIST_CONTENT_FORMATS_SEARCH}
@@ -103,11 +107,10 @@ function RenderFilter() {
           />
         </div>
         {/* Filter of Audience */}
-        <div className="mt-4 ms-2 backgroundMainPage">
+        <div className=" mt-4 backgroundMainPage">
           <DropdownOfAudience />
         </div>
       </div>
-      <div className="col-1"></div>
     </>
   );
 }
@@ -128,29 +131,34 @@ const FilterSearch = () => {
 
   return (
     <>
-      <div className="col-2 backgroundMainPage"></div>
-      <div className="col-1"></div>
-      <div className="col-10">
-        <div className="searchBtns">
-          <RenderSelectSearch
-            className={LIST_LEFT_BUTTON_SELECT_SEARCH.className}
-            options={LIST_LEFT_BUTTON_SELECT_SEARCH.options}
-            title={LIST_LEFT_BUTTON_SELECT_SEARCH.title}
-            description={LIST_LEFT_BUTTON_SELECT_SEARCH.description}
-            onChange={handleChangePlatform}
-          />
-          <RenderSelectSearch
-            className={LIST_RIGHT_BUTTON_SELECT_SEARCH.className}
-            options={LIST_RIGHT_BUTTON_SELECT_SEARCH.options}
-            title={LIST_RIGHT_BUTTON_SELECT_SEARCH.title}
-            description={LIST_RIGHT_BUTTON_SELECT_SEARCH.description}
-            onChange={handleChangeCategory}
-          />
-          <Button className="bntSreach ms-3">Search</Button>
+      <div className="row">
+        <div className="col-1"></div>
+        <div className="col-10 shadowBox filterSearch">
+          <div className="row">
+            <div className="col-12 searchBtns">
+              <RenderSelectSearch
+                className={LIST_LEFT_BUTTON_SELECT_SEARCH.className}
+                options={LIST_LEFT_BUTTON_SELECT_SEARCH.options}
+                title={LIST_LEFT_BUTTON_SELECT_SEARCH.title}
+                description={LIST_LEFT_BUTTON_SELECT_SEARCH.description}
+                onChange={handleChangePlatform}
+              />
+              <RenderSelectSearch
+                className={LIST_RIGHT_BUTTON_SELECT_SEARCH.className}
+                options={LIST_RIGHT_BUTTON_SELECT_SEARCH.options}
+                title={LIST_RIGHT_BUTTON_SELECT_SEARCH.title}
+                description={LIST_RIGHT_BUTTON_SELECT_SEARCH.description}
+                onChange={handleChangeCategory}
+              />
+              <Button className="bntSreach ms-3">Search</Button>
+            </div>
+            <div className="col-12">
+              <RenderFilter />
+            </div>
+          </div>
         </div>
+        <div className="col-1"></div>
       </div>
-      <div className="col-1"></div>
-      <RenderFilter />
     </>
   );
 };
