@@ -1,31 +1,34 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Space, Typography } from "antd";
-import { Button } from "antd";
-
+import { Button, Avatar, Dropdown } from "antd";
+import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import "./HeaderHomepage.css";
 import { UPREACH } from "../../Constant/Const";
 
-function RenderContent({ onClick }) {
+const handleMenuClick = (e) => {
+  console.log("click", e);
+};
+const items = [
+  {
+    label: "Infomation",
+    key: "Infomation",
+    icon: <UserOutlined />,
+  },
+  {
+    label: "Log Out",
+    key: "Logout",
+    icon: <UserOutlined />,
+  },
+];
+const menuProps = {
+  items,
+  onClick: handleMenuClick,
+};
+function RenderContent() {
   return (
     <div className="headerContent">
-      <div className="logoText" onClick={onClick}>
-        {UPREACH}
-      </div>
-      <div className="navBar">
-        <div className="nav" onClick={onClick}>
-          Home
-        </div>
-        <div className="nav" onClick={onClick}>
-          Explore
-        </div>
-        <div className="nav" onClick={onClick}>
-          How it work
-        </div>
-        <div className="nav" onClick={onClick}>
-          Blogs
-        </div>
-      </div>
+      <div className="logoText">{UPREACH}</div>
     </div>
   );
 }
@@ -36,21 +39,20 @@ function HeaderLoginHompape() {
       <div className="HeaderHomepage">
         <RenderContent />
         <div className="authBtn">
-          <Link to="/login">
-            <Button className="loginBtn" type="link">
-              <p style={{ fontWeight: "700", marginTop: "-2px" }}>Login</p>
+          <Link to="/myinfluencer">
+            <Button className="my-list-btn" type="primary">
+              My Influencer
             </Button>
           </Link>
-          <Link to="/join-as-brand">
-            <Button
-              style={{ height: "35px" }}
-              className="joinBtn"
-              shape="round"
-              type="primary"
-            >
-              Join as brand
+          <Dropdown menu={menuProps} style={{ width: "250px" }} shape="round">
+            <Button>
+              <Space>
+                <Avatar icon={<UserOutlined />} />
+                Name
+                <DownOutlined />
+              </Space>
             </Button>
-          </Link>
+          </Dropdown>
         </div>
       </div>
     </div>

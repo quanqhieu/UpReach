@@ -67,6 +67,7 @@
 	background: linear-gradient(45deg, #96cbf0, #fbc7d4);
 	height: 45px;
 	outline: none;
+	width: 100%;
 }
 .logInBtn:hover {
 	opacity: 0.7;

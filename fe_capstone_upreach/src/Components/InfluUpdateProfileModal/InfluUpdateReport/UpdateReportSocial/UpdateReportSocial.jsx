@@ -13,7 +13,7 @@ import { useUserStore } from "../../../../Stores/user";
 const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
   const [edit, setEdit] = React.useState("");
   const [isError, setIsError] = React.useState(false);
-  const [isEditable, setIsEditable] = React.useState(true);
+
   const [influ] = useInfluStore((state) => [state.influ]);
   const [user] = useUserStore((state) => [state.user]);
 
@@ -58,13 +58,6 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
     }
   };
 
-  const handleEdit = (editValue) => {
-    if (!edit) {
-      setEdit(editValue);
-      setIsEditable(false);
-    }
-  };
-
   React.useLayoutEffect(() => {
     if (
       influInfo.influencerFollowFb == user.influencerFollowFb &&
@@ -77,33 +70,40 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
         user.influencerInteractionYoutube &&
       influInfo.influencerInteractionTiktok ==
         user.influencerInteractionTiktok &&
-      influInfo.influencerEngagement == user.Engagement &&
-      influInfo.influencerCostEstimateFrom == user.CostEstimateFrom &&
-      influInfo.influencerCostEstimateTo == user.CostEstimateTo &&
-      influInfo.influencerPostsPerWeek == user.PostsPerWeek
+      influInfo.influencerEngagement == user.influencerEngagement &&
+      influInfo.influencerCostEstimateFrom == user.influencerCostEstimateFrom &&
+      influInfo.influencerCostEstimateTo == user.influencerCostEstimateTo &&
+      influInfo.influencerPostsPerWeek == user.influencerPostsPerWeek
     ) {
       setIsChange(false);
     } else {
       setIsChange(true);
     }
-  }, [influInfo]);
+  }, [influInfo, user, setIsChange]);
 
-  React.useEffect(
-    (sumFollowers) => {
-      sumFollowers =
-        parseInt(influInfo.influencerFollowFb) +
-        parseInt(influInfo.influencerFollowInsta) +
-        parseInt(influInfo.influencerFollowTikTok) +
-        parseInt(influInfo.influencerFollowYoutube);
-      influInfo.influencerFollowers = sumFollowers;
-    },
-    [
-      influInfo.influencerFollowFb,
-      influInfo.influencerFollowInsta,
-      influInfo.influencerFollowTikTok,
-      influInfo.influencerFollowYoutube,
-    ]
-  );
+  React.useEffect(() => {
+    let sumFollowers = 0;
+
+    if (influInfo.influencerFollowFb) {
+      sumFollowers += parseInt(influInfo.influencerFollowFb);
+    }
+    if (influInfo.influencerFollowInsta) {
+      sumFollowers += parseInt(influInfo.influencerFollowInsta);
+    }
+    if (influInfo.influencerFollowTikTok) {
+      sumFollowers += parseInt(influInfo.influencerFollowTikTok);
+    }
+    if (influInfo.influencerFollowYoutube) {
+      sumFollowers += parseInt(influInfo.influencerFollowYoutube);
+    }
+    influInfo.influencerFollowers = sumFollowers;
+  }, [
+    influInfo,
+    influInfo.influencerFollowFb,
+    influInfo.influencerFollowInsta,
+    influInfo.influencerFollowTikTok,
+    influInfo.influencerFollowYoutube,
+  ]);
 
   return (
     <>
@@ -164,7 +164,7 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                     </Tooltip>
                     <EditOutlined
                       onClick={() => {
-                        handleEdit("engagement");
+                        setEdit("engagement");
                       }}
                     />
                   </div>
@@ -216,9 +216,6 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                       </Tooltip>
                       <EditOutlined
                         onClick={() => {
-                          if (edit !== "cost estimate from") {
-                            setEdit("");
-                          }
                           setEdit("cost estimate from");
                         }}
                       />
@@ -266,11 +263,7 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                       </Tooltip>
                       <EditOutlined
                         onClick={() => {
-                          if (edit === "cost estimate to") {
-                            setEdit("cost estimate to");
-                          } else {
-                            setIsEditable(false);
-                          }
+                          setEdit("cost estimate to");
                         }}
                       />
                     </div>

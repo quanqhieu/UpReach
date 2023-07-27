@@ -76,7 +76,7 @@ const InfluUpdateImage = ({ influInfo, setInfluInfo, setIsChange }) => {
     if (!checkImages(influInfo.Image, user.Image)) {
       setIsChange(true);
     }
-  }, [influInfo]);
+  }, [influInfo, influInfo.Image]);
 
   return (
     <>
@@ -96,7 +96,7 @@ const InfluUpdateImage = ({ influInfo, setInfluInfo, setIsChange }) => {
       <div className="influ-update-images">
         <DndContext sensors={[sensor]} onDragEnd={onDragEnd}>
           <SortableContext
-            items={fileList ? fileList.map((i) => i.uid) : []} // Use an empty array if fileList is undefined or null
+            items={fileList ? fileList.map((i) => i.uid) : []}
             strategy={verticalListSortingStrategy}
           >
             <ImgCrop rotationSlider>
@@ -117,8 +117,11 @@ const InfluUpdateImage = ({ influInfo, setInfluInfo, setIsChange }) => {
                   />
                 )}
               >
-                {fileList && fileList.length < 3 && "+ Upload"}
-                {!fileList && "+ Upload"}
+                {!fileList
+                  ? "+ Upload"
+                  : fileList.length < 3
+                  ? "+ Upload"
+                  : null}
               </Upload>
             </ImgCrop>
           </SortableContext>

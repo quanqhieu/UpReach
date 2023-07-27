@@ -147,6 +147,20 @@ const UpdateReportAudience = () => {
     minBarWidth: 16,
     maxBarWidth: 16,
   };
+  function convertExcelDateToNormalDate(excelDate) {
+    let baseDate = new Date(1900, 0, 1);
+    let milliseconds = excelDate * 86400000;
+    let resultDate = new Date(baseDate.getTime() + milliseconds);
+
+    let month = resultDate.getMonth() + 1;
+    let day = resultDate.getDate() - 2;
+    let year = resultDate.getFullYear();
+
+    let formattedDate = month + "/" + day + "/" + year;
+
+    return formattedDate;
+  }
+
   const fileHandler = (event, chartName) => {
     if (event.target.files[0]) {
       let fileObj = event.target.files[0];
@@ -160,7 +174,7 @@ const UpdateReportAudience = () => {
             const rows = resp.rows.slice(1);
             const data = rows.map((row) => {
               return {
-                year: row[0],
+                year: convertExcelDateToNormalDate(row[0]),
                 value: row[1],
               };
             });

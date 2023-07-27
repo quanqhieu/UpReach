@@ -14,7 +14,7 @@ import { HeartOutlined, MailFilled, PhoneFilled } from "@ant-design/icons";
 const InfluSideBar = ({ influInfo }) => {
   const [badgeColor, setBadgeColor] = React.useState("");
   React.useEffect(() => {
-    switch (influInfo.influencerTypeName) {
+    switch (influInfo.influencerTypeName[0]) {
       case "Professional":
         setBadgeColor("#C837AB");
         break;
@@ -33,11 +33,11 @@ const InfluSideBar = ({ influInfo }) => {
       default:
         return;
     }
-  }, [influInfo.influencerTypeName]);
+  }, [influInfo.influencerTypeName[0]]);
 
   return (
     <>
-      <div className="influ-side-bar-container">
+      <div className="influ-update-side-bar-container">
         <div className="side-bar-header-body">
           <div className="influ-side-bar-header">
             <img className="profile-avatar" src={default_img} alt="" />
@@ -56,25 +56,27 @@ const InfluSideBar = ({ influInfo }) => {
                     marginRight: "8px",
                   }}
                 />
-                {influInfo.influencerTypeName}
+                {influInfo.influencerTypeName[0]}
               </div>
             </div>
-            <div className="profile-socials">
-              <div className="profile-social">
-                <Facebook />
-                <p>{roundNumber(influInfo.influencerFollowFb)}</p>
-              </div>
-              <div className="profile-social">
-                <Instagram />
-                <p>{roundNumber(influInfo.influencerFollowInsta)}</p>
-              </div>
-              <div className="profile-social">
-                <Youtube />
-                <p>{roundNumber(influInfo.influencerFollowYoutube)}</p>
-              </div>
-              <div className="profile-social">
-                <Tiktok />
-                <p>{roundNumber(influInfo.influencerFollowTikTok)}</p>
+            <div className="profile-socials-wrapper">
+              <div className="profile-socials">
+                <div className="profile-social">
+                  <Facebook className="profile-social-icon" />
+                  <p>{roundNumber(influInfo.influencerFollowFb)}</p>
+                </div>
+                <div className="profile-social">
+                  <Instagram className="profile-social-icon" />
+                  <p>{roundNumber(influInfo.influencerFollowInsta)}</p>
+                </div>
+                <div className="profile-social">
+                  <Youtube className="profile-social-icon" />
+                  <p>{roundNumber(influInfo.influencerFollowYoutube)}</p>
+                </div>
+                <div className="profile-social">
+                  <Tiktok className="profile-social-icon" />
+                  <p>{roundNumber(influInfo.influencerFollowTikTok)}</p>
+                </div>
               </div>
             </div>
           </div>

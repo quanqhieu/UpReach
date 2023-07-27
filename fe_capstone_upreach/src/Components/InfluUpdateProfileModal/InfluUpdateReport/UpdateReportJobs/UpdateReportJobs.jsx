@@ -56,6 +56,19 @@ const UpdateReportJobs = () => {
                     </Form.Item>
                     <Form.Item
                       {...field}
+                      name={[field.name, "job-link"]}
+                      label="Link:"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input job link!",
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Please input job link" autoFocus />
+                    </Form.Item>
+                    <Form.Item
+                      {...field}
                       name={[field.name, "platform"]}
                       label="Choose Platform"
                       hasFeedback
@@ -98,18 +111,18 @@ const UpdateReportJobs = () => {
 
                     <Form.Item
                       {...field}
-                      name={[field.name, "cost-estimate"]}
-                      label="Cost Estimate"
+                      name={[field.name, "cost-estimate-from"]}
+                      label="Cost Estimate From"
                       rules={[
                         {
-                          // required: true,
+                          required: true,
                           message: "Please input cost estimate!",
                         },
                       ]}
                     >
                       <div>
                         <Input
-                          placeholder="Input cost estimate"
+                          placeholder="Input cost estimate from"
                           type="number"
                           maxLength={16}
                           style={{ width: "145px" }}
@@ -124,6 +137,64 @@ const UpdateReportJobs = () => {
                         >
                           VND
                         </span>
+                      </div>
+                    </Form.Item>
+                    <Form.Item
+                      {...field}
+                      name={[field.name, "cost-estimate-to"]}
+                      label="Cost Estimate To"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input cost estimate!",
+                        },
+                      ]}
+                    >
+                      <div>
+                        <Input
+                          placeholder="Input cost estimate to"
+                          type="number"
+                          maxLength={16}
+                          style={{ width: "145px" }}
+                          autoFocus
+                        />
+
+                        <span
+                          className="ant-form-text"
+                          style={{
+                            marginLeft: 8,
+                          }}
+                        >
+                          VND
+                        </span>
+                      </div>
+                    </Form.Item>
+                    <Form.Item
+                      {...field}
+                      name={[field.name, "quantity"]}
+                      label="Quantity"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input quantity!",
+                        },
+                      ]}
+                    >
+                      <div>
+                        <Input
+                          placeholder="Input quantity"
+                          type="number"
+                          maxLength={16}
+                          style={{ width: "145px" }}
+                          autoFocus
+                        />
+
+                        <span
+                          className="ant-form-text"
+                          style={{
+                            marginLeft: 8,
+                          }}
+                        ></span>
                       </div>
                     </Form.Item>
                   </Space>

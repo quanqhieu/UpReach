@@ -1,12 +1,10 @@
 import React from "react";
 import "./InfluencerReportLayout.css";
-import { DownOutlined } from "@ant-design/icons";
-import { Dropdown, Space } from "antd";
 import InfluencerProfileCard from "../../../../Components/InfluencerProfileCard/InfluencerProfileCard";
 import InfluUpdateProfileModal from "../../../../Components/InfluUpdateProfileModal/InfluUpdateProfileModal";
 import { ReactComponent as IconArrow } from "../../../../Assets/Icon/IconArrow.svg";
-import { List, Modal } from "antd";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { List, Modal, Dropdown, Space } from "antd";
+import { ExclamationCircleOutlined, DownOutlined } from "@ant-design/icons";
 import Buttons from "../../../../Components/UI/Buttons";
 import { VERSION_PROFILE_INFLU } from "../../../HomePage/ConstHomePage";
 // import { useInfluStore } from "../../../../Stores/influencer";
@@ -18,8 +16,12 @@ const InfluencerReportLayout = () => {
   const [previewInflu, setPreviewInflu] = React.useState(user);
   const [isChange, setIsChange] = React.useState(false);
   // const [isClose, setIsClose] = React.useState(false);
+
   const [openConfirmForm, setOpenConfirmForm] = React.useState(false);
   const [isOpenProfileInflu, setIsOpenProfileInflu] = React.useState(false);
+
+  // const countdownElement = document.getElementById("countdown");
+  // const updateButton = document.querySelector(".update-btn");
 
   const [versionProfile, setVersionProfile] = React.useState(
     VERSION_PROFILE_INFLU
@@ -28,10 +30,6 @@ const InfluencerReportLayout = () => {
   const handleOpenModal = () => {
     setIsOpenProfileInflu(true);
   };
-
-  // React.useEffect(() => {
-  //   setIsOpenProfileInflu(false);
-  // }, [influInfo]);
 
   const [sortOption, setSortOption] = React.useState("Choose Option");
   const items = [
@@ -61,12 +59,10 @@ const InfluencerReportLayout = () => {
     },
   ];
   const handleClose = () => {
-    // setIsClose(true);
     if (isChange) {
       setOpenConfirmForm(true);
     } else {
       setIsOpenProfileInflu(false);
-      // setIsClose(false);
     }
   };
 
@@ -76,6 +72,35 @@ const InfluencerReportLayout = () => {
     setIsOpenProfileInflu(false);
     setPreviewInflu(user);
   };
+
+  // const updateCountdown = (countDownTime) => {
+  //   const countdownDate = new Date();
+  //   countdownDate.setDate(countdownDate.getDate() + 7); // Set the countdown to 7 days from now
+
+  //   const updateInterval = setInterval(() => {
+  //     const now = new Date().getTime();
+  //     const timeLeft = countdownDate - now;
+
+  //     const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+  //     const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  //     const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+  //     const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+  //     if (timeLeft <= 0) {
+  //       countdownElement.textContent = "0 days left to update";
+  //       clearInterval(updateInterval);
+
+  //       // Enable the Update Now button when the countdown reaches 0
+  //       updateButton.disabled = false;
+  //     } else {
+  //       countdownElement.textContent = `${days} days, ${hours} hours, ${minutes} minutes, ${seconds} seconds left to update`;
+  //     }
+  //   }, 1000);
+  // }
+
+  // // Call the updateCountdown function to start the countdown
+  // updateCountdown(7); // Here, you can pass any number of days you want for the countdown
+
   return (
     <>
       <Modal
@@ -112,7 +137,6 @@ const InfluencerReportLayout = () => {
       >
         <InfluUpdateProfileModal
           setIsChange={setIsChange}
-          // user={user}
           previewInflu={previewInflu}
           setPreviewInflu={setPreviewInflu}
         />
@@ -131,16 +155,17 @@ const InfluencerReportLayout = () => {
             </div>
           </div>
         </div>
-        <div className="col-12 mt-3">
-          <div className="button-block mt-5">
-            <Buttons
-              className="update-btn"
-              text="Update Now"
-              icon={<IconArrow />}
-              onClick={() => handleOpenModal()}
-            />
-          </div>
+
+        <div className="update-block">
+          {/* <p id="countdown">7 days left to update</p> */}
+          <Buttons
+            className="update-btn"
+            text="Update Now"
+            icon={<IconArrow />}
+            onClick={() => handleOpenModal()}
+          />
         </div>
+
         <div className="influencer-report-list">
           <List
             grid={{
