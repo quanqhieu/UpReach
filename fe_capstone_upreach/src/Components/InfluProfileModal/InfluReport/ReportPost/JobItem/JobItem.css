@@ -1,0 +1,40 @@
+.report-post-item {
+	width: 100%;
+	height: 105px;
+	border: #ccc 1px solid;
+	padding: 15px 145px 15px 25px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.report-post-item .post-item-title {
+	display: flex;
+}
+
+.report-post-item .post-item-title p {
+	font-weight: 600;
+}
+
+.report-post-item .social-icon {
+	width: 70px;
+	height: 70px;
+	margin-right: 10px;
+}
+
+.report-post-item .post-item-sub-title {
+    height: 100%;
+    width: fit-content;
+}
+
+.report-post-item .cover-quantity-cost {
+	width: fit-content;
+	height: 70px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.report-post-item .cover-quantity-cost p {
+	font-size: 20px;
+	color: #9b9a9a;
+}

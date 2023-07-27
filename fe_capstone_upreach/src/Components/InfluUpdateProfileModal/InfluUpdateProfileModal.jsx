@@ -4,8 +4,11 @@ import InfluUpdateImage from "./InfluUpdateImage/InfluUpdateImage";
 import InfluUpdateReport from "./InfluUpdateReport/InfluUpdateReport";
 import React from "react";
 import axios from "axios";
-import { useInfluStore } from "../../Stores/influencer";
+import { Spin } from "antd";
 
+// import { useInfluStore } from "../../Stores/influencer";
+import { useUserStore } from "../../Stores/user";
+import { useInfluStore } from "../../Stores/influencer";
 const InfluUpdateProfileModal = ({
   setIsChange,
   previewInflu,
@@ -15,12 +18,15 @@ const InfluUpdateProfileModal = ({
     state.influ,
     state.setInfluInfo,
   ]);
+  const [user, setUserInfo] = useUserStore((state) => [
+    state.user,
+    state.setUserInfo,
+  ]);
+  const [isSaving, setIsSaving] = React.useState(false);
   const handleSave = () => {
-    setInfluInfo(previewInflu);
-    setIsChange(false);
-    console.log(influ);
+    setIsSaving(true);
     const formData = new FormData();
-    formData.append("image", JSON.stringify(influ.image));
+    formData.append("influ", JSON.stringify(previewInflu));
 
     axios
       .put("http://localhost:4000/api/influ/update", formData, {
@@ -28,35 +34,44 @@ const InfluUpdateProfileModal = ({
           "Content-Type": "multipart/form-data",
         },
       })
-      .then((response) => {})
+      .then((response) => {
+        setUserInfo(previewInflu);
+        setIsChange(false);
+        setIsSaving(false);
+
+        console.log(response.data);
+      })
       .catch((error) => {
         console.error("Lỗi khi cập nhật thông tin:", error);
       });
+    console.log(previewInflu);
   };
   return (
     <>
       <div className="influ-update-profile">
         <div className="influ-update-side-bar">
-          <InfluUpdateSideBar influInfo={influ} />
+          <InfluUpdateSideBar influInfo={previewInflu} />
         </div>
         <div className="cover-influ-update-image-report">
-          <div className="influ-update-image">
-            <InfluUpdateImage
-              setIsChange={setIsChange}
-              influInfo={previewInflu}
-              setInfluInfo={setPreviewInflu}
-            />
-          </div>
-          <div className="influ-update-report">
-            <InfluUpdateReport
-              setIsChange={setIsChange}
-              influInfo={previewInflu}
-              setInfluInfo={setPreviewInflu}
-            />
-            <button className="influ-update-report-btn" onClick={handleSave}>
-              SAVE
-            </button>
-          </div>
+          <Spin tip="Saving" size="large" spinning={isSaving}>
+            <div className="influ-update-image">
+              <InfluUpdateImage
+                setIsChange={setIsChange}
+                influInfo={previewInflu}
+                setInfluInfo={setPreviewInflu}
+              />
+            </div>
+            <div className="influ-update-report">
+              <InfluUpdateReport
+                setIsChange={setIsChange}
+                influInfo={previewInflu}
+                setInfluInfo={setPreviewInflu}
+              />
+              <button className="influ-update-report-btn" onClick={handleSave}>
+                SAVE
+              </button>
+            </div>
+          </Spin>
         </div>
       </div>
     </>

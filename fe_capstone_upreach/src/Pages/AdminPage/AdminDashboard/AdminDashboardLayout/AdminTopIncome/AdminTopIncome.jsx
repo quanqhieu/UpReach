@@ -1,6 +1,6 @@
 import React from "react";
 import "./AdminTopIncome.css";
-
+import RecentIncomeCard from "../../../../../Components/RecentIncomeCard/RecentIncomeCard";
 import { Table } from "antd";
 const AdminTopIncome = () => {
   const tags = [
@@ -80,6 +80,7 @@ const AdminTopIncome = () => {
           <p className="admin-top-income-view-all">View all</p>
         </div>
         <div className="admin-top-income-contents">
+          {/* <RecentIncomeCard /> */}
           <Table
             columns={tags}
             dataSource={data}

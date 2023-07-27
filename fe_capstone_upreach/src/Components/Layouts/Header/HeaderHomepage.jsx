@@ -1,10 +1,22 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Space, Typography } from "antd";
-import { Button } from "antd";
+import { useCookies } from "react-cookie";
+import { Button, Dropdown, Space } from "antd";
+import { DownOutlined } from "@ant-design/icons";
 
 import "./HeaderHomepage.css";
 import { UPREACH } from "../../Constant/Const";
+import { useUserStore } from "../../../Stores/user";
+
+function RenderLogo(onClickIntroduce) {
+  return (
+    <div className="headerContent">
+      <div className="logoText" onClick={onClickIntroduce}>
+        {UPREACH}
+      </div>
+    </div>
+  );
+}
 
 function RenderContent({
   onClickIntroduce,
@@ -13,9 +25,6 @@ function RenderContent({
 }) {
   return (
     <div className="headerContent">
-      <div className="logoText" onClick={onClickIntroduce}>
-        {UPREACH}
-      </div>
       <div className="navBar">
         <div className="nav" onClick={onClickHomeMain}>
           Home
@@ -34,8 +43,13 @@ function RenderContent({
   );
 }
 
-const HeaderHomepage = () => {
-  const navigate = useNavigate();
+const HeaderHomepage = (handleClickHomePage) => {
+  let navigate = useNavigate();
+  const [cookies, setCookie, removeCookie] = useCookies();
+  const [user, setUserInfo] = useUserStore((state) => [
+    state.user,
+    state.setUserInfo,
+  ]);
 
   //click button will go to home page not logged in yet
   const navigateIntroduce = () => {
@@ -51,39 +65,104 @@ const HeaderHomepage = () => {
     navigate("/myinfluencer");
   };
 
+  const handleLogout = () => {
+    removeCookie("token", { path: "/" });
+    setUserInfo({});
+    localStorage.removeItem("user-draw-storage");
+    navigate("/");
+  };
+  const items = [
+    {
+      label: <p>Profile</p>,
+      key: "0",
+    },
+    {
+      label: <p onClick={handleLogout}>Logout</p>,
+      key: "1",
+    },
+  ];
+  console.log(user);
+
   return (
     <div className="HeaderHomepage">
-      <RenderContent
-        oncClickIntroduce={navigateIntroduce}
-        onClickHomeMain={navigateHomeMain}
-        onClickMyInfluencer={navigateMyInfluencer}
-      />
+      <RenderLogo oncClickIntroduce={handleClickHomePage} />
       <div className="authBtn">
-        <Link to="/login">
-          <Button className="loginBtn" type="link">
-            <p style={{ fontWeight: "700", marginTop: "-2px" }}>Login</p>
-          </Button>
-        </Link>
-        <Link to="/join-as-brand">
-          <Button
-            style={{ height: "35px" }}
-            className="joinBrandBtn"
-            shape="round"
-            // type="primary"
-          >
-            Join as brand
-          </Button>
-        </Link>
-        <Link to="/join-as-influencer">
-          <Button
-            style={{ height: "35px" }}
-            className="joinInfluBtn"
-            shape="round"
-            // type="primary"
-          >
-            Join as Influencer
-          </Button>
-        </Link>
+        {user.influencerId ? (
+          <div className="influencer-btn">
+            <img
+              className="influencer-avatar"
+              src="https://demoda.vn/wp-content/uploads/2022/09/hinh-anh-avatar-anime-nu.jpg"
+              alt="anh"
+            />
+
+            <div className="influencer-dropdown-block">
+              <Dropdown menu={{ items }} trigger={"click"}>
+                <p style={{ height: "45px" }}>
+                  <Space>
+                    <div>
+                      {user.influencerfullName.length > 14
+                        ? `${user.influencerfullName.slice(0, 14)}...`
+                        : user.influencerfullName}
+                    </div>
+                  </Space>
+                  <DownOutlined />
+                </p>
+              </Dropdown>
+            </div>
+          </div>
+        ) : user.clientId ? (
+          <div className="cover-client-login">
+            <Link to="/myinfluencer">
+              <Button className="my-list-btn" type="primary">
+                My Influencer
+              </Button>
+            </Link>
+
+            <div className="influencer-btn">
+              <img
+                className="influencer-avatar"
+                src="https://demoda.vn/wp-content/uploads/2022/09/hinh-anh-avatar-anime-nu.jpg"
+                alt="anh"
+              />
+
+              <div className="influencer-dropdown-block">
+                <Dropdown menu={{ items }} trigger={"click"}>
+                  <p style={{ height: "45px" }}>
+                    <Space>
+                      <div>
+                        {user.fullName.length > 14
+                          ? `${user.fullName.slice(0, 14)}...`
+                          : user.fullName}
+                      </div>
+                    </Space>
+                    <DownOutlined />
+                  </p>
+                </Dropdown>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="landing-page-header">
+            <RenderContent onClickHomeMain={navigateHomeMain} />
+            <div className="cover-login-sign-up">
+              <Link to="/login">
+                <Button className="loginBtn" type="link">
+                  <p style={{ fontWeight: "700", marginTop: "-2px" }}>Login</p>
+                </Button>
+              </Link>
+              <Link to="/sign-up">
+                <Button
+                  style={{ height: "35px" }}
+                  className="joinBtn"
+                  shape="round"
+                  type="primary"
+                >
+                  Sign up
+                </Button>
+              </Link>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

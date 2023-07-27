@@ -79,8 +79,8 @@ const DropdownOfAudience = () => {
                 value={valueGender}
               >
                 <Row>
-                  {GENDER_OF_AUDIANCE.map((item) => (
-                    <Col span={24}>
+                  {GENDER_OF_AUDIANCE.map((item, index) => (
+                    <Col span={24} key={index}>
                       <Checkbox value={item.value}>{item.name}</Checkbox>
                     </Col>
                   ))}

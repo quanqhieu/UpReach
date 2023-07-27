@@ -1,45 +1,45 @@
 import React from "react";
 import "./AdminDashboardLayout.css";
-import { DownOutlined } from "@ant-design/icons";
-import { Dropdown, Space } from "antd";
+// import { DownOutlined } from "@ant-design/icons";
+// import { Dropdown, Space } from "antd";
 import AdminTotalStatusCard from "./AdminTotalStatusCard/AdminTotalStatusCard";
 import AdminTopCards from "./AdminTopCards/AdminTopCards";
 import AdminTopIncome from "./AdminTopIncome/AdminTopIncome";
 
 const AdminDashboardLayout = () => {
-  const [sortOption, setSortOption] = React.useState("Choose Option");
-  const items = [
-    {
-      label: (
-        <p
-          onClick={(e) => {
-            setSortOption(e.target.innerText);
-          }}
-        >
-          Monthly
-        </p>
-      ),
-      key: "0",
-    },
-    {
-      label: (
-        <p
-          onClick={(e) => {
-            setSortOption(e.target.innerText);
-          }}
-        >
-          Year
-        </p>
-      ),
-      key: "1",
-    },
-  ];
+  // const [sortOption, setSortOption] = React.useState("Choose Option");
+  // const items = [
+  //   {
+  //     label: (
+  //       <p
+  //         onClick={(e) => {
+  //           setSortOption(e.target.innerText);
+  //         }}
+  //       >
+  //         Monthly
+  //       </p>
+  //     ),
+  //     key: "0",
+  //   },
+  //   {
+  //     label: (
+  //       <p
+  //         onClick={(e) => {
+  //           setSortOption(e.target.innerText);
+  //         }}
+  //       >
+  //         Year
+  //       </p>
+  //     ),
+  //     key: "1",
+  //   },
+  // ];
   return (
     <>
       <div className="admin-dashboard-layout">
         <div className="admin-dashboard-title">
           <p>OVERVIEW</p>
-          <div className="dashboard-filter">
+          {/* <div className="dashboard-filter">
             <p>Sort by:</p>
             <div className="dashboard-sort-by">
               <Dropdown menu={{ items }} trigger={"click"}>
@@ -49,7 +49,7 @@ const AdminDashboardLayout = () => {
               </Dropdown>
               <DownOutlined />
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="admin-total-status">
           <AdminTotalStatusCard />

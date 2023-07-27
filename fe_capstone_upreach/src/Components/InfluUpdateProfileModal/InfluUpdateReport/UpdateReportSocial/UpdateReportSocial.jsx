@@ -1,5 +1,5 @@
 import "./UpdateReportSocial.css";
-import React, { useEffect } from "react";
+import React from "react";
 import { ReactComponent as Facebook } from "../../../../Assets/Icon/Facebook.svg";
 import { ReactComponent as Instagram } from "../../../../Assets/Icon/Instagram.svg";
 import { ReactComponent as Youtube } from "../../../../Assets/Icon/Youtube.svg";
@@ -8,49 +8,316 @@ import { EditOutlined } from "@ant-design/icons";
 import { Input, Tooltip } from "antd";
 import roundNumber from "../../roundNumber";
 import { useInfluStore } from "../../../../Stores/influencer";
+import { useUserStore } from "../../../../Stores/user";
+
 const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
   const [edit, setEdit] = React.useState("");
   const [isError, setIsError] = React.useState(false);
+
   const [influ] = useInfluStore((state) => [state.influ]);
+  const [user] = useUserStore((state) => [state.user]);
+
   const handleSubmit = () => {
     if (
-      (edit === "facebook follower" && influInfo.facebook.followers === "") ||
-      (edit === "instagram follower" && influInfo.instagram.followers === "") ||
-      (edit === "youtube follower" && influInfo.youtube.followers === "") ||
-      (edit === "tiktok follower" && influInfo.tiktok.followers === "") ||
+      (edit === "facebook follower" &&
+        parseInt(influInfo.influencerFollowFb) <= 0) ||
+      (edit === "instagram follower" &&
+        parseInt(influInfo.influencerFollowInsta) <= 0) ||
+      (edit === "youtube follower" &&
+        parseInt(influInfo.influencerFollowYoutube) <= 0) ||
+      (edit === "tiktok follower" &&
+        parseInt(influInfo.influencerFollowTikTok) <= 0) ||
       (edit === "facebook interaction" &&
-        influInfo.facebook.interactions === "") ||
+        parseInt(influInfo.influencerInteractionFb) <= 0) ||
       (edit === "instagram interaction" &&
-        influInfo.instagram.interactions === "") ||
+        parseInt(influInfo.influencerInteractionInsta) <= 0) ||
       (edit === "youtube interaction" &&
-        influInfo.youtube.interactions === "") ||
-      (edit === "tiktok interaction" && influInfo.tiktok.interactions === "")
+        parseInt(influInfo.influencerInteractionYoutube) <= 0) ||
+      (edit === "tiktok interaction" &&
+        parseInt(influInfo.influencerInteractionTiktok) <= 0) ||
+      (edit === "engagement" &&
+        parseInt(influInfo.influencerEngagement) <= 0) ||
+      (edit === "engagement" &&
+        parseInt(influInfo.influencerEngagement) > 100) ||
+      (edit === "cost estimate from" &&
+        parseInt(influInfo.influencerCostEstimateFrom) <= 0) ||
+      (edit === "cost estimate from" &&
+        parseInt(influInfo.influencerCostEstimateFrom) >
+          parseInt(influInfo.influencerCostEstimateTo)) ||
+      (edit === "cost estimate to" &&
+        parseInt(influInfo.influencerCostEstimateTo) <= 0) ||
+      (edit === "cost estimate to" &&
+        parseInt(influInfo.influencerCostEstimateFrom) >
+          parseInt(influInfo.influencerCostEstimateTo)) ||
+      (edit === "post per week" &&
+        parseInt(influInfo.influencerPostsPerWeek) <= 0)
     ) {
       setIsError(true);
     } else {
-      console.log(influInfo);
-
       setEdit("");
     }
   };
 
   React.useLayoutEffect(() => {
     if (
-      influInfo.facebook.followers == influ.facebook.followers &&
-      influInfo.instagram.followers == influ.instagram.followers &&
-      influInfo.youtube.followers == influ.youtube.followers &&
-      influInfo.tiktok.followers == influ.tiktok.followers &&
-      influInfo.facebook.interactions == influ.facebook.interactions &&
-      influInfo.instagram.interactions == influ.instagram.interactions &&
-      influInfo.youtube.interactions == influ.youtube.interactions &&
-      influInfo.tiktok.interactions == influ.tiktok.interactions
+      influInfo.influencerFollowFb == user.influencerFollowFb &&
+      influInfo.influencerFollowInsta == user.influencerFollowInsta &&
+      influInfo.influencerFollowYoutube == user.influencerFollowYoutube &&
+      influInfo.influencerFollowTikTok == user.influencerFollowTikTok &&
+      influInfo.influencerInteractionFb == user.influencerInteractionFb &&
+      influInfo.influencerInteractionInsta == user.influencerInteractionInsta &&
+      influInfo.influencerInteractionYoutube ==
+        user.influencerInteractionYoutube &&
+      influInfo.influencerInteractionTiktok ==
+        user.influencerInteractionTiktok &&
+      influInfo.influencerEngagement == user.influencerEngagement &&
+      influInfo.influencerCostEstimateFrom == user.influencerCostEstimateFrom &&
+      influInfo.influencerCostEstimateTo == user.influencerCostEstimateTo &&
+      influInfo.influencerPostsPerWeek == user.influencerPostsPerWeek
     ) {
       setIsChange(false);
-    } else setIsChange(true);
-  }, [influInfo]);
+    } else {
+      setIsChange(true);
+    }
+  }, [influInfo, user, setIsChange]);
+
+  React.useEffect(() => {
+    let sumFollowers = 0;
+
+    if (influInfo.influencerFollowFb) {
+      sumFollowers += parseInt(influInfo.influencerFollowFb);
+    }
+    if (influInfo.influencerFollowInsta) {
+      sumFollowers += parseInt(influInfo.influencerFollowInsta);
+    }
+    if (influInfo.influencerFollowTikTok) {
+      sumFollowers += parseInt(influInfo.influencerFollowTikTok);
+    }
+    if (influInfo.influencerFollowYoutube) {
+      sumFollowers += parseInt(influInfo.influencerFollowYoutube);
+    }
+    influInfo.influencerFollowers = sumFollowers;
+  }, [
+    influInfo,
+    influInfo.influencerFollowFb,
+    influInfo.influencerFollowInsta,
+    influInfo.influencerFollowTikTok,
+    influInfo.influencerFollowYoutube,
+  ]);
+
   return (
     <>
-      <div className="report-social-layout">
+      <div className="update-report-social-layout">
+        <div className="report-general">
+          <p className="report-general-title">GENERAL</p>
+          <div className="report-general-contents">
+            <div className="report-general-content-left">
+              <div className="report-general-content-item">
+                <p>Followers:</p>
+                <div className="interact-block">
+                  <Tooltip
+                    placement="top"
+                    title={Number(influInfo.influencerFollowers).toLocaleString(
+                      "vi-VN"
+                    )}
+                  >
+                    <span className="text-tooltip">
+                      {roundNumber(influInfo.influencerFollowers)}
+                    </span>
+                  </Tooltip>
+                </div>
+              </div>
+
+              <div className="report-general-content-item">
+                <p>Engagement:</p>
+
+                {edit === "engagement" ? (
+                  <Input
+                    onChange={(e) => {
+                      setInfluInfo({
+                        ...influInfo,
+                        influencerEngagement: e.target.value,
+                      });
+
+                      setIsError(false);
+                    }}
+                    onBlur={handleSubmit}
+                    type="number"
+                    onPressEnter={handleSubmit}
+                    value={influInfo.influencerEngagement}
+                    maxLength={16}
+                    style={{ width: "100px" }}
+                    autoFocus
+                    status={isError ? "error" : ""}
+                  />
+                ) : (
+                  <div className="interact-block">
+                    <Tooltip
+                      placement="top"
+                      title={Number(
+                        influInfo.influencerEngagement
+                      ).toLocaleString("vi-VN")}
+                    >
+                      <span className="text-tooltip">
+                        {roundNumber(influInfo.influencerEngagement)}%
+                      </span>
+                    </Tooltip>
+                    <EditOutlined
+                      onClick={() => {
+                        setEdit("engagement");
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="report-general-content-right">
+              <div className="report-general-content-item">
+                <div className="cost-estimate-edit-from">
+                  <p>Cost estimate:</p>
+
+                  {edit === "cost estimate from" ? (
+                    <Input
+                      disabled={edit !== "cost estimate from"}
+                      onChange={(e) => {
+                        setInfluInfo({
+                          ...influInfo,
+                          influencerCostEstimateFrom: e.target.value,
+                        });
+
+                        setIsError(false);
+                      }}
+                      onBlur={handleSubmit}
+                      type="number"
+                      onPressEnter={handleSubmit}
+                      value={influInfo.influencerCostEstimateFrom}
+                      maxLength={16}
+                      style={{ width: "135px" }}
+                      autoFocus
+                      status={isError ? "error" : ""}
+                    />
+                  ) : (
+                    <div className="cost-estimate-block">
+                      <Tooltip
+                        placement="top"
+                        title={Number(
+                          influInfo.influencerCostEstimateFrom
+                        ).toLocaleString("vi-VN")}
+                      >
+                        <span className="text-tooltip">
+                          {influInfo.influencerCostEstimateFrom?.length > 8
+                            ? `${Number(influInfo.influencerCostEstimateFrom)
+                                .toLocaleString("vi-VN")
+                                .slice(0, 10)}...`
+                            : Number(
+                                influInfo.influencerCostEstimateFrom
+                              ).toLocaleString("vi-VN")}
+                        </span>
+                      </Tooltip>
+                      <EditOutlined
+                        onClick={() => {
+                          setEdit("cost estimate from");
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
+                <div className="cost-estimate-edit-to">
+                  <p>to</p>
+                  {edit === "cost estimate to" ? (
+                    <Input
+                      onChange={(e) => {
+                        setInfluInfo({
+                          ...influInfo,
+                          influencerCostEstimateTo: e.target.value,
+                        });
+
+                        setIsError(false);
+                      }}
+                      onBlur={handleSubmit}
+                      type="number"
+                      onPressEnter={handleSubmit}
+                      value={influInfo.influencerCostEstimateTo}
+                      maxLength={16}
+                      style={{ width: "135px" }}
+                      autoFocus
+                      status={isError ? "error" : ""}
+                    />
+                  ) : (
+                    <div className="cost-estimate-block">
+                      <Tooltip
+                        placement="top"
+                        title={Number(
+                          influInfo.influencerCostEstimateTo
+                        ).toLocaleString("vi-VN")}
+                      >
+                        <span className="text-tooltip">
+                          {influInfo.influencerCostEstimateTo.length > 8
+                            ? `${Number(influInfo.influencerCostEstimateTo)
+                                .toLocaleString("vi-VN")
+                                .slice(0, 10)}...`
+                            : Number(
+                                influInfo.influencerCostEstimateTo
+                              ).toLocaleString("vi-VN")}
+                        </span>
+                      </Tooltip>
+                      <EditOutlined
+                        onClick={() => {
+                          setEdit("cost estimate to");
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="report-general-content-item">
+                <p>Post per week:</p>
+
+                {edit === "post per week" ? (
+                  <Input
+                    onChange={(e) => {
+                      setInfluInfo({
+                        ...influInfo,
+                        influencerPostsPerWeek: e.target.value,
+                      });
+
+                      setIsError(false);
+                    }}
+                    onBlur={handleSubmit}
+                    type="number"
+                    onPressEnter={handleSubmit}
+                    value={influInfo.influencerPostsPerWeek}
+                    maxLength={16}
+                    style={{ width: "100px" }}
+                    autoFocus
+                    status={isError ? "error" : ""}
+                  />
+                ) : (
+                  <div className="interact-block">
+                    <Tooltip
+                      placement="top"
+                      title={Number(
+                        influInfo.influencerPostsPerWeek
+                      ).toLocaleString("vi-VN")}
+                    >
+                      <span className="text-tooltip">
+                        {roundNumber(influInfo.influencerPostsPerWeek)}
+                      </span>
+                    </Tooltip>
+                    <EditOutlined
+                      onClick={() => {
+                        setEdit("post per week");
+                      }}
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p className="report-social-title">SOCIAL</p>
         <div className="report-social">
           <div className="social-icon-title">
             <Facebook className="social-icon" />
@@ -63,10 +330,7 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                   onChange={(e) => {
                     setInfluInfo({
                       ...influInfo,
-                      facebook: {
-                        ...influInfo.facebook,
-                        followers: e.target.value,
-                      },
+                      influencerFollowFb: e.target.value,
                     });
 
                     setIsError(false);
@@ -74,7 +338,7 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                   onBlur={handleSubmit}
                   type="number"
                   onPressEnter={handleSubmit}
-                  value={influInfo.facebook.followers}
+                  value={influInfo.influencerFollowFb}
                   maxLength={16}
                   style={{ width: "100px" }}
                   autoFocus
@@ -84,12 +348,12 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                 <div className="interact-block">
                   <Tooltip
                     placement="top"
-                    title={Number(influInfo.facebook.followers).toLocaleString(
+                    title={Number(influInfo.influencerFollowFb).toLocaleString(
                       "vi-VN"
                     )}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo.facebook.followers)}
+                      {roundNumber(influInfo.influencerFollowFb)}
                     </span>
                   </Tooltip>
                   <EditOutlined
@@ -108,17 +372,14 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                   onChange={(e) => {
                     setInfluInfo({
                       ...influInfo,
-                      facebook: {
-                        ...influInfo.facebook,
-                        interactions: e.target.value,
-                      },
+                      influencerInteractionFb: e.target.value,
                     });
                     setIsError(false);
                   }}
                   onBlur={handleSubmit}
                   type="number"
                   onPressEnter={handleSubmit}
-                  value={influInfo.facebook.interactions}
+                  value={influInfo.influencerInteractionFb}
                   maxLength={16}
                   style={{ width: "100px" }}
                   autoFocus
@@ -129,11 +390,11 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                   <Tooltip
                     placement="top"
                     title={Number(
-                      influInfo.facebook.interactions
+                      influInfo.influencerInteractionFb
                     ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo.facebook.interactions)}
+                      {roundNumber(influInfo.influencerInteractionFb)}
                     </span>
                   </Tooltip>
                   <EditOutlined
@@ -159,19 +420,14 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                   onChange={(e) => {
                     setInfluInfo({
                       ...influInfo,
-                      instagram: {
-                        ...influInfo.instagram,
-                        followers: e.target.value,
-                      },
+                      influencerFollowInsta: e.target.value,
                     });
                     setIsError(false);
                   }}
                   onBlur={handleSubmit}
                   type="number"
                   onPressEnter={handleSubmit}
-                  value={Number(influInfo.instagram.followers).toLocaleString(
-                    "vi-VN"
-                  )}
+                  value={influInfo.influencerFollowInsta}
                   maxLength={16}
                   style={{ width: "100px" }}
                   autoFocus
@@ -181,12 +437,12 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                 <div className="interact-block">
                   <Tooltip
                     placement="top"
-                    title={Number(influInfo.instagram.followers).toLocaleString(
-                      "vi-VN"
-                    )}
+                    title={Number(
+                      influInfo.influencerFollowInsta
+                    ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo.instagram.followers)}
+                      {roundNumber(influInfo.influencerFollowInsta)}
                     </span>
                   </Tooltip>
 
@@ -205,17 +461,14 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                   onChange={(e) => {
                     setInfluInfo({
                       ...influInfo,
-                      instagram: {
-                        ...influInfo.instagram,
-                        interactions: e.target.value,
-                      },
+                      influencerInteractionInsta: e.target.value,
                     });
                     setIsError(false);
                   }}
                   onBlur={handleSubmit}
                   type="number"
                   onPressEnter={handleSubmit}
-                  value={influInfo.instagram.interactions}
+                  value={influInfo.influencerInteractionInsta}
                   maxLength={16}
                   style={{ width: "100px" }}
                   autoFocus
@@ -226,11 +479,11 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                   <Tooltip
                     placement="top"
                     title={Number(
-                      influInfo.instagram.interactions
+                      influInfo.influencerInteractionInsta
                     ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo.instagram.interactions)}
+                      {roundNumber(influInfo.influencerInteractionInsta)}
                     </span>
                   </Tooltip>
                   <EditOutlined
@@ -256,17 +509,14 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                   onChange={(e) => {
                     setInfluInfo({
                       ...influInfo,
-                      youtube: {
-                        ...influInfo.youtube,
-                        followers: e.target.value,
-                      },
+                      influencerFollowYoutube: e.target.value,
                     });
                     setIsError(false);
                   }}
                   onBlur={handleSubmit}
                   type="number"
                   onPressEnter={handleSubmit}
-                  value={influInfo.youtube.followers}
+                  value={influInfo.influencerFollowYoutube}
                   maxLength={16}
                   style={{ width: "100px" }}
                   autoFocus
@@ -276,12 +526,12 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                 <div className="interact-block">
                   <Tooltip
                     placement="top"
-                    title={Number(influInfo.youtube.followers).toLocaleString(
-                      "vi-VN"
-                    )}
+                    title={Number(
+                      influInfo.influencerFollowYoutube
+                    ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo.youtube.followers)}
+                      {roundNumber(influInfo.influencerFollowYoutube)}
                     </span>
                   </Tooltip>
                   <EditOutlined
@@ -299,17 +549,14 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                   onChange={(e) => {
                     setInfluInfo({
                       ...influInfo,
-                      youtube: {
-                        ...influInfo.youtube,
-                        interactions: e.target.value,
-                      },
+                      influencerInteractionYoutube: e.target.value,
                     });
                     setIsError(false);
                   }}
                   onBlur={handleSubmit}
                   type="number"
                   onPressEnter={handleSubmit}
-                  value={influInfo.youtube.interactions}
+                  value={influInfo.influencerInteractionYoutube}
                   maxLength={16}
                   style={{ width: "100px" }}
                   autoFocus
@@ -320,11 +567,11 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                   <Tooltip
                     placement="top"
                     title={Number(
-                      influInfo.youtube.interactions
+                      influInfo.influencerInteractionYoutube
                     ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo.youtube.interactions)}
+                      {roundNumber(influInfo.influencerInteractionYoutube)}
                     </span>
                   </Tooltip>
                   <EditOutlined
@@ -350,17 +597,14 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                   onChange={(e) => {
                     setInfluInfo({
                       ...influInfo,
-                      tiktok: {
-                        ...influInfo.tiktok,
-                        followers: e.target.value,
-                      },
+                      influencerFollowTikTok: e.target.value,
                     });
                     setIsError(false);
                   }}
                   onBlur={handleSubmit}
                   type="number"
                   onPressEnter={handleSubmit}
-                  value={influInfo.tiktok.followers}
+                  value={influInfo.influencerFollowTikTok}
                   maxLength={16}
                   style={{ width: "100px" }}
                   autoFocus
@@ -370,12 +614,12 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                 <div className="interact-block">
                   <Tooltip
                     placement="top"
-                    title={Number(influInfo.tiktok.followers).toLocaleString(
-                      "vi-VN"
-                    )}
+                    title={Number(
+                      influInfo.influencerFollowTikTok
+                    ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo.tiktok.followers)}
+                      {roundNumber(influInfo.influencerFollowTikTok)}
                     </span>
                   </Tooltip>
                   <EditOutlined
@@ -393,17 +637,14 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                   onChange={(e) => {
                     setInfluInfo({
                       ...influInfo,
-                      tiktok: {
-                        ...influInfo.tiktok,
-                        interactions: e.target.value,
-                      },
+                      influencerInteractionTiktok: e.target.value,
                     });
                     setIsError(false);
                   }}
                   onBlur={handleSubmit}
                   type="number"
                   onPressEnter={handleSubmit}
-                  value={influInfo.tiktok.interactions}
+                  value={influInfo.influencerInteractionTiktok}
                   maxLength={16}
                   style={{ width: "100px" }}
                   autoFocus
@@ -413,12 +654,12 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                 <div className="interact-block">
                   <Tooltip
                     placement="top"
-                    title={Number(influInfo.tiktok.interactions).toLocaleString(
-                      "vi-VN"
-                    )}
+                    title={Number(
+                      influInfo.influencerInteractionTiktok
+                    ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo.tiktok.interactions)}
+                      {roundNumber(influInfo.influencerInteractionTiktok)}
                     </span>
                   </Tooltip>
                   <EditOutlined

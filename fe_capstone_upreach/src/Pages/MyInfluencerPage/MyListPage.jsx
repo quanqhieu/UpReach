@@ -1,5 +1,5 @@
 import FooterHome from "../../Components/Layouts/Footer/FooterHome";
-import HeaderLoginHompape from "../../Components/Layouts/Header/HeaderLoginHompape";
+import HeaderHomepage from "../../Components/Layouts/Header/HeaderHomepage";
 import React, { useEffect, useState } from "react";
 import { ReactComponent as Influencers } from "../../Assets/Icon/InfluencersMyList.svg";
 import { ReactComponent as TotalInteractions } from "../../Assets/Icon/Est.TotalInteractions.svg";

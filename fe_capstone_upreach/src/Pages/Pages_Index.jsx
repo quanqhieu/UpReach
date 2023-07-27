@@ -6,10 +6,16 @@ import SignUp from "./SignUpPage/SignUp";
 import Introduce from "./IntroducePage/Introduce";
 import HomePage from "./HomePage/HomePage";
 import Upgrade from "./UpgradePage/Upgrade";
+
 import AdminDashboard from "./AdminPage/AdminDashboard/AdminDashboard";
 import AdminUserProfile from "./AdminPage/AdminUserProfile/AdminUserProfile";
+import AdminInfluencer from "./AdminPage/AdminInfluencer/AdminInfluencer";
+import AdminReport from "./AdminPage/AdminReport/AdminReport";
+import AdminUpgrade from "./AdminPage/AdminUpgrade/AdminUpgrade";
+
 import InfluencerBookingPage from "./InfluencerPage/InfluencerBookingPage/InfluencerBookingPage.jsx";
 import InfluencerReportPage from "./InfluencerPage/InfluencerReportPage/InfluencerReportPage.jsx";
+
 import ForgotPasswordPage from "./ForgotPassword/ForgotPasswordPage";
 import VerifyRegisterPage from "./VerifyRegister/VerifyRegisterPage";
 import ClientProfilePage from "./ClientProfilePage/ClientProfilePage";
@@ -123,10 +129,34 @@ function Pages_Index() {
         }
       />
       <Route
-        path="/admin/user-profile"
+        path="/admin/user-management"
         element={
           <>
             <AdminUserProfile navigateHome={navigateAdmin} />
+          </>
+        }
+      />
+      <Route
+        path="/admin/influencer-management"
+        element={
+          <>
+            <AdminInfluencer navigateHome={navigateAdmin} />
+          </>
+        }
+      />
+      <Route
+        path="/admin/report-management"
+        element={
+          <>
+            <AdminReport navigateHome={navigateAdmin} />
+          </>
+        }
+      />
+      <Route
+        path="/admin/upgrade-management"
+        element={
+          <>
+            <AdminUpgrade navigateHome={navigateAdmin} />
           </>
         }
       />

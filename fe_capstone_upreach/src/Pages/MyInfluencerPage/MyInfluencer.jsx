@@ -1,5 +1,5 @@
 import FooterHome from "../../Components/Layouts/Footer/FooterHome";
-import HeaderLoginHompape from "../../Components/Layouts/Header/HeaderLoginHompape";
+import HeaderHomepage from "../../Components/Layouts/Header/HeaderHomepage";
 import React, { useState, useEffect } from "react";
 import {
   MailOutlined,
@@ -305,7 +305,7 @@ const MyInfluencer = () => {
   return (
     <>
       <div className="coverMain">
-        <HeaderLoginHompape />
+        <HeaderHomepage />
         <div className="row pt-5">
           <div className="col-2 pt-2 menuList">
             <Menu

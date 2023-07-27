@@ -1,6 +1,6 @@
 import React from "react";
 import "./InfluencerBookingCard.css";
-import { ReactComponent as OpenBookingIcon } from "../../Assets/Icon/OpenBooking.svg";
+import { Icon } from "@iconify/react";
 
 const InfluencerBookingCard = ({ bookingList }) => {
   return (
@@ -18,8 +18,10 @@ const InfluencerBookingCard = ({ bookingList }) => {
           <p style={{ width: "15%" }}>{bookingList.createdDate}</p>
         </div>
         <div className="influ-booking-card-icon">
-          <OpenBookingIcon />
-          {/* style={{width:"22px", height:"22px"}} */}
+          <Icon icon="iconoir:cancel" color="#fa0000" width="30" height="30" />
+        </div>
+        <div className="influ-booking-card-icon">
+          <Icon icon="ic:round-check" color="#00dd1a" width="30" height="30" />
         </div>
       </div>
     </>
