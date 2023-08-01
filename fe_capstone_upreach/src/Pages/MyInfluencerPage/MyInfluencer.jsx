@@ -25,97 +25,6 @@ function getItem(label, key, icon, children, type) {
   };
 }
 
-// data example get from BE
-// const DATALIST = [
-//   {
-//     id: "mot",
-//     label: "List 1",
-//     dataMale: 50,
-//     dataFemale: 50,
-//     bar: [30, 30, 40, 50, 60],
-//     influencer: 3,
-//     channels: 4,
-//     Esttotal: 5,
-//     Price: 4,
-//     Table: [
-//       {
-//         key: "1",
-//         influencer: "John Brown",
-//         followers: 32,
-//         interactions: "New York No. 1 Lake Park",
-//         costestimate: ["nice", "developer"],
-//       },
-//       {
-//         key: "2",
-//         influencer: "Jim Green",
-//         followers: 42,
-//         interactions: "London No. 1 Lake Park",
-//         costestimate: ["loser"],
-//       },
-//       {
-//         key: "3",
-//         influencer: "Joe Black",
-//         followers: 32,
-//         interactions: "Sydney No. 1 Lake Park",
-//         costestimate: ["cool", "teacher"],
-//       },
-//     ],
-//   },
-//   {
-//     id: "hai",
-//     label: "List 2",
-//     dataMale: 40,
-//     dataFemale: 60,
-//     bar: [10, 20, 30, 40, 50, 30],
-//     influencer: 6,
-//     channels: 5,
-//     Esttotal: 2,
-//     Price: 1,
-//     Table: [
-//       {
-//         key: "1",
-//         influencer: "John Brown",
-//         followers: 32,
-//         interactions: "New York No. 1 Lake Park",
-//         costestimate: ["nice", "developer"],
-//       },
-//       {
-//         key: "2",
-//         influencer: "Jim Green",
-//         followers: 42,
-//         interactions: "London No. 1 Lake Park",
-//         costestimate: ["loser"],
-//       },
-//     ],
-//   },
-//   {
-//     id: "ba",
-//     label: "List 3",
-//     dataMale: 30,
-//     dataFemale: 70,
-//     bar: [30, 40, 10, 30, 50, 70],
-//     influencer: 1,
-//     channels: 2,
-//     Esttotal: 4,
-//     Price: 5,
-//     Table: [
-//       {
-//         key: "2",
-//         influencer: "Jim Green",
-//         followers: 42,
-//         interactions: "London No. 1 Lake Park",
-//         costestimate: ["loser"],
-//       },
-//     ],
-//   },
-// ];
-// const DATA_NAMELIST = [];
-
-// DATALIST.forEach((item) => {
-//   DATA_NAMELIST.push(getItem(item.label, item.id));
-// });
-// DATA_NAMELIST.push(getItem("+ Add New", "new"));
-
 const MyInfluencer = () => {
   const [addNewList, setAddNewList] = useState(false);
   const [checkTabListPage, setCheckTabListPage] = useState(true);
@@ -133,7 +42,14 @@ const MyInfluencer = () => {
   const [flagChangeDataTable, setFlagChangeDataTable] = useState(true);
   const [flagChangeNameList, setFlagChangeNameList] = useState(true);
   const [flagDeleteList, setFlagDeleteList] = useState(true);
+  const [idAccClient, setIdAccClient] = useState("");
 
+  // // get Id account
+  // function getClientID() {
+
+  // }
+
+  //get all list in menu
   function getDataSelectList() {
     var elementData = dataOfList.find((obj) => obj.id === listSelected);
     setObject(elementData);
@@ -167,16 +83,25 @@ const MyInfluencer = () => {
   //====================== Get Data Back End ======================
   const fetchDataGetList = async () => {
     try {
-      const response = (await ApiListInfluecer.getListMenu()).data;
+      const dataLocalStorge = await JSON.parse(
+        localStorage.getItem("user-draw-storage")
+      ).state.user.clientId;
+      setIdAccClient(dataLocalStorge);
+      const response = (await ApiListInfluecer.getListMenu(dataLocalStorge))
+        .data;
       setListInfluencer(response);
     } catch (error) {
       console.log("Error fetching data:", error);
     }
   };
 
-  const AddNewListClient = async (idList, nameList) => {
+  const AddNewListClient = async (clientID, idList, nameList) => {
     try {
-      const response = await ApiListInfluecer.addListClient(idList, nameList);
+      const response = await ApiListInfluecer.addListClient(
+        clientID,
+        idList,
+        nameList
+      );
       if (response.Status == "Success") {
         fetchDataGetList();
       }
@@ -184,9 +109,9 @@ const MyInfluencer = () => {
       console.log("Error fetching data:", error);
     }
   };
-  const fetchDataTableKOLs = async (idList) => {
+  const fetchDataTableKOLs = async (idAccClient, idList) => {
     try {
-      const response = await ApiListInfluecer.getTableKOLs(idList);
+      const response = await ApiListInfluecer.getTableKOLs(idAccClient, idList);
       setTableInfluencer(response);
       const nameIdList = listInfluencer.find(
         (item) => item.ClientLists_ID == idList
@@ -197,7 +122,6 @@ const MyInfluencer = () => {
       const totalInteractions = response.Table.reduce(function (prev, current) {
         return prev + +current.interactions;
       }, 0);
-      console.log(totalFlollowers);
       const dataObject = {
         id: idList,
         label: nameIdList.Name_list,
@@ -219,13 +143,12 @@ const MyInfluencer = () => {
   //================================================================
   //====================== click item in list=======================
   const onClick = (e) => {
-    console.log("key", e);
     if (e.key === "history") {
       setCheckTabListPage(false);
     } else {
       setCheckTabListPage(true);
       setListSelected(e.key);
-      fetchDataTableKOLs(e.key);
+      fetchDataTableKOLs(idAccClient, e.key);
       // setIdList(e.key);
     }
     if (e.key === "new") {
@@ -248,8 +171,7 @@ const MyInfluencer = () => {
     } else {
       //setListInfluencer([getItem(nameList, nameList), ...listInfluencer]);
       const idList = uuid().slice(0, 8);
-      console.log(`id: ${idList}, name ${nameList}`);
-      AddNewListClient(idList, nameList);
+      AddNewListClient(idAccClient, idList, nameList);
       setAddNewList(false);
       form.resetFields();
       setListSelected(idList);
@@ -271,13 +193,13 @@ const MyInfluencer = () => {
   //   getDataSelectList();
   // }, [dataOfList, listSelected, listInfluencer]);
 
-  // useEffect(() => {
-  //   fetchDataGetList();
-  // }, []);
+  useEffect(() => {
+    fetchDataGetList(idAccClient);
+  }, []);
 
   //Remove Influ out list
   useEffect(() => {
-    fetchDataTableKOLs(listSelected);
+    fetchDataTableKOLs(idAccClient, listSelected);
   }, [flagChangeDataTable]);
 
   //Change Name List
@@ -288,7 +210,7 @@ const MyInfluencer = () => {
   }, [flagChangeNameList]);
 
   useEffect(() => {
-    fetchDataTableKOLs(listSelected);
+    fetchDataTableKOLs(idAccClient, listSelected);
   }, [listInfluencer]);
 
   //Delete List
@@ -333,6 +255,7 @@ const MyInfluencer = () => {
                 setFlagChangeNameList={setFlagChangeNameList}
                 flagDeleteList={flagDeleteList}
                 setFlagDeleteList={setFlagDeleteList}
+                idAccClient={idAccClient}
                 // IdList={IdList}
                 // DeleteList={DeleteList}
               />

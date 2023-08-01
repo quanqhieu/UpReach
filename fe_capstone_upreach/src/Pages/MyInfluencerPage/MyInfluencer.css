@@ -7,8 +7,11 @@
     background-color: white;
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     border-radius: 15px;
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+.coverMain .info{
+    margin: 0;
 }
 .coverMain .infomation{
     border-bottom: 2px solid black;
@@ -40,7 +43,7 @@
     line-height: normal;
     letter-spacing: 0.12px;
 }
-.coverMain .value-type .button-edit{
+.coverMain .button-edit{
     background-color: transparent;
     color: blue;
     border: none;

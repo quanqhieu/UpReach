@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Dropdown, Row, Col, Checkbox } from "antd";
-import ButtonDropdow from "./ButtonDropdow";
+import ButtonDropdown from "./ButtonDropdown";
 
 function RenderListCheckbox({ valueCheckbox, titleCheckbox }) {
   return (
@@ -47,18 +47,42 @@ function RenderCheckBoxGroup({
   );
 }
 
-const DropdownOfCheckBox = ({ listItemCheckBox, titleBtn, className }) => {
+const DropdownOfCheckBox = ({
+  listItemCheckBox,
+  titleBtn,
+  className,
+  checkClearAll,
+  dataSearch,
+  setDataSearch,
+}) => {
   const [value, setValue] = useState();
 
   //Func Khi click vào checkbox thì sẽ set data vào value
   const hanndleOnChange = (checkedValues) => {
     setValue(checkedValues);
+    if (titleBtn === "Type") {
+      setDataSearch({ ...dataSearch, nameType: checkedValues });
+    }
+    if (titleBtn === "Content Formats") {
+      console.log(value);
+      setDataSearch({ ...dataSearch, contentFormats: checkedValues });
+    }
+    // setInputSearch({});
+    // console.log(value);
+    // change background when onchange filter
+    document.getElementById(titleBtn).classList.add("active-filter");
   };
 
   //Func Khi click vào btn clear thì sẽ xóa hết data
   const handleBtnClear = () => {
     setValue([]);
+    // change background when onchange filter
+    document.getElementById(titleBtn).classList.remove("active-filter");
   };
+
+  useEffect(() => {
+    handleBtnClear();
+  }, [checkClearAll]);
 
   return (
     <Dropdown
@@ -75,7 +99,7 @@ const DropdownOfCheckBox = ({ listItemCheckBox, titleBtn, className }) => {
       )}
     >
       <a onClick={(e) => e.preventDefault()}>
-        <ButtonDropdow titleBtn={titleBtn} />
+        <ButtonDropdown Id={titleBtn} titleBtn={titleBtn} />
       </a>
     </Dropdown>
   );

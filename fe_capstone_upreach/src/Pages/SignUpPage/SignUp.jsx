@@ -16,14 +16,14 @@ const SignUp = () => {
           initialValues={{ remember: true }}
         >
           <p className="signUpTitle">Create your account</p>
-          <Button type="primary" htmlType="submit" className="signUpGoogle">
+          {/* <Button type="primary" htmlType="submit" className="signUpGoogle">
             <div className="GoogleIcon">{<IconGoogle />}</div>
             <p style={{ fontWeight: "600" }}>Sign up with Google</p>
-          </Button>
+          </Button> */}
           <div className="signUpBorders">
-            <div className="signUpBorder"></div>
+            {/* <div className="signUpBorder"></div>
             <p style={{ padding: "0 15px" }}>or</p>
-            <div className="signUpBorder"></div>
+            <div className="signUpBorder"></div> */}
           </div>
           <div className="signUpSubTitle">
             <p className="signUpSubTitleContent">Full Name </p>
@@ -112,20 +112,38 @@ const SignUp = () => {
               }
             />
           </Form.Item>
-
-          <Link className="signUpBtnText" to="/verify-register">
-            <Button
-              style={{
-                width: "100%",
-                height: "50px",
-              }}
-              type="primary"
-              htmlType="submit"
-              className="signUpBtn"
-            >
-              Sign Up
-            </Button>
-          </Link>
+          <div className="row">
+            <div className="col-6 p-0">
+              <Link className="signUpBtnText" to="/verify-register">
+                <Button
+                  style={{
+                    width: "98%",
+                    height: "50px",
+                  }}
+                  type="primary"
+                  htmlType="submit"
+                  className="signUpBtn"
+                >
+                  Join as Brand
+                </Button>
+              </Link>
+            </div>
+            <div className="col-6 p-0">
+              <Link className="signUpBtnText" to="/verify-register">
+                <Button
+                  style={{
+                    width: "98%",
+                    height: "50px",
+                  }}
+                  type="primary"
+                  htmlType="submit"
+                  className="signUpBtn"
+                >
+                  Join as Influencer
+                </Button>
+              </Link>
+            </div>
+          </div>
           <div className="signUpToLogin">
             <p>Already have an account? </p>
             <div className="loginLink">
