@@ -10,6 +10,11 @@ const ApiUser = {
         const url = '/confirm';
         return axiosClient.post(url, {Data: data})
     },
+
+    addInfomationInflunecer(data){
+        const url = '/addBasicInfomationInfluencer';
+        return axiosClient.post(url, {Data: data})
+    }
 }
 
 export default ApiUser

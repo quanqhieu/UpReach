@@ -36,6 +36,7 @@ function ValidateButton({
 const SignUp = () => {
   const navigate = useNavigate()
   const ROLE_CLIENT = "2"
+  const ROLE_INFLUENCER = "3"
   const [message, setMessage] = useState({
     MesName: '',
     MesEmail: '',
@@ -72,6 +73,12 @@ const SignUp = () => {
 
   const onChangeInput = (value) => {
     setForm({...form, [value.target.name] : value.target.value})
+  };
+  const handleClickSignUpClient = () => {
+    form.role =ROLE_CLIENT
+  };
+  const handleClickSignUpInfluencer = () => {
+    form.role =ROLE_INFLUENCER
   };
   
   return (
@@ -163,6 +170,7 @@ const SignUp = () => {
                   type="primary"
                   htmlType="submit"
                   className="signUpBtn"
+                  onClick = {handleClickSignUpClient}
                 >
                   Join as Brand
                 </Button>
@@ -176,6 +184,7 @@ const SignUp = () => {
                   type="primary"
                   htmlType="submit"
                   className="signUpBtn"
+                  onClick = {handleClickSignUpInfluencer}
                 >
                   Join as Influencer
                 </Button>

@@ -14,6 +14,7 @@ import OverviewForm from "./OverviewForm";
 import ContentForm from "./ContentForm";
 import SocialForm from "./SocialForm";
 import FinishForm from "./FinishForm";
+import ApiUser from "../../Api/ApiUser";
 
 const CreatInfluencerProfilePage = () => {
   const [form] = Form.useForm();
@@ -22,6 +23,10 @@ const CreatInfluencerProfilePage = () => {
   const [overviewDetails, setOverviewDetails] = useState(null);
   const [contentDetails, setContentFormDetails] = useState([null]);
   const [socialDetails, setSocialFormDetails] = useState(null);
+  const [message, setMessage] = useState()
+  
+  
+
 
   const onFinishInformationForm = (values) => {
     console.log(values);

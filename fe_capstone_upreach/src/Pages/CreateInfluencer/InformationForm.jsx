@@ -1,9 +1,18 @@
 import { Button, Form, Input, InputNumber, Select } from "antd";
-import React from "react";
+import React, {useRef, useState} from "react";
 import "./CreateInfluencerPage.css";
 import { Option } from "antd/es/mentions";
-
+import ApiUser from "../../Api/ApiUser";
 const InformationForm = ({ onFinish, initialValues }) => {
+  
+  
+
+  onFinish = (values) =>{
+    console.log(123)
+    console.log(values);
+  }
+  
+
   return (
     <>
       <div id="content">
@@ -52,8 +61,8 @@ const InformationForm = ({ onFinish, initialValues }) => {
                 ]}
               >
                 <Select placeholder="Select Your Gender">
-                  <Option value="male">Male</Option>
-                  <Option value="female">Female</Option>
+                  <Option value="Male">Male</Option>
+                  <Option value="Female">Female</Option>
                 </Select>
               </Form.Item>
               <Form.Item
@@ -98,11 +107,11 @@ const InformationForm = ({ onFinish, initialValues }) => {
                 ]}
               >
                 <Select placeholder="Select Your Influencer Type ">
-                  <Option value="type1">Celebrity</Option>
-                  <Option value="type2">Talent</Option>
-                  <Option value="type3">Professional</Option>
-                  <Option value="type4">Citizen</Option>
-                  <Option value="type5">Community</Option>
+                  <Option value="Celebrity">Celebrity</Option>
+                  <Option value="Talent">Talent</Option>
+                  <Option value="Professional">Professional</Option>
+                  <Option value="Citizen">Citizen</Option>
+                  <Option value="Community">Community</Option>
                 </Select>
               </Form.Item>
               <Form.Item
@@ -116,11 +125,11 @@ const InformationForm = ({ onFinish, initialValues }) => {
                 ]}
               >
                 <Select placeholder="Select Your Relationship ">
-                  <Option value="rela1">Single</Option>
-                  <Option value="rela2">Married</Option>
-                  <Option value="rela3">Single Mom</Option>
-                  <Option value="rela4">Single Dad</Option>
-                  <Option value="rela5">Unknown</Option>
+                  <Option value="Single">Single</Option>
+                  <Option value="Married">Married</Option>
+                  <Option value="Single Mom">Single Mom</Option>
+                  <Option value="Single Dad">Single Dad</Option>
+                  <Option value="Unknown">Unknown</Option>
                 </Select>
               </Form.Item>
               <div>
