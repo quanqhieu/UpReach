@@ -1,10 +1,10 @@
 import axiosClient from "./AxiosClient"
 
 const ApiListClient = {
-    // getListMenu(){
-    //     const url = '/getlistbyuserid';
-    //     return axiosClient.post(url, {ClientID: "CL001"})
-    // },
+    updateProfileClient(data){
+        const url = '/updateClientProfile';
+        return axiosClient.post(url, data)
+    },
 }
 
 export default ApiListClient

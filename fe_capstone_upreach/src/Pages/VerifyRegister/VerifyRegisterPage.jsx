@@ -74,9 +74,6 @@ const VerifyRegisterPage = () => {
     
   }
 
-
-  
-
   return (
     <>
       <div className="verify-background">

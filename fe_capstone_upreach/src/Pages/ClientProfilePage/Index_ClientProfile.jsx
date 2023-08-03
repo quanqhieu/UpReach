@@ -9,20 +9,31 @@ import {
 } from "@ant-design/icons";
 import UpdateEmail from "./UpdateEmail";
 import ChangePassword from "./ChangePassword";
+import ApiListClient from "../../Api/ApiListClient";
 
 const Index_ClientProfile = () => {
   const [isModalOpenUpdateEmail, setIsModalOpenUpdateEmail] = useState(false);
   const [isSubModel, setSubModel] = useState(false);
-  const [isModalOpenChangePassword, setIsModalOpenChangePassword] =
-    useState(false);
+  const [isModalOpenChangePassword, setIsModalOpenChangePassword] =useState(false);
   const [data, setData] = useState();
   const inputRef = useRef(null);
   const [image, setImage] = useState("");
-
+  const [message, setMessage] = useState()
+  
   function onFinish(value) {
     setData(value);
   }
-  console.log("data", data);
+
+  const FetchDataProfile = async (data) => {
+    try {
+      const response = await ApiListClient.updateProfileClient(data);
+      console.log(response)
+      return response;
+    } catch (error) {
+      setMessage(error)
+      console.log(error) ; 
+    }
+  }; 
 
   function handleClickShowDialog() {
     setIsModalOpenUpdateEmail(true);

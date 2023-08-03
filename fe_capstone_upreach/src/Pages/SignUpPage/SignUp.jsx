@@ -9,29 +9,6 @@ import ApiUser from "../../Api/ApiUser"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-function ValidateButton({
-  isValidInput
-}) {
-  return (
-    <>
-  {isValidInput? <Link className="signUpBtnText" to="/verify-register">
-  
-</Link>: <Button
-    style={{
-      width: "100%",
-      height: "50px",
-    }}
-    type="primary"
-    htmlType="submit"
-    className="signUpBtn"
-    
-  >
-    Sign Up
-  </Button>}
-  </>
-  );
-}
-
 const SignUp = () => {
   const navigate = useNavigate()
   const ROLE_CLIENT = "2"
