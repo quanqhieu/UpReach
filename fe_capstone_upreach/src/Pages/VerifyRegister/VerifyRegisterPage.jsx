@@ -3,6 +3,8 @@ import { Button, Form, Input, InputNumber } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import "./VerifyRegisterPage.css";
 import ApiUser from "../../Api/ApiUser"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const VerifyRegisterPage = () => {
 
   const navigate = useNavigate(); 
@@ -15,31 +17,34 @@ const VerifyRegisterPage = () => {
     confirmPass: ''
   });
 
-  useEffect(  () => {    
-    const FetchRegisterUser = async (data) => {
-      try {
-        const response = await ApiUser.registerUser(data);
-        console.log(response)
-        return response;
-      } catch (error) {
-        setMessage(error)
-        console.log(error) ; 
-      }
-    };
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8000,
+    pauseOnFocusLoss: true,
+    draggable: true,
+    theme: "dark",
+  }
 
+  useEffect(  () => {    
     const data = localStorage.getItem('formData');
     if(!data){
       navigate("/sign-up")
     }
     const formDataJson = JSON.parse(data);
-    const result = FetchRegisterUser(formDataJson);
     setFormData(formDataJson)
+
+
   }, []);
 
   const confirmUser = async (data) =>{
     try{
       const response = await ApiUser.conFirmUser(data);
       console.log(response)
+      
+      if(response.status === "False"){
+        toast.error(response.message, toastOptions)
+        return false;
+      }
       return response
     }catch(error){
       setMessage(error)
@@ -51,10 +56,25 @@ const VerifyRegisterPage = () => {
     setInputValue(value);
   };
 
-  const handleContinueButtonClick = () => {
+  const handleSubmit = async () =>{
     formData.otp = ''+inputValue
-    confirmUser(formData)
-  };
+    const result = await confirmUser(formData)
+    console.log(result)
+    if(result){
+      if(message){
+        navigate('/verify-register')
+      }
+      if(formData.role === '2'  ){
+        navigate('/client-profile')
+      }
+      else if (formData.role === '3' ){
+        navigate('/create-influencer-page')
+      }
+    }
+    
+  }
+
+
   
 
   return (
@@ -69,7 +89,7 @@ const VerifyRegisterPage = () => {
                 enter the 6-digit code to verify your email.
               </p>
             </div>
-            <Form className="form" >
+            <Form className="form" onFinish={handleSubmit}>
               <Form.Item
                 name="name"
               >
@@ -89,13 +109,14 @@ const VerifyRegisterPage = () => {
                     width: "500px",
                     height: "50px",
                   }}
-                  className="submit btn"
-                  onClick={handleContinueButtonClick}
+                  className="submit btn" 
+                  htmlType="submit"
                 >
                   Continue
               </Button>
               
               <div className="login-forgot">I didn't receive an email</div>
+              <ToastContainer />
             </Form>
           </div>
         </div>

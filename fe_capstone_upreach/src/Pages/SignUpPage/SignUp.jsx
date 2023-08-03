@@ -6,9 +6,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import AuthBackground from "../../Components/Layouts/AuthBackground/AuthBackground";
 import ApiUser from "../../Api/ApiUser"
-
-
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function ValidateButton({
   isValidInput
@@ -37,12 +36,7 @@ const SignUp = () => {
   const navigate = useNavigate()
   const ROLE_CLIENT = "2"
   const ROLE_INFLUENCER = "3"
-  const [message, setMessage] = useState({
-    MesName: '',
-    MesEmail: '',
-    MesPassword: '',
-    MesConfirmPass: ''
-  })
+  const [message, setMessage] = useState()
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -50,35 +44,42 @@ const SignUp = () => {
     confirmPass: ''
   })
 
-  const handleSubmit = () => {
-    console.log('VODAY', form)
-    if (form.name === "" || form.name === undefined) {
-      return;
-    }
-    if (form.email === "" || form.email === undefined) {
-      return;
-    }
-    if (form.password === "" || form.password === undefined) {
-      return;
-    }
-    if (form.confirmPass === "" || form.confirmPass === undefined || form.confirmPass !== form.password) {
-      return;
-    }
-    else{
-      form.role = ROLE_CLIENT
+  const FetchRegisterUser = async (data) => {
+    try {
+      const response = await ApiUser.registerUser(data);
+      if(response.status === "False"){
+        toast.error(response.message, toastOptions)
+        return;
+      }
       localStorage.setItem('formData', JSON.stringify(form));
       navigate("/verify-register")
+      return response;
+    } catch (error) {
+      setMessage(error)
+      console.log(error) ; 
     }
   };
+
+  
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8000,
+    pauseOnFocusLoss: true,
+    draggable: true,
+    theme: "dark",
+  }
 
   const onChangeInput = (value) => {
     setForm({...form, [value.target.name] : value.target.value})
   };
   const handleClickSignUpClient = () => {
     form.role =ROLE_CLIENT
+    const result = FetchRegisterUser(form);
+    
   };
   const handleClickSignUpInfluencer = () => {
-    form.role =ROLE_INFLUENCER
+    form.role = ROLE_INFLUENCER
+    const result = FetchRegisterUser(form);
   };
   
   return (
@@ -88,7 +89,7 @@ const SignUp = () => {
           name="signUp"
           className="signUpForm"
           initialValues={{ remember: true }}
-          onFinish={handleSubmit}
+          // onFinish={handleSubmit}
         >
           <p className="signUpTitle">Create your account</p>
           <Button type="primary" htmlType="submit" className="signUpGoogle">
@@ -106,6 +107,9 @@ const SignUp = () => {
           </div>
           <Form.Item
             name="name"
+            rules={[
+              { required: true, message: "Please input your Full Name!" },
+            ]}
           >
             <Input
               className= "signUpTypeBtn heightSignUpBtn"
@@ -122,6 +126,13 @@ const SignUp = () => {
           
           <Form.Item
             name="email"
+            rules={[
+              {
+                required: true,
+                message: "Please input your email!",
+              },
+              { type: "email", message: "Invalid email" },
+            ]}
           >
             <Input
               className="signUpTypeBtn heightSignUpBtn"
@@ -136,11 +147,18 @@ const SignUp = () => {
           </div>
           <Form.Item
             name="password"
+            rules={[
+              { required: true, message: "Please input your password!" },
+              { min: 8, message: "Enter as least 8 characters" },
+            ]}
           >
             <Input.Password
               type="password"
               className="signUpTypeBtn heightSignUpBtn"
               placeholder="Enter your password at least 8 characters"
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
               name="password"
               onChange={onChangeInput}
             />
@@ -151,6 +169,23 @@ const SignUp = () => {
           </div>
           <Form.Item
             name="confirmPassword"
+            rules={[
+              {
+                required: true,
+                message: "Please input your confirm password!",
+              },
+              { min: 8, message: "Enter as least 8 characters" },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error("The re-password that you entered do not match!")
+                  );
+                },
+              }),
+            ]}
           >
             <Input
               type="password"
@@ -158,6 +193,9 @@ const SignUp = () => {
               onChange={onChangeInput}
               className="signUpTypeBtn heightSignUpBtn"
               placeholder="Enter confirm password"
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
             />
           </Form.Item>
           <div className="row">
@@ -198,6 +236,7 @@ const SignUp = () => {
           </div>
         </Form>
       </div>
+      <ToastContainer />
     </AuthBackground>
   );
 };
