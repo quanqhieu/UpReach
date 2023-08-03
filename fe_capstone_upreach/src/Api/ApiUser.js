@@ -8,7 +8,7 @@ const ApiUser = {
 
     conFirmUser(data){
         const url = '/confirm';
-        return axiosClient.post(url, {Data: data})
+        return axiosClient.post(url, data);
     },
 
     addInfomationInflunecer(data){
