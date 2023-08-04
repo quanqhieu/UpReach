@@ -1,6 +1,6 @@
 import { Avatar, Button, Col, Collapse, Form, Input, Row } from "antd";
 import FormItem from "antd/es/form/FormItem";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./ClientProfilePage.css";
 import {
   DownCircleOutlined,
@@ -10,6 +10,9 @@ import {
 import UpdateEmail from "./UpdateEmail";
 import ChangePassword from "./ChangePassword";
 import ApiListClient from "../../Api/ApiListClient";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Index_ClientProfile = () => {
   const [isModalOpenUpdateEmail, setIsModalOpenUpdateEmail] = useState(false);
@@ -19,14 +22,37 @@ const Index_ClientProfile = () => {
   const inputRef = useRef(null);
   const [image, setImage] = useState("");
   const [message, setMessage] = useState()
-  
+  const [status, setStatus] = useState()
+  const navigate = useNavigate(); 
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8000,
+    pauseOnFocusLoss: true,
+    draggable: true,
+    theme: "dark",
+  }
+
   function onFinish(value) {
     setData(value);
+    FetchDataProfile(value)
   }
+
+  useEffect(() =>{
+    if(status ==='True'){
+      navigate('/homepage')
+    }
+  },[status])
 
   const FetchDataProfile = async (data) => {
     try {
       const response = await ApiListClient.updateProfileClient(data);
+      if(response.status === "False"){
+        toast.error(response.message, toastOptions)
+        setStatus(response.status)
+        return ;
+      }
+      toast.success(response.message, toastOptions)
+      setStatus(response.status)
       console.log(response)
       return response;
     } catch (error) {
@@ -166,8 +192,10 @@ const Index_ClientProfile = () => {
                     </Button>
                   </FormItem>
                 </div>
+                
               </Form>
             </div>
+            <ToastContainer />
             <Collapse
               className="collapse_advanced"
               ghost
@@ -206,6 +234,7 @@ const Index_ClientProfile = () => {
         </Row>
       </Col>
     </Row>
+    
   );
 };
 

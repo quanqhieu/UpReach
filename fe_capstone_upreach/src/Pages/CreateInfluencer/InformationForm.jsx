@@ -4,15 +4,8 @@ import "./CreateInfluencerPage.css";
 import { Option } from "antd/es/mentions";
 import ApiUser from "../../Api/ApiUser";
 const InformationForm = ({ onFinish, initialValues }) => {
-  
-  
 
-  onFinish = (values) =>{
-    console.log(123)
-    console.log(values);
-  }
   
-
   return (
     <>
       <div id="content">

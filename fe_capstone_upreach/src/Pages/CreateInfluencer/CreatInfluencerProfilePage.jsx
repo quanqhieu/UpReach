@@ -26,7 +26,7 @@ const CreatInfluencerProfilePage = () => {
   const [message, setMessage] = useState()
   
   
-
+  
 
   const onFinishInformationForm = (values) => {
     console.log(values);
