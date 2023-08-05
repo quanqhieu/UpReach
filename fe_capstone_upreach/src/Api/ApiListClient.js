@@ -5,6 +5,7 @@ const ApiListClient = {
         const url = '/updateClientProfile';
         return axiosClient.post(url, data)
     },
+
 }
 
 export default ApiListClient
