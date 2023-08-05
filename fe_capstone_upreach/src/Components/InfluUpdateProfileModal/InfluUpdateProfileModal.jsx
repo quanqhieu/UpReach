@@ -6,18 +6,21 @@ import React from "react";
 import axios from "axios";
 import { Spin } from "antd";
 
-// import { useInfluStore } from "../../Stores/influencer";
 import { useUserStore } from "../../Stores/user";
-import { useInfluStore } from "../../Stores/influencer";
+
 const InfluUpdateProfileModal = ({
+  setWaitedDate,
+  setIsAllowEdit,
   setIsChange,
   previewInflu,
   setPreviewInflu,
+  previewBooking,
+  setPreviewBooking,
+  idJobsRemove,
+  setIdJobsRemove,
+  previewChart,
+  setPreviewChart,
 }) => {
-  const [influ, setInfluInfo] = useInfluStore((state) => [
-    state.influ,
-    state.setInfluInfo,
-  ]);
   const [user, setUserInfo] = useUserStore((state) => [
     state.user,
     state.setUserInfo,
@@ -25,8 +28,16 @@ const InfluUpdateProfileModal = ({
   const [isSaving, setIsSaving] = React.useState(false);
   const handleSave = () => {
     setIsSaving(true);
+    var dateUTC = new Date();
+    dateUTC.setHours(dateUTC.getHours() + 7);
+    var dateVN7 = JSON.stringify(dateUTC);
+
     const formData = new FormData();
     formData.append("influ", JSON.stringify(previewInflu));
+    formData.append("chart", JSON.stringify(previewChart));
+    formData.append("booking", JSON.stringify(previewBooking));
+    formData.append("idRemove", JSON.stringify(idJobsRemove));
+    formData.append("editDate", dateVN7);
 
     axios
       .put("http://localhost:4000/api/influ/update", formData, {
@@ -35,16 +46,16 @@ const InfluUpdateProfileModal = ({
         },
       })
       .then((response) => {
-        setUserInfo(previewInflu);
+        setWaitedDate(0);
+        setIsAllowEdit(false);
         setIsChange(false);
         setIsSaving(false);
-
-        console.log(response.data);
+        localStorage.setItem("editDate", new Date());
+        // setUserInfo(previewInflu);
       })
       .catch((error) => {
         console.error("Lỗi khi cập nhật thông tin:", error);
       });
-    console.log(previewInflu);
   };
   return (
     <>
@@ -66,6 +77,12 @@ const InfluUpdateProfileModal = ({
                 setIsChange={setIsChange}
                 influInfo={previewInflu}
                 setInfluInfo={setPreviewInflu}
+                bookingInfo={previewBooking}
+                setBookingInfo={setPreviewBooking}
+                idJobsRemove={idJobsRemove}
+                setIdJobsRemove={setIdJobsRemove}
+                chartInfo={previewChart}
+                setChartInfo={setPreviewChart}
               />
               <button className="influ-update-report-btn" onClick={handleSave}>
                 SAVE

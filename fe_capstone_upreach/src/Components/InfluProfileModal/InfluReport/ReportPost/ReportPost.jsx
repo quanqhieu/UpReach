@@ -1,3 +1,4 @@
+import React from "react";
 import "./ReportPost.css";
 import JobItem from "./JobItem/JobItem";
 

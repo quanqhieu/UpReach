@@ -3,10 +3,37 @@
     height: 100%;
     padding: 30px 20px;
     position: relative;
-    overflow: hidden;
+    overflow-x: hidden;
+	overflow-y: scroll;
 }
 
-.report-management-approve {
+.report-management-layout .report-management-layout-items:hover::-webkit-scrollbar-thumb {
+	z-index: 2;
+	visibility: visible;
+}
+
+.report-management-layout .report-management-layout-items::-webkit-scrollbar {
+    height: 10px;
+}
+
+.report-management-layout .report-management-layout-items::-webkit-scrollbar-track {
+	background: transparent;
+	margin: 5px;
+}
+
+.report-management-layout .report-management-layout-items::-webkit-scrollbar-thumb {
+	border-radius: 8px;
+	background: #bdbdbd;
+	z-index: 1;
+	visibility: hidden;
+}
+
+.report-management-layout .report-management-layout-items::-webkit-scrollbar-thumb:hover {
+	background: #858585;
+    width: 2px;
+}
+
+.report-management-wait {
     width: 100%;
     height: 340px;
     background-color: #f1f4f5;
@@ -16,7 +43,8 @@
     font-weight: 600;
 }
 
-.report-management-approve .report-management-approve-items {
+
+.report-management-wait .report-management-wait-items {
     padding-top: 5px;
     width: 100%;
     height: 300px;
@@ -28,33 +56,43 @@
     gap: 25px;
 }
 
-.report-management-approve .report-management-approve-items:hover::-webkit-scrollbar-thumb {
+.report-management-wait .report-management-wait-items:hover::-webkit-scrollbar-thumb {
 	z-index: 2;
 	visibility: visible;
 }
 
-.report-management-approve .report-management-approve-items::-webkit-scrollbar {
+.report-management-wait .report-management-wait-items::-webkit-scrollbar {
     height: 10px;
 }
 
-.report-management-approve .report-management-approve-items::-webkit-scrollbar-track {
+.report-management-wait .report-management-wait-items::-webkit-scrollbar-track {
 	background: transparent;
 	margin: 5px;
 }
 
-.report-management-approve .report-management-approve-items::-webkit-scrollbar-thumb {
+.report-management-wait .report-management-wait-items::-webkit-scrollbar-thumb {
 	border-radius: 8px;
 	background: #bdbdbd;
 	z-index: 1;
 	visibility: hidden;
 }
 
-.report-management-approve .report-management-approve-items::-webkit-scrollbar-thumb:hover {
+.report-management-wait .report-management-wait-items::-webkit-scrollbar-thumb:hover {
 	background: #858585;
     width: 2px;
 }
 
-.report-management-approve .report-management-approve-item{
+.report-management-wait .report-management-wait-item{
     width: 100%;
     height: 270px;
+}
+
+.report-management-layout .report-management-admin-view{
+    padding: 30px  20px;
+}
+
+.report-management-admin-view .admin-view-title {
+    font-size: 20px;
+    font-weight: 600;
+    padding-bottom: 10px;
 }

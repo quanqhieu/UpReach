@@ -8,7 +8,7 @@ import "./HeaderHomepage.css";
 import { UPREACH } from "../../Constant/Const";
 import { useUserStore } from "../../../Stores/user";
 
-function RenderLogo(onClickIntroduce) {
+function RenderLogo({ onClickIntroduce }) {
   return (
     <div className="headerContent">
       <div className="logoText" onClick={onClickIntroduce}>
@@ -18,11 +18,7 @@ function RenderLogo(onClickIntroduce) {
   );
 }
 
-function RenderContent({
-  onClickIntroduce,
-  onClickHomeMain,
-  onClickMyInfluencer,
-}) {
+function RenderContent({ onClickHomeMain, onClickMyInfluencer }) {
   return (
     <div className="headerContent">
       <div className="navBar">
@@ -32,10 +28,10 @@ function RenderContent({
         <div className="nav" onClick={onClickMyInfluencer}>
           Explore
         </div>
-        <div className="nav" onClick={onClickIntroduce}>
+        <div className="nav" onClick={onClickHomeMain}>
           How it work
         </div>
-        <div className="nav" onClick={onClickIntroduce}>
+        <div className="nav" onClick={onClickHomeMain}>
           Blogs
         </div>
       </div>
@@ -43,7 +39,7 @@ function RenderContent({
   );
 }
 
-const HeaderHomepage = (handleClickHomePage) => {
+const HeaderHomepage = (onClickIntroduce) => {
   let navigate = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies();
   const [user, setUserInfo] = useUserStore((state) => [
@@ -85,7 +81,7 @@ const HeaderHomepage = (handleClickHomePage) => {
 
   return (
     <div className="HeaderHomepage">
-      <RenderLogo oncClickIntroduce={handleClickHomePage} />
+      <RenderLogo onClickIntroduce={navigateIntroduce} />
       <div className="authBtn">
         {user.influencerId ? (
           <div className="influencer-btn">

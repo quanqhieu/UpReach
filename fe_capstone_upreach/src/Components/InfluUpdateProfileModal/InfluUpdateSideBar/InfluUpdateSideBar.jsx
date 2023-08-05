@@ -14,7 +14,7 @@ import { HeartOutlined, MailFilled, PhoneFilled } from "@ant-design/icons";
 const InfluSideBar = ({ influInfo }) => {
   const [badgeColor, setBadgeColor] = React.useState("");
   React.useEffect(() => {
-    switch (influInfo.influencerTypeName[0]) {
+    switch (influInfo.influencerTypeName[1]) {
       case "Professional":
         setBadgeColor("#C837AB");
         break;
@@ -33,7 +33,7 @@ const InfluSideBar = ({ influInfo }) => {
       default:
         return;
     }
-  }, [influInfo.influencerTypeName[0]]);
+  }, [influInfo.influencerTypeName[1]]);
 
   return (
     <>
@@ -43,21 +43,24 @@ const InfluSideBar = ({ influInfo }) => {
             <img className="profile-avatar" src={default_img} alt="" />
             <p className="profile-name">{influInfo.influencerfullName}</p>
             <div className="badge-block">
-              <div
-                style={{
-                  border: `2px solid ${badgeColor}`,
-                }}
-                className="badge-text"
-              >
-                <Diamond
-                  style={{
-                    height: "15px",
-                    fill: `${badgeColor}`,
-                    marginRight: "8px",
-                  }}
-                />
-                {influInfo.influencerTypeName[0]}
-              </div>
+              {influInfo.influencerTypeName &&
+                influInfo.influencerTypeName[1] !== null && (
+                  <div
+                    style={{
+                      border: `2px solid ${badgeColor}`,
+                    }}
+                    className="badge-text"
+                  >
+                    <Diamond
+                      style={{
+                        height: "15px",
+                        fill: `${badgeColor}`,
+                        marginRight: "8px",
+                      }}
+                    />
+                    {influInfo.influencerTypeName[1]}
+                  </div>
+                )}
             </div>
             <div className="profile-socials-wrapper">
               <div className="profile-socials">
@@ -85,35 +88,37 @@ const InfluSideBar = ({ influInfo }) => {
             <div className="profile-contents">
               <div className="profile-content">
                 <div className="profile-topics">
-                  {Array.isArray(influInfo.influencerContentTopicName) ? (
-                    influInfo.influencerContentTopicName.map((topic, index) => (
-                      <div key={index} className="profile-topic">
-                        <Tooltip placement="top" title={topic}>
-                          <div>
-                            {topic.length > 8
-                              ? `${topic.slice(0, 8)}...`
-                              : topic}
+                  {Array.isArray(influInfo.influencerContentTopicName)
+                    ? influInfo.influencerContentTopicName
+                        .filter((topic) => topic !== null)
+                        .map((topic, index) => (
+                          <div key={index} className="profile-topic">
+                            <Tooltip placement="top" title={topic}>
+                              <div>
+                                {topic?.length > 8
+                                  ? `${topic.slice(0, 8)}...`
+                                  : topic}
+                              </div>
+                            </Tooltip>
                           </div>
-                        </Tooltip>
-                      </div>
-                    ))
-                  ) : (
-                    <div className="profile-topic">
-                      <Tooltip
-                        placement="top"
-                        title={influInfo.influencerContentTopicName}
-                      >
-                        <div>
-                          {influInfo.influencerContentTopicName.length > 8
-                            ? `${influInfo.influencerContentTopicName.slice(
-                                0,
-                                8
-                              )}...`
-                            : influInfo.influencerContentTopicName}
+                        ))
+                    : influInfo.influencerContentTopicName !== null && (
+                        <div className="profile-topic">
+                          <Tooltip
+                            placement="top"
+                            title={influInfo.influencerContentTopicName}
+                          >
+                            <div>
+                              {influInfo.influencerContentTopicName?.length > 8
+                                ? `${influInfo.influencerContentTopicName.slice(
+                                    0,
+                                    8
+                                  )}...`
+                                : influInfo.influencerContentTopicName}
+                            </div>
+                          </Tooltip>
                         </div>
-                      </Tooltip>
-                    </div>
-                  )}
+                      )}
                 </div>
                 <div className="profile-location">
                   <Location style={{ marginRight: "8px" }} />

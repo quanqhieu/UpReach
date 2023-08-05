@@ -132,7 +132,7 @@ animation: rot-svg 2s infinite;
   background: grey;
 }
 
-.influencer-report-layout .influencer-report-layout .ant-ribbon-wrapper {
+.influencer-report-layout .ant-ribbon-wrapper {
   width: 423px;
   height: 270px;
 }
@@ -140,3 +140,12 @@ animation: rot-svg 2s infinite;
 /* .new-report {
   background-color: #e6e6e6;
 } */
+.influencer-report-layout .ant-list {
+  position: unset
+}
+
+.influencer-report-layout .ant-list-pagination {
+  position: absolute;
+  bottom: 20px;
+  left: 1040px;
+}

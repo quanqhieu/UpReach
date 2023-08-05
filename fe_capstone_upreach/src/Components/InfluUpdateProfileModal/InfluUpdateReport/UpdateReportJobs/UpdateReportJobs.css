@@ -6,9 +6,20 @@
 	border-bottom-right-radius: 20px;
     overflow-y: scroll;
 	overflow-x: hidden;
-	display: grid;
+	display: flex;
+    flex-direction: column;
 }
 
+.report-update-jobs-layout .job-view{
+	width: 100%;
+	height: fit-content;
+}
+.report-update-jobs-layout .update-jobs {
+	width: 100%;
+	height: fit-content;
+	display: grid;
+	padding-top: 20px;
+}
 .report-update-jobs-layout:hover::-webkit-scrollbar-thumb {
 	z-index: 2;
 	visibility: visible;

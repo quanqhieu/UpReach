@@ -5,7 +5,17 @@ import UpdateReportSocial from "./UpdateReportSocial/UpdateReportSocial";
 import UpdateReportAudience from "./UpdateReportAudience/UpdateReportAudience";
 import UpdateReportJobs from "./UpdateReportJobs/UpdateReportJobs";
 
-const InfluUpdateReport = ({ setIsChange, influInfo, setInfluInfo }) => {
+const InfluUpdateReport = ({
+  setIsChange,
+  influInfo,
+  setInfluInfo,
+  bookingInfo,
+  setBookingInfo,
+  idJobsRemove,
+  setIdJobsRemove,
+  chartInfo,
+  setChartInfo,
+}) => {
   const items = [
     {
       title: "SOCIAL",
@@ -17,8 +27,26 @@ const InfluUpdateReport = ({ setIsChange, influInfo, setInfluInfo }) => {
         />
       ),
     },
-    { title: "AUDIENCE", children: <UpdateReportAudience /> },
-    { title: "JOBS", children: <UpdateReportJobs /> },
+    {
+      title: "AUDIENCE",
+      children: (
+        <UpdateReportAudience
+          previewChart={chartInfo}
+          setPreviewChart={setChartInfo}
+        />
+      ),
+    },
+    {
+      title: "JOBS",
+      children: (
+        <UpdateReportJobs
+          bookingInfo={bookingInfo}
+          setBookingInfo={setBookingInfo}
+          idJobsRemove={idJobsRemove}
+          setIdJobsRemove={setIdJobsRemove}
+        />
+      ),
+    },
   ];
 
   return (
