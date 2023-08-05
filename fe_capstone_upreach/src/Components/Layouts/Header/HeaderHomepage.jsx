@@ -77,7 +77,6 @@ const HeaderHomepage = (onClickIntroduce) => {
       key: "1",
     },
   ];
-  console.log(user);
 
   return (
     <div className="HeaderHomepage">

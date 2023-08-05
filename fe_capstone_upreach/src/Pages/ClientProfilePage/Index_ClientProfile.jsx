@@ -1,6 +1,6 @@
 import { Avatar, Button, Col, Collapse, Form, Input, Row } from "antd";
 import FormItem from "antd/es/form/FormItem";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./ClientProfilePage.css";
 import {
   DownCircleOutlined,
@@ -9,20 +9,57 @@ import {
 } from "@ant-design/icons";
 import UpdateEmail from "./UpdateEmail";
 import ChangePassword from "./ChangePassword";
+import ApiListClient from "../../Api/ApiListClient";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Index_ClientProfile = () => {
   const [isModalOpenUpdateEmail, setIsModalOpenUpdateEmail] = useState(false);
   const [isSubModel, setSubModel] = useState(false);
-  const [isModalOpenChangePassword, setIsModalOpenChangePassword] =
-    useState(false);
+  const [isModalOpenChangePassword, setIsModalOpenChangePassword] =useState(false);
   const [data, setData] = useState();
   const inputRef = useRef(null);
   const [image, setImage] = useState("");
+  const [message, setMessage] = useState()
+  const [status, setStatus] = useState()
+  const navigate = useNavigate(); 
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8000,
+    pauseOnFocusLoss: true,
+    draggable: true,
+    theme: "dark",
+  }
 
   function onFinish(value) {
     setData(value);
+    FetchDataProfile(value)
   }
-  console.log("data", data);
+
+  useEffect(() =>{
+    if(status ==='True'){
+      navigate('/homepage')
+    }
+  },[status])
+
+  const FetchDataProfile = async (data) => {
+    try {
+      const response = await ApiListClient.updateProfileClient(data);
+      if(response.status === "False"){
+        toast.error(response.message, toastOptions)
+        setStatus(response.status)
+        return ;
+      }
+      toast.success(response.message, toastOptions)
+      setStatus(response.status)
+      console.log(response)
+      return response;
+    } catch (error) {
+      setMessage(error)
+      console.log(error) ; 
+    }
+  }; 
 
   function handleClickShowDialog() {
     setIsModalOpenUpdateEmail(true);
@@ -155,8 +192,10 @@ const Index_ClientProfile = () => {
                     </Button>
                   </FormItem>
                 </div>
+                
               </Form>
             </div>
+            <ToastContainer />
             <Collapse
               className="collapse_advanced"
               ghost
@@ -195,6 +234,7 @@ const Index_ClientProfile = () => {
         </Row>
       </Col>
     </Row>
+    
   );
 };
 
