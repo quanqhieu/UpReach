@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Dropdown, Slider } from "antd";
-import ButtonDropdow from "./ButtonDropdow";
+import ButtonDropdown from "./ButtonDropdown";
 
 const DropdownOfSlider = ({
   titleBtn,
@@ -10,18 +10,67 @@ const DropdownOfSlider = ({
   min,
   max,
   step,
+  checkClearAll,
+  dataSearch,
+  setDataSearch,
 }) => {
   const [value, setValue] = useState();
 
   //func khi kéo thì sẽ set data
   const hanndleOnChange = (sliderValue) => {
-    setValue(sliderValue);
+    // set value to search
+    // from cost estimate
+    if (titleBtn === "Cost Estimate") {
+      setDataSearch({ ...dataSearch, costEstimateFrom: sliderValue[0] });
+      if (value[0] !== sliderValue[0]) {
+        setValue(sliderValue);
+        return;
+      }
+    }
+    // to cost estimate
+    if (titleBtn === "Cost Estimate") {
+      setDataSearch({ ...dataSearch, costEstimateTo: sliderValue[1] });
+      setValue(sliderValue);
+    }
+    // from age
+    if (titleBtn === "Age") {
+      setDataSearch({ ...dataSearch, ageFrom: sliderValue[0] });
+      if (value[0] !== sliderValue[0]) {
+        setValue(sliderValue);
+        return;
+      }
+    }
+    // to age
+    if (titleBtn === "Age") {
+      setDataSearch({ ...dataSearch, ageTo: sliderValue[1] });
+      setValue(sliderValue);
+    }
+    // from follower
+    if (titleBtn === "Followers") {
+      setDataSearch({ ...dataSearch, ageFrom: sliderValue[0] });
+      if (value[0] !== sliderValue[0]) {
+        setValue(sliderValue);
+        return;
+      }
+    }
+    // to follower
+    if (titleBtn === "Followers") {
+      setDataSearch({ ...dataSearch, ageTo: sliderValue[1] });
+      setValue(sliderValue);
+    }
+    // change background when onchange filter
+    document.getElementById(titleBtn).classList.add("active-filter");
   };
   //func về lại ban đầu
   const handleBtnClear = () => {
     setValue(defaultValue);
+    // change background when onchange filter
+    document.getElementById(titleBtn).classList.remove("active-filter");
   };
 
+  useEffect(() => {
+    handleBtnClear();
+  }, [checkClearAll]);
   return (
     <Dropdown
       dropdownRender={() => (
@@ -44,7 +93,11 @@ const DropdownOfSlider = ({
       )}
     >
       <a onClick={(e) => e.preventDefault()}>
-        <ButtonDropdow titleBtn={titleBtn} />
+        <ButtonDropdown
+          Id={titleBtn}
+          className="background-change-filter"
+          titleBtn={titleBtn}
+        />
       </a>
     </Dropdown>
   );

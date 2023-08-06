@@ -28,11 +28,11 @@ const Login = () => {
       .then(
         (response) => {
           setIsLoading(false);
-          if (response.data.User.role == 2) {
+          if (response.data.User.roleId == 2) {
             setUserInfo(response.data.User);
             navigate("/homepage");
           }
-          if (response.data.User.role == 3) {
+          if (response.data.User.roleId == 3) {
             setUserInfo(response.data.User);
             navigate("/influencer/my-report");
           }

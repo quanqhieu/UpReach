@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./FilterSearch.css";
 import "../../../CSS/Theme.css";
 import "../HomePage.css";
@@ -13,10 +13,13 @@ import {
   LIST_TYPE_SEARCH,
   COST,
   AGE,
+  FOLLOWERS,
+  ENGAGEMENT,
+  PUBLICATION,
 } from "../ConstHomePage";
 import DropdownOfCheckBox from "./DropdownOfCheckBox";
 import DropdownOfSlider from "./DropdownOfSlider";
-import ButtonDropdow from "./ButtonDropdow";
+import ButtonDropdown from "./ButtonDropdown";
 import DropdownOfAudience from "./DropdownOfAudience";
 
 function RenderSelectSearch({
@@ -41,8 +44,32 @@ function RenderSelectSearch({
     />
   );
 }
+// set button clear all
+function RenderFilter(inputSearch, setInputSearch) {
+  const [checkClearAll, setcheckClearAll] = useState(true);
+  const [dataSearch, setDataSearch] = useState({
+    // input to filter Influencer
+    clientId: "",
+    pointSearch: "",
+    costEstimateFrom: 0,
+    costEstimateTo: 5000000,
+    ageFrom: 0,
+    ageTo: 100,
+    contentTopic: "",
+    nameType: ["Celebrity", "Talent", "Professional", "Citizen", "Community"],
+    contentFormats: ["Text", "Picture", "Video"],
+    audienceGender: "",
+    audienceLocation: "",
+  });
 
-function RenderFilter() {
+  function handleClearAll() {
+    setcheckClearAll(!checkClearAll);
+  }
+
+  useEffect(() => {
+    console.log(dataSearch);
+  }, [dataSearch]);
+
   return (
     <>
       <div className="d-flex flex-wrap justify-content-sm-start">
@@ -51,6 +78,9 @@ function RenderFilter() {
           <DropdownOfCheckBox
             listItemCheckBox={LIST_TYPE_SEARCH}
             titleBtn="Type"
+            checkClearAll={checkClearAll}
+            dataSearch={dataSearch}
+            setDataSearch={setDataSearch}
           />
         </div>
         {/* Filter of Cost Estimate */}
@@ -61,8 +91,11 @@ function RenderFilter() {
             max={5000000}
             step={500000}
             isDraggable={true}
-            defaultValue={[0, 500000]}
+            defaultValue={[0, 5000000]}
             marks={COST}
+            checkClearAll={checkClearAll}
+            dataSearch={dataSearch}
+            setDataSearch={setDataSearch}
           />
         </div>
         {/* Filter of Age */}
@@ -70,8 +103,11 @@ function RenderFilter() {
           <DropdownOfSlider
             titleBtn="Age"
             isDraggable={true}
-            defaultValue={[0, 60]}
+            defaultValue={[0, 100]}
             marks={AGE}
+            checkClearAll={checkClearAll}
+            dataSearch={dataSearch}
+            setDataSearch={setDataSearch}
           />
         </div>
         {/* Filter of Followers */}
@@ -79,7 +115,12 @@ function RenderFilter() {
           <DropdownOfSlider
             titleBtn="Followers"
             isDraggable={true}
-            defaultValue={[20, 50]}
+            min={0}
+            max={10000000}
+            step={500000}
+            defaultValue={[0, 10000000]}
+            marks={FOLLOWERS}
+            checkClearAll={checkClearAll}
           />
         </div>
         {/* Filter of Engagement */}
@@ -87,15 +128,23 @@ function RenderFilter() {
           <DropdownOfSlider
             titleBtn="Engagement"
             isDraggable={true}
-            defaultValue={[20, 50]}
+            defaultValue={[0, 20]}
+            min={0}
+            max={20}
+            marks={ENGAGEMENT}
+            checkClearAll={checkClearAll}
           />
         </div>
         {/* Filter of Publications */}
         <div className=" mt-4 backgroundMainPage">
           <DropdownOfSlider
-            titleBtn="Publications"
+            titleBtn="Post per week"
             isDraggable={true}
-            defaultValue={[20, 50]}
+            defaultValue={[0, 15]}
+            min={0}
+            max={15}
+            marks={PUBLICATION}
+            checkClearAll={checkClearAll}
           />
         </div>
         {/* Filter of Content Formats */}
@@ -104,11 +153,19 @@ function RenderFilter() {
             className="width-100-percent"
             listItemCheckBox={LIST_CONTENT_FORMATS_SEARCH}
             titleBtn="Content Formats"
+            checkClearAll={checkClearAll}
+            dataSearch={dataSearch}
+            setDataSearch={setDataSearch}
           />
         </div>
         {/* Filter of Audience */}
         <div className=" mt-4 backgroundMainPage">
-          <DropdownOfAudience />
+          <DropdownOfAudience checkClearAll={checkClearAll} />
+        </div>
+        <div className=" mt-4 backgroundMainPage">
+          <Button onClick={handleClearAll} className="dropdownSlider bg-white">
+            Clear All
+          </Button>
         </div>
       </div>
     </>
@@ -118,6 +175,10 @@ function RenderFilter() {
 const FilterSearch = () => {
   const [platform, setPlatform] = useState();
   const [category, setCategory] = useState();
+
+  const handleSubmitFilter = (selectPlatfrom) => {
+    // selectPlatfrom();
+  };
 
   const handleChangePlatform = (selectPlatfrom) => {
     console.log(`selected: ${selectPlatfrom}`);
@@ -150,7 +211,9 @@ const FilterSearch = () => {
                 description={LIST_RIGHT_BUTTON_SELECT_SEARCH.description}
                 onChange={handleChangeCategory}
               />
-              <Button className="bntSreach ms-3">Search</Button>
+              <Button className="bntSreach ms-3" onClick={handleSubmitFilter}>
+                Search
+              </Button>
             </div>
             <div className="col-12">
               <RenderFilter />

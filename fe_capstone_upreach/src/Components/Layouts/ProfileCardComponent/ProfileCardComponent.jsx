@@ -16,21 +16,23 @@ const ProfileCardComponent = ({ profileInflu }) => {
           <div className="profile-avatar-content">
             <img className="profile-avatar" src={default_img} alt="" />
             <div className="profile-content">
-              <p className="profile-name">{profileInflu.fullName}</p>
+              <p className="profile-name">{profileInflu?.influencerNickName}</p>
               <div className="profile-location">
                 <Location style={{ marginRight: "8px" }} />
-                <p>{profileInflu.address}</p>
+                <p>{profileInflu?.influencerAddress}</p>
               </div>
               <div className="profile-topics">
-                {profileInflu.topics.slice(0, 3).map((topic, index) => (
-                  <div key={index} className="profile-topic">
-                    <Tooltip placement="top" title={topic}>
-                      <div>
-                        {topic.length > 8 ? `${topic.slice(0, 8)}...` : topic}
-                      </div>
-                    </Tooltip>
-                  </div>
-                ))}
+                {profileInflu?.influencerContentTopicName
+                  .slice(0, profileInflu?.influencerContentTopicName.length)
+                  .map((topic, index) => (
+                    <div key={index} className="profile-topic">
+                      <Tooltip placement="top" title={topic}>
+                        <div>
+                          {topic.length > 8 ? `${topic.slice(0, 8)}...` : topic}
+                        </div>
+                      </Tooltip>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>
@@ -41,19 +43,38 @@ const ProfileCardComponent = ({ profileInflu }) => {
         <div className="profile-socials">
           <div className="profile-social">
             <Facebook />
-            <p>1M</p>
+            <p>
+              {profileInflu?.influencerFollowFb === 0
+                ? "0M"
+                : (profileInflu?.influencerFollowFb / 1000000).toFixed(1) + "M"}
+            </p>
           </div>
           <div className="profile-social">
             <Instagram />
-            <p>1M</p>
+            <p>
+              {profileInflu?.influencerFollowInsta === 0
+                ? "0M"
+                : (profileInflu?.influencerFollowInsta / 1000000).toFixed(1) +
+                  "M"}
+            </p>
           </div>
           <div className="profile-social">
             <Youtube />
-            <p>1M</p>
+            <p>
+              {profileInflu?.influencerFollowYoutube === 0
+                ? "0M"
+                : (profileInflu?.influencerFollowYoutube / 1000000).toFixed(1) +
+                  "M"}
+            </p>
           </div>
           <div className="profile-social">
             <Tiktok />
-            <p>1M</p>
+            <p>
+              {profileInflu?.influencerFollowTikTok === 0
+                ? "0M"
+                : (profileInflu?.influencerFollowTikTok / 1000000).toFixed(1) +
+                  "M"}
+            </p>
           </div>
         </div>
         <div className="profile-images">
