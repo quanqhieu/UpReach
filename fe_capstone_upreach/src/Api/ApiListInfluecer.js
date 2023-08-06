@@ -29,6 +29,11 @@ const ApiListInfluecer = {
         const url = '/deletealltable';
         return axiosClient.post(url, {IdList: idList})
     },
+
+    addNewInfluencer(data){
+        const url = '/addProfileInfluncer'
+        return axiosClient.post(url,data)
+    }
     
 }
 

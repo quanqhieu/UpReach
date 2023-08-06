@@ -68,29 +68,6 @@ const OverviewForm = ({ onFinish, initialValues }) => {
               </div>
               <div className="overview-form-pub">
                 <h5>Your Publication</h5>
-
-                <Form.Item
-                  label="Followers"
-                  tooltip="This follower count is the number of followers of your highest platform."
-                  name="follower"
-                  rules={[
-                    {
-                      type: "number",
-                      min: 0,
-                      required: true,
-                      message: "Please input your followers of social",
-                    },
-                  ]}
-                >
-                  <InputNumber
-                    style={{
-                      width: "100%",
-                      textAlign: "center",
-                    }}
-                    addonAfter={suffixSelector2}
-                    placeholder="Followers"
-                  />
-                </Form.Item>
                 <Form.Item
                   name="engagement"
                   rules={[

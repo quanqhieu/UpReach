@@ -7,13 +7,14 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Button, Form, Input, Steps } from "antd";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import InformationForm from "./InformationForm";
 import "./CreateInfluencerPage.css";
 import OverviewForm from "./OverviewForm";
 import ContentForm from "./ContentForm";
 import SocialForm from "./SocialForm";
 import FinishForm from "./FinishForm";
+import ApiUser from "../../Api/ApiUser";
 
 const CreatInfluencerProfilePage = () => {
   const [form] = Form.useForm();
@@ -22,25 +23,46 @@ const CreatInfluencerProfilePage = () => {
   const [overviewDetails, setOverviewDetails] = useState(null);
   const [contentDetails, setContentFormDetails] = useState([null]);
   const [socialDetails, setSocialFormDetails] = useState(null);
-
+  const [message, setMessage] = useState()
+  const [allDataInfluencer, setAllDataInfluencer] = useState([]);
+  
+  const [allDetails, setAllDetails] = useState({
+    informationDetails: null,
+    overviewDetails: null,
+    contentDetails: [null],
+    socialDetails: null,
+  });
+  
   const onFinishInformationForm = (values) => {
+    console.log('Information Form')
     console.log(values);
-    setInformationDetails(values);
+    // setInformationDetails(values);
+    setAllDetails(prevDetails => ({ ...prevDetails, informationDetails: values }));
     setCurrent(1);
   };
+
   const onFinishOverviewForm = (values) => {
+    console.log('Overview Form')
     console.log(values);
-    setOverviewDetails(values); // vẫn chưa lưu value OverviewDetails
+    // setOverviewDetails(values); // vẫn chưa lưu value OverviewDetails
+    setAllDetails(prevDetails => ({ ...prevDetails, overviewDetails: values }));
     setCurrent(2);
   };
-  const onFinishContentForm = () => {
+
+  const onFinishContentForm = (values) => {
+    console.log('Content Form')
+    console.log(values)
     setCurrent(3); // khi bấm continue chuyển qua tab 3
   };
+
   const onFinishSocialForm = (values) => {
+    console.log('Social Form')
     console.log(values);
-    setSocialFormDetails(values);
+    // setSocialFormDetails(values);
+    setAllDetails(prevDetails => ({ ...prevDetails, socialDetails: values }));
     setCurrent(4);
   };
+  console.log(allDetails)
 
   const forms = [
     <InformationForm
@@ -56,7 +78,10 @@ const CreatInfluencerProfilePage = () => {
       setContentFormDetails={setContentFormDetails}
       contentDetails={contentDetails}
     />,
-    <SocialForm onFinish={onFinishSocialForm} initialValues={socialDetails} />,
+    <SocialForm 
+      onFinish={onFinishSocialForm} 
+      initialValues={socialDetails} 
+    />,
 
     <FinishForm />,
   ];

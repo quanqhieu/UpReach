@@ -1,12 +1,64 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, Input } from "antd";
 import { ReactComponent as IconGoogle } from "../../../src/Assets/Icon/google-icon.svg";
 import "./SignUp.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import AuthBackground from "../../Components/Layouts/AuthBackground/AuthBackground";
+import ApiUser from "../../Api/ApiUser"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp = () => {
+  const navigate = useNavigate()
+  const ROLE_CLIENT = "2"
+  const ROLE_INFLUENCER = "3"
+  const [message, setMessage] = useState()
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPass: ''
+  })
+
+  const FetchRegisterUser = async (data) => {
+    try {
+      const response = await ApiUser.registerUser(data);
+      if (response.status === "False") {
+        toast.error(response.message, toastOptions)
+        return;
+      }
+      localStorage.setItem('formData', JSON.stringify(form));
+      navigate("/verify-register")
+      return response;
+    } catch (error) {
+      setMessage(error)
+      console.log(error);
+    }
+  };
+
+
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8000,
+    pauseOnFocusLoss: true,
+    draggable: true,
+    theme: "dark",
+  }
+
+  const onChangeInput = (value) => {
+    setForm({ ...form, [value.target.name]: value.target.value })
+  };
+  const handleClickSignUpClient = () => {
+    form.role = ROLE_CLIENT
+    const result = FetchRegisterUser(form);
+
+  };
+  const handleClickSignUpInfluencer = () => {
+    form.role = ROLE_INFLUENCER
+    const result = FetchRegisterUser(form);
+  };
+
   return (
     <AuthBackground>
       <div className="signUpLayout">
@@ -14,6 +66,7 @@ const SignUp = () => {
           name="signUp"
           className="signUpForm"
           initialValues={{ remember: true }}
+        // onFinish={handleSubmit}
         >
           <p className="signUpTitle">Create your account</p>
           {/* <Button type="primary" htmlType="submit" className="signUpGoogle">
@@ -38,12 +91,16 @@ const SignUp = () => {
             <Input
               className="signUpTypeBtn heightSignUpBtn"
               placeholder="Enter full name"
+              name="name"
+              onChange={onChangeInput}
             />
           </Form.Item>
+
           <div className="signUpSubTitle">
             <p className="signUpSubTitleContent">Email address </p>
             <p className="signUpSubChar">*</p>
           </div>
+
           <Form.Item
             name="email"
             rules={[
@@ -57,6 +114,8 @@ const SignUp = () => {
             <Input
               className="signUpTypeBtn heightSignUpBtn"
               placeholder="Youremail@example.com"
+              name="email"
+              onChange={onChangeInput}
             />
           </Form.Item>
           <div className="signUpSubTitle">
@@ -77,6 +136,8 @@ const SignUp = () => {
               iconRender={(visible) =>
                 visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
               }
+              name="password"
+              onChange={onChangeInput}
             />
           </Form.Item>
           <div className="signUpSubTitle">
@@ -103,8 +164,10 @@ const SignUp = () => {
               }),
             ]}
           >
-            <Input.Password
+            <Input
               type="password"
+              name="confirmPass"
+              onChange={onChangeInput}
               className="signUpTypeBtn heightSignUpBtn"
               placeholder="Enter confirm password"
               iconRender={(visible) =>
@@ -114,34 +177,32 @@ const SignUp = () => {
           </Form.Item>
           <div className="row">
             <div className="col-6 p-0">
-              <Link className="signUpBtnText" to="/verify-register">
-                <Button
-                  style={{
-                    width: "98%",
-                    height: "50px",
-                  }}
-                  type="primary"
-                  htmlType="submit"
-                  className="signUpBtn"
-                >
-                  Join as Brand
-                </Button>
-              </Link>
+              <Button
+                style={{
+                  width: "98%",
+                  height: "50px",
+                }}
+                type="primary"
+                htmlType="submit"
+                className="signUpBtn"
+                onClick={handleClickSignUpClient}
+              >
+                Join as Brand
+              </Button>
             </div>
             <div className="col-6 p-0">
-              <Link className="signUpBtnText" to="/verify-register">
-                <Button
-                  style={{
-                    width: "98%",
-                    height: "50px",
-                  }}
-                  type="primary"
-                  htmlType="submit"
-                  className="signUpBtn"
-                >
-                  Join as Influencer
-                </Button>
-              </Link>
+              <Button
+                style={{
+                  width: "98%",
+                  height: "50px",
+                }}
+                type="primary"
+                htmlType="submit"
+                className="signUpBtn"
+                onClick={handleClickSignUpInfluencer}
+              >
+                Join as Influencer
+              </Button>
             </div>
           </div>
           <div className="signUpToLogin">
@@ -152,6 +213,7 @@ const SignUp = () => {
           </div>
         </Form>
       </div>
+      <ToastContainer />
     </AuthBackground>
   );
 };
