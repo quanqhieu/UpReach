@@ -51,13 +51,13 @@ function RenderFilter(inputSearch, setInputSearch) {
     // input to filter Influencer
     clientId: "",
     pointSearch: "",
-    costEstimateFrom: "",
-    costEstimateTo: "",
-    ageFrom: "",
-    ageTo: "",
+    costEstimateFrom: 0,
+    costEstimateTo: 5000000,
+    ageFrom: 0,
+    ageTo: 100,
     contentTopic: "",
-    nameType: "",
-    contentFormats: "",
+    nameType: ["Celebrity", "Talent", "Professional", "Citizen", "Community"],
+    contentFormats: ["Text", "Picture", "Video"],
     audienceGender: "",
     audienceLocation: "",
   });
@@ -138,7 +138,7 @@ function RenderFilter(inputSearch, setInputSearch) {
         {/* Filter of Publications */}
         <div className=" mt-4 backgroundMainPage">
           <DropdownOfSlider
-            titleBtn="Publications"
+            titleBtn="Post per week"
             isDraggable={true}
             defaultValue={[0, 15]}
             min={0}

@@ -18,17 +18,45 @@ const DropdownOfSlider = ({
 
   //func khi kéo thì sẽ set data
   const hanndleOnChange = (sliderValue) => {
-    setValue(sliderValue);
-
     // set value to search
     // from cost estimate
     if (titleBtn === "Cost Estimate") {
-      setDataSearch({ ...dataSearch, costEstimateFrom: value[0] });
-      console.log(sliderValue[0]);
+      setDataSearch({ ...dataSearch, costEstimateFrom: sliderValue[0] });
+      if (value[0] !== sliderValue[0]) {
+        setValue(sliderValue);
+        return;
+      }
     }
     // to cost estimate
     if (titleBtn === "Cost Estimate") {
-      setDataSearch({ ...dataSearch, costEstimateTo: value[1] });
+      setDataSearch({ ...dataSearch, costEstimateTo: sliderValue[1] });
+      setValue(sliderValue);
+    }
+    // from age
+    if (titleBtn === "Age") {
+      setDataSearch({ ...dataSearch, ageFrom: sliderValue[0] });
+      if (value[0] !== sliderValue[0]) {
+        setValue(sliderValue);
+        return;
+      }
+    }
+    // to age
+    if (titleBtn === "Age") {
+      setDataSearch({ ...dataSearch, ageTo: sliderValue[1] });
+      setValue(sliderValue);
+    }
+    // from follower
+    if (titleBtn === "Followers") {
+      setDataSearch({ ...dataSearch, ageFrom: sliderValue[0] });
+      if (value[0] !== sliderValue[0]) {
+        setValue(sliderValue);
+        return;
+      }
+    }
+    // to follower
+    if (titleBtn === "Followers") {
+      setDataSearch({ ...dataSearch, ageTo: sliderValue[1] });
+      setValue(sliderValue);
     }
     // change background when onchange filter
     document.getElementById(titleBtn).classList.add("active-filter");

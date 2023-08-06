@@ -8,8 +8,8 @@ const ApiGetInfoAndFilterInfluencer = {
         return axiosClient.post(url, InputSearch)
     },
     getAllInfluencer(index){
-        const url = '/influ/get';
-        return axiosClient.get(url/index)
+        const url = `/influ/get?page=${index}&limit=999`;
+        return axiosClient.get(url)
     },
 }
 
