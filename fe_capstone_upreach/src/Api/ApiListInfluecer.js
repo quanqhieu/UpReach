@@ -31,10 +31,9 @@ const ApiListInfluecer = {
     },
 
     addNewInfluencer(data){
-        const url = '/addProfileInfluncer'
+        const url = '/influ/addInfluencer'
         return axiosClient.post(url,data)
     }
-    
 }
 
 export default ApiListInfluecer
