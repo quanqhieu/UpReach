@@ -45,7 +45,7 @@ const Login = () => {
             setUserInfo(response.data.User);
             navigate("/influencer/my-report");
           }
-          setCookie("token", response.data.User.Sessions_ID, {
+          setCookie("token", response.data.User.email, {
             path: "/",
             maxAge: 30 * 24 * 60 * 60,
           });

@@ -302,7 +302,7 @@ const AdminInfluencerLayout = () => {
       console.log("Validate Failed:", errInfo);
     }
   };
-  console.log(listInflu);
+  // console.log(listInflu);
 
   const mergedTags = tags.map((col) => {
     if (!col.editable) {

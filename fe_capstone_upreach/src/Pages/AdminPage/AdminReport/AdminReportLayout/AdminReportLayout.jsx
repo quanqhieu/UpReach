@@ -8,20 +8,25 @@ import {
 import AdminApproveCard from "../../../../Components/AdminApproveCard/AdminApproveCard";
 import ProfileCardComponent from "../../../../Components/Layouts/ProfileCardComponent/ProfileCardComponent";
 import InfluProfile from "../../../../Components/InfluProfileModal/InfluProfile";
+import AdminApproveProfile from "../../../../Components/AdminApproveProfileModal/AdminApproveProfile";
 import axios from "axios";
 
 const AdminReportLayout = () => {
   const [influInfo, setInfluInfo] = React.useState("");
+  const [reportInfo, setReportInfo] = React.useState("");
+  const [isOpenApproveProfile, setIsOpenApproveProfile] = React.useState(false);
   const [isOpenProfileInflu, setIsOpenProfileInflu] = React.useState(false);
   const [profileInflus, setProfileInflus] = React.useState(PROFILE_INFLUS);
+  const [approveReport, setApproveReport] = React.useState([]);
 
-  const [versionProfile, setVersionProfile] = React.useState(
-    VERSION_PROFILE_INFLU
-  );
-
-  const handleOpenModal = (info) => {
+  const handleOpenInfluModal = (info) => {
     setInfluInfo(info);
     setIsOpenProfileInflu(true);
+  };
+
+  const handleOpenApproveModal = (info) => {
+    setReportInfo(info);
+    setIsOpenApproveProfile(true);
   };
 
   const itemRender = (_, type, originalElement) => {
@@ -36,7 +41,7 @@ const AdminReportLayout = () => {
 
   React.useEffect(() => {
     axios
-      .get("http://localhost:4000/api/admin/get-aprrove-report", {
+      .get("http://localhost:4000/api/admin/get-approve-report", {
         params: {
           // email: user.influencerEmail,
         },
@@ -44,8 +49,25 @@ const AdminReportLayout = () => {
 
       .then((response) => {
         const info = response.data.data;
+        setApproveReport(info);
+      })
+      .catch((error) => {
+        console.error("Error while fetching profile information:", error);
+      });
+  }, []);
 
-        // console.log(info);
+  React.useEffect(() => {
+    axios
+      .get("http://localhost:4000/api/admin/get-influ-report", {
+        params: {
+          // email: user.influencerEmail,
+        },
+      })
+
+      .then((response) => {
+        const info = response.data.data;
+        console.log(info);
+        // setApproveReport(info);
       })
       .catch((error) => {
         console.error("Error while fetching profile information:", error);
@@ -54,6 +76,23 @@ const AdminReportLayout = () => {
 
   return (
     <>
+      {/* -----------------Approve Modal---------------------- */}
+      <Modal
+        className="custom-modal"
+        centered
+        open={isOpenApproveProfile}
+        footer={null}
+        onCancel={() => setIsOpenApproveProfile(false)}
+        width={1400}
+        bodyStyle={{ borderRadius: "30px" }}
+      >
+        <AdminApproveProfile approveReport={reportInfo} />
+      </Modal>
+
+      {/* ------------------------------------------ */}
+
+      {/* -----------------Influ Modal---------------------- */}
+
       <Modal
         className="custom-modal"
         centered
@@ -65,19 +104,29 @@ const AdminReportLayout = () => {
       >
         <InfluProfile profileInflu={influInfo} />
       </Modal>
+      {/* ------------------------------------------ */}
+
       <div className="report-management-layout">
         <div className="report-management-wait">
           Wait to approve
+          {/* -----------------Approve List---------------------- */}
           <div className="report-management-wait-items">
-            {versionProfile?.map((item, index) => (
-              <div className="report-management-wait-item" key={index}>
-                <AdminApproveCard bookingList={item} />
+            {approveReport?.map((item, index) => (
+              <div
+                className="report-management-wait-item"
+                key={index}
+                onClick={() => handleOpenApproveModal(item)}
+              >
+                <AdminApproveCard reportApprove={item} />
               </div>
             ))}
           </div>
+          {/* ----------------------------------------------------- */}
         </div>
 
         <div className="report-management-admin-view">
+          {/* -----------------Influ List---------------------- */}
+
           <div className="admin-view-title">All Influencer</div>
           <List
             grid={{
@@ -101,12 +150,13 @@ const AdminReportLayout = () => {
             renderItem={(item) => (
               <List.Item
                 style={{ display: "flex", flexDirection: "column" }}
-                onClick={() => handleOpenModal(item)}
+                onClick={() => handleOpenInfluModal(item)}
               >
                 <ProfileCardComponent profileInflu={item} />
               </List.Item>
             )}
           />
+          {/* ------------------------------------------------ */}
         </div>
       </div>
     </>

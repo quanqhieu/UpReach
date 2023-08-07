@@ -78,11 +78,12 @@ const HeaderHomepage = (onClickIntroduce) => {
     },
   ];
 
+  console.log(user);
   return (
     <div className="HeaderHomepage">
       <RenderLogo onClickIntroduce={navigateIntroduce} />
       <div className="authBtn">
-        {user.influencerId ? (
+        {user.roleId == 3 ? (
           <div className="influencer-btn">
             <img
               className="influencer-avatar"
@@ -95,9 +96,9 @@ const HeaderHomepage = (onClickIntroduce) => {
                 <p style={{ height: "45px" }}>
                   <Space>
                     <div>
-                      {user.influencerfullName.length > 14
-                        ? `${user.influencerfullName.slice(0, 14)}...`
-                        : user.influencerfullName}
+                      {user?.fullNameInfluencer?.length > 14
+                        ? `${user?.fullNameInfluencer?.slice(0, 14)}...`
+                        : user?.fullNameInfluencer}
                     </div>
                   </Space>
                   <DownOutlined />
@@ -105,7 +106,7 @@ const HeaderHomepage = (onClickIntroduce) => {
               </Dropdown>
             </div>
           </div>
-        ) : user.clientId ? (
+        ) : user.roleId == 2 ? (
           <div className="cover-client-login">
             <Link to="/myinfluencer">
               <Button className="my-list-btn" type="primary">
@@ -125,9 +126,9 @@ const HeaderHomepage = (onClickIntroduce) => {
                   <p style={{ height: "45px" }}>
                     <Space>
                       <div>
-                        {user.fullName.length > 14
-                          ? `${user.fullName.slice(0, 14)}...`
-                          : user.fullName}
+                        {user?.fullNameClient?.length > 14
+                          ? `${user?.fullNameClient?.slice(0, 14)}...`
+                          : user?.fullNameClient}
                       </div>
                     </Space>
                     <DownOutlined />

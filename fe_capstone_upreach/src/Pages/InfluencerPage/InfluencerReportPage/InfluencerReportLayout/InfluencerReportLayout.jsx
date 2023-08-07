@@ -128,7 +128,6 @@ const InfluencerReportLayout = () => {
       (currentYear === storedTimeAsDateYear &&
         currentMonth > storedTimeAsDateMonth)
     ) {
-      console.log(currentTime, storedTimeAsDate, range);
       return (range = Math.ceil(
         (currentTime - storedTimeAsDate) / (1000 * 60 * 60 * 24)
       ));
@@ -145,7 +144,6 @@ const InfluencerReportLayout = () => {
     setIsLoading(true);
     if (is7DaysOrMoreAgo(localStorage.getItem("editDate")) > 0) {
       setIsAllowEdit(true);
-      console.log("out");
     }
   };
 
@@ -208,17 +206,16 @@ const InfluencerReportLayout = () => {
 
   React.useEffect(() => {
     axios
-      .get("http://localhost:4000/api/influ/get-profile-update", {
-        params: {
-          email: user.influencerEmail,
-        },
+      .post("http://localhost:4000/api/influ/dataReportInfluencer", {
+        email: user.email,
       })
 
       .then((response) => {
-        const info = response.data.data;
-
-        // console.log(info);
+        const info = response.data.Influencer;
         setProfileVersion(info);
+        setPreviewInflu(() => {
+          return info.find((item) => item.isPublish);
+        });
       })
       .catch((error) => {
         console.error("Error while fetching profile information:", error);

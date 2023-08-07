@@ -6,32 +6,9 @@ import { ReactComponent as Youtube } from "../../Assets/Icon/Youtube.svg";
 import { ReactComponent as Tiktok } from "../../Assets/Icon/Tiktok.svg";
 import { ReactComponent as Location } from "../../Assets/Icon/Location.svg";
 import { Tooltip } from "antd";
+import roundNumber from "../../Components/InfluUpdateProfileModal/roundNumber";
 
-const AdminApproveCard = () => {
-  const profileInflu = {
-    id: "1",
-    fullName: "Le Quang Hieu",
-    type: "Citizen",
-    topics: [
-      "Baby",
-      "Beauty",
-      "Business",
-      "Travel",
-      "Game",
-      "Film",
-      "Personal perception",
-      "Film",
-      "Film",
-      "Film",
-    ],
-    address: "Da Nang",
-    gender: "Male",
-    age: 22,
-    relationship: "Married",
-    bio: "Sang som thuc day bong thay minh qua dep trai, tieng hot thanh thot cua nhung chu chim vua sang, ngay vui lai len...",
-    email: "hieupro123@gmail.com",
-    phone: "0398357123",
-  };
+const AdminApproveCard = ({ reportApprove }) => {
   return (
     <>
       <div className="profile-layout">
@@ -39,13 +16,13 @@ const AdminApproveCard = () => {
           <div className="profile-avatar-content">
             <img className="profile-avatar" src={default_img} alt="" />
             <div className="profile-content">
-              <p className="profile-name">{profileInflu.fullName}</p>
+              <p className="profile-name">{reportApprove.profile.fullName}</p>
               <div className="profile-location">
                 <Location style={{ marginRight: "8px" }} />
-                <p>{profileInflu.address}</p>
+                <p>{reportApprove.profile.Address}</p>
               </div>
               <div className="profile-topics">
-                {profileInflu.topics.slice(0, 3).map((topic, index) => (
+                {reportApprove.topics.slice(0, 3).map((topic, index) => (
                   <div key={index} className="profile-topic">
                     <Tooltip placement="top" title={topic}>
                       <div>
@@ -61,19 +38,19 @@ const AdminApproveCard = () => {
         <div className="profile-socials">
           <div className="profile-social">
             <Facebook />
-            <p>1M</p>
+            <p>{roundNumber(reportApprove.platform.Follow_FB)}</p>
           </div>
           <div className="profile-social">
             <Instagram />
-            <p>1M</p>
+            <p>{roundNumber(reportApprove.platform.Follow_Insta)}</p>
           </div>
           <div className="profile-social">
             <Youtube />
-            <p>1M</p>
+            <p>{roundNumber(reportApprove.platform.Follow_TikTok)}</p>
           </div>
           <div className="profile-social">
             <Tiktok />
-            <p>1M</p>
+            <p>{roundNumber(reportApprove.platform.Follow_Youtube)}</p>
           </div>
         </div>
         <div className="profile-images">

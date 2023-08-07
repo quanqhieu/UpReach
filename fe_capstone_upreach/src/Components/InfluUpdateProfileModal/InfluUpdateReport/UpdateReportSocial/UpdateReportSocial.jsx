@@ -10,6 +10,7 @@ import roundNumber from "../../roundNumber";
 import { useUserStore } from "../../../../Stores/user";
 
 const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
+  console.log(influInfo);
   const [edit, setEdit] = React.useState("");
   const [isError, setIsError] = React.useState(false);
 

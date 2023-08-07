@@ -82,32 +82,32 @@ const InfluUpdateImage = ({ influInfo, setInfluInfo, setIsChange }) => {
     }
   }, [influInfo, influInfo.Image]);
 
-  // React.useEffect(() => {
-  //   axios
-  //     .get("http://localhost:4000/api/influ/get-images-influencer", {
-  //       params: {
-  //         email: user.influencerEmail,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       const ImageData = response.data.data;
-  //       const imageList = ImageData.map((data) => {
-  //         if (data?.Image && data?.Image_ID) {
-  //           return {
-  //             url: data.Image,
-  //             uid: data.Image_ID,
-  //           };
-  //         }
-  //         return null;
-  //       }).filter((item) => item !== null);
-  //       setFileList(imageList);
-  //       setIsChange(false);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error while fetching Image information:", error);
-  //     });
-  // }, []);
-  // console.log(influInfo.Image);
+  React.useEffect(() => {
+    axios
+      .get("http://localhost:4000/api/influ/get-images-influencer", {
+        params: {
+          email: user.influencerEmail,
+        },
+      })
+      .then((response) => {
+        const ImageData = response.data.data;
+        const imageList = ImageData.map((data) => {
+          if (data?.Image && data?.Image_ID) {
+            return {
+              url: data.Image,
+              uid: data.Image_ID,
+            };
+          }
+          return null;
+        }).filter((item) => item !== null);
+        setFileList(imageList);
+        setIsChange(false);
+      })
+      .catch((error) => {
+        console.error("Error while fetching Image information:", error);
+      });
+  }, []);
+  console.log(influInfo.Image);
 
   return (
     <>

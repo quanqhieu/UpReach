@@ -36,14 +36,14 @@ const InfluencerProfileCard = ({ profileInflu, previewInflu }) => {
           <div className="profile-avatar-content">
             <img className="profile-avatar" src={default_img} alt="" />
             <div className="profile-content">
-              <p className="profile-name">{profileInflu.fullName}</p>
+              <p className="profile-name">{previewInflu.influencerfullName}</p>
               <div className="profile-location">
                 <Location style={{ marginRight: "8px" }} />
-                <p>{profileInflu.Address}</p>
+                <p>{previewInflu.influencerAddress}</p>
               </div>
               <div className="profile-topics">
                 {previewInflu.influencerContentTopicName
-                  .filter((topic) => topic !== null)
+                  ?.filter((topic) => topic)
                   .slice(0, 2)
                   .map((topic, index) => (
                     <div key={index} className="profile-topic">
@@ -75,22 +75,22 @@ const InfluencerProfileCard = ({ profileInflu, previewInflu }) => {
           <div className="profile-social">
             <Facebook />
 
-            <p> {roundNumber(profileInflu.Follow_FB)}</p>
+            <p> {roundNumber(profileInflu.influencerFollowFb)}</p>
           </div>
           <div className="profile-social">
             <Instagram />
 
-            <p> {roundNumber(profileInflu.Follow_Insta)}</p>
+            <p> {roundNumber(profileInflu.influencerFollowInsta)}</p>
           </div>
           <div className="profile-social">
             <Youtube />
 
-            <p>{roundNumber(profileInflu.Follow_Youtube)}</p>
+            <p>{roundNumber(profileInflu.influencerFollowYoutube)}</p>
           </div>
           <div className="profile-social">
             <Tiktok />
 
-            <p>{roundNumber(profileInflu.Follow_TikTok)}</p>
+            <p>{roundNumber(profileInflu.influencerFollowTikTok)}</p>
           </div>
         </div>
         <div className="profile-images">

@@ -12,9 +12,10 @@ import roundNumber from "../roundNumber";
 import { HeartOutlined, MailFilled, PhoneFilled } from "@ant-design/icons";
 
 const InfluSideBar = ({ influInfo }) => {
+  console.log(influInfo);
   const [badgeColor, setBadgeColor] = React.useState("");
   React.useEffect(() => {
-    switch (influInfo.influencerTypeName[1]) {
+    switch (influInfo.influencerTypeName[0]) {
       case "Professional":
         setBadgeColor("#C837AB");
         break;
@@ -33,7 +34,7 @@ const InfluSideBar = ({ influInfo }) => {
       default:
         return;
     }
-  }, [influInfo.influencerTypeName[1]]);
+  }, [influInfo.influencerTypeName]);
 
   return (
     <>
@@ -44,7 +45,7 @@ const InfluSideBar = ({ influInfo }) => {
             <p className="profile-name">{influInfo.influencerfullName}</p>
             <div className="badge-block">
               {influInfo.influencerTypeName &&
-                influInfo.influencerTypeName[1] !== null && (
+                influInfo.influencerTypeName[0] !== null && (
                   <div
                     style={{
                       border: `2px solid ${badgeColor}`,
@@ -58,7 +59,7 @@ const InfluSideBar = ({ influInfo }) => {
                         marginRight: "8px",
                       }}
                     />
-                    {influInfo.influencerTypeName[1]}
+                    {influInfo.influencerTypeName[0]}
                   </div>
                 )}
             </div>
