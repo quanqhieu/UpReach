@@ -44,6 +44,7 @@ const VerifyRegisterPage = () => {
         toast.error(response.message, toastOptions)
         return false;
       }
+      toast.success(response.message,toastOptions)
       return response
     }catch(error){
       setMessage(error)

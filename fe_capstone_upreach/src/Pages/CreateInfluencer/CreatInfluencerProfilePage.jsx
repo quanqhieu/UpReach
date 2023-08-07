@@ -25,13 +25,14 @@ const CreatInfluencerProfilePage = () => {
   const [overviewDetails, setOverviewDetails] = useState(null);
   const [contentDetails, setContentFormDetails] = useState([null]);
   const [socialDetails, setSocialFormDetails] = useState(null);
-  const [message, setMessage] = useState();
-  
+  const [checkDataAddSuccess, setCheckDataAddSuccess] = useState(false);
+
   const [allDetails, setAllDetails] = useState({
     informationDetails: null,
     overviewDetails: null,
     contentDetails: null,
     socialDetails: null,
+    influencerDetail: null,
   });
   
   const onFinishInformationForm = (values) => {
@@ -79,17 +80,25 @@ const CreatInfluencerProfilePage = () => {
         console.log(allDetails)
         console.log(result)
         if (result) {
-          return true
-        } else {
-          return false
-        }
+          setCheckDataAddSuccess(true) 
+        } 
       }
       
     } catch (error) {
       console.log(error);
     }
   };
-  const isAllFormsFinished = handleFinishAllForms();
+  
+  useEffect (() =>{
+    
+    const data = localStorage.getItem('formData');
+    const formDataJson = JSON.parse(data);
+    setAllDetails(prevDetails => ({ ...prevDetails, influencerDetail: formDataJson }));
+    
+    if(current === 4){
+        handleFinishAllForms()
+    }
+  }, [current])
   
   const forms = [
     <InformationForm
@@ -101,7 +110,7 @@ const CreatInfluencerProfilePage = () => {
       initialValues={overviewDetails}
     />,
     <ContentForm
-      onFinish={onFinishContentForm} // chuyển tabs
+      onFinish={onFinishContentForm} 
       setContentFormDetails={setContentFormDetails}
       contentDetails={contentDetails}
     />,
@@ -109,7 +118,7 @@ const CreatInfluencerProfilePage = () => {
       onFinish={onFinishSocialForm}
       initialValues={socialDetails}
     />,
-    <>{isAllFormsFinished ? <FinishForm />: <FailForm/>}</>,
+    <>{checkDataAddSuccess ? <FinishForm />: <FailForm/>}</>,
   ];
   const isStepDisabled = (stepNumber) => {
     if (stepNumber === 0) {
@@ -171,7 +180,7 @@ const CreatInfluencerProfilePage = () => {
             />
           </Steps>
           
-          {forms[current] }
+          {forms[current]}
         </div>
       </div>
     </>

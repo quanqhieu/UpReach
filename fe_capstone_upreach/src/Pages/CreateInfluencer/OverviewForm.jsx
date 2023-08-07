@@ -38,7 +38,7 @@ const OverviewForm = ({ onFinish, initialValues }) => {
               <div className="overview-form-contact">
                 <h5>Your Contact Information</h5>
                 <Form.Item
-                  name="email"
+                  name="emailContact"
                   rules={[
                     {
                       required: true,

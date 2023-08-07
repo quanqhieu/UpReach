@@ -6,7 +6,7 @@ const ContentForm = ({ onFinish, setContentFormDetails, contentDetails }) => {
   const [modal, contextHolder] = Modal.useModal();
   const { CheckableTag } = Tag;
   const tagsData1 = [
-    "Sport & Fitness",
+    "Sport/Fitness",
     "Business",
     "Baby",
     "Education",
