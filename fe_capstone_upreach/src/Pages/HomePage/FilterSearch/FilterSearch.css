@@ -69,3 +69,11 @@
 	padding: 15px;
 	border-radius: 15px;
 }
+
+.ant-space{
+	margin-bottom: 0 !important;
+}
+
+.active-filter{
+	background: #e0ffe0 !important;
+}

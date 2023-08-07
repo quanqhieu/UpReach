@@ -24,7 +24,7 @@ const SignUp = () => {
   const FetchRegisterUser = async (data) => {
     try {
       const response = await ApiUser.registerUser(data);
-      if(response.status === "False"){
+      if (response.status === "False") {
         toast.error(response.message, toastOptions)
         return;
       }
@@ -33,11 +33,11 @@ const SignUp = () => {
       return response;
     } catch (error) {
       setMessage(error)
-      console.log(error) ; 
+      console.log(error);
     }
   };
 
-  
+
   const toastOptions = {
     position: "bottom-right",
     autoClose: 8000,
@@ -47,18 +47,18 @@ const SignUp = () => {
   }
 
   const onChangeInput = (value) => {
-    setForm({...form, [value.target.name] : value.target.value})
+    setForm({ ...form, [value.target.name]: value.target.value })
   };
   const handleClickSignUpClient = () => {
-    form.role =ROLE_CLIENT
+    form.role = ROLE_CLIENT
     const result = FetchRegisterUser(form);
-    
+
   };
   const handleClickSignUpInfluencer = () => {
     form.role = ROLE_INFLUENCER
     const result = FetchRegisterUser(form);
   };
-  
+
   return (
     <AuthBackground>
       <div className="signUpLayout">
@@ -66,17 +66,17 @@ const SignUp = () => {
           name="signUp"
           className="signUpForm"
           initialValues={{ remember: true }}
-          // onFinish={handleSubmit}
+        // onFinish={handleSubmit}
         >
           <p className="signUpTitle">Create your account</p>
-          <Button type="primary" htmlType="submit" className="signUpGoogle">
+          {/* <Button type="primary" htmlType="submit" className="signUpGoogle">
             <div className="GoogleIcon">{<IconGoogle />}</div>
             <p style={{ fontWeight: "600" }}>Sign up with Google</p>
-          </Button>
+          </Button> */}
           <div className="signUpBorders">
-            <div className="signUpBorder"></div>
+            {/* <div className="signUpBorder"></div>
             <p style={{ padding: "0 15px" }}>or</p>
-            <div className="signUpBorder"></div>
+            <div className="signUpBorder"></div> */}
           </div>
           <div className="signUpSubTitle">
             <p className="signUpSubTitleContent">Full Name </p>
@@ -89,18 +89,18 @@ const SignUp = () => {
             ]}
           >
             <Input
-              className= "signUpTypeBtn heightSignUpBtn"
+              className="signUpTypeBtn heightSignUpBtn"
               placeholder="Enter full name"
               name="name"
               onChange={onChangeInput}
             />
           </Form.Item>
-          
+
           <div className="signUpSubTitle">
             <p className="signUpSubTitleContent">Email address </p>
             <p className="signUpSubChar">*</p>
           </div>
-          
+
           <Form.Item
             name="email"
             rules={[
@@ -177,32 +177,32 @@ const SignUp = () => {
           </Form.Item>
           <div className="row">
             <div className="col-6 p-0">
-                <Button
-                  style={{
-                    width: "98%",
-                    height: "50px",
-                  }}
-                  type="primary"
-                  htmlType="submit"
-                  className="signUpBtn"
-                  onClick = {handleClickSignUpClient}
-                >
-                  Join as Brand
-                </Button>
+              <Button
+                style={{
+                  width: "98%",
+                  height: "50px",
+                }}
+                type="primary"
+                htmlType="submit"
+                className="signUpBtn"
+                onClick={handleClickSignUpClient}
+              >
+                Join as Brand
+              </Button>
             </div>
             <div className="col-6 p-0">
-                <Button
-                  style={{
-                    width: "98%",
-                    height: "50px",
-                  }}
-                  type="primary"
-                  htmlType="submit"
-                  className="signUpBtn"
-                  onClick = {handleClickSignUpInfluencer}
-                >
-                  Join as Influencer
-                </Button>
+              <Button
+                style={{
+                  width: "98%",
+                  height: "50px",
+                }}
+                type="primary"
+                htmlType="submit"
+                className="signUpBtn"
+                onClick={handleClickSignUpInfluencer}
+              >
+                Join as Influencer
+              </Button>
             </div>
           </div>
           <div className="signUpToLogin">

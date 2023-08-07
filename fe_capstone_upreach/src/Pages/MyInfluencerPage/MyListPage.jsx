@@ -43,6 +43,7 @@ const MyListPage = ({
   setFlagChangeNameList,
   flagDeleteList,
   setFlagDeleteList,
+  idAccClient,
 }) => {
   const [dataListShow, setDataListShow] = useState({});
   const [isFirstShow, setIsFirstShow] = useState(true);
@@ -201,7 +202,7 @@ const MyListPage = ({
       setIsNameListExist(true);
       return;
     } else {
-      fetchEditNameList(object.id, editnamelist);
+      fetchEditNameList(idAccClient, object.id, editnamelist);
       setEditList(false);
     }
   };
@@ -224,9 +225,13 @@ const MyListPage = ({
 
   //============================= Edit Name List DB BE =============================
 
-  const fetchEditNameList = async (idList, nameList) => {
+  const fetchEditNameList = async (idAccClient, idList, nameList) => {
     try {
-      const response = await ApiListInfluecer.editListName(idList, nameList);
+      const response = await ApiListInfluecer.editListName(
+        idAccClient,
+        idList,
+        nameList
+      );
       if (response.Status == "Success") {
         setFlagChangeNameList(!flagChangeNameList);
       }
@@ -369,7 +374,7 @@ const MyListPage = ({
             </div>
             {/* card 2 */}
             <div className="col-4 demographic mt-3 ms-4">
-              <div className="row">
+              <div className="row info">
                 <div className="col-6 text-center infomation">INFOMATION</div>
                 <div className="col-6 text-center type">TYPE</div>
                 <div className="col-12 mt-5">

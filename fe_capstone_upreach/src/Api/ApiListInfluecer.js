@@ -1,25 +1,25 @@
 import axiosClient from "./AxiosClient"
 
 const ApiListInfluecer = {
-    getListMenu(){
+    getListMenu(clientID){
         const url = '/getlistbyuserid';
-        return axiosClient.post(url, {ClientID: "CL001"})
+        return axiosClient.post(url, {ClientID: clientID})
     },
-    addListClient(idList, nameList){
+    addListClient(clientID,idList, nameList){
         const url = '/addlistclient';
-        return axiosClient.post(url, {ClientID: "CL001",IdList: idList, NameList: nameList})
+        return axiosClient.post(url, {ClientID: clientID,IdList: idList, NameList: nameList})
     },
-    editListName(idList,nameList){
+    editListName(clientID,idList,nameList){
         const url = '/editnamelist';
-        return axiosClient.post(url, {ClientID: "CL001",ListID: idList, UpdateNameList: nameList})
+        return axiosClient.post(url, {ClientID: clientID,ListID: idList, UpdateNameList: nameList})
     },
     deleteListClient(idList){
         const url = '/deletelistclient';
         return axiosClient.post(url, {IdList: idList})
     },
-    getTableKOLs(idList){
+    getTableKOLs(clientID,idList){
         const url = '/gettablekols';
-        return axiosClient.post(url, {ClientID: "CL001",IdList: idList})
+        return axiosClient.post(url, {ClientID: clientID,IdList: idList})
     },
     deleteTableKOLs(idProfile,idList){
         const url = '/deletetablekols';
