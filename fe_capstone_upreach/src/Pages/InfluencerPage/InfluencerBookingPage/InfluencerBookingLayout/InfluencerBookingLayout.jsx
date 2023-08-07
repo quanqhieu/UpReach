@@ -2,7 +2,7 @@ import React from "react";
 import "./InfluencerBookingLayout.css";
 import InfluencerBookingCard from "../../../../Components/InfluencerBookingCard/InfluencerBookingCard";
 import { DownOutlined } from "@ant-design/icons";
-import { Dropdown, Space } from "antd";
+import { Dropdown, Space, Modal } from "antd";
 const InfluencerBookingLayout = () => {
   const [sortOption, setSortOption] = React.useState("Choose Option");
   const items = [
@@ -49,38 +49,63 @@ const InfluencerBookingLayout = () => {
       brandName: "NoFear",
       platform: "Facebook",
       content: "Picture",
-      cost: 1000000,
-      status: "Processing",
+      quantities: 1,
+      status: "Pending",
       createdDate: "10/07/2023",
+      costFrom: 800000,
+      costTo: 1000000,
+      linkBook: "facebook.com",
+      describes: "deptraicogisai",
+      startDate: "26 / 8 / 2023",
+      endDate: "28 / 8 / 2023",
     },
     {
       name: "Minh",
-      brandName: "NoFear",
+      brandName: "Manh",
       platform: "Instagram",
       content: "Video",
-      cost: 10000000,
-      status: "Processing",
+      quantities: 1,
+      status: "Pending",
       createdDate: "11/07/2023",
+      costFrom: 900000,
+      costTo: 1200000,
+      linkBook: "facebook.com",
+      describes: "xau trai qua",
+      startDate: "26 / 8 / 2023",
+      endDate: "28 / 8 / 2023",
+    },
+    {
+      name: "Khoa",
+      brandName: "FSoft",
+      platform: "Tiktok",
+      content: "Picture",
+      quantities: 1,
+      status: "Pending",
+      createdDate: "12/07/2023",
+      costFrom: 1200000,
+      costTo: 1500000,
+      linkBook: "facebook.com/khoadeptrai",
+      describes: "Tester co tam",
+      startDate: "26 / 8 / 2023",
+      endDate: "28 / 8 / 2023",
     },
     {
       name: "Huy",
       brandName: "NoFear",
       platform: "Facebook",
       content: "Picture",
-      cost: 11000000,
-      status: "Processing",
+      quantities: 1,
+      status: "Pending",
       createdDate: "12/07/2023",
-    },
-    {
-      name: "Khoa",
-      brandName: "NoFear",
-      platform: "Facebook",
-      content: "Picture",
-      cost: 100000,
-      status: "Processing",
-      createdDate: "07/07/2023",
+      costFrom: 10000,
+      costTo: 20000,
+      linkBook: "facebook.com/huyga",
+      describes: "con ga",
+      startDate: "26 / 8 / 2023",
+      endDate: "28 / 8 / 2023",
     },
   ]);
+
   const hanldeSort = (bookingList) => {
     if (sortOption === "Name") {
       return bookingList.sort((a, b) => {
@@ -102,12 +127,15 @@ const InfluencerBookingLayout = () => {
 
         return dateB - dateA;
       });
-    } else if (sortOption === "Cost") {
-      return bookingList.sort((a, b) => {
-        return a.cost - b.cost;
-      });
-    } else return bookingList;
+    }
+    // else if (sortOption === "Cost") {
+    //   return bookingList.sort((a, b) => {
+    //     return a.cost - b.cost;
+    //   });
+    // }
+    else return bookingList;
   };
+
   return (
     <>
       <div className="influencer-booking-layout">
@@ -129,8 +157,8 @@ const InfluencerBookingLayout = () => {
           <p style={{ width: "14.6%" }}>Name</p>
           <p style={{ width: "18.8%" }}>Brand Name</p>
           <p style={{ width: "12.1%" }}>Platform</p>
-          <p style={{ width: "13.1%" }}>Content</p>
-          <p style={{ width: "14%" }}>Cost estimate</p>
+          <p style={{ width: "14.5%" }}>Content</p>
+          <p style={{ width: "12.9%" }}>Quantities</p>
           <p style={{ width: "12.4%" }}>Status</p>
           <p style={{ width: "15%" }}>Created Date</p>
         </div>

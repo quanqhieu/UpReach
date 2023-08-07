@@ -6,9 +6,10 @@ import { ReactComponent as Youtube } from "../../Assets/Icon/Youtube.svg";
 import { ReactComponent as Tiktok } from "../../Assets/Icon/Tiktok.svg";
 import { ReactComponent as Location } from "../../Assets/Icon/Location.svg";
 import { Tooltip } from "antd";
+import roundNumber from "../../Components/InfluUpdateProfileModal/roundNumber";
 import { EyeOutlined } from "@ant-design/icons";
 
-const InfluencerProfileCard = ({ profileInflu }) => {
+const InfluencerProfileCard = ({ profileInflu, previewInflu }) => {
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth();
   const currentYear = currentDate.getFullYear();
@@ -35,25 +36,30 @@ const InfluencerProfileCard = ({ profileInflu }) => {
           <div className="profile-avatar-content">
             <img className="profile-avatar" src={default_img} alt="" />
             <div className="profile-content">
-              <p className="profile-name">{profileInflu.fullName}</p>
+              <p className="profile-name">{previewInflu.influencerfullName}</p>
               <div className="profile-location">
                 <Location style={{ marginRight: "8px" }} />
-                <p>{profileInflu.address}</p>
+                <p>{previewInflu.influencerAddress}</p>
               </div>
               <div className="profile-topics">
-                {profileInflu.topics.slice(0, 2).map((topic, index) => (
-                  <div key={index} className="profile-topic">
-                    <Tooltip placement="top" title={topic}>
-                      <div>
-                        {topic.length > 8 ? `${topic.slice(0, 8)}...` : topic}
-                      </div>
-                    </Tooltip>
-                  </div>
-                ))}
+                {previewInflu.influencerContentTopicName
+                  ?.filter((topic) => topic)
+                  .slice(0, 2)
+                  .map((topic, index) => (
+                    <div key={index} className="profile-topic">
+                      <Tooltip placement="top" title={topic}>
+                        <div>
+                          {topic?.length > 8
+                            ? `${topic.slice(0, 8)}...`
+                            : topic}
+                        </div>
+                      </Tooltip>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>
-          <div className="profile-date-view">
+          {/* <div className="profile-date-view">
             <div className="profile-date">{profileInflu.date}</div>
             <div className="profile-view">
               <Tooltip
@@ -63,24 +69,28 @@ const InfluencerProfileCard = ({ profileInflu }) => {
                 <EyeOutlined />
               </Tooltip>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="profile-socials">
           <div className="profile-social">
             <Facebook />
-            <p>1M</p>
+
+            <p> {roundNumber(profileInflu.influencerFollowFb)}</p>
           </div>
           <div className="profile-social">
             <Instagram />
-            <p>1M</p>
+
+            <p> {roundNumber(profileInflu.influencerFollowInsta)}</p>
           </div>
           <div className="profile-social">
             <Youtube />
-            <p>1M</p>
+
+            <p>{roundNumber(profileInflu.influencerFollowYoutube)}</p>
           </div>
           <div className="profile-social">
             <Tiktok />
-            <p>1M</p>
+
+            <p>{roundNumber(profileInflu.influencerFollowTikTok)}</p>
           </div>
         </div>
         <div className="profile-images">

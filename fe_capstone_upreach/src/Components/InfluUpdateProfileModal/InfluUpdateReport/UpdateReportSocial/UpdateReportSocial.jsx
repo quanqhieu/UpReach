@@ -7,14 +7,13 @@ import { ReactComponent as Tiktok } from "../../../../Assets/Icon/Tiktok.svg";
 import { EditOutlined } from "@ant-design/icons";
 import { Input, Tooltip } from "antd";
 import roundNumber from "../../roundNumber";
-import { useInfluStore } from "../../../../Stores/influencer";
 import { useUserStore } from "../../../../Stores/user";
 
 const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
+  console.log(influInfo);
   const [edit, setEdit] = React.useState("");
   const [isError, setIsError] = React.useState(false);
 
-  const [influ] = useInfluStore((state) => [state.influ]);
   const [user] = useUserStore((state) => [state.user]);
 
   const handleSubmit = () => {

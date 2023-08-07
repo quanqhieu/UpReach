@@ -13,11 +13,14 @@ import {
 } from "./ConstUpgradePage";
 import { List } from "antd";
 import UpgradeCard from "../../Components/Layouts/UpgradeCard/UpgradeCard";
+import HeaderHomepage from "../../Components/Layouts/Header/HeaderHomepage";
 
 const Upgrade = () => {
   const [upgradeCards, setUpgradeCards] = useState(UPGRADE_CARDS);
   return (
     <>
+      <HeaderHomepage />
+
       <div className="upgrade-bg backgroundMainPage">
         <div className="upgrade-header">
           <div className="d-inline mt-3 countTime pt-2 countTime-bg">

@@ -8,7 +8,7 @@ import "./HeaderHomepage.css";
 import { UPREACH } from "../../Constant/Const";
 import { useUserStore } from "../../../Stores/user";
 
-function RenderLogo(onClickIntroduce) {
+function RenderLogo({ onClickIntroduce }) {
   return (
     <div className="headerContent">
       <div className="logoText" onClick={onClickIntroduce}>
@@ -18,11 +18,7 @@ function RenderLogo(onClickIntroduce) {
   );
 }
 
-function RenderContent({
-  onClickIntroduce,
-  onClickHomeMain,
-  onClickMyInfluencer,
-}) {
+function RenderContent({ onClickHomeMain, onClickMyInfluencer }) {
   return (
     <div className="headerContent">
       <div className="navBar">
@@ -32,10 +28,10 @@ function RenderContent({
         <div className="nav" onClick={onClickMyInfluencer}>
           Explore
         </div>
-        <div className="nav" onClick={onClickIntroduce}>
+        <div className="nav" onClick={onClickHomeMain}>
           How it work
         </div>
-        <div className="nav" onClick={onClickIntroduce}>
+        <div className="nav" onClick={onClickHomeMain}>
           Blogs
         </div>
       </div>
@@ -43,7 +39,7 @@ function RenderContent({
   );
 }
 
-const HeaderHomepage = (handleClickHomePage) => {
+const HeaderHomepage = (onClickIntroduce) => {
   let navigate = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies();
   const [user, setUserInfo] = useUserStore((state) => [
@@ -82,11 +78,12 @@ const HeaderHomepage = (handleClickHomePage) => {
     },
   ];
 
+  console.log(user);
   return (
     <div className="HeaderHomepage">
-      <RenderLogo oncClickIntroduce={handleClickHomePage} />
+      <RenderLogo onClickIntroduce={navigateIntroduce} />
       <div className="authBtn">
-        {user.influencerId ? (
+        {user.roleId == 3 ? (
           <div className="influencer-btn">
             <img
               className="influencer-avatar"
@@ -99,9 +96,9 @@ const HeaderHomepage = (handleClickHomePage) => {
                 <p style={{ height: "45px" }}>
                   <Space>
                     <div>
-                      {user.influencerfullName.length > 14
-                        ? `${user.influencerfullName.slice(0, 14)}...`
-                        : user.influencerfullName}
+                      {user?.fullNameInfluencer?.length > 14
+                        ? `${user?.fullNameInfluencer?.slice(0, 14)}...`
+                        : user?.fullNameInfluencer}
                     </div>
                   </Space>
                   <DownOutlined />
@@ -109,7 +106,7 @@ const HeaderHomepage = (handleClickHomePage) => {
               </Dropdown>
             </div>
           </div>
-        ) : user.clientId ? (
+        ) : user.roleId == 2 ? (
           <div className="cover-client-login">
             <Link to="/myinfluencer">
               <Button className="my-list-btn" type="primary">
@@ -129,9 +126,9 @@ const HeaderHomepage = (handleClickHomePage) => {
                   <p style={{ height: "45px" }}>
                     <Space>
                       <div>
-                        {user.fullName.length > 14
-                          ? `${user.fullName.slice(0, 14)}...`
-                          : user.fullName}
+                        {user?.fullNameClient?.length > 14
+                          ? `${user?.fullNameClient?.slice(0, 14)}...`
+                          : user?.fullNameClient}
                       </div>
                     </Space>
                     <DownOutlined />

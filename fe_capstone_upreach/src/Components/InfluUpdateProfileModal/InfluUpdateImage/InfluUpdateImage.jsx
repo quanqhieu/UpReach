@@ -9,14 +9,17 @@ import { Upload, Modal } from "antd";
 import ImgCrop from "antd-img-crop";
 import "./InfluUpdateImage.css";
 import DraggableUploadListItem from "./DraggableUploadListItem/DraggableUploadListItem";
-import { useInfluStore } from "../../../Stores/influencer";
 import { useUserStore } from "../../../Stores/user";
+import axios from "axios";
 
 const InfluUpdateImage = ({ influInfo, setInfluInfo, setIsChange }) => {
-  const [fileList, setFileList] = React.useState(influInfo.Image);
+  const [fileList, setFileList] = React.useState(
+    Array.isArray(influInfo.Image) ? influInfo.Image : []
+  );
+
+  const sortableItemIds = fileList.map((file) => file.uid);
   const [previewOpen, setPreviewOpen] = React.useState(false);
   const [previewImage, setPreviewImage] = React.useState("");
-  const [influ] = useInfluStore((state) => [state.influ]);
   const [user] = useUserStore((state) => [state.user]);
 
   const getBase64 = (file) =>
@@ -59,6 +62,7 @@ const InfluUpdateImage = ({ influInfo, setInfluInfo, setIsChange }) => {
       Image: fileList,
     });
   }, [fileList]);
+
   const checkImages = (arr1, arr2) => {
     if (arr1?.length !== arr2?.length) {
       return false;
@@ -78,6 +82,33 @@ const InfluUpdateImage = ({ influInfo, setInfluInfo, setIsChange }) => {
     }
   }, [influInfo, influInfo.Image]);
 
+  React.useEffect(() => {
+    axios
+      .get("http://localhost:4000/api/influ/get-images-influencer", {
+        params: {
+          email: user.influencerEmail,
+        },
+      })
+      .then((response) => {
+        const ImageData = response.data.data;
+        const imageList = ImageData.map((data) => {
+          if (data?.Image && data?.Image_ID) {
+            return {
+              url: data.Image,
+              uid: data.Image_ID,
+            };
+          }
+          return null;
+        }).filter((item) => item !== null);
+        setFileList(imageList);
+        setIsChange(false);
+      })
+      .catch((error) => {
+        console.error("Error while fetching Image information:", error);
+      });
+  }, []);
+  console.log(influInfo.Image);
+
   return (
     <>
       <Modal
@@ -96,7 +127,7 @@ const InfluUpdateImage = ({ influInfo, setInfluInfo, setIsChange }) => {
       <div className="influ-update-images">
         <DndContext sensors={[sensor]} onDragEnd={onDragEnd}>
           <SortableContext
-            items={fileList ? fileList.map((i) => i.uid) : []}
+            items={sortableItemIds}
             strategy={verticalListSortingStrategy}
           >
             <ImgCrop rotationSlider>
@@ -104,6 +135,7 @@ const InfluUpdateImage = ({ influInfo, setInfluInfo, setIsChange }) => {
                 customRequest={({ file, onSuccess }) => {
                   onSuccess("ok");
                 }}
+                action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                 listType="picture-card"
                 fileList={fileList}
                 beforeUpload={() => true}

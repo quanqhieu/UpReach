@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./UpgradeCard.css";
 import { ReactComponent as Facebook } from "../../../Assets/Icon/Facebook.svg";
 import { ReactComponent as Instagram } from "../../../Assets/Icon/Instagram.svg";
@@ -34,13 +35,14 @@ const UpgradeCard = ({ upgradeCards }) => {
             </p>
             <p style={{ fontSize: "14px", fontWeight: "600" }}>/month</p>
           </div>
+
           <Button
             className="upgrade-card-btn"
             type="primary"
             shape="round"
             size="large"
           >
-            {upgradeCards.btnTag}
+            <Link to={upgradeCards.link}>{upgradeCards.btnTag}</Link>
           </Button>
         </div>
         <div className="upgrade-card-content">

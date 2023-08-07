@@ -13,7 +13,8 @@ export const Q3_SUB_TITLE ="Definitely not. Our system will detect the upgrade a
 export const UPGRADE_CARDS = [
     {
         tag:"Starter",
-        cost:"49", 
+        cost:"49",
+        link:"https://sandbox.vnpayment.vn/payment-link/order-confirm?id=TIKKUQyMuC&token=19e63567036f071d4134181fe95302f8d8de7a33e82d7f8aac913d3aeb335df6",
         btnTag:"Buy starter",
         sub1:[CheckIcon, "Database of 11M influencers"],
         sub2:[CheckIcon, "15000 monthly results"],
@@ -30,6 +31,7 @@ export const UPGRADE_CARDS = [
     {   
         tag:"Business",
         cost:"79",
+        link:"https://sandbox.vnpayment.vn/payment-link/order-confirm?id=ffAUdKCMU7&token=09c0baf46816ee67b5883b09dfe861a8e2876e810de31293cde71acbc915192a",
         btnTag:"Buy business",
         sub1:[CheckIcon, 'Database of 11M influencers'],
         sub2:[CheckIcon, '40000 monthly results'],
@@ -46,6 +48,7 @@ export const UPGRADE_CARDS = [
     {
         tag:"Gold",
         cost:"149",
+        link:"https://sandbox.vnpayment.vn/payment-link/order-confirm?id=TIKKUQyMuC&token=19e63567036f071d4134181fe95302f8d8de7a33e82d7f8aac913d3aeb335df6",
         btnTag:"Buy gold",
         sub1:[CheckIcon, 'Database of 11M influencers'],
         sub2:[CheckIcon, '60000 monthly results'],

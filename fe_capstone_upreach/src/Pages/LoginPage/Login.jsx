@@ -1,4 +1,4 @@
-import { Button, Form, Input, Spin } from "antd";
+import { Button, Form, Input, Spin, message } from "antd";
 import React from "react";
 import "./Login.css";
 import { ReactComponent as IconGoogle } from "../../../src/Assets/Icon/google-icon.svg";
@@ -14,9 +14,18 @@ const Login = () => {
   const [setUserInfo] = useUserStore((state) => [state.setUserInfo]);
 
   const [isLoading, setIsLoading] = React.useState(false);
-  const [message, setMessage] = React.useState("");
+  const [validateMess, setValidateMess] = React.useState("");
+  const [messageApi, contextHolder] = message.useMessage();
   const [cookies, setCookie] = useCookies();
   let navigate = useNavigate();
+
+  const sendError = () => {
+    messageApi.open({
+      type: "error",
+      content: "Login Error",
+      duration: 100,
+    });
+  };
 
   const handleSubmit = (data) => {
     setIsLoading(true);
@@ -36,13 +45,15 @@ const Login = () => {
             setUserInfo(response.data.User);
             navigate("/influencer/my-report");
           }
-          setCookie("token", response.data.User.Sessions_ID, {
+          setCookie("token", response.data.User.email, {
             path: "/",
             maxAge: 30 * 24 * 60 * 60,
           });
           console.log(response);
         },
         (error) => {
+          setIsLoading(false);
+          sendError();
           console.log(error);
         }
       );
@@ -50,6 +61,7 @@ const Login = () => {
 
   return (
     <>
+      {contextHolder}
       <AuthBackground>
         <div className="logInLayout">
           <Link to="/">
@@ -75,9 +87,9 @@ const Login = () => {
                 rules={[
                   {
                     required: true,
-                    message: "Please input your email!",
+                    validateMess: "Please input your email!",
                   },
-                  { type: "email", message: "Invalid email" },
+                  { type: "email", validateMess: "Invalid email" },
                 ]}
               >
                 <Input
@@ -92,8 +104,11 @@ const Login = () => {
               <Form.Item
                 name="password"
                 rules={[
-                  { required: true, message: "Please input your password!" },
-                  { min: 5, message: "Enter as least 8 characters" },
+                  {
+                    required: true,
+                    validateMess: "Please input your password!",
+                  },
+                  { min: 5, validateMess: "Enter as least 8 characters" },
                 ]}
               >
                 <Input.Password

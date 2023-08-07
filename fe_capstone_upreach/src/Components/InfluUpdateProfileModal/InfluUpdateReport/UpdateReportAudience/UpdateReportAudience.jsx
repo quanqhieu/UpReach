@@ -3,101 +3,19 @@ import { Row, Col } from "antd";
 import { Line, Pie, Bar } from "@ant-design/plots";
 import React from "react";
 import { ExcelRenderer } from "react-excel-renderer";
+import axios from "axios";
+import { useUserStore } from "../../../../Stores/user";
 
-const UpdateReportAudience = () => {
-  const [dataFollower, setDataFollower] = React.useState([
-    {
-      year: "2018",
-      value: 3,
-    },
-    {
-      year: "2019",
-      value: 4,
-    },
-    {
-      year: "2020",
-      value: 5,
-    },
-    {
-      year: "2021",
-      value: 4,
-    },
-    {
-      year: "2022",
-      value: 6,
-    },
-    {
-      year: "2023",
-      value: 18,
-    },
-  ]);
+const UpdateReportAudience = ({ previewChart, setPreviewChart }) => {
+  const [dataFollower, setDataFollower] = React.useState([]);
+  const [dataGender, setDataGender] = React.useState([]);
+  const [dataAge, setDataAge] = React.useState([]);
+  const [dataLocation, setDataLocation] = React.useState([]);
+  const [user] = useUserStore((state) => [state.user]);
 
-  const [dataGender, setDataGender] = React.useState([
-    {
-      sex: "Male",
-      value: 45,
-    },
-    {
-      sex: "Female",
-      value: 55,
-    },
-  ]);
-
-  const [dataAge, setDataAge] = React.useState([
-    {
-      age: "18-",
-      value: 38,
-    },
-    {
-      age: "18-24",
-      value: 52,
-    },
-    {
-      age: "25-34",
-      value: 61,
-    },
-    {
-      age: "35-44",
-      value: 145,
-    },
-    {
-      age: "45-54",
-      value: 48,
-    },
-    {
-      age: "55+",
-      value: 38,
-    },
-  ]);
-  const [dataLocation, setDataLocation] = React.useState([
-    {
-      location: "TP.HCM",
-      value: 38,
-    },
-    {
-      location: "Ha Noi",
-      value: 52,
-    },
-    {
-      location: "Da Nang",
-      value: 61,
-    },
-    {
-      location: "Hue",
-      value: 14,
-    },
-    {
-      location: "Can Tho",
-      value: 48,
-    },
-    {
-      location: "Quang Binh",
-      value: 38,
-    },
-  ]);
   const configFollower = {
     data: dataFollower,
-    xField: "year",
+    xField: "date",
     yField: "value",
   };
 
@@ -153,10 +71,11 @@ const UpdateReportAudience = () => {
     let resultDate = new Date(baseDate.getTime() + milliseconds);
 
     let month = resultDate.getMonth() + 1;
-    let day = resultDate.getDate() - 2;
+    // let day = resultDate.getDate() - 2;
     let year = resultDate.getFullYear();
 
-    let formattedDate = month + "/" + day + "/" + year;
+    // let formattedDate = month + "/" + day + "/" + year;
+    let formattedDate = month + "/" + year;
 
     return formattedDate;
   }
@@ -164,53 +83,156 @@ const UpdateReportAudience = () => {
   const fileHandler = (event, chartName) => {
     if (event.target.files[0]) {
       let fileObj = event.target.files[0];
-      console.log(chartName);
-
       ExcelRenderer(fileObj, (err, resp) => {
         if (err) {
           console.log(err);
         } else {
           if (chartName === "follower") {
-            const rows = resp.rows.slice(1);
+            const rows = resp.rows.slice(2, 8);
             const data = rows.map((row) => {
               return {
-                year: convertExcelDateToNormalDate(row[0]),
-                value: row[1],
+                date: convertExcelDateToNormalDate(row[1]),
+                // date: row[1],
+                value: row[2],
               };
             });
             setDataFollower(data);
+            setPreviewChart((prevChart) => ({
+              ...prevChart,
+              dataFollower: data,
+            }));
           } else if (chartName === "gender") {
-            const rows = resp.rows.slice(1);
+            const rows = resp.rows.slice(2, 4);
             const data = rows.map((row) => {
               return {
-                sex: row[0],
-                value: row[1],
+                sex: row[1],
+                value: row[2],
               };
             });
             setDataGender(data);
+            setPreviewChart((prevChart) => ({
+              ...prevChart,
+              dataGender: data,
+            }));
           } else if (chartName === "age") {
-            const rows = resp.rows.slice(1);
+            const rows = resp.rows.slice(2, 6);
             const data = rows.map((row) => {
               return {
-                age: row[0],
-                value: row[1],
+                age: row[1],
+                value: row[2],
               };
             });
             setDataAge(data);
+            setPreviewChart((prevChart) => ({
+              ...prevChart,
+              dataAge: data,
+            }));
           } else if (chartName === "location") {
-            const rows = resp.rows.slice(1);
+            const rows = resp.rows.slice(2, 8);
             const data = rows.map((row) => {
               return {
-                location: row[0],
-                value: row[1],
+                location: row[1],
+                value: row[2],
               };
             });
             setDataLocation(data);
+            setPreviewChart((prevChart) => ({
+              ...prevChart,
+              dataLocation: data,
+            }));
           }
         }
       });
     }
   };
+
+  // React.useEffect(() => {
+  //   axios
+  //     .get("http://localhost:4000/api/influ/get-audience-influencer", {
+  //       params: {
+  //         email: user.influencerEmail,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       // console.log(response.data.data.selectedFollowers);
+  //       const audienceFollowerData = response.data.data.selectedFollowers;
+  //       const followerList = audienceFollowerData
+  //         .map((data) => {
+  //           if (data?.AudienceFollowerMonth && data?.Quantity) {
+  //             return {
+  //               date: data.AudienceFollowerMonth,
+  //               value: data.Quantity,
+  //             };
+  //           }
+  //           return null;
+  //         })
+  //         .filter((item) => item !== null)
+  //         .sort((a, b) => {
+  //           const [aMonth, aYear] = a.date.split("/");
+  //           const [bMonth, bYear] = b.date.split("/");
+
+  //           if (parseInt(aYear, 10) !== parseInt(bYear, 10)) {
+  //             return parseInt(aYear, 10) - parseInt(bYear, 10);
+  //           }
+  //           return parseInt(aMonth, 10) - parseInt(bMonth, 10);
+  //         });
+
+  //       setDataFollower(followerList);
+
+  //       // console.log(response.data.data.selectedGenders);
+  //       const audienceGenderData = response.data.data.selectedGenders;
+  //       const genderList = audienceGenderData
+  //         .map((data) => {
+  //           if (data?.Gender && data?.Quantity) {
+  //             return {
+  //               sex: data.Gender,
+  //               value: data.Quantity,
+  //             };
+  //           }
+  //           return null;
+  //         })
+  //         .filter((item) => item !== null);
+  //       setDataGender(genderList);
+
+  //       // console.log(response.data.data.selectedAges);
+  //       const audienceAgeData = response.data.data.selectedAges;
+  //       const ageList = audienceAgeData
+  //         .map((data) => {
+  //           if (data?.AgeRange && data?.Quantity && data?.AudienceAge_ID) {
+  //             return {
+  //               age: data.AgeRange,
+  //               value: data.Quantity,
+  //               ageId: data.AudienceAge_ID,
+  //             };
+  //           }
+  //           return null;
+  //         })
+  //         .filter((item) => item !== null)
+  //         .sort((a, b) => {
+  //           return a.ageId.localeCompare(b.ageId);
+  //         });
+  //       setDataAge(ageList);
+
+  //       // console.log(response.data.data.selectedLocations);
+  //       const audienceLocationData = response.data.data.selectedLocations;
+  //       const locationList = audienceLocationData
+  //         .map((data) => {
+  //           if (data?.AudienceLocation && data?.Quantity) {
+  //             return {
+  //               location: data.AudienceLocation,
+  //               value: data.Quantity,
+  //             };
+  //           }
+  //           return null;
+  //         })
+  //         .filter((item) => item !== null);
+  //       setDataLocation(locationList);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error while fetching Audience information:", error);
+  //     });
+  // }, []);
+
   return (
     <div className="update-report-audience-layout">
       <Row gutter={[16, 16]}>
@@ -287,4 +309,4 @@ const UpdateReportAudience = () => {
   );
 };
 
-export default UpdateReportAudience;
+export default React.memo(UpdateReportAudience);
