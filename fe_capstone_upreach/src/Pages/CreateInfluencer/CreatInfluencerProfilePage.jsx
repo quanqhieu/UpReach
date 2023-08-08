@@ -17,6 +17,7 @@ import FinishForm from "./FinishForm";
 import ApiUser from "../../Api/ApiUser";
 import ApiListInfluecer from "../../Api/ApiListInfluecer";
 import FailForm from "./FailForm";
+import ApiInfluencer from "../../Api/ApiInfluencer";
 
 const CreatInfluencerProfilePage = () => {
   const [form] = Form.useForm();
@@ -76,7 +77,7 @@ const CreatInfluencerProfilePage = () => {
   const handleFinishAllForms = async () => {
     try {
       if(areAllStepsCompleted()){
-        const result = await ApiListInfluecer.addNewInfluencer(allDetails);
+        const result = await ApiInfluencer.addNewInfluencer(allDetails);
         console.log(allDetails)
         console.log(result)
         if (result) {

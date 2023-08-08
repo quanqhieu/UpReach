@@ -30,10 +30,7 @@ const ApiListInfluecer = {
         return axiosClient.post(url, {IdList: idList})
     },
 
-    addNewInfluencer(data){
-        const url = '/influ/addInfluencer'
-        return axiosClient.post(url,data)
-    }
+    
 }
 
 export default ApiListInfluecer
