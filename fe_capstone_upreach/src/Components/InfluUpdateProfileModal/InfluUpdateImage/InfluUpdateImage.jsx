@@ -59,6 +59,7 @@ const InfluUpdateImage = ({ influInfo, setInfluInfo, setIsChange }) => {
       Image: fileList,
     });
   }, [fileList]);
+
   const checkImages = (arr1, arr2) => {
     if (arr1?.length !== arr2?.length) {
       return false;
