@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, Input, InputNumber } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import "./VerifyRegisterPage.css";
 import ApiUser from "../../Api/ApiUser"
 import { ToastContainer, toast } from 'react-toastify';
@@ -32,9 +32,8 @@ const VerifyRegisterPage = () => {
     }
     const formDataJson = JSON.parse(data);
     setFormData(formDataJson)
-
-
-  }, []);
+    
+  }, [navigate]);
 
   const confirmUser = async (data) =>{
     try{
@@ -45,6 +44,7 @@ const VerifyRegisterPage = () => {
         toast.error(response.message, toastOptions)
         return false;
       }
+      toast.success(response.message,toastOptions)
       return response
     }catch(error){
       setMessage(error)
