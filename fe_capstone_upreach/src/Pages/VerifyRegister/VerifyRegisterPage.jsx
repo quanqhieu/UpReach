@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, Form, Input, InputNumber } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./VerifyRegisterPage.css";
@@ -10,6 +10,7 @@ const VerifyRegisterPage = () => {
   const navigate = useNavigate();
   const [message, setMessage] = useState()
   const [otp, setOtp] = useState(new Array(6).fill(""))
+  const inputRefs = useRef([]);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -55,12 +56,22 @@ const VerifyRegisterPage = () => {
   const handleInputChange = (element, index) => {
     console.log(element)
     if (isNaN(element)) {
-      console.log("aaa")
       return false;
     };
 
     setOtp([...otp.map((d, idx) => (idx === index) ? element : d)])
-    // setInputValue(value);
+
+    if (element === null && index > 0) {
+      inputRefs.current[index - 1].focus(); // Move focus to the previous input
+    } else if (element !== null && element.toString().length === 1 && index < otp.length - 1) {
+      inputRefs.current[index + 1].focus(); // Move focus to the next input
+    }
+  };
+
+  const handleInputFocus = (index) => {
+    if (inputRefs.current[index]) {
+      inputRefs.current[index].select();
+    }
   };
 
 
@@ -110,7 +121,8 @@ const VerifyRegisterPage = () => {
                       defaultValue={null}
                       value={data}
                       onChange={(e) => handleInputChange(e, index)}
-                      onFocus={e => e.target.select()}
+                      onFocus={() => handleInputFocus(index)}
+                      ref={(ref) => (inputRefs.current[index] = ref)}
                     />
                   )
                 })}
