@@ -90,7 +90,7 @@ const InformationForm = ({ onFinish, initialValues }) => {
                 />
               </Form.Item>
               <Form.Item
-                name="type"
+                name="typeId"
                 className="information-btn"
                 rules={[
                   {
@@ -100,11 +100,11 @@ const InformationForm = ({ onFinish, initialValues }) => {
                 ]}
               >
                 <Select placeholder="Select Your Influencer Type ">
-                  <Option value="Celebrity">Celebrity</Option>
-                  <Option value="Talent">Talent</Option>
-                  <Option value="Professional">Professional</Option>
-                  <Option value="Citizen">Citizen</Option>
-                  <Option value="Community">Community</Option>
+                  <Option value="IT01">Celebrity</Option>
+                  <Option value="IT02">Talent</Option>
+                  <Option value="IT03">Professional</Option>
+                  <Option value="IT04">Citizen</Option>
+                  <Option value="IT05">Community</Option>
                 </Select>
               </Form.Item>
               <Form.Item

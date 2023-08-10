@@ -38,7 +38,7 @@ const OverviewForm = ({ onFinish, initialValues }) => {
               <div className="overview-form-contact">
                 <h5>Your Contact Information</h5>
                 <Form.Item
-                  name="email"
+                  name="emailContact"
                   rules={[
                     {
                       required: true,
@@ -112,7 +112,7 @@ const OverviewForm = ({ onFinish, initialValues }) => {
                 </Form.Item>
                 <div className="cost-select-form">
                   <Form.Item
-                    name="cost-form"
+                    name="costFrom"
                     label="Cost estimatie"
                     tooltip="This estimate depends on the influencer's stats, country, and if they're a personality off social media."
                     rules={[
@@ -145,7 +145,7 @@ const OverviewForm = ({ onFinish, initialValues }) => {
                     </p>
                   </FormItem>
                   <FormItem
-                    name="cost-to"
+                    name="costTo"
                     rules={[
                       {
                         type: "number",
