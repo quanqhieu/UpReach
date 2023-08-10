@@ -7,6 +7,7 @@ import { ReactComponent as Youtube } from "../../../../../Assets/Icon/Youtube.sv
 import { Tooltip } from "antd";
 
 const ApproveJobItem = ({ jobInfo }) => {
+  console.log(jobInfo);
   const getPlatformIcon = (platform) => {
     switch (platform) {
       case "facebook":

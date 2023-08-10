@@ -18,11 +18,15 @@ import axios from "axios";
 
 const InfluencerReportLayout = () => {
   const [user] = useUserStore((state) => [state.user]);
-  const [previewInflu, setPreviewInflu] = React.useState(user);
+  const [previewInflu, setPreviewInflu] = React.useState({});
+  const [mokPreviewInflu, setMokPreviewInflu] = React.useState({});
+  const [oldVerInflu, setOldVerInflu] = React.useState({});
+
   const [previewBooking, setPreviewBooking] = React.useState([]);
   const [previewChart, setPreviewChart] = React.useState([]);
   const [idJobsRemove, setIdJobsRemove] = React.useState([]);
   const [profileVersion, setProfileVersion] = React.useState([]);
+  const [force, setForce] = React.useState(0);
 
   const [isChange, setIsChange] = React.useState(false);
   const [openConfirmForm, setOpenConfirmForm] = React.useState(false);
@@ -79,7 +83,7 @@ const InfluencerReportLayout = () => {
     setOpenConfirmForm(false);
     setIsChange(false);
     setIsOpenProfileInflu(false);
-    setPreviewInflu(user);
+    setPreviewInflu(mokPreviewInflu);
   };
 
   function is7DaysOrMoreAgo(storedTime) {
@@ -211,17 +215,33 @@ const InfluencerReportLayout = () => {
       })
 
       .then((response) => {
+        console.log("run");
         const info = response.data.Influencer;
         setProfileVersion(info);
         setPreviewInflu(() => {
+          return info.sort(
+            (a, b) =>
+              new Date(b.dateEdit).getTime() - new Date(a.dateEdit).getTime()
+          )[0];
+        });
+
+        setMokPreviewInflu(() => {
+          return info.sort(
+            (a, b) =>
+              new Date(b.dateEdit).getTime() - new Date(a.dateEdit).getTime()
+          )[0];
+        });
+        setOldVerInflu(() => {
           return info.find((item) => item.isPublish);
         });
       })
       .catch((error) => {
         console.error("Error while fetching profile information:", error);
+      })
+      .finally(() => {
+        setIsChange(false);
       });
-  }, []);
-
+  }, [force]);
   return (
     <>
       <Modal
@@ -259,15 +279,19 @@ const InfluencerReportLayout = () => {
         <InfluUpdateProfileModal
           setWaitedDate={setWaitedDate}
           setIsAllowEdit={setIsAllowEdit}
+          isChange={isChange}
           setIsChange={setIsChange}
           previewInflu={previewInflu}
+          mokPreviewInflu={mokPreviewInflu}
           setPreviewInflu={setPreviewInflu}
           previewBooking={previewBooking}
           setPreviewBooking={setPreviewBooking}
           idJobsRemove={idJobsRemove}
           setIdJobsRemove={setIdJobsRemove}
           previewChart={previewChart}
+          oldVerInflu={oldVerInflu}
           setPreviewChart={setPreviewChart}
+          setForce={setForce}
         />
       </Modal>
       <div className="influencer-report-layout">
@@ -350,6 +374,7 @@ const InfluencerReportLayout = () => {
                 <InfluencerProfileCard
                   profileInflu={item}
                   previewInflu={previewInflu}
+                  oldVerInflu={oldVerInflu}
                 />
               </List.Item>
             )}

@@ -6,6 +6,7 @@ import UpdateReportAudience from "./UpdateReportAudience/UpdateReportAudience";
 import UpdateReportJobs from "./UpdateReportJobs/UpdateReportJobs";
 
 const InfluUpdateReport = ({
+  mokPreviewInflu,
   setIsChange,
   influInfo,
   setInfluInfo,
@@ -24,6 +25,7 @@ const InfluUpdateReport = ({
           setIsChange={setIsChange}
           influInfo={influInfo}
           setInfluInfo={setInfluInfo}
+          mokPreviewInflu={mokPreviewInflu}
         />
       ),
     },
@@ -31,8 +33,10 @@ const InfluUpdateReport = ({
       title: "AUDIENCE",
       children: (
         <UpdateReportAudience
+          influInfo={influInfo}
           previewChart={chartInfo}
           setPreviewChart={setChartInfo}
+          setIsChange={setIsChange}
         />
       ),
     },
@@ -40,10 +44,13 @@ const InfluUpdateReport = ({
       title: "JOBS",
       children: (
         <UpdateReportJobs
+          influInfo={influInfo}
           bookingInfo={bookingInfo}
           setBookingInfo={setBookingInfo}
           idJobsRemove={idJobsRemove}
           setIdJobsRemove={setIdJobsRemove}
+          mokPreviewInflu={mokPreviewInflu}
+          setIsChange={setIsChange}
         />
       ),
     },

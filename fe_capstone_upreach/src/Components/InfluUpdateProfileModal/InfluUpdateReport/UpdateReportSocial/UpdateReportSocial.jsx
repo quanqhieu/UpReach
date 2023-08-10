@@ -7,14 +7,15 @@ import { ReactComponent as Tiktok } from "../../../../Assets/Icon/Tiktok.svg";
 import { EditOutlined } from "@ant-design/icons";
 import { Input, Tooltip } from "antd";
 import roundNumber from "../../roundNumber";
-import { useUserStore } from "../../../../Stores/user";
 
-const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
-  console.log(influInfo);
+const UpdateReportSocial = ({
+  influInfo,
+  setInfluInfo,
+  setIsChange,
+  mokPreviewInflu,
+}) => {
   const [edit, setEdit] = React.useState("");
   const [isError, setIsError] = React.useState(false);
-
-  const [user] = useUserStore((state) => [state.user]);
 
   const handleSubmit = () => {
     if (
@@ -57,28 +58,35 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
     }
   };
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     if (
-      influInfo.influencerFollowFb == user.influencerFollowFb &&
-      influInfo.influencerFollowInsta == user.influencerFollowInsta &&
-      influInfo.influencerFollowYoutube == user.influencerFollowYoutube &&
-      influInfo.influencerFollowTikTok == user.influencerFollowTikTok &&
-      influInfo.influencerInteractionFb == user.influencerInteractionFb &&
-      influInfo.influencerInteractionInsta == user.influencerInteractionInsta &&
+      influInfo.influencerFollowFb == mokPreviewInflu.influencerFollowFb &&
+      influInfo.influencerFollowInsta ==
+        mokPreviewInflu.influencerFollowInsta &&
+      influInfo.influencerFollowYoutube ==
+        mokPreviewInflu.influencerFollowYoutube &&
+      influInfo.influencerFollowTikTok ==
+        mokPreviewInflu.influencerFollowTikTok &&
+      influInfo.influencerInteractionFb ==
+        mokPreviewInflu.influencerInteractionFb &&
+      influInfo.influencerInteractionInsta ==
+        mokPreviewInflu.influencerInteractionInsta &&
       influInfo.influencerInteractionYoutube ==
-        user.influencerInteractionYoutube &&
+        mokPreviewInflu.influencerInteractionYoutube &&
       influInfo.influencerInteractionTiktok ==
-        user.influencerInteractionTiktok &&
-      influInfo.influencerEngagement == user.influencerEngagement &&
-      influInfo.influencerCostEstimateFrom == user.influencerCostEstimateFrom &&
-      influInfo.influencerCostEstimateTo == user.influencerCostEstimateTo &&
-      influInfo.influencerPostsPerWeek == user.influencerPostsPerWeek
+        mokPreviewInflu.influencerInteractionTiktok &&
+      influInfo.influencerEngagement == mokPreviewInflu.influencerEngagement &&
+      influInfo.influencerCostEstimateFrom ==
+        mokPreviewInflu.influencerCostEstimateFrom &&
+      influInfo.influencerCostEstimateTo ==
+        mokPreviewInflu.influencerCostEstimateTo &&
+      influInfo.influencerPostsPerWeek == mokPreviewInflu.influencerPostsPerWeek
     ) {
       setIsChange(false);
     } else {
       setIsChange(true);
     }
-  }, [influInfo, user, setIsChange]);
+  }, [influInfo, mokPreviewInflu, setIsChange]);
 
   React.useEffect(() => {
     let sumFollowers = 0;

@@ -9,7 +9,7 @@ import { Tooltip } from "antd";
 import roundNumber from "../../Components/InfluUpdateProfileModal/roundNumber";
 import { EyeOutlined } from "@ant-design/icons";
 
-const InfluencerProfileCard = ({ profileInflu, previewInflu }) => {
+const InfluencerProfileCard = ({ profileInflu, previewInflu, oldVerInflu }) => {
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth();
   const currentYear = currentDate.getFullYear();
@@ -36,13 +36,13 @@ const InfluencerProfileCard = ({ profileInflu, previewInflu }) => {
           <div className="profile-avatar-content">
             <img className="profile-avatar" src={default_img} alt="" />
             <div className="profile-content">
-              <p className="profile-name">{previewInflu.influencerfullName}</p>
+              <p className="profile-name">{oldVerInflu.influencerfullName}</p>
               <div className="profile-location">
                 <Location style={{ marginRight: "8px" }} />
-                <p>{previewInflu.influencerAddress}</p>
+                <p>{oldVerInflu.influencerAddress}</p>
               </div>
               <div className="profile-topics">
-                {previewInflu.influencerContentTopicName
+                {oldVerInflu.influencerContentTopicName
                   ?.filter((topic) => topic)
                   .slice(0, 2)
                   .map((topic, index) => (
@@ -59,17 +59,17 @@ const InfluencerProfileCard = ({ profileInflu, previewInflu }) => {
               </div>
             </div>
           </div>
-          {/* <div className="profile-date-view">
-            <div className="profile-date">{profileInflu.date}</div>
-            <div className="profile-view">
+          <div className="profile-date-view">
+            <div className="profile-date">{profileInflu.isPublish}</div>
+            {/* <div className="profile-view">
               <Tooltip
                 placement="top"
                 title={profileInflu.view.toLocaleString("vi-VN")}
               >
                 <EyeOutlined />
               </Tooltip>
-            </div>
-          </div> */}
+            </div> */}
+          </div>
         </div>
         <div className="profile-socials">
           <div className="profile-social">

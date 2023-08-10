@@ -67,7 +67,6 @@ const UpdateComponent = ({
 
   const onFinish = (values) => {
     setIsEditting(false);
-
     const updatedItem = {
       ...item,
       jobName: values.jobName,
@@ -149,7 +148,7 @@ const UpdateComponent = ({
                 },
               ]}
             >
-              <Select placeholder="Please select a country">
+              <Select placeholder="Please select a platform">
                 <Option value="facebook">Facebook</Option>
                 <Option value="instagram">Instagram</Option>
                 <Option value="youtube">Youtube</Option>
@@ -301,12 +300,14 @@ const UpdateComponent = ({
 };
 
 const UpdateReportJobs = ({
+  influInfo,
   bookingInfo,
   setBookingInfo,
   idJobsRemove,
   setIdJobsRemove,
+  mokPreviewInflu,
+  setIsChange,
 }) => {
-  const [user] = useUserStore((state) => [state.user]);
   const [isAdding, setIsAdding] = React.useState(false);
   const [isEditting, setIsEditting] = React.useState(false);
   const [editingIndex, setEditingIndex] = React.useState(-1);
@@ -330,6 +331,7 @@ const UpdateReportJobs = ({
       setBookingInfo([...bookingInfo, ...values.jobs]);
       setIsAdding(false);
       form.resetFields();
+      setIsChange(true);
     }
   };
   const handleItemUpdate = (index, updatedItem) => {
@@ -338,23 +340,9 @@ const UpdateReportJobs = ({
       updatedBookingInfo[index] = updatedItem;
       return updatedBookingInfo;
     });
+    setIsChange(true);
   };
 
-  // const handleItemRemove = (indexToRemove) => {
-  //   if (indexToRemove === editingIndex) {
-  //     setIsEditting(false);
-  //     setEditPost("");
-  //   }
-  //   setBookingInfo((prevBookingInfo) => {
-  //     const removedItem = prevBookingInfo[indexToRemove];
-  //     if (removedItem) {
-  //       setIdJobsRemove(removedItem.jobId);
-  //     }
-  //     const updatedBookingInfo = [...prevBookingInfo];
-  //     updatedBookingInfo.splice(indexToRemove, 1);
-  //     return updatedBookingInfo;
-  //   });
-  // };
   const handleItemRemove = (indexToRemove) => {
     if (indexToRemove === editingIndex) {
       setIsEditting(false);
@@ -369,47 +357,43 @@ const UpdateReportJobs = ({
           ...prevDeletedJobIds,
           removedItem.jobId,
         ]);
+        setIsChange(true);
       }
-
       const updatedBookingInfo = [...prevBookingInfo];
       updatedBookingInfo.splice(indexToRemove, 1);
       return updatedBookingInfo;
     });
   };
 
-  // React.useEffect(() => {
-  //   axios
-  //     .get("http://localhost:4000/api/influ/get-jobs-influencer", {
-  //       params: {
-  //         email: user.influencerEmail,
-  //       },
-  //     })
-
-  //     .then((response) => {
-  //       const jobDataArray = response.data.data;
-  //       // console.log(response);
-
-  //       const bookingList = jobDataArray.map((data) => ({
-  //         jobId: data?.Job_ID,
-  //         jobName: data?.Name_Job,
-  //         platform: data?.Platform_Job,
-  //         jobLink: data?.Link,
-  //         quantity: data?.Quantity,
-  //         costEstimateFrom: data?.CostEstimate_From_Job,
-  //         costEstimateTo: data?.CostEstimate_To_Job,
-  //         formatContent: data?.Format_Id,
-  //       }));
-  //       // console.log(bookingList);
-  //       setBookingInfo(bookingList);
-  //       // console.log(bookingInfo);
-  //     })
-  //     .catch((error) => {
-  //       console.error(
-  //         "Error while fetching previewBooking information:",
-  //         error
-  //       );
-  //     });
-  // }, []);
+  React.useEffect(() => {
+    axios
+      .get("http://localhost:4000/api/influ/get-jobs-influencer", {
+        params: {
+          email: influInfo.influencerEmail,
+        },
+      })
+      .then((response) => {
+        const jobDataArray = response.data.data;
+        const bookingList = jobDataArray?.map((data) => ({
+          jobId: data?.Job_ID,
+          jobName: data?.Name_Job,
+          platform: data?.Platform_Job,
+          jobLink: data?.Link,
+          quantity: data?.Quantity,
+          costEstimateFrom: data?.CostEstimate_From_Job,
+          costEstimateTo: data?.CostEstimate_To_Job,
+          formatContent: data?.Format_Id,
+        }));
+        // console.log(bookingList);
+        setBookingInfo(bookingList);
+      })
+      .catch((error) => {
+        console.error(
+          "Error while fetching previewBooking information:",
+          error
+        );
+      });
+  }, []);
 
   return (
     <>
@@ -508,7 +492,7 @@ const UpdateReportJobs = ({
                           },
                         ]}
                       >
-                        <Select placeholder="Please select a country">
+                        <Select placeholder="Please select a platform">
                           <Option value="facebook">Facebook</Option>
                           <Option value="instagram">Instagram</Option>
                           <Option value="youtube">Youtube</Option>
@@ -671,7 +655,7 @@ const UpdateReportJobs = ({
               }}
             >
               <Space>
-                <Button type="primary" htmlType="submit">
+                <Button type="primary" htmlType="submit" disabled={!isAdding}>
                   Submit
                 </Button>
               </Space>

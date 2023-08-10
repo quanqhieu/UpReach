@@ -12,7 +12,12 @@ import DraggableUploadListItem from "./DraggableUploadListItem/DraggableUploadLi
 import { useUserStore } from "../../../Stores/user";
 import axios from "axios";
 
-const InfluUpdateImage = ({ influInfo, setInfluInfo, setIsChange }) => {
+const InfluUpdateImage = ({
+  influInfo,
+  setInfluInfo,
+  setIsChange,
+  mokPreviewInflu,
+}) => {
   const [fileList, setFileList] = React.useState(
     Array.isArray(influInfo.Image) ? influInfo.Image : []
   );
@@ -20,7 +25,6 @@ const InfluUpdateImage = ({ influInfo, setInfluInfo, setIsChange }) => {
   const sortableItemIds = fileList.map((file) => file.uid);
   const [previewOpen, setPreviewOpen] = React.useState(false);
   const [previewImage, setPreviewImage] = React.useState("");
-  const [user] = useUserStore((state) => [state.user]);
 
   const getBase64 = (file) =>
     new Promise((resolve, reject) => {
@@ -77,16 +81,16 @@ const InfluUpdateImage = ({ influInfo, setInfluInfo, setIsChange }) => {
     return true;
   };
   React.useEffect(() => {
-    if (!checkImages(influInfo.Image, user.Image)) {
+    if (!checkImages(influInfo.Image, mokPreviewInflu.Image)) {
       setIsChange(true);
     }
-  }, [influInfo, influInfo.Image]);
+  }, [mokPreviewInflu.Image, influInfo.Image]);
 
   React.useEffect(() => {
     axios
       .get("http://localhost:4000/api/influ/get-images-influencer", {
         params: {
-          email: user.influencerEmail,
+          email: influInfo.influencerEmail,
         },
       })
       .then((response) => {
@@ -107,7 +111,6 @@ const InfluUpdateImage = ({ influInfo, setInfluInfo, setIsChange }) => {
         console.error("Error while fetching Image information:", error);
       });
   }, []);
-  console.log(influInfo.Image);
 
   return (
     <>

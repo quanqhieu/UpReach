@@ -4,15 +4,19 @@ import InfluUpdateImage from "./InfluUpdateImage/InfluUpdateImage";
 import InfluUpdateReport from "./InfluUpdateReport/InfluUpdateReport";
 import React from "react";
 import axios from "axios";
-import { Spin } from "antd";
+import { Button, Spin } from "antd";
 
 import { useUserStore } from "../../Stores/user";
 
 const InfluUpdateProfileModal = ({
+  setForce,
+  oldVerInflu,
   setWaitedDate,
   setIsAllowEdit,
+  isChange,
   setIsChange,
   previewInflu,
+  mokPreviewInflu,
   setPreviewInflu,
   previewBooking,
   setPreviewBooking,
@@ -21,10 +25,7 @@ const InfluUpdateProfileModal = ({
   previewChart,
   setPreviewChart,
 }) => {
-  const [user, setUserInfo] = useUserStore((state) => [
-    state.user,
-    state.setUserInfo,
-  ]);
+  console.log(previewInflu);
   const [isSaving, setIsSaving] = React.useState(false);
   const handleSave = () => {
     setIsSaving(true);
@@ -50,8 +51,9 @@ const InfluUpdateProfileModal = ({
         setIsAllowEdit(false);
         setIsChange(false);
         setIsSaving(false);
+        console.log(response.data);
+        setForce((prev) => prev + 1);
         localStorage.setItem("editDate", new Date());
-        // setUserInfo(previewInflu);
       })
       .catch((error) => {
         console.error("Lỗi khi cập nhật thông tin:", error);
@@ -61,7 +63,10 @@ const InfluUpdateProfileModal = ({
     <>
       <div className="influ-update-profile">
         <div className="influ-update-side-bar">
-          <InfluUpdateSideBar influInfo={previewInflu} />
+          <InfluUpdateSideBar
+            influInfo={previewInflu}
+            oldVerInflu={oldVerInflu}
+          />
         </div>
         <div className="cover-influ-update-image-report">
           <Spin tip="Saving" size="large" spinning={isSaving}>
@@ -70,10 +75,12 @@ const InfluUpdateProfileModal = ({
                 setIsChange={setIsChange}
                 influInfo={previewInflu}
                 setInfluInfo={setPreviewInflu}
+                mokPreviewInflu={mokPreviewInflu}
               />
             </div>
             <div className="influ-update-report">
               <InfluUpdateReport
+                mokPreviewInflu={mokPreviewInflu}
                 setIsChange={setIsChange}
                 influInfo={previewInflu}
                 setInfluInfo={setPreviewInflu}
@@ -84,9 +91,15 @@ const InfluUpdateProfileModal = ({
                 chartInfo={previewChart}
                 setChartInfo={setPreviewChart}
               />
-              <button className="influ-update-report-btn" onClick={handleSave}>
+              <Button
+                disabled={!isChange}
+                type="primary"
+                size={18}
+                className="influ-update-report-btn"
+                onClick={handleSave}
+              >
                 SAVE
-              </button>
+              </Button>
             </div>
           </Spin>
         </div>
