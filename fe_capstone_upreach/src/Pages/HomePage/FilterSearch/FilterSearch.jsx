@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./FilterSearch.css";
 import "../../../CSS/Theme.css";
 import "../HomePage.css";
-import { Button, Dropdown, Slider } from "antd";
+import { Button } from "antd";
 import Selects from "../../../Components/UI/Selects";
 import {
   GENDER_OF_AUDIANCE,
@@ -21,6 +21,7 @@ import DropdownOfCheckBox from "./DropdownOfCheckBox";
 import DropdownOfSlider from "./DropdownOfSlider";
 import ButtonDropdown from "./ButtonDropdown";
 import DropdownOfAudience from "./DropdownOfAudience";
+import ApiGetInfoAndFilterInfluencer from "../../../Api/ApiGetInfoAndFilterInfluencer";
 
 function RenderSelectSearch({
   className,
@@ -45,31 +46,91 @@ function RenderSelectSearch({
   );
 }
 // set button clear all
-function RenderFilter(inputSearch, setInputSearch) {
+function RenderFilter({
+  isClickSearch,
+  setIsClickSearch,
+  setLoading,
+  setAllInfluencer,
+  category,
+}) {
   const [checkClearAll, setcheckClearAll] = useState(true);
   const [dataSearch, setDataSearch] = useState({
     // input to filter Influencer
-    clientId: "",
-    pointSearch: "",
+    clientId: "CL001",
+    pointSearch: 100,
     costEstimateFrom: 0,
     costEstimateTo: 5000000,
+    followerFrom: 0,
+    followerTo: 10000000,
+    postsPerWeekFrom: 0,
+    postsPerWeekTo: 15,
+    engagementFrom: 0,
+    engagementTo: 20,
     ageFrom: 0,
     ageTo: 100,
-    contentTopic: "",
-    nameType: ["Celebrity", "Talent", "Professional", "Citizen", "Community"],
-    contentFormats: ["Text", "Picture", "Video"],
-    audienceGender: "",
-    audienceLocation: "",
+    contentTopic: [""],
+    nameType: [""],
+    contentFormats: [""],
+    audienceGender: [""],
+    audienceLocation: [""],
   });
+
+  const defaultSearch = {
+    clientId: "CL001",
+    pointSearch: 100,
+    costEstimateFrom: 0,
+    costEstimateTo: 5000000,
+    followerFrom: 0,
+    followerTo: 10000000,
+    postsPerWeekFrom: 0,
+    postsPerWeekTo: 15,
+    engagementFrom: 0,
+    engagementTo: 20,
+    ageFrom: 0,
+    ageTo: 100,
+    contentTopic: [""],
+    nameType: [""],
+    contentFormats: [""],
+    audienceGender: [""],
+    audienceLocation: [""],
+  };
 
   function handleClearAll() {
     setcheckClearAll(!checkClearAll);
+    setDataSearch(defaultSearch);
   }
-
+  // fetch Data search BE
+  const fetchDataSearch = async () => {
+    try {
+      console.log(dataSearch);
+      // const User = await JSON.parse(localStorage.getItem("user-draw-storage"))
+      //   .state.user;
+      const response = await ApiGetInfoAndFilterInfluencer.searchInfluencer(
+        dataSearch
+      );
+      // setAllInfluencer(response);
+      setAllInfluencer(response);
+      setLoading(false);
+    } catch (error) {
+      console.log("Error fetching data:", error);
+    }
+  };
+  // UseEffect
   useEffect(() => {
     console.log(dataSearch);
-  }, [dataSearch]);
+  }, []);
 
+  useEffect(() => {
+    if (isClickSearch === true) {
+      fetchDataSearch(dataSearch);
+    }
+    setIsClickSearch(false);
+  }, [isClickSearch]);
+
+  useEffect(() => {
+    setDataSearch({ ...dataSearch, contentTopic: category });
+    console.log(dataSearch);
+  }, [category]);
   return (
     <>
       <div className="d-flex flex-wrap justify-content-sm-start">
@@ -121,6 +182,8 @@ function RenderFilter(inputSearch, setInputSearch) {
             defaultValue={[0, 10000000]}
             marks={FOLLOWERS}
             checkClearAll={checkClearAll}
+            dataSearch={dataSearch}
+            setDataSearch={setDataSearch}
           />
         </div>
         {/* Filter of Engagement */}
@@ -133,6 +196,8 @@ function RenderFilter(inputSearch, setInputSearch) {
             max={20}
             marks={ENGAGEMENT}
             checkClearAll={checkClearAll}
+            dataSearch={dataSearch}
+            setDataSearch={setDataSearch}
           />
         </div>
         {/* Filter of Publications */}
@@ -145,6 +210,8 @@ function RenderFilter(inputSearch, setInputSearch) {
             max={15}
             marks={PUBLICATION}
             checkClearAll={checkClearAll}
+            dataSearch={dataSearch}
+            setDataSearch={setDataSearch}
           />
         </div>
         {/* Filter of Content Formats */}
@@ -158,10 +225,10 @@ function RenderFilter(inputSearch, setInputSearch) {
             setDataSearch={setDataSearch}
           />
         </div>
-        {/* Filter of Audience */}
+        {/* Filter of Audience
         <div className=" mt-4 backgroundMainPage">
           <DropdownOfAudience checkClearAll={checkClearAll} />
-        </div>
+        </div> */}
         <div className=" mt-4 backgroundMainPage">
           <Button onClick={handleClearAll} className="dropdownSlider bg-white">
             Clear All
@@ -172,12 +239,14 @@ function RenderFilter(inputSearch, setInputSearch) {
   );
 }
 
-const FilterSearch = () => {
+const FilterSearch = ({ setAllInfluencer, setLoading, loading }) => {
   const [platform, setPlatform] = useState();
   const [category, setCategory] = useState();
+  const [isClickSearch, setIsClickSearch] = useState(false);
 
-  const handleSubmitFilter = (selectPlatfrom) => {
-    // selectPlatfrom();
+  const handleSubmitFilter = () => {
+    setIsClickSearch(true);
+    setLoading(true);
   };
 
   const handleChangePlatform = (selectPlatfrom) => {
@@ -189,6 +258,14 @@ const FilterSearch = () => {
     console.log(`selected: ${selectCategory}`);
     setCategory(selectCategory);
   };
+
+  useEffect(() => {
+    if (loading) {
+      document.querySelector(".bntSreach").disabled = true;
+    } else {
+      document.querySelector(".bntSreach").disabled = false;
+    }
+  }, [loading]);
 
   return (
     <>
@@ -216,7 +293,13 @@ const FilterSearch = () => {
               </Button>
             </div>
             <div className="col-12">
-              <RenderFilter />
+              <RenderFilter
+                isClickSearch={isClickSearch}
+                setIsClickSearch={setIsClickSearch}
+                setAllInfluencer={setAllInfluencer}
+                setLoading={setLoading}
+                category={category}
+              />
             </div>
           </div>
         </div>

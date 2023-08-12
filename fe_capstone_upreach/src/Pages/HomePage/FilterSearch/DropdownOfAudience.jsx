@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Dropdown, Slider, Checkbox, Row, Col } from "antd";
 import {
+  GENDER_OF_AGE,
   GENDER_OF_AUDIANCE,
   LOCATION_OF_AUDIANCE,
   URL_API_CITY,
@@ -16,8 +17,8 @@ const DropdownOfAudience = (checkClearAll) => {
   const [valueLocation, setValuelocation] = useState();
   const [city, setCity] = useState([]);
 
-  function handleOnChangeAge(sliderValue) {
-    setValueAge(sliderValue);
+  function handleOnChangeAge(checkValue) {
+    setValueAge(checkValue);
     // change background when onchange filter
     document.getElementById("AudienceBtn").classList.add("active-filter");
   }
@@ -48,7 +49,6 @@ const DropdownOfAudience = (checkClearAll) => {
   const fetchDataCity = async () => {
     try {
       const response = await axios.get(URL_API_CITY);
-      console.log(response.data);
       const newDataCity = response.data.map((item) => ({
         value: item.name,
         label: item.name,
@@ -75,12 +75,21 @@ const DropdownOfAudience = (checkClearAll) => {
             <div className="col-12">
               {/* Filter Age of audiance */}
               <div className="fw-bold">Audiance Age</div>
-              <Slider
-                range={{ draggableTrack: true }}
-                value={valueAge}
+              <Checkbox.Group
+                style={{
+                  width: "100%",
+                }}
                 onChange={handleOnChangeAge}
-                marks={AGE}
-              />
+                value={valueAge}
+              >
+                <Row>
+                  {GENDER_OF_AGE.map((item, index) => (
+                    <Col span={24} key={index}>
+                      <Checkbox value={item.value}>{item.name}</Checkbox>
+                    </Col>
+                  ))}
+                </Row>
+              </Checkbox.Group>
             </div>
             {/* Filter gender of audiance */}
             <div className="col-12">

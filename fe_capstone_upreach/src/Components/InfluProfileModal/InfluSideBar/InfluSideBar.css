@@ -184,3 +184,16 @@
 	width: 100%;
 	text-align: center;
 }
+
+.influ-side-bar-container .popupFilter{
+	height: auto;
+	width: 50%;
+	background-color: white;
+	border-radius: 10px;
+    padding: 28px;
+}
+.titleAddToList{
+	font-size: 19px;
+	margin-bottom: 10px;
+}
+

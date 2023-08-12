@@ -29,6 +29,10 @@ const ApiListInfluecer = {
         const url = '/deletealltable';
         return axiosClient.post(url, {IdList: idList})
     },
+    addTableKOLs(listKOLsID,kOLsID,idList){
+        const url = '/addtotablekols';
+        return axiosClient.post(url, {ListKOLsID: listKOLsID,KOLsID : kOLsID ,ClientListID: idList})
+    },
 
     
 }
