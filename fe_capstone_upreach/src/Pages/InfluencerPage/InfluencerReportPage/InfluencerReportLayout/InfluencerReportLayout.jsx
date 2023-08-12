@@ -2,6 +2,7 @@ import React from "react";
 import "./InfluencerReportLayout.css";
 import InfluencerProfileCard from "../../../../Components/InfluencerProfileCard/InfluencerProfileCard";
 import InfluUpdateProfileModal from "../../../../Components/InfluUpdateProfileModal/InfluUpdateProfileModal";
+import InfluVersionModal from "../../../../Components/InfluencerVersionProfileModal/InfluVersionProfile";
 import { ReactComponent as IconArrow } from "../../../../Assets/Icon/IconArrow.svg";
 import { List, Modal, Dropdown, Space, Progress, Spin } from "antd";
 import {
@@ -26,11 +27,13 @@ const InfluencerReportLayout = () => {
   const [previewChart, setPreviewChart] = React.useState([]);
   const [idJobsRemove, setIdJobsRemove] = React.useState([]);
   const [profileVersion, setProfileVersion] = React.useState([]);
+  const [reportVersion, setReportVersion] = React.useState([]);
   const [force, setForce] = React.useState(0);
 
   const [isChange, setIsChange] = React.useState(false);
   const [openConfirmForm, setOpenConfirmForm] = React.useState(false);
   const [isOpenProfileInflu, setIsOpenProfileInflu] = React.useState(false);
+  const [isOpenVersionInflu, setIsOpenVersionInflu] = React.useState(false);
 
   const [isAllowEdit, setIsAllowEdit] = React.useState(false);
   const [waitedDate, setWaitedDate] = React.useState(0);
@@ -244,6 +247,7 @@ const InfluencerReportLayout = () => {
   }, [force]);
   return (
     <>
+      {/* -----------------Modal confirm---------------------- */}
       <Modal
         centered
         icon={ExclamationCircleOutlined}
@@ -266,6 +270,23 @@ const InfluencerReportLayout = () => {
           <p>Sure to cancel?</p>
         </div>
       </Modal>
+      {/* -----------------Modal version---------------------- */}
+      <Modal
+        className="custom-modal"
+        centered
+        open={isOpenVersionInflu}
+        footer={null}
+        onCancel={() => {
+          setIsOpenVersionInflu(false);
+        }}
+        width={1400}
+        bodyStyle={{ borderRadius: "30px" }}
+      >
+        <InfluVersionModal profileInflu={reportVersion} />
+      </Modal>
+
+      {/* -----------------Modal update---------------------- */}
+
       <Modal
         className="custom-modal"
         centered
@@ -369,6 +390,10 @@ const InfluencerReportLayout = () => {
                   flexDirection: "column",
                   width: "423px",
                   height: "270px",
+                }}
+                onClick={() => {
+                  setIsOpenVersionInflu(true);
+                  setReportVersion(item);
                 }}
               >
                 <InfluencerProfileCard

@@ -4,12 +4,13 @@ import "./ApproveInfluImage.css";
 const ApproveInfluImage = (influInfo) => {
   const [images, setImages] = React.useState([]);
   React.useEffect(() => {
-    setImages(influInfo.influInfo.image);
-  }, [influInfo.influInfo.image]);
+    setImages(influInfo?.influInfo.image);
+  }, [influInfo?.influInfo.image]);
   return (
     <>
+      {console.log(images)}
       <div className="approve-influ-images">
-        {images.map((imageObj, index) => (
+        {images?.map((imageObj, index) => (
           <img
             key={index}
             className="influ-image"

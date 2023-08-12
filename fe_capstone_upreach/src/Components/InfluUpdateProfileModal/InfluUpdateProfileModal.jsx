@@ -51,7 +51,6 @@ const InfluUpdateProfileModal = ({
         setIsAllowEdit(false);
         setIsChange(false);
         setIsSaving(false);
-        console.log(response.data);
         setForce((prev) => prev + 1);
         localStorage.setItem("editDate", new Date());
       })

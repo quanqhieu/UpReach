@@ -1,5 +1,5 @@
 import default_img from "../../../Assets/Image/Default/DefaultImg.jpg";
-import "./InfluSideBar.css";
+import "./VersionInfluSideBar.css";
 import { Button, Tooltip } from "antd";
 import { ReactComponent as Facebook } from "../../../Assets/Icon/Facebook.svg";
 import { ReactComponent as Instagram } from "../../../Assets/Icon/Instagram.svg";
@@ -7,6 +7,7 @@ import { ReactComponent as Youtube } from "../../../Assets/Icon/Youtube.svg";
 import { ReactComponent as Tiktok } from "../../../Assets/Icon/Tiktok.svg";
 import { ReactComponent as Location } from "../../../Assets/Icon/Location.svg";
 import { ReactComponent as Diamond } from "../../../Assets/Icon/Diamond.svg";
+import roundNumber from "../../InfluUpdateProfileModal/roundNumber";
 import { Link } from "react-router-dom";
 import React from "react";
 import {
@@ -16,11 +17,10 @@ import {
   LockFilled,
 } from "@ant-design/icons";
 
-const InfluSideBar = ({ influInfo }) => {
-  const [isUpgraded, setIsUpGraded] = React.useState(false);
+const VersionInfluSideBar = ({ influInfo }) => {
   const [badgeColor, setBadgeColor] = React.useState("");
   React.useEffect(() => {
-    switch (influInfo?.type) {
+    switch (influInfo?.influencerTypeName[0]) {
       case "Professional":
         setBadgeColor("#C837AB");
         break;
@@ -39,15 +39,15 @@ const InfluSideBar = ({ influInfo }) => {
       default:
         return;
     }
-  }, [influInfo?.type]);
+  }, [influInfo?.influencerTypeName[0]]);
 
   return (
     <>
-      <div className="influ-side-bar-container">
+      <div className="approve-influ-side-bar-container">
         <div className="side-bar-header-body">
           <div className="influ-side-bar-header">
             <img className="profile-avatar" src={default_img} alt="" />
-            <p className="profile-name">{influInfo?.fullName}</p>
+            <p className="profile-name">{influInfo?.influencerfullName}</p>
             <div className="badge-block">
               <div
                 style={{
@@ -62,37 +62,37 @@ const InfluSideBar = ({ influInfo }) => {
                     marginRight: "8px",
                   }}
                 />
-                {influInfo?.type}
+                {influInfo?.influencerTypeName[0]}
               </div>
             </div>
-            <Button
-              className="profile-btn"
-              type="primary"
-              shape="round"
-              size="large"
-            >
-              <p
-                style={{ fontWeight: "700", marginTop: "-1px", color: "#000" }}
-              >
-                Add to list
-              </p>
-            </Button>
             <div className="profile-socials">
               <div className="profile-social">
-                <Facebook />
-                <p>1M</p>
+                <Facebook
+                  className="profile-social-icon"
+                  style={{ marginRight: "2px" }}
+                />
+                <p> {roundNumber(influInfo?.influencerFollowFb)}</p>
               </div>
               <div className="profile-social">
-                <Instagram />
-                <p>1M</p>
+                <Instagram
+                  className="profile-social-icon"
+                  style={{ marginRight: "2px" }}
+                />
+                <p> {roundNumber(influInfo?.influencerFollowInsta)}</p>
               </div>
               <div className="profile-social">
-                <Youtube />
-                <p>1M</p>
+                <Youtube
+                  className="profile-social-icon"
+                  style={{ marginRight: "2px" }}
+                />
+                <p> {roundNumber(influInfo?.influencerFollowYoutube)}</p>
               </div>
               <div className="profile-social">
-                <Tiktok />
-                <p>1M</p>
+                <Tiktok
+                  className="profile-social-icon"
+                  style={{ marginRight: "2px" }}
+                />
+                <p> {roundNumber(influInfo?.influencerFollowTikTok)}</p>
               </div>
             </div>
           </div>
@@ -101,7 +101,7 @@ const InfluSideBar = ({ influInfo }) => {
             <div className="profile-contents">
               <div className="profile-content">
                 <div className="profile-topics">
-                  {influInfo?.topics?.map((topic, index) => (
+                  {influInfo?.influencerContentTopicName.map((topic, index) => (
                     <div key={index} className="profile-topic">
                       <Tooltip placement="top" title={topic}>
                         <div>
@@ -115,25 +115,27 @@ const InfluSideBar = ({ influInfo }) => {
                 </div>
                 <div className="profile-location">
                   <Location style={{ marginRight: "8px" }} />
-                  <p>{influInfo?.address}</p>
+                  <p>{influInfo?.influencerAddress}</p>
                 </div>
                 <div className="profile-gender">
                   <p style={{ marginRight: "5px" }}>Gender:</p>
-                  <p>{influInfo?.gender}</p>
+                  <p>{influInfo?.influencerGender}</p>
                 </div>
                 <div className="profile-age">
                   <p style={{ marginRight: "5px" }}>Age:</p>
-                  <p>{influInfo?.age}</p>
+                  <p>{influInfo?.influencerAge}</p>
                 </div>
                 <div className="profile-marriage-status">
                   <HeartOutlined style={{ marginRight: "8px" }} />
 
-                  <p>{influInfo?.relationship}</p>
+                  <p>{influInfo?.influencerRelationship}</p>
                 </div>
               </div>
               <div className="profile-biography">
                 <p className="profile-biography-title">Biography</p>
-                <p className="profile-biography-content">{influInfo?.bio}</p>
+                <p className="profile-biography-content">
+                  {influInfo?.influencerBio}
+                </p>
               </div>
             </div>
           </div>
@@ -142,52 +144,19 @@ const InfluSideBar = ({ influInfo }) => {
           <div className="footer-content">
             <p className="profile-contact">Contact information</p>
             <div className="contact-info ">
-              {isUpgraded ? (
-                ""
-              ) : (
-                <div className="upgrade-btn">
-                  <Button
-                    type="primary"
-                    shape="round"
-                    icon={<LockFilled />}
-                    size={"large"}
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      backgroundColor: "#000",
-                    }}
-                    onClick={() => setIsUpGraded(true)}
-                  >
-                    Upgrade
-                  </Button>
-                </div>
-              )}
-
-              <div
-                className={
-                  isUpgraded ? "contact-email" : "contact-email lock-info"
-                }
-              >
+              <div className={"contact-email lock-info"}>
                 <MailFilled style={{ marginRight: "8px" }} />
-                <p className="contact-text">{influInfo?.email}</p>
+                <p className="contact-text">{influInfo?.influencerEmail}</p>
               </div>
-              <div
-                className={
-                  isUpgraded ? "contact-phone" : "contact-phone lock-info"
-                }
-              >
+              <div className={"contact-phone lock-info"}>
                 <PhoneFilled style={{ marginRight: "8px" }} />
-                <p className="contact-text">{influInfo?.phone}</p>
+                <p className="contact-text">{influInfo?.influencerPhone}</p>
               </div>
             </div>
           </div>
           <div className="feedback-btn">
             <Link to="/login">
-              <Button type="link">
-                <p style={{ fontWeight: "600", marginTop: "-2px" }}>
-                  Feedback influencer
-                </p>
-              </Button>
+              <Button type="link"></Button>
             </Link>
           </div>
         </div>
@@ -196,4 +165,4 @@ const InfluSideBar = ({ influInfo }) => {
   );
 };
 
-export default InfluSideBar;
+export default VersionInfluSideBar;

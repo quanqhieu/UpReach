@@ -36,13 +36,13 @@ const InfluencerProfileCard = ({ profileInflu, previewInflu, oldVerInflu }) => {
           <div className="profile-avatar-content">
             <img className="profile-avatar" src={default_img} alt="" />
             <div className="profile-content">
-              <p className="profile-name">{oldVerInflu.influencerfullName}</p>
+              <p className="profile-name">{oldVerInflu?.influencerfullName}</p>
               <div className="profile-location">
                 <Location style={{ marginRight: "8px" }} />
-                <p>{oldVerInflu.influencerAddress}</p>
+                <p>{oldVerInflu?.influencerAddress}</p>
               </div>
               <div className="profile-topics">
-                {oldVerInflu.influencerContentTopicName
+                {oldVerInflu?.influencerContentTopicName
                   ?.filter((topic) => topic)
                   .slice(0, 2)
                   .map((topic, index) => (
@@ -50,7 +50,7 @@ const InfluencerProfileCard = ({ profileInflu, previewInflu, oldVerInflu }) => {
                       <Tooltip placement="top" title={topic}>
                         <div>
                           {topic?.length > 8
-                            ? `${topic.slice(0, 8)}...`
+                            ? `${topic?.slice(0, 8)}...`
                             : topic}
                         </div>
                       </Tooltip>
@@ -60,7 +60,9 @@ const InfluencerProfileCard = ({ profileInflu, previewInflu, oldVerInflu }) => {
             </div>
           </div>
           <div className="profile-date-view">
-            <div className="profile-date">{profileInflu.isPublish}</div>
+            <div className="profile-date">
+              {profileInflu.isPublish ? "Available" : "Waiting"}
+            </div>
             {/* <div className="profile-view">
               <Tooltip
                 placement="top"
@@ -75,22 +77,22 @@ const InfluencerProfileCard = ({ profileInflu, previewInflu, oldVerInflu }) => {
           <div className="profile-social">
             <Facebook />
 
-            <p> {roundNumber(profileInflu.influencerFollowFb)}</p>
+            <p> {roundNumber(profileInflu?.influencerFollowFb)}</p>
           </div>
           <div className="profile-social">
             <Instagram />
 
-            <p> {roundNumber(profileInflu.influencerFollowInsta)}</p>
+            <p> {roundNumber(profileInflu?.influencerFollowInsta)}</p>
           </div>
           <div className="profile-social">
             <Youtube />
 
-            <p>{roundNumber(profileInflu.influencerFollowYoutube)}</p>
+            <p>{roundNumber(profileInflu?.influencerFollowYoutube)}</p>
           </div>
           <div className="profile-social">
             <Tiktok />
 
-            <p>{roundNumber(profileInflu.influencerFollowTikTok)}</p>
+            <p>{roundNumber(profileInflu?.influencerFollowTikTok)}</p>
           </div>
         </div>
         <div className="profile-images">
