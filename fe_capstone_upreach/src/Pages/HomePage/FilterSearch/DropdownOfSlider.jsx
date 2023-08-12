@@ -45,25 +45,76 @@ const DropdownOfSlider = ({
       setDataSearch({ ...dataSearch, ageTo: sliderValue[1] });
       setValue(sliderValue);
     }
-    // from follower
+    // from follow
     if (titleBtn === "Followers") {
-      setDataSearch({ ...dataSearch, ageFrom: sliderValue[0] });
+      setDataSearch({ ...dataSearch, followerFrom: sliderValue[0] });
       if (value[0] !== sliderValue[0]) {
         setValue(sliderValue);
         return;
       }
     }
-    // to follower
+    // to follow
     if (titleBtn === "Followers") {
-      setDataSearch({ ...dataSearch, ageTo: sliderValue[1] });
+      setDataSearch({ ...dataSearch, followerTo: sliderValue[1] });
+      setValue(sliderValue);
+    }
+    // from engagement
+    if (titleBtn === "Engagement") {
+      setDataSearch({ ...dataSearch, engagementFrom: sliderValue[0] });
+      if (value[0] !== sliderValue[0]) {
+        setValue(sliderValue);
+        return;
+      }
+    }
+    // to engagement
+    if (titleBtn === "Engagement") {
+      setDataSearch({ ...dataSearch, engagementTo: sliderValue[1] });
+      setValue(sliderValue);
+    }
+    // to engagement
+    if (titleBtn === "Post per week") {
+      setDataSearch({ ...dataSearch, postsPerWeekFrom: sliderValue[0] });
+      if (value[0] !== sliderValue[0]) {
+        setValue(sliderValue);
+        return;
+      }
+    }
+    // to engagement
+    if (titleBtn === "Post per week") {
+      setDataSearch({ ...dataSearch, postsPerWeekTo: sliderValue[1] });
       setValue(sliderValue);
     }
     // change background when onchange filter
     document.getElementById(titleBtn).classList.add("active-filter");
   };
+
   //func về lại ban đầu
   const handleBtnClear = () => {
-    setValue(defaultValue);
+    if (titleBtn === "Cost Estimate") {
+      setDataSearch({ ...dataSearch, costEstimateFrom: defaultValue[0] });
+      setDataSearch({ ...dataSearch, costEstimateTo: defaultValue[1] });
+      setValue(defaultValue);
+    }
+    if (titleBtn === "Age") {
+      setDataSearch({ ...dataSearch, ageFrom: defaultValue[0] });
+      setDataSearch({ ...dataSearch, ageTo: defaultValue[1] });
+      setValue(defaultValue);
+    }
+    if (titleBtn === "Followers") {
+      setDataSearch({ ...dataSearch, followerFrom: defaultValue[0] });
+      setDataSearch({ ...dataSearch, followerTo: defaultValue[1] });
+      setValue(defaultValue);
+    }
+    if (titleBtn === "Engagement") {
+      setDataSearch({ ...dataSearch, engagementFrom: defaultValue[0] });
+      setDataSearch({ ...dataSearch, engagementTo: defaultValue[1] });
+      setValue(defaultValue);
+    }
+    if (titleBtn === "Post per week") {
+      setDataSearch({ ...dataSearch, postsPerWeekFrom: defaultValue[0] });
+      setDataSearch({ ...dataSearch, postsPerWeekTo: defaultValue[1] });
+      setValue(defaultValue);
+    }
     // change background when onchange filter
     document.getElementById(titleBtn).classList.remove("active-filter");
   };

@@ -85,7 +85,8 @@ const MyInfluencer = () => {
     try {
       const dataLocalStorge = await JSON.parse(
         localStorage.getItem("user-draw-storage")
-      ).state.user.clientId;
+      ).state.user.Client_ID;
+      console.log(dataLocalStorge);
       setIdAccClient(dataLocalStorge);
       const response = (await ApiListInfluecer.getListMenu(dataLocalStorge))
         .data;
@@ -134,6 +135,7 @@ const MyInfluencer = () => {
         Interactions: totalInteractions,
         Table: response.Table,
       };
+      console.log("aa");
       setObject(dataObject);
     } catch (error) {
       console.log("Error fetching data:", error);
@@ -271,6 +273,7 @@ const MyInfluencer = () => {
         title="Add New List"
         className="popup-add-new"
         centered
+        destroyOnClose={true}
         open={addNewList}
         onOk={() => form.submit(value)}
         onCancel={() => setAddNewList(false)}
