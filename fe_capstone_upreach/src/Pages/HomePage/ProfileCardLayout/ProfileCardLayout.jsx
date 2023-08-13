@@ -4,16 +4,25 @@ import ProfileCardComponent from "../../../Components/Layouts/ProfileCardCompone
 import InfluProfile from "../../../Components/InfluProfileModal/InfluProfile";
 import { Modal, Spin, List } from "antd";
 import { PROFILE_INFLUS } from "../ConstHomePage";
+import ApiInfluencer from "../../../Api/ApiInfluencer";
 
 const ProfileCardLayout = ({ allInfluencer, loading }) => {
   const [influInfo, setInfluInfo] = useState("");
   const [isOpenProfileInflu, setIsOpenProfileInflu] = useState(false);
+  const [idInfluMongoDB, setIdInfluMongoDB] = useState();
   const [profileInflus, setProfileInflus] = useState(PROFILE_INFLUS);
 
-  const handleOpenModal = (info) => {
-    setInfluInfo(info);
-    console.log(info);
-    setIsOpenProfileInflu(true);
+  const handleOpenModal = async (info) => {
+    try {
+      const influencerEmail = info.influencerEmail;
+      const idInfluencerInMongoDB = await ApiInfluencer.getIDInfluencer(influencerEmail);
+      setIdInfluMongoDB(idInfluencerInMongoDB.data._id);
+      setInfluInfo(info);
+      console.log(info);
+      setIsOpenProfileInflu(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const itemRender = (_, type, originalElement) => {

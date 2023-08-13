@@ -9,6 +9,7 @@ import { UPREACH } from "../../Components/Constant/Const";
 import axiosClient from "../../Api/AxiosClient";
 import { useUserStore } from "../../Stores/user";
 import { useCookies } from "react-cookie";
+import ApiUser from "../../Api/ApiUser";
 
 const Login = () => {
   const [setUserInfo] = useUserStore((state) => [state.setUserInfo]);
@@ -27,37 +28,38 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (data) => {
-    setIsLoading(true);
-    axiosClient
-      .post("/login", {
-        email: data.email,
-        password: data.password,
-      })
-      .then(
-        (response) => {
-          setIsLoading(false);
-          if (response.data.User.roleId == 2) {
-            setUserInfo(response.data.User);
-            navigate("/homepage");
-          }
-          if (response.data.User.roleId == 3) {
-            setUserInfo(response.data.User);
-            navigate("/influencer/my-report");
-          }
-          setCookie("token", response.data.User.email, {
-            path: "/",
-            maxAge: 30 * 24 * 60 * 60,
-          });
-          console.log(response);
-        },
-        (error) => {
-          setIsLoading(false);
-          sendError();
-          console.log(error);
-        }
-      );
-  };
+  const handleSubmit = async (data) => {
+    try {
+      setIsLoading(true);
+      const responeLogin = await ApiUser.login(data);
+      const idRole = responeLogin.data.User.roleId;
+      const dataUser = responeLogin.data.User;
+      const _idMonogDb = responeLogin.idInMogodb;
+      const emailUser = responeLogin.data.User.email;
+
+      checkRole(idRole, dataUser, _idMonogDb);
+
+      setCookie("token", emailUser, {
+        path: "/",
+        maxAge: 30 * 24 * 60 * 60,
+      });
+    } catch (error) {
+      setIsLoading(false);
+      sendError();
+      console.log(error);
+    }
+  }
+  // Kiểm tra role đẻ lưu ở localstorage và điều hướng
+  function checkRole(idRole, dataUser, _idMonogDb) {
+    if (idRole == 2) {
+      setUserInfo(dataUser, _idMonogDb);
+      navigate("/homepage");
+    }
+    if (idRole == 3) {
+      setUserInfo(dataUser, _idMonogDb);
+      navigate("/influencer/my-report");
+    }
+  }
 
   return (
     <>

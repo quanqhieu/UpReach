@@ -5,14 +5,14 @@ import { persist } from 'zustand/middleware'
 const useUserStore = create()(
   persist(
     (set) => ({
-      user:{},
+      user: {},
 
-    setUserInfo: (user) => {
+      setUserInfo: (user, _idMonogDB) => {
         set(() => ({
-            user: user
+          user: user,
+          _idMonogDB: _idMonogDB
         }))
       },
-
     }),
     {
       name: 'user-draw-storage'
