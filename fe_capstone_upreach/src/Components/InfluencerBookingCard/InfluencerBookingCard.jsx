@@ -16,12 +16,10 @@ const InfluencerBookingCard = ({ bookingList }) => {
   };
 
   const handleReject = (info) => {
-    console.log(info);
     setStatus((info.status = "Reject"));
   };
 
   const handleProcessing = (info) => {
-    console.log(info);
     setStatus((info.status = "Processing"));
   };
 

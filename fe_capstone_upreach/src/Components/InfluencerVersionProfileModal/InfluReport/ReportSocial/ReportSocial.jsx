@@ -7,7 +7,6 @@ import { Input, Tooltip } from "antd";
 import roundNumber from "../../../InfluUpdateProfileModal/roundNumber";
 
 const ReportSocial = (influInfo) => {
-  console.log(influInfo);
   return (
     <>
       <div className="approve-report-social-layout">

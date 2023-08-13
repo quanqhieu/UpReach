@@ -1,7 +1,6 @@
 import React from "react";
 import "./VersionInfluImage.css";
 const VersionInfluImage = (influInfo) => {
-  console.log(influInfo);
   const [images, setImages] = React.useState([]);
   React.useEffect(() => {
     setImages(influInfo?.influInfo.Image);

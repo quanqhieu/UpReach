@@ -144,91 +144,91 @@ const UpdateReportAudience = ({ influInfo, setPreviewChart, setIsChange }) => {
     }
   };
 
-  React.useEffect(() => {
-    axios
-      .get("http://localhost:4000/api/influ/get-audience-influencer", {
-        params: {
-          email: influInfo.influencerEmail,
-        },
-      })
-      .then((response) => {
-        const audienceFollowerData = response.data.data.selectedFollowers;
-        const followerList = audienceFollowerData
-          .map((data) => {
-            if (data?.AudienceFollowerMonth && data?.Quantity) {
-              return {
-                date: data.AudienceFollowerMonth,
-                value: data.Quantity,
-              };
-            }
-            return null;
-          })
-          .filter((item) => item !== null)
-          .sort((a, b) => {
-            const [aMonth, aYear] = a.date.split("/");
-            const [bMonth, bYear] = b.date.split("/");
+  // React.useEffect(() => {
+  //   axios
+  //     .get("http://localhost:4000/api/influ/get-audience-influencer", {
+  //       params: {
+  //         email: influInfo.influencerEmail,
+  //       },
+  //     })
+  //     .then((response) => {
+  //       const audienceFollowerData = response.data.data.selectedFollowers;
+  //       const followerList = audienceFollowerData
+  //         .map((data) => {
+  //           if (data?.AudienceFollowerMonth && data?.Quantity) {
+  //             return {
+  //               date: data.AudienceFollowerMonth,
+  //               value: data.Quantity,
+  //             };
+  //           }
+  //           return null;
+  //         })
+  //         .filter((item) => item !== null)
+  //         .sort((a, b) => {
+  //           const [aMonth, aYear] = a.date.split("/");
+  //           const [bMonth, bYear] = b.date.split("/");
 
-            if (parseInt(aYear, 10) !== parseInt(bYear, 10)) {
-              return parseInt(aYear, 10) - parseInt(bYear, 10);
-            }
-            return parseInt(aMonth, 10) - parseInt(bMonth, 10);
-          });
+  //           if (parseInt(aYear, 10) !== parseInt(bYear, 10)) {
+  //             return parseInt(aYear, 10) - parseInt(bYear, 10);
+  //           }
+  //           return parseInt(aMonth, 10) - parseInt(bMonth, 10);
+  //         });
 
-        setDataFollower(followerList);
+  //       setDataFollower(followerList);
 
-        // console.log(response.data.data.selectedGenders);
-        const audienceGenderData = response.data.data.selectedGenders;
-        const genderList = audienceGenderData
-          .map((data) => {
-            if (data?.Gender && data?.Quantity) {
-              return {
-                sex: data.Gender,
-                value: data.Quantity,
-              };
-            }
-            return null;
-          })
-          .filter((item) => item !== null);
-        setDataGender(genderList);
+  //       // console.log(response.data.data.selectedGenders);
+  //       const audienceGenderData = response.data.data.selectedGenders;
+  //       const genderList = audienceGenderData
+  //         .map((data) => {
+  //           if (data?.Gender && data?.Quantity) {
+  //             return {
+  //               sex: data.Gender,
+  //               value: data.Quantity,
+  //             };
+  //           }
+  //           return null;
+  //         })
+  //         .filter((item) => item !== null);
+  //       setDataGender(genderList);
 
-        // console.log(response.data.data.selectedAges);
-        const audienceAgeData = response.data.data.selectedAges;
-        const ageList = audienceAgeData
-          .map((data) => {
-            if (data?.AgeRange && data?.Quantity && data?.AudienceAge_ID) {
-              return {
-                age: data.AgeRange,
-                value: data.Quantity,
-                ageId: data.AudienceAge_ID,
-              };
-            }
-            return null;
-          })
-          .filter((item) => item !== null)
-          .sort((a, b) => {
-            return a.ageId.localeCompare(b.ageId);
-          });
-        setDataAge(ageList);
+  //       // console.log(response.data.data.selectedAges);
+  //       const audienceAgeData = response.data.data.selectedAges;
+  //       const ageList = audienceAgeData
+  //         .map((data) => {
+  //           if (data?.AgeRange && data?.Quantity && data?.AudienceAge_ID) {
+  //             return {
+  //               age: data.AgeRange,
+  //               value: data.Quantity,
+  //               ageId: data.AudienceAge_ID,
+  //             };
+  //           }
+  //           return null;
+  //         })
+  //         .filter((item) => item !== null)
+  //         .sort((a, b) => {
+  //           return a.ageId.localeCompare(b.ageId);
+  //         });
+  //       setDataAge(ageList);
 
-        // console.log(response.data.data.selectedLocations);
-        const audienceLocationData = response.data.data.selectedLocations;
-        const locationList = audienceLocationData
-          .map((data) => {
-            if (data?.AudienceLocation && data?.Quantity) {
-              return {
-                location: data.AudienceLocation,
-                value: data.Quantity,
-              };
-            }
-            return null;
-          })
-          .filter((item) => item !== null);
-        setDataLocation(locationList);
-      })
-      .catch((error) => {
-        console.error("Error while fetching Audience information:", error);
-      });
-  }, []);
+  //       // console.log(response.data.data.selectedLocations);
+  //       const audienceLocationData = response.data.data.selectedLocations;
+  //       const locationList = audienceLocationData
+  //         .map((data) => {
+  //           if (data?.AudienceLocation && data?.Quantity) {
+  //             return {
+  //               location: data.AudienceLocation,
+  //               value: data.Quantity,
+  //             };
+  //           }
+  //           return null;
+  //         })
+  //         .filter((item) => item !== null);
+  //       setDataLocation(locationList);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error while fetching Audience information:", error);
+  //     });
+  // }, []);
 
   return (
     <div className="update-report-audience-layout">

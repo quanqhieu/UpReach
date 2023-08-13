@@ -47,8 +47,8 @@ const UpdateJobItem = ({ bookingItem }) => {
             </div>
             <Tooltip placement="top" title={bookingItem?.jobLink}>
               <a>
-                {bookingItem?.jobLink.length > 29
-                  ? `${bookingItem?.jobLink.slice(0, 29)}...`
+                {bookingItem?.jobLink?.length > 29
+                  ? `${bookingItem?.jobLink?.slice(0, 29)}...`
                   : bookingItem?.jobLink}
               </a>
             </Tooltip>
@@ -64,7 +64,7 @@ const UpdateJobItem = ({ bookingItem }) => {
                 "vi-VN"
               )}
             >
-              {bookingItem?.costEstimateFrom.length > 8
+              {bookingItem?.costEstimateFrom?.length > 8
                 ? `${Number(bookingItem?.costEstimateFrom)
                     .toLocaleString("vi-VN")
                     .slice(0, 8)}...`
@@ -77,7 +77,7 @@ const UpdateJobItem = ({ bookingItem }) => {
                 "vi-VN"
               )}
             >
-              {bookingItem?.costEstimateTo.length > 8
+              {bookingItem?.costEstimateTo?.length > 8
                 ? `${Number(bookingItem?.costEstimateTo)
                     .toLocaleString("vi-VN")
                     .slice(0, 8)}...`

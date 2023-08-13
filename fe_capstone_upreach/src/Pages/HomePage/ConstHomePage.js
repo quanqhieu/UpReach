@@ -144,6 +144,12 @@ export const PUBLICATION = {
     },
 };
 
+export const GENDER_OF_AGE = [
+    { name: "0-18", value: "AAI001" },
+    { name: "19-25", value: "AAI002" },
+    { name: "26-40", value: "AAI003" },
+    { name: "41-60", value: "AAI004" }
+];
 export const GENDER_OF_AUDIANCE = [
     { name: "Male", value: "Male" },
     { name: "Female", value: "Female" },

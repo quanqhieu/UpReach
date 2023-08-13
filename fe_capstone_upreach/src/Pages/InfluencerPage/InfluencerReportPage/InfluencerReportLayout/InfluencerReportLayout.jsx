@@ -39,11 +39,13 @@ const InfluencerReportLayout = () => {
   const [waitedDate, setWaitedDate] = React.useState(0);
   const [timerId, setTimerId] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [versionProfile, setVersionProfile] = React.useState(
-    VERSION_PROFILE_INFLU
-  );
 
   const handleOpenModal = () => {
+    // previewInflu={previewInflu}
+    // mokPreviewInflu={mokPreviewInflu}
+    // if(!previewInflu.isPublish) {
+    //   set
+    // }
     setIsOpenProfileInflu(true);
   };
 
@@ -218,8 +220,8 @@ const InfluencerReportLayout = () => {
       })
 
       .then((response) => {
-        console.log("run");
         const info = response.data.Influencer;
+        console.log("run", response);
         setProfileVersion(info);
         setPreviewInflu(() => {
           return info.sort(
@@ -245,6 +247,38 @@ const InfluencerReportLayout = () => {
         setIsChange(false);
       });
   }, [force]);
+
+  React.useLayoutEffect(() => {
+    axios
+      .get("http://localhost:4000/api/influ/get-images-influencer", {
+        params: {
+          email: user.email,
+        },
+      })
+      .then((response) => {
+        const ImageData = response.data.data;
+        const imageList = ImageData.map((data) => {
+          if (data?.Image) {
+            return {
+              url: data.Image,
+              uid: data.Image_ID,
+            };
+          }
+          return null;
+        }).filter((item) => item !== null);
+        previewInflu.Image.splice(0, previewInflu.Image.length);
+        for (const image of imageList) {
+          previewInflu.Image.push(image);
+        }
+
+        setIsChange(false);
+      })
+      .catch((error) => {
+        console.error("Error while fetching Image information:", error);
+      });
+  }, []);
+  console.log(previewInflu.Image);
+
   return (
     <>
       {/* -----------------Modal confirm---------------------- */}

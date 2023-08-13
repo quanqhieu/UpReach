@@ -1,14 +1,16 @@
 import React from "react";
 import "./JobItem.css";
 import { ReactComponent as Facebook } from "../../../../../Assets/Icon/Facebook.svg";
+import { ReactComponent as Instagram } from "../../../../../Assets/Icon/Instagram.svg";
+import { ReactComponent as Youtube } from "../../../../../Assets/Icon/Youtube.svg";
+import { ReactComponent as TikTok } from "../../../../../Assets/Icon/Tiktok.svg";
 import { Button, Modal } from "antd";
 import { ExclamationCircleOutlined, LoadingOutlined } from "@ant-design/icons";
 import ClientBookingModal from "../../../../../Components/ClientBookingModal/ClientBookingModal";
 
-const JobItem = () => {
+const JobItem = ({ data }) => {
   const [isChange, setIsChange] = React.useState(false);
   const [openConfirmForm, setOpenConfirmForm] = React.useState(false);
-
   const [isOpenBooking, setIsOpenBooking] = React.useState(false);
 
   const handleOpenModal = () => {
@@ -62,20 +64,33 @@ const JobItem = () => {
         width={900}
         bodyStyle={{ borderRadius: "30px" }}
       >
-        <ClientBookingModal setIsChange={setIsChange} />
+        <ClientBookingModal setIsChange={setIsChange} data={data} />
       </Modal>
       <div className="report-post-item">
         <div className="post-item-title">
-          <Facebook className="social-icon" />
+          {(() => {
+            switch (data?.jobPlatform) {
+              case "facebook":
+                return <Facebook className="social-icon" />;
+              case "instagram":
+                return <Instagram className="social-icon" />;
+              case "youtube":
+                return <Youtube className="social-icon" />;
+              case "tiktok":
+                return <TikTok className="social-icon" />;
+            }
+          })()}
           <div className="post-item-sub-title">
-            <p>JobName</p>
-            <div>Text, Video</div>
-            <a>https://www.facebook.com/lilism3.s/</a>
+            <p>{data?.jobName === undefined ? "" : data?.jobName}</p>
+            <div>{data?.formatid}</div>
+            <a>{data?.linkJob}</a>
           </div>
         </div>
         <div className="cover-quantity-cost">
-          <p>Quantity: 1</p>
-          <p>Cost Estimate: 1000000 ~ 2000000 VND</p>
+          <p>Quantity: {data?.quantityNumberWork}</p>
+          <p>
+            Cost Estimate: {data?.costForm} ~ {data?.costTo} VND
+          </p>
         </div>
         <div className="post-item-btn">
           <Button

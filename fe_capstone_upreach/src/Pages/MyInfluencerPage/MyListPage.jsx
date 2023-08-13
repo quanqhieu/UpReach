@@ -162,7 +162,7 @@ const MyListPage = ({
       title: "Followers",
       dataIndex: "followers",
       key: "followers",
-      render: (text) => <Tag color="blue">{text}</Tag>,
+      render: (text) => <Tag color="blue">{(parseInt(text) / 1000).toFixed(1) + "K"}</Tag>,
     },
     {
       title: "Interactions",
@@ -398,7 +398,9 @@ const MyListPage = ({
                     <div className="col-9">
                       <TotalInteractions /> Total Follower
                     </div>
-                    <div className="col-3 value-type">{object?.Followers}</div>
+                    <div className="col-3 value-type">
+                      {(parseInt(object?.Followers) / 1000).toFixed(1) + "K"}
+                    </div>
                   </div>
                 </div>
                 <div className="col-12 mt-4">
@@ -407,7 +409,7 @@ const MyListPage = ({
                       <PricePerAssignment /> Total Interactions
                     </div>
                     <div className="col-3 value-type">
-                      {object?.Interactions}
+                      {(parseInt(object?.Interactions) / 1000).toFixed(1) + "K"}
                     </div>
                   </div>
                 </div>

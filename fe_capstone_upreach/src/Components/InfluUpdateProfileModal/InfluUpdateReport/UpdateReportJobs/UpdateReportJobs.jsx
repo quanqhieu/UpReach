@@ -374,6 +374,7 @@ const UpdateReportJobs = ({
       })
       .then((response) => {
         const jobDataArray = response.data.data;
+        console.log(response.data.data);
         const bookingList = jobDataArray?.map((data) => ({
           jobId: data?.Job_ID,
           jobName: data?.Name_Job,
@@ -383,8 +384,8 @@ const UpdateReportJobs = ({
           costEstimateFrom: data?.CostEstimate_From_Job,
           costEstimateTo: data?.CostEstimate_To_Job,
           formatContent: data?.Format_Id,
+          JobList_ID: data?.JobList_ID,
         }));
-        // console.log(bookingList);
         setBookingInfo(bookingList);
       })
       .catch((error) => {

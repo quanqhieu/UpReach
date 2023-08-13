@@ -7,7 +7,6 @@ import { ReactComponent as Youtube } from "../../../../../Assets/Icon/Youtube.sv
 import { Tooltip } from "antd";
 
 const ApproveJobItem = ({ jobInfo }) => {
-  console.log(jobInfo);
   const getPlatformIcon = (platform) => {
     switch (platform) {
       case "facebook":
@@ -65,7 +64,7 @@ const ApproveJobItem = ({ jobInfo }) => {
                 "vi-VN"
               )}
             >
-              {jobInfo?.CostEstimate_From_Job.length > 8
+              {jobInfo?.CostEstimate_From_Job?.length > 8
                 ? `${Number(jobInfo?.CostEstimate_From_Job)
                     .toLocaleString("vi-VN")
                     .slice(0, 8)}...`
@@ -80,7 +79,7 @@ const ApproveJobItem = ({ jobInfo }) => {
                 "vi-VN"
               )}
             >
-              {jobInfo?.CostEstimate_To_Job.length > 8
+              {jobInfo?.CostEstimate_To_Job?.length > 8
                 ? `${Number(jobInfo?.CostEstimate_To_Job)
                     .toLocaleString("vi-VN")
                     .slice(0, 8)}...`

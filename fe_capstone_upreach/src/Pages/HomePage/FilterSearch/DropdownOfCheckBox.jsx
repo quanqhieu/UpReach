@@ -75,6 +75,13 @@ const DropdownOfCheckBox = ({
 
   //Func Khi click vào btn clear thì sẽ xóa hết data
   const handleBtnClear = () => {
+    if (titleBtn === "Type") {
+      setDataSearch({ ...dataSearch, nameType: [""] });
+    }
+    if (titleBtn === "Content Formats") {
+      console.log(value);
+      setDataSearch({ ...dataSearch, contentFormats: [""] });
+    }
     setValue([]);
     // change background when onchange filter
     document.getElementById(titleBtn).classList.remove("active-filter");

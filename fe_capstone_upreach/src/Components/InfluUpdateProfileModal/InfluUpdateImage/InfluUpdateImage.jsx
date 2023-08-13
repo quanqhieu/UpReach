@@ -19,10 +19,10 @@ const InfluUpdateImage = ({
   mokPreviewInflu,
 }) => {
   const [fileList, setFileList] = React.useState(
-    Array.isArray(influInfo.Image) ? influInfo.Image : []
+    Array.isArray(influInfo?.Image) ? influInfo?.Image : []
   );
 
-  const sortableItemIds = fileList.map((file) => file.uid);
+  const sortableItemIds = fileList?.map((file) => file?.uid);
   const [previewOpen, setPreviewOpen] = React.useState(false);
   const [previewImage, setPreviewImage] = React.useState("");
 
@@ -34,15 +34,14 @@ const InfluUpdateImage = ({
       reader.onerror = (error) => reject(error);
     });
   const onChange = ({ fileList: newFileList }) => {
-    // console.log(prev);
     setFileList(newFileList);
   };
 
   const onPreview = async (file) => {
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj);
+    if (!file?.url && !file?.preview) {
+      file.preview = await getBase64(file?.originFileObj);
     }
-    setPreviewImage(file.url || file.preview);
+    setPreviewImage(file?.url || file?.preview);
     setPreviewOpen(true);
   };
 
@@ -52,14 +51,15 @@ const InfluUpdateImage = ({
     },
   });
   const onDragEnd = ({ active, over }) => {
-    if (active.id !== over?.id) {
+    if (active?.id !== over?.id) {
       setFileList((prev) => {
-        const activeIndex = prev.findIndex((i) => i.uid === active.id);
-        const overIndex = prev.findIndex((i) => i.uid === over?.id);
+        const activeIndex = prev?.findIndex((i) => i?.uid === active?.id);
+        const overIndex = prev?.findIndex((i) => i?.uid === over?.id);
         return arrayMove(prev, activeIndex, overIndex);
       });
     }
   };
+
   React.useEffect(() => {
     setInfluInfo({
       ...influInfo,
@@ -73,7 +73,7 @@ const InfluUpdateImage = ({
     }
 
     for (let i = 0; i < arr1?.length; i++) {
-      if (arr1[i].uid !== arr2[i].uid) {
+      if (arr1[i]?.uid !== arr2[i]?.uid) {
         return false;
       }
     }
@@ -81,36 +81,10 @@ const InfluUpdateImage = ({
     return true;
   };
   React.useEffect(() => {
-    if (!checkImages(influInfo.Image, mokPreviewInflu.Image)) {
+    if (!checkImages(influInfo?.Image, mokPreviewInflu?.Image)) {
       setIsChange(true);
     }
-  }, [mokPreviewInflu.Image, influInfo.Image]);
-
-  React.useEffect(() => {
-    axios
-      .get("http://localhost:4000/api/influ/get-images-influencer", {
-        params: {
-          email: influInfo.influencerEmail,
-        },
-      })
-      .then((response) => {
-        const ImageData = response.data.data;
-        const imageList = ImageData.map((data) => {
-          if (data?.Image && data?.Image_ID) {
-            return {
-              url: data.Image,
-              uid: data.Image_ID,
-            };
-          }
-          return null;
-        }).filter((item) => item !== null);
-        setFileList(imageList);
-        setIsChange(false);
-      })
-      .catch((error) => {
-        console.error("Error while fetching Image information:", error);
-      });
-  }, []);
+  }, [mokPreviewInflu?.Image, influInfo?.Image]);
 
   return (
     <>

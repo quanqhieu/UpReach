@@ -3,7 +3,6 @@ import { Row, Col } from "antd";
 import { Line, Pie, Bar } from "@ant-design/plots";
 import React from "react";
 const ReportAudience = (influInfo) => {
-  console.log(influInfo);
   const [audienceFollower, setAudienceFollower] = React.useState([]);
   const [audienceGender, setAudienceGender] = React.useState([]);
   const [audienceAge, setAudienceAge] = React.useState([]);

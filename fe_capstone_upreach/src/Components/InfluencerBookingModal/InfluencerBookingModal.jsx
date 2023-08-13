@@ -2,7 +2,6 @@ import "./InfluencerBookingModal.css";
 import React from "react";
 import { Button } from "antd";
 const InfluencerBookingModal = ({ bookingItem }) => {
-  //   console.log(bookingItem);
   return (
     <>
       <div className="influ-booking-modal">

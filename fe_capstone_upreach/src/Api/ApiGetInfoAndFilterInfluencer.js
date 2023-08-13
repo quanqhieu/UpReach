@@ -7,9 +7,9 @@ const ApiGetInfoAndFilterInfluencer = {
         const url = '/influ/search';
         return axiosClient.post(url, InputSearch)
     },
-    getAllInfluencer(index){
-        const url = `/influ/get?page=${index}&limit=999`;
-        return axiosClient.get(url)
+    getAllInfluencer(Email,Role){
+        const url = "/client/homePage";
+        return axiosClient.post(url,{email : Email, role: Role})
     },
 }
 

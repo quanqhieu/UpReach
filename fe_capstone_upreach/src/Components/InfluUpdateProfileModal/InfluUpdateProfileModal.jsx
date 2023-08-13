@@ -6,8 +6,6 @@ import React from "react";
 import axios from "axios";
 import { Button, Spin } from "antd";
 
-import { useUserStore } from "../../Stores/user";
-
 const InfluUpdateProfileModal = ({
   setForce,
   oldVerInflu,
@@ -25,7 +23,6 @@ const InfluUpdateProfileModal = ({
   previewChart,
   setPreviewChart,
 }) => {
-  console.log(previewInflu);
   const [isSaving, setIsSaving] = React.useState(false);
   const handleSave = () => {
     setIsSaving(true);
@@ -58,6 +55,7 @@ const InfluUpdateProfileModal = ({
         console.error("Lỗi khi cập nhật thông tin:", error);
       });
   };
+
   return (
     <>
       <div className="influ-update-profile">

@@ -8,7 +8,6 @@ const ApproveInfluImage = (influInfo) => {
   }, [influInfo?.influInfo.image]);
   return (
     <>
-      {console.log(images)}
       <div className="approve-influ-images">
         {images?.map((imageObj, index) => (
           <img
