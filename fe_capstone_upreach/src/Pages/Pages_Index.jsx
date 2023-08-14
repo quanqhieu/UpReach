@@ -209,14 +209,14 @@ function Pages_Index() {
           </>
         }
       />
-      <Route
+      {/* <Route
         path="/create-influencer-page"
         element={
           <>
             <CreatInfluencerProfilePage />
           </>
         }
-      />
+      /> */}
       <Route
         path="/myinfluencer"
         element={
