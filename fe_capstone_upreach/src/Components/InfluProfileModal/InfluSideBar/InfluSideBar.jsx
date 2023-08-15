@@ -168,7 +168,7 @@ const InfluSideBar = ({ influInfo }) => {
                     value={listSelected}
                   >
                     <Row>
-                      {listInfluencer.map((item, index) => (
+                      {listInfluencer?.map((item, index) => (
                         <RenderListCheckbox
                           key={index}
                           valueCheckbox={item.ClientLists_ID}
@@ -259,15 +259,19 @@ const InfluSideBar = ({ influInfo }) => {
             <div className="profile-contents">
               <div className="profile-content">
                 <div className="profile-topics">
-                  {influInfo?.influencerContentTopicName.map((topic, index) => (
-                    <div key={index} className="profile-topic">
-                      <Tooltip placement="top" title={topic}>
-                        <div>
-                          {topic.length > 8 ? `${topic.slice(0, 8)}...` : topic}
-                        </div>
-                      </Tooltip>
-                    </div>
-                  ))}
+                  {influInfo?.influencerContentTopicName?.map(
+                    (topic, index) => (
+                      <div key={index} className="profile-topic">
+                        <Tooltip placement="top" title={topic}>
+                          <div>
+                            {topic?.length > 8
+                              ? `${topic?.slice(0, 8)}...`
+                              : topic}
+                          </div>
+                        </Tooltip>
+                      </div>
+                    )
+                  )}
                 </div>
                 <div className="profile-location">
                   <Location style={{ marginRight: "8px" }} />

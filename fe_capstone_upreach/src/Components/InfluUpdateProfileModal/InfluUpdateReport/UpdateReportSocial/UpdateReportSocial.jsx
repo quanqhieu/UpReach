@@ -7,49 +7,50 @@ import { ReactComponent as Tiktok } from "../../../../Assets/Icon/Tiktok.svg";
 import { EditOutlined } from "@ant-design/icons";
 import { Input, Tooltip } from "antd";
 import roundNumber from "../../roundNumber";
-import { useUserStore } from "../../../../Stores/user";
 
-const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
-  console.log(influInfo);
+const UpdateReportSocial = ({
+  influInfo,
+  setInfluInfo,
+  setIsChange,
+  mokPreviewInflu,
+}) => {
   const [edit, setEdit] = React.useState("");
   const [isError, setIsError] = React.useState(false);
-
-  const [user] = useUserStore((state) => [state.user]);
 
   const handleSubmit = () => {
     if (
       (edit === "facebook follower" &&
-        parseInt(influInfo.influencerFollowFb) <= 0) ||
+        parseInt(influInfo?.influencerFollowFb) <= 0) ||
       (edit === "instagram follower" &&
-        parseInt(influInfo.influencerFollowInsta) <= 0) ||
+        parseInt(influInfo?.influencerFollowInsta) <= 0) ||
       (edit === "youtube follower" &&
-        parseInt(influInfo.influencerFollowYoutube) <= 0) ||
+        parseInt(influInfo?.influencerFollowYoutube) <= 0) ||
       (edit === "tiktok follower" &&
-        parseInt(influInfo.influencerFollowTikTok) <= 0) ||
+        parseInt(influInfo?.influencerFollowTikTok) <= 0) ||
       (edit === "facebook interaction" &&
-        parseInt(influInfo.influencerInteractionFb) <= 0) ||
+        parseInt(influInfo?.influencerInteractionFb) <= 0) ||
       (edit === "instagram interaction" &&
-        parseInt(influInfo.influencerInteractionInsta) <= 0) ||
+        parseInt(influInfo?.influencerInteractionInsta) <= 0) ||
       (edit === "youtube interaction" &&
-        parseInt(influInfo.influencerInteractionYoutube) <= 0) ||
+        parseInt(influInfo?.influencerInteractionYoutube) <= 0) ||
       (edit === "tiktok interaction" &&
-        parseInt(influInfo.influencerInteractionTiktok) <= 0) ||
+        parseInt(influInfo?.influencerInteractionTiktok) <= 0) ||
       (edit === "engagement" &&
-        parseInt(influInfo.influencerEngagement) <= 0) ||
+        parseInt(influInfo?.influencerEngagement) <= 0) ||
       (edit === "engagement" &&
-        parseInt(influInfo.influencerEngagement) > 100) ||
+        parseInt(influInfo?.influencerEngagement) > 100) ||
       (edit === "cost estimate from" &&
-        parseInt(influInfo.influencerCostEstimateFrom) <= 0) ||
+        parseInt(influInfo?.influencerCostEstimateFrom) <= 0) ||
       (edit === "cost estimate from" &&
-        parseInt(influInfo.influencerCostEstimateFrom) >
-          parseInt(influInfo.influencerCostEstimateTo)) ||
+        parseInt(influInfo?.influencerCostEstimateFrom) >
+          parseInt(influInfo?.influencerCostEstimateTo)) ||
       (edit === "cost estimate to" &&
-        parseInt(influInfo.influencerCostEstimateTo) <= 0) ||
+        parseInt(influInfo?.influencerCostEstimateTo) <= 0) ||
       (edit === "cost estimate to" &&
-        parseInt(influInfo.influencerCostEstimateFrom) >
-          parseInt(influInfo.influencerCostEstimateTo)) ||
+        parseInt(influInfo?.influencerCostEstimateFrom) >
+          parseInt(influInfo?.influencerCostEstimateTo)) ||
       (edit === "post per week" &&
-        parseInt(influInfo.influencerPostsPerWeek) <= 0)
+        parseInt(influInfo?.influencerPostsPerWeek) <= 0)
     ) {
       setIsError(true);
     } else {
@@ -57,51 +58,59 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
     }
   };
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     if (
-      influInfo.influencerFollowFb == user.influencerFollowFb &&
-      influInfo.influencerFollowInsta == user.influencerFollowInsta &&
-      influInfo.influencerFollowYoutube == user.influencerFollowYoutube &&
-      influInfo.influencerFollowTikTok == user.influencerFollowTikTok &&
-      influInfo.influencerInteractionFb == user.influencerInteractionFb &&
-      influInfo.influencerInteractionInsta == user.influencerInteractionInsta &&
-      influInfo.influencerInteractionYoutube ==
-        user.influencerInteractionYoutube &&
-      influInfo.influencerInteractionTiktok ==
-        user.influencerInteractionTiktok &&
-      influInfo.influencerEngagement == user.influencerEngagement &&
-      influInfo.influencerCostEstimateFrom == user.influencerCostEstimateFrom &&
-      influInfo.influencerCostEstimateTo == user.influencerCostEstimateTo &&
-      influInfo.influencerPostsPerWeek == user.influencerPostsPerWeek
+      influInfo?.influencerFollowFb == mokPreviewInflu.influencerFollowFb &&
+      influInfo?.influencerFollowInsta ==
+        mokPreviewInflu.influencerFollowInsta &&
+      influInfo?.influencerFollowYoutube ==
+        mokPreviewInflu.influencerFollowYoutube &&
+      influInfo?.influencerFollowTikTok ==
+        mokPreviewInflu.influencerFollowTikTok &&
+      influInfo?.influencerInteractionFb ==
+        mokPreviewInflu.influencerInteractionFb &&
+      influInfo?.influencerInteractionInsta ==
+        mokPreviewInflu.influencerInteractionInsta &&
+      influInfo?.influencerInteractionYoutube ==
+        mokPreviewInflu.influencerInteractionYoutube &&
+      influInfo?.influencerInteractionTiktok ==
+        mokPreviewInflu.influencerInteractionTiktok &&
+      influInfo?.influencerEngagement == mokPreviewInflu.influencerEngagement &&
+      influInfo?.influencerCostEstimateFrom ==
+        mokPreviewInflu.influencerCostEstimateFrom &&
+      influInfo?.influencerCostEstimateTo ==
+        mokPreviewInflu.influencerCostEstimateTo &&
+      influInfo?.influencerPostsPerWeek ==
+        mokPreviewInflu.influencerPostsPerWeek
     ) {
       setIsChange(false);
     } else {
       setIsChange(true);
     }
-  }, [influInfo, user, setIsChange]);
+  }, [influInfo, mokPreviewInflu, setIsChange]);
 
   React.useEffect(() => {
     let sumFollowers = 0;
 
-    if (influInfo.influencerFollowFb) {
-      sumFollowers += parseInt(influInfo.influencerFollowFb);
+    if (influInfo?.influencerFollowFb) {
+      sumFollowers += parseInt(influInfo?.influencerFollowFb);
     }
-    if (influInfo.influencerFollowInsta) {
-      sumFollowers += parseInt(influInfo.influencerFollowInsta);
+    if (influInfo?.influencerFollowInsta) {
+      sumFollowers += parseInt(influInfo?.influencerFollowInsta);
     }
-    if (influInfo.influencerFollowTikTok) {
-      sumFollowers += parseInt(influInfo.influencerFollowTikTok);
+    if (influInfo?.influencerFollowTikTok) {
+      sumFollowers += parseInt(influInfo?.influencerFollowTikTok);
     }
-    if (influInfo.influencerFollowYoutube) {
-      sumFollowers += parseInt(influInfo.influencerFollowYoutube);
+    if (influInfo?.influencerFollowYoutube) {
+      sumFollowers += parseInt(influInfo?.influencerFollowYoutube);
     }
     influInfo.influencerFollowers = sumFollowers;
   }, [
     influInfo,
-    influInfo.influencerFollowFb,
-    influInfo.influencerFollowInsta,
-    influInfo.influencerFollowTikTok,
-    influInfo.influencerFollowYoutube,
+    influInfo?.influencerFollowFb,
+    influInfo?.influencerFollowInsta,
+    influInfo?.influencerFollowTikTok,
+    influInfo?.influencerFollowYoutube,
   ]);
 
   return (
@@ -116,12 +125,12 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                 <div className="interact-block">
                   <Tooltip
                     placement="top"
-                    title={Number(influInfo.influencerFollowers).toLocaleString(
-                      "vi-VN"
-                    )}
+                    title={Number(
+                      influInfo?.influencerFollowers
+                    ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo.influencerFollowers)}
+                      {roundNumber(influInfo?.influencerFollowers)}
                     </span>
                   </Tooltip>
                 </div>
@@ -154,11 +163,11 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                     <Tooltip
                       placement="top"
                       title={Number(
-                        influInfo.influencerEngagement
+                        influInfo?.influencerEngagement
                       ).toLocaleString("vi-VN")}
                     >
                       <span className="text-tooltip">
-                        {roundNumber(influInfo.influencerEngagement)}%
+                        {roundNumber(influInfo?.influencerEngagement)}%
                       </span>
                     </Tooltip>
                     <EditOutlined
@@ -200,16 +209,16 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                       <Tooltip
                         placement="top"
                         title={Number(
-                          influInfo.influencerCostEstimateFrom
+                          influInfo?.influencerCostEstimateFrom
                         ).toLocaleString("vi-VN")}
                       >
                         <span className="text-tooltip">
-                          {influInfo.influencerCostEstimateFrom?.length > 8
-                            ? `${Number(influInfo.influencerCostEstimateFrom)
+                          {influInfo?.influencerCostEstimateFrom?.length > 8
+                            ? `${Number(influInfo?.influencerCostEstimateFrom)
                                 .toLocaleString("vi-VN")
                                 .slice(0, 10)}...`
                             : Number(
-                                influInfo.influencerCostEstimateFrom
+                                influInfo?.influencerCostEstimateFrom
                               ).toLocaleString("vi-VN")}
                         </span>
                       </Tooltip>
@@ -247,16 +256,16 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                       <Tooltip
                         placement="top"
                         title={Number(
-                          influInfo.influencerCostEstimateTo
+                          influInfo?.influencerCostEstimateTo
                         ).toLocaleString("vi-VN")}
                       >
                         <span className="text-tooltip">
-                          {influInfo.influencerCostEstimateTo.length > 8
-                            ? `${Number(influInfo.influencerCostEstimateTo)
+                          {influInfo?.influencerCostEstimateTo?.length > 8
+                            ? `${Number(influInfo?.influencerCostEstimateTo)
                                 .toLocaleString("vi-VN")
                                 .slice(0, 10)}...`
                             : Number(
-                                influInfo.influencerCostEstimateTo
+                                influInfo?.influencerCostEstimateTo
                               ).toLocaleString("vi-VN")}
                         </span>
                       </Tooltip>
@@ -297,11 +306,11 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                     <Tooltip
                       placement="top"
                       title={Number(
-                        influInfo.influencerPostsPerWeek
+                        influInfo?.influencerPostsPerWeek
                       ).toLocaleString("vi-VN")}
                     >
                       <span className="text-tooltip">
-                        {roundNumber(influInfo.influencerPostsPerWeek)}
+                        {roundNumber(influInfo?.influencerPostsPerWeek)}
                       </span>
                     </Tooltip>
                     <EditOutlined
@@ -347,12 +356,12 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                 <div className="interact-block">
                   <Tooltip
                     placement="top"
-                    title={Number(influInfo.influencerFollowFb).toLocaleString(
+                    title={Number(influInfo?.influencerFollowFb).toLocaleString(
                       "vi-VN"
                     )}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo.influencerFollowFb)}
+                      {roundNumber(influInfo?.influencerFollowFb)}
                     </span>
                   </Tooltip>
                   <EditOutlined
@@ -389,11 +398,11 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                   <Tooltip
                     placement="top"
                     title={Number(
-                      influInfo.influencerInteractionFb
+                      influInfo?.influencerInteractionFb
                     ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo.influencerInteractionFb)}
+                      {roundNumber(influInfo?.influencerInteractionFb)}
                     </span>
                   </Tooltip>
                   <EditOutlined
@@ -437,11 +446,11 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                   <Tooltip
                     placement="top"
                     title={Number(
-                      influInfo.influencerFollowInsta
+                      influInfo?.influencerFollowInsta
                     ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo.influencerFollowInsta)}
+                      {roundNumber(influInfo?.influencerFollowInsta)}
                     </span>
                   </Tooltip>
 
@@ -478,11 +487,11 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                   <Tooltip
                     placement="top"
                     title={Number(
-                      influInfo.influencerInteractionInsta
+                      influInfo?.influencerInteractionInsta
                     ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo.influencerInteractionInsta)}
+                      {roundNumber(influInfo?.influencerInteractionInsta)}
                     </span>
                   </Tooltip>
                   <EditOutlined
@@ -526,11 +535,11 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                   <Tooltip
                     placement="top"
                     title={Number(
-                      influInfo.influencerFollowYoutube
+                      influInfo?.influencerFollowYoutube
                     ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo.influencerFollowYoutube)}
+                      {roundNumber(influInfo?.influencerFollowYoutube)}
                     </span>
                   </Tooltip>
                   <EditOutlined
@@ -566,11 +575,11 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                   <Tooltip
                     placement="top"
                     title={Number(
-                      influInfo.influencerInteractionYoutube
+                      influInfo?.influencerInteractionYoutube
                     ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo.influencerInteractionYoutube)}
+                      {roundNumber(influInfo?.influencerInteractionYoutube)}
                     </span>
                   </Tooltip>
                   <EditOutlined
@@ -614,11 +623,11 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                   <Tooltip
                     placement="top"
                     title={Number(
-                      influInfo.influencerFollowTikTok
+                      influInfo?.influencerFollowTikTok
                     ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo.influencerFollowTikTok)}
+                      {roundNumber(influInfo?.influencerFollowTikTok)}
                     </span>
                   </Tooltip>
                   <EditOutlined
@@ -654,11 +663,11 @@ const UpdateReportSocial = ({ influInfo, setInfluInfo, setIsChange }) => {
                   <Tooltip
                     placement="top"
                     title={Number(
-                      influInfo.influencerInteractionTiktok
+                      influInfo?.influencerInteractionTiktok
                     ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo.influencerInteractionTiktok)}
+                      {roundNumber(influInfo?.influencerInteractionTiktok)}
                     </span>
                   </Tooltip>
                   <EditOutlined

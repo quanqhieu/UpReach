@@ -3,7 +3,11 @@ import "./InfluencerBookingLayout.css";
 import InfluencerBookingCard from "../../../../Components/InfluencerBookingCard/InfluencerBookingCard";
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, Space, Modal } from "antd";
+import axios from "axios";
+import { useUserStore } from "../../../../Stores/user";
+
 const InfluencerBookingLayout = () => {
+  const [user] = useUserStore((state) => [state.user]);
   const [sortOption, setSortOption] = React.useState("Choose Option");
   const items = [
     {
@@ -43,74 +47,14 @@ const InfluencerBookingLayout = () => {
       key: "2",
     },
   ];
-  const [bookingList, setBookingList] = React.useState([
-    {
-      name: "Hieu",
-      brandName: "NoFear",
-      platform: "Facebook",
-      content: "Picture",
-      quantities: 1,
-      status: "Pending",
-      createdDate: "10/07/2023",
-      costFrom: 800000,
-      costTo: 1000000,
-      linkBook: "facebook.com",
-      describes: "deptraicogisai",
-      startDate: "26 / 8 / 2023",
-      endDate: "28 / 8 / 2023",
-    },
-    {
-      name: "Minh",
-      brandName: "Manh",
-      platform: "Instagram",
-      content: "Video",
-      quantities: 1,
-      status: "Pending",
-      createdDate: "11/07/2023",
-      costFrom: 900000,
-      costTo: 1200000,
-      linkBook: "facebook.com",
-      describes: "xau trai qua",
-      startDate: "26 / 8 / 2023",
-      endDate: "28 / 8 / 2023",
-    },
-    {
-      name: "Khoa",
-      brandName: "FSoft",
-      platform: "Tiktok",
-      content: "Picture",
-      quantities: 1,
-      status: "Pending",
-      createdDate: "12/07/2023",
-      costFrom: 1200000,
-      costTo: 1500000,
-      linkBook: "facebook.com/khoadeptrai",
-      describes: "Tester co tam",
-      startDate: "26 / 8 / 2023",
-      endDate: "28 / 8 / 2023",
-    },
-    {
-      name: "Huy",
-      brandName: "NoFear",
-      platform: "Facebook",
-      content: "Picture",
-      quantities: 1,
-      status: "Pending",
-      createdDate: "12/07/2023",
-      costFrom: 10000,
-      costTo: 20000,
-      linkBook: "facebook.com/huyga",
-      describes: "con ga",
-      startDate: "26 / 8 / 2023",
-      endDate: "28 / 8 / 2023",
-    },
-  ]);
+  const [bookingList, setBookingList] = React.useState([]);
 
   const hanldeSort = (bookingList) => {
+    let sortedList = [...bookingList];
     if (sortOption === "Name") {
-      return bookingList.sort((a, b) => {
-        const nameA = a.name.toUpperCase();
-        const nameB = b.name.toUpperCase();
+      return sortedList.sort((a, b) => {
+        const nameA = a.clientName.toUpperCase();
+        const nameB = b.clientName.toUpperCase();
 
         if (nameA < nameB) {
           return -1;
@@ -121,11 +65,10 @@ const InfluencerBookingLayout = () => {
         return 0;
       });
     } else if (sortOption === "Date") {
-      return bookingList.sort((a, b) => {
-        const dateA = new Date(a.createdDate);
-        const dateB = new Date(b.createdDate);
-
-        return dateB - dateA;
+      return sortedList.sort((a, b) => {
+        const dateA = new Date(a.startDate);
+        const dateB = new Date(b.startDate);
+        return dateA - dateB;
       });
     }
     // else if (sortOption === "Cost") {
@@ -135,6 +78,43 @@ const InfluencerBookingLayout = () => {
     // }
     else return bookingList;
   };
+
+  React.useEffect(() => {
+    axios
+      .get("http://localhost:4000/api/influ/get-booking-jobs", {
+        params: {
+          email: user.email,
+        },
+      })
+      .then((response) => {
+        const bookingDataArray = response.data.data;
+        console.log(response.data.data);
+        const bookingJobList = bookingDataArray?.map((data) => ({
+          bookingId: data?.clientBooking_ID,
+          jobId: data?.Job_ID,
+          brandName: data?.clientInfo.Brand_Client,
+          clientName: data?.clientInfo.FullName,
+          jobName: data?.Name_Job,
+          platform: data?.Platform_Job,
+          jobLink: data?.Link,
+          quantity: data?.Quantity,
+          costEstimateFrom: data?.CostEstimate_From_Job,
+          costEstimateTo: data?.CostEstimate_To_Job,
+          formatContent: data?.Format_Id,
+          describes: data?.Describes,
+          startDate: data?.Start_Date,
+          endDate: data?.End_Date,
+          status: data?.Status,
+        }));
+        setBookingList(bookingJobList);
+      })
+      .catch((error) => {
+        console.error(
+          "Error while fetching previewBooking information:",
+          error
+        );
+      });
+  }, []);
 
   return (
     <>
@@ -154,13 +134,13 @@ const InfluencerBookingLayout = () => {
           </div>
         </div>
         <div className="influencer-booking-sub-title">
-          <p style={{ width: "14.6%" }}>Name</p>
           <p style={{ width: "18.8%" }}>Brand Name</p>
           <p style={{ width: "12.1%" }}>Platform</p>
           <p style={{ width: "14.5%" }}>Content</p>
           <p style={{ width: "12.9%" }}>Quantities</p>
-          <p style={{ width: "12.4%" }}>Status</p>
-          <p style={{ width: "15%" }}>Created Date</p>
+          <p style={{ width: "12%" }}>Status</p>
+          <p style={{ width: "15%" }}>Start Date</p>
+          <p style={{ width: "15%" }}>End Date</p>
         </div>
         <div className="influencer-booking-list">
           {hanldeSort(bookingList)?.map((booking, index) => (

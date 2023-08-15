@@ -4,14 +4,12 @@ import { Line, Pie, Bar } from "@ant-design/plots";
 import React from "react";
 import { ExcelRenderer } from "react-excel-renderer";
 import axios from "axios";
-import { useUserStore } from "../../../../Stores/user";
 
-const UpdateReportAudience = ({ previewChart, setPreviewChart }) => {
+const UpdateReportAudience = ({ influInfo, setPreviewChart, setIsChange }) => {
   const [dataFollower, setDataFollower] = React.useState([]);
   const [dataGender, setDataGender] = React.useState([]);
   const [dataAge, setDataAge] = React.useState([]);
   const [dataLocation, setDataLocation] = React.useState([]);
-  const [user] = useUserStore((state) => [state.user]);
 
   const configFollower = {
     data: dataFollower,
@@ -150,11 +148,10 @@ const UpdateReportAudience = ({ previewChart, setPreviewChart }) => {
   //   axios
   //     .get("http://localhost:4000/api/influ/get-audience-influencer", {
   //       params: {
-  //         email: user.influencerEmail,
+  //         email: influInfo.influencerEmail,
   //       },
   //     })
   //     .then((response) => {
-  //       // console.log(response.data.data.selectedFollowers);
   //       const audienceFollowerData = response.data.data.selectedFollowers;
   //       const followerList = audienceFollowerData
   //         .map((data) => {

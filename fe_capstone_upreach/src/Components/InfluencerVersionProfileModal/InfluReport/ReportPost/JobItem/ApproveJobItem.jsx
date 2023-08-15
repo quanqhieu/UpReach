@@ -7,6 +7,7 @@ import { ReactComponent as Youtube } from "../../../../../Assets/Icon/Youtube.sv
 import { Tooltip } from "antd";
 
 const ApproveJobItem = ({ jobInfo }) => {
+  // console.log(jobInfo);
   const getPlatformIcon = (platform) => {
     switch (platform) {
       case "facebook":
@@ -21,69 +22,53 @@ const ApproveJobItem = ({ jobInfo }) => {
         return null;
     }
   };
-  const getFormatContent = (id) => {
-    switch (id) {
-      case "CF01":
-        return "Text";
-      case "CF02":
-        return "Picture";
-      case "CF03":
-        return "Video";
-      default:
-        return null;
-    }
-  };
+
   return (
     <>
       <div className="aprrove-report-post-item">
         <div className="post-item-title">
-          {getPlatformIcon(jobInfo?.Platform_Job)}
+          {getPlatformIcon(jobInfo?.jobPlatform)}
           <div className="post-item-sub-title">
-            <p>{jobInfo?.Name_Job || ""}</p>
+            <p>{jobInfo?.jobName || ""}</p>
             <div style={{ display: "flex" }}>
-              {jobInfo?.Format_Id?.map((item) => getFormatContent(item))?.join(
-                ", "
-              )}
+              {/* {Array.isArray(jobInfo?.formatid)
+                ? jobInfo.formatid.map((item) => item).join(", ")
+                : "No valid data"} */}
+              <p>{jobInfo?.formatid || ""}</p>
             </div>
-            <Tooltip placement="top" title={jobInfo?.Link}>
+            <Tooltip placement="top" title={jobInfo?.linkJob}>
               <a>
-                {jobInfo?.Link?.length > 29
-                  ? `${jobInfo?.Link?.slice(0, 29)}...`
-                  : jobInfo?.Link}
+                {jobInfo?.linkJob?.length > 29
+                  ? `${jobInfo?.linkJob?.slice(0, 29)}...`
+                  : jobInfo?.linkJob}
               </a>
             </Tooltip>
           </div>
         </div>
         <div className="cover-quantity-cost">
-          <p>Quantity: {jobInfo?.Quantity || 0}</p>
+          <p>Quantity: {jobInfo?.quantityNumberWork || 0}</p>
           <p>
             Cost Estimate:{" "}
             <Tooltip
               placement="top"
-              title={Number(jobInfo?.CostEstimate_From_Job).toLocaleString(
-                "vi-VN"
-              )}
+              title={Number(jobInfo?.costForm).toLocaleString("vi-VN")}
             >
-              {jobInfo?.CostEstimate_From_Job?.length > 8
-                ? `${Number(jobInfo?.CostEstimate_From_Job)
+              {jobInfo?.costForm?.length > 8
+                ? `${Number(jobInfo?.costForm)
                     .toLocaleString("vi-VN")
-                    .slice(0, 8)}...`
-                : Number(jobInfo?.CostEstimate_From_Job).toLocaleString(
-                    "vi-VN"
-                  )}
+                    ?.slice(0, 8)}...`
+                : Number(jobInfo?.costForm).toLocaleString("vi-VN")}
             </Tooltip>{" "}
             ~{" "}
             <Tooltip
               placement="top"
-              title={Number(jobInfo?.CostEstimate_To_Job).toLocaleString(
-                "vi-VN"
-              )}
+              title={Number(jobInfo?.costTo).toLocaleString("vi-VN")}
             >
-              {jobInfo?.CostEstimate_To_Job?.length > 8
-                ? `${Number(jobInfo?.CostEstimate_To_Job)
+              {jobInfo?.costTo?.length > 8
+                ? `${Number(jobInfo?.costTo)
                     .toLocaleString("vi-VN")
-                    .slice(0, 8)}...`
-                : Number(jobInfo?.CostEstimate_To_Job).toLocaleString("vi-VN")}
+                    ?.slice(0, 8)}...`
+                : Number(jobInfo?.costTo).toLocaleString("vi-VN")}
             </Tooltip>{" "}
             VND
           </p>

@@ -9,11 +9,16 @@ import { UPREACH } from "../../Constant/Const";
 import { useUserStore } from "../../../Stores/user";
 
 function RenderLogo({ onClickIntroduce }) {
+  const [user] = useUserStore((state) => [state.user]);
   return (
     <div className="headerContent">
-      <div className="logoText" onClick={onClickIntroduce}>
-        {UPREACH}
-      </div>
+      {user ? (
+        <div className="logoText">{UPREACH}</div>
+      ) : (
+        <div className="logoText" onClick={onClickIntroduce}>
+          {UPREACH}
+        </div>
+      )}
     </div>
   );
 }
@@ -82,7 +87,6 @@ const HeaderHomepage = (onClickIntroduce) => {
     },
   ];
 
-  console.log(user);
   return (
     <div className="HeaderHomepage">
       <RenderLogo onClickIntroduce={navigateIntroduce} />

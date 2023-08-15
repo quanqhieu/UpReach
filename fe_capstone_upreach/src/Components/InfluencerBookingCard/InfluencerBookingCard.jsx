@@ -1,14 +1,17 @@
 import React from "react";
 import "./InfluencerBookingCard.css";
 import { Icon } from "@iconify/react";
-import { Modal, message } from "antd";
+import { Modal, message, Button } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import InfluencerBookingModal from "../InfluencerBookingModal/InfluencerBookingModal";
+// import { useUserStore } from "../../Stores/user";
+import axios from "axios";
 
 const InfluencerBookingCard = ({ bookingList }) => {
+  // const [user] = useUserStore((state) => [state.user]);
   const [bookingDetail, setBookingDetail] = React.useState("");
   const [isOpenBooking, setIsOpenBooking] = React.useState(false);
-  const [status, setStatus] = React.useState(bookingList);
+  const [status, setStatus] = React.useState(bookingList.status);
 
   const handleOpenModal = (info) => {
     setBookingDetail(info);
@@ -16,13 +19,43 @@ const InfluencerBookingCard = ({ bookingList }) => {
   };
 
   const handleReject = (info) => {
-    console.log(info);
     setStatus((info.status = "Reject"));
+    const formData = new FormData();
+    formData.append("booking", JSON.stringify(info));
+    // formData.append("influName", JSON.stringify(user.fullNameInfluencer));
+
+    axios
+      .put("http://localhost:4000/api/influ/reject-booking", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        // setForce((prev) => prev + 1);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi cập nhật thông tin:", error);
+      });
   };
 
   const handleProcessing = (info) => {
-    console.log(info);
     setStatus((info.status = "Processing"));
+    const formData = new FormData();
+    formData.append("booking", JSON.stringify(info));
+    // formData.append("influName", JSON.stringify(user.fullNameInfluencer));
+
+    axios
+      .put("http://localhost:4000/api/influ/accept-booking", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        // setForce((prev) => prev + 1);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi cập nhật thông tin:", error);
+      });
   };
 
   const showConfirm = (info, action) => {
@@ -45,6 +78,18 @@ const InfluencerBookingCard = ({ bookingList }) => {
       },
     });
   };
+  const getFormatContent = (id) => {
+    switch (id) {
+      case "CF01":
+        return "Text";
+      case "CF02":
+        return "Picture";
+      case "CF03":
+        return "Video";
+      default:
+        return null;
+    }
+  };
 
   return (
     <>
@@ -61,13 +106,18 @@ const InfluencerBookingCard = ({ bookingList }) => {
       </Modal>
       <div className="influ-booking-card">
         <div className="influ-booking-card-content">
-          <p style={{ width: "14.6%" }}>{bookingList.name}</p>
           <p style={{ width: "18.8%" }}>{bookingList.brandName}</p>
           <p style={{ width: "12.1%" }}>{bookingList.platform}</p>
-          <p style={{ width: "17.1%" }}>{bookingList.content}</p>
-          <p style={{ width: "10%" }}>{bookingList.quantities}</p>
-          <p style={{ width: "12.4%" }}>{bookingList.status}</p>
-          <p style={{ width: "15%" }}>{bookingList.createdDate}</p>
+          <p style={{ width: "17.1%" }}>
+            {bookingList?.formatContent
+              ?.map((item) => getFormatContent(item))
+              ?.join(", ")}
+          </p>
+
+          <p style={{ width: "10%" }}>{bookingList.quantity}</p>
+          <p style={{ width: "12%" }}>{bookingList.status}</p>
+          <p style={{ width: "15%" }}>{bookingList.startDate}</p>
+          <p style={{ width: "15%" }}>{bookingList.endDate}</p>
         </div>
         <div className="influ-booking-card-icons">
           <div className="influ-booking-card-icon">
@@ -79,29 +129,49 @@ const InfluencerBookingCard = ({ bookingList }) => {
             />
           </div>
 
-          <div
+          <Button
             className="influ-booking-card-icon"
             onClick={() => showConfirm(bookingList, "Reject")}
-          >
-            <Icon
-              icon="iconoir:cancel"
-              color="#fa0000"
-              width="30"
-              height="30"
-            />
-          </div>
+            disabled={
+              bookingList.status === "Reject" ||
+              bookingList.status === "Processing"
+            }
+            icon={
+              <Icon
+                icon="iconoir:cancel"
+                color={
+                  bookingList.status === "Reject" ||
+                  bookingList.status === "Processing"
+                    ? "#ccc"
+                    : "#fa0000"
+                }
+                width="30"
+                height="30"
+              />
+            }
+          ></Button>
 
-          <div
+          <Button
             className="influ-booking-card-icon"
             onClick={() => showConfirm(bookingList, "Processing")}
-          >
-            <Icon
-              icon="ic:round-check"
-              color="#00dd1a"
-              width="30"
-              height="30"
-            />
-          </div>
+            disabled={
+              bookingList.status === "Reject" ||
+              bookingList.status === "Processing"
+            }
+            icon={
+              <Icon
+                icon="ic:round-check"
+                color={
+                  bookingList.status === "Reject" ||
+                  bookingList.status === "Processing"
+                    ? "#ccc"
+                    : "#00dd1a"
+                }
+                width="30"
+                height="30"
+              />
+            }
+          ></Button>
         </div>
       </div>
     </>

@@ -28,7 +28,7 @@ const Index_HomePage = () => {
         response.Influencer[j] = temp;
       }
       setAllInfluencer(response);
-      console.log(response);
+      // console.log(response);
       setLoading(false);
     } catch (error) {
       console.log("Error fetching data:", error);
@@ -41,7 +41,7 @@ const Index_HomePage = () => {
   }, []);
 
   useEffect(() => {
-    console.log(allInfluencer);
+    // console.log(allInfluencer);
   }, [allInfluencer]);
 
   return (

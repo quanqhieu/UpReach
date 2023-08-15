@@ -19,8 +19,7 @@ const ReportAudience = ({ influInfo }) => {
     }
   };
   //=================================================================================
-  console.log("data");
-  console.log(data?.data[0]);
+
   useEffect(() => {
     fetchDataForChart(influInfo);
   }, [influInfo]);

@@ -1,6 +1,6 @@
 import React from "react";
-import "./InfluImage.css";
-const InfluImage = ({ influInfo }) => {
+import "./VersionInfluImage.css";
+const VersionInfluImage = ({ influInfo }) => {
   const [images, setImages] = React.useState([]);
   React.useEffect(() => {
     setImages(influInfo?.dataImage);
@@ -24,4 +24,4 @@ const InfluImage = ({ influInfo }) => {
     </>
   );
 };
-export default InfluImage;
+export default VersionInfluImage;

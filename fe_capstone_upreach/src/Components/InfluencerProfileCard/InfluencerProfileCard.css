@@ -79,6 +79,11 @@
     justify-content: space-between;
 }
 
+.profile-date {
+	width: fit-content;
+	height: fit-content;
+}
+
 .profile-view {
     margin-top: -3px;
 }

@@ -11,7 +11,6 @@ import ClientBookingModal from "../../../../../Components/ClientBookingModal/Cli
 const JobItem = ({ data }) => {
   const [isChange, setIsChange] = React.useState(false);
   const [openConfirmForm, setOpenConfirmForm] = React.useState(false);
-
   const [isOpenBooking, setIsOpenBooking] = React.useState(false);
 
   const handleOpenModal = () => {
@@ -31,8 +30,7 @@ const JobItem = ({ data }) => {
     setIsChange(false);
     setIsOpenBooking(false);
   };
-  console.log("111");
-  console.log(data);
+
   return (
     <>
       <Modal
@@ -66,7 +64,7 @@ const JobItem = ({ data }) => {
         width={900}
         bodyStyle={{ borderRadius: "30px" }}
       >
-        <ClientBookingModal setIsChange={setIsChange} />
+        <ClientBookingModal setIsChange={setIsChange} data={data} />
       </Modal>
       <div className="report-post-item">
         <div className="post-item-title">

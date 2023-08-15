@@ -1,13 +1,32 @@
 import "./ClientBookingModal.css";
 import React from "react";
 import { Button, Input, DatePicker } from "antd";
+import axios from "axios";
+import { useUserStore } from "../../Stores/user";
+
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+dayjs.extend(customParseFormat);
+
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
-const ClientBookingModal = ({ setIsChange }) => {
+
+const ClientBookingModal = ({ data }) => {
+  const [user, setUserInfo] = useUserStore((state) => [
+    state.user,
+    state.setUserInfo,
+  ]);
+  const [bookingJob, setBookingJob] = React.useState(data);
+  const [isSending, setIsSending] = React.useState(false);
   const [describes, setDescribes] = React.useState("");
   const [dates, setDates] = React.useState(null);
   const [value, setValue] = React.useState(null);
-  console.log(dates);
+  const isSubmitDisabled = !describes || !value;
+
+  const disabledDate = (current) => {
+    return current && current < dayjs().endOf("day");
+  };
+
   const onOpenChange = (open) => {
     if (open) {
       setDates([null, null]);
@@ -15,56 +34,78 @@ const ClientBookingModal = ({ setIsChange }) => {
       setDates(null);
     }
   };
+
   const handleSend = () => {
-    console.log("mo ta", describes);
-    console.log("start date", value[0]);
-    console.log("end date", value[1]);
+    var startDay = value[0].$D;
+    var startMonth = value[0].$M + 1;
+    var startYear = value[0].$y;
+    var formatStartDate = startDay + "/" + startMonth + "/" + startYear;
+
+    var endDay = value[1].$D;
+    var endMonth = value[1].$M + 1;
+    var endYear = value[1].$y;
+    var formatEndDate = endDay + "/" + endMonth + "/" + endYear;
+
+    const updatedBookingJob = {
+      ...bookingJob,
+      describes: describes,
+      startDate: formatStartDate,
+      endDate: formatEndDate,
+      clientId: user.Client_ID,
+      clientName: user.fullNameClient,
+    };
+    setIsSending(true);
+    const formData = new FormData();
+    formData.append("bookingJob", JSON.stringify(updatedBookingJob));
+    axios
+      .put("http://localhost:4000/api/client/bookingJob", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        setIsSending(false);
+        // setForce((prev) => prev + 1);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi cập nhật thông tin:", error);
+      });
   };
+
   return (
     <>
       <div className="client-booking-modal">
         <div className="booking-modal-title">Detail Booking</div>
         <div className="booking-modal-content">
-          <div className="content-header">
-            Services
+          <div className="content-body">
+            Job Information
             <div className="content-line">
               <p className="line-title">Platform</p>
-              <p className="line-content"></p>
+              <p className="line-content">{bookingJob.jobPlatform}</p>
             </div>
             <div className="content-line">
               <p className="line-title">Job Name</p>
-              <p className="line-content">Quang cao tu lanh</p>
-            </div>
-          </div>
-          <div className="content-body">
-            Customer
-            <div className="content-line">
-              <p className="line-title">Full Name</p>
-              <p className="line-content"></p>
-            </div>
-            <div className="content-line">
-              <p className="line-title">Brand Name</p>
-              <p className="line-content"></p>
+              <p className="line-content">{bookingJob.jobName}</p>
             </div>
             <div className="content-line">
               <p className="line-title">Content</p>
-              <p className="line-content"></p>
-            </div>
-            <div className="content-line">
-              <p className="line-title">Quantities</p>
-              <p className="line-content"></p>
+              <p className="line-content">{bookingJob.formatid}</p>
             </div>
             <div className="content-line">
               <p className="line-title">Link</p>
-              <p className="line-content">facebook.com</p>
+              <p className="line-content">{bookingJob.linkJob}</p>
+            </div>
+            <div className="content-line">
+              <p className="line-title">Quantities</p>
+              <p className="line-content">{bookingJob.quantityNumberWork}</p>
             </div>
             <div className="content-line">
               <p className="line-title">Cost Estimate From</p>
-              <p className="line-content"></p>
+              <p className="line-content">{bookingJob.costForm}</p>
             </div>
             <div className="content-line">
               <p className="line-title">Cost Estimate To</p>
-              <p className="line-content"></p>
+              <p className="line-content">{bookingJob.costTo}</p>
             </div>
             <div className="content-line">
               <p className="line-title">Describes</p>
@@ -93,6 +134,7 @@ const ClientBookingModal = ({ setIsChange }) => {
                 }}
                 onOpenChange={onOpenChange}
                 changeOnBlur
+                disabledDate={disabledDate}
               />
             </div>
           </div>
@@ -100,8 +142,8 @@ const ClientBookingModal = ({ setIsChange }) => {
             <Button
               className="mail-box-btn"
               type="primary"
-              onClick={handleSend()}
-              // htmlType="submit"
+              onClick={handleSend}
+              disabled={isSubmitDisabled}
             >
               Send detail booking
             </Button>

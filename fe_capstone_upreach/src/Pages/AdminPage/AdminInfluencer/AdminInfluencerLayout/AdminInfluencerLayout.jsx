@@ -1,59 +1,75 @@
 import React from "react";
 import "./AdminInfluencerLayout.css";
 
-import { Table, Popconfirm, Form, Input, Typography } from "antd";
 import {
-  DeleteOutlined,
-  UserDeleteOutlined,
+  Table,
+  Popconfirm,
+  Form,
+  Input,
+  Typography,
+  Spin,
+  message,
+} from "antd";
+import {
+  IdcardOutlined,
   EditOutlined,
+  LockOutlined,
+  UnlockOutlined,
 } from "@ant-design/icons";
+import axios from "axios";
 
 const AdminInfluencerLayout = () => {
+  const [messageApi, contextHolder] = message.useMessage();
+
   const [form] = Form.useForm();
+  const [listInflu, setListInflu] = React.useState([]);
+
   const [editingId, setEditingId] = React.useState("");
-  const [isChange, setIsChange] = React.useState(false);
+  const [allowAccount, setAllowAccount] = React.useState(0);
   const [openConfirm, setOpenConfirm] = React.useState(false);
+  const [force, setForce] = React.useState(0);
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const tags = [
     {
       title: "Full Name",
-      dataIndex: "name",
+      dataIndex: "fullName",
       width: "14%",
       editable: true,
     },
     {
       title: "Age",
-      dataIndex: "age",
+      dataIndex: "Age",
       width: "5%",
       editable: true,
     },
     {
       title: "Gender",
-      dataIndex: "gender",
+      dataIndex: "Gender",
       width: "6%",
       editable: true,
     },
     {
       title: "Relationship",
-      dataIndex: "relationship",
+      dataIndex: "Relationship",
       width: "8%",
       editable: true,
     },
     {
       title: "Email",
-      dataIndex: "email",
+      dataIndex: "Email",
       width: "20%",
       editable: true,
     },
     {
       title: "Phone Number",
-      dataIndex: "phone",
+      dataIndex: "Phone",
       width: "10%",
       editable: true,
     },
     {
       title: "Address",
-      dataIndex: "address",
+      dataIndex: "Address",
       width: "20%",
       editable: true,
     },
@@ -73,7 +89,7 @@ const AdminInfluencerLayout = () => {
             }}
           >
             <Typography.Link
-              onClick={() => handleSave(record.id)}
+              onClick={() => handleSave(record.Profile_ID)}
               style={{
                 marginRight: 8,
               }}
@@ -90,7 +106,6 @@ const AdminInfluencerLayout = () => {
                 style={{ cursor: "pointer", paddingTop: "3px  " }}
                 onClick={async () => {
                   if (await check()) {
-                    // console.log(true);
                     setOpenConfirm(true);
                   } else {
                     setEditingId("");
@@ -112,107 +127,66 @@ const AdminInfluencerLayout = () => {
       },
     },
     {
-      title: <UserDeleteOutlined />,
-      dataIndex: "delete",
+      title: <IdcardOutlined />,
+      dataIndex: "lock",
       width: "5%",
       render: (_, record) =>
-        listInflu.length >= 1 ? (
+        listInflu.length >= 1 && record.isAccepted == false ? (
           <Popconfirm
-            title="Sure to delete?"
-            onConfirm={() => handleDelete(record.id)}
+            title="Sure to unlock account?"
+            onConfirm={() => handleAllow(record.Profile_ID)}
           >
-            <DeleteOutlined />
+            <LockOutlined />
           </Popconfirm>
-        ) : null,
+        ) : (
+          <Popconfirm
+            title="Sure to lock account?"
+            onConfirm={() => handleLock(record.Profile_ID)}
+          >
+            <UnlockOutlined />
+          </Popconfirm>
+        ),
     },
   ];
-
-  const [listInflu, setListInflu] = React.useState([
-    {
-      id: "1",
-      name: "hieu",
-      age: 22,
-      gender: "Male",
-      relationship: "Single",
-      email: "lequanghieu0701@gmail.com",
-      phone: "0398357123",
-      address: "Da Nang",
-    },
-    {
-      id: "2",
-      name: "Le Quang Hieu",
-      age: 22,
-      gender: "Male",
-      relationship: "Single",
-      email: "lequanghieu0701@gmail.com",
-      phone: "0398357123",
-      address: "Quang Binh",
-    },
-    {
-      id: "3",
-      name: "hieudepzai",
-      age: 22,
-      gender: "Male",
-      relationship: "Single",
-      email: "lequanghieu0701@gmail.com",
-      phone: "0398357123",
-      address: "Hoi An",
-    },
-    {
-      id: "4",
-      name: "hieu",
-      age: 22,
-      gender: "Male",
-      relationship: "Single",
-      email: "lequanghieu0701@gmail.com",
-      phone: "0398357123",
-      address: "Da Nang",
-    },
-    {
-      id: "5",
-      name: "hieu",
-      age: 22,
-      gender: "Male",
-      relationship: "Single",
-      email: "lequanghieu0701@gmail.com",
-      phone: "0398357123",
-      address: "Da Nang",
-    },
-  ]);
 
   const check = async () => {
     if (editingId !== "") {
       const row = await form.validateFields();
-
       if (
         listInflu.some(
-          (item) => item.id == editingId && item.name == row.name
+          (item) =>
+            item.Profile_ID == editingId && item.fullName == row.fullName
         ) &&
-        listInflu.some((item) => item.id == editingId && item.age == row.age) &&
         listInflu.some(
-          (item) => item.id == editingId && item.gender == row.gender
+          (item) => item.Profile_ID == editingId && item.Age == row.Age
+        ) &&
+        listInflu.some(
+          (item) => item.Profile_ID == editingId && item.Gender == row.Gender
         ) &&
         listInflu.some(
           (item) =>
-            item.id == editingId && item.relationship == row.relationship
+            item.Profile_ID == editingId &&
+            item.Relationship == row.Relationship
         ) &&
         listInflu.some(
-          (item) => item.id == editingId && item.email == row.email
+          (item) => item.Profile_ID == editingId && item.Email == row.Email
         ) &&
         listInflu.some(
-          (item) => item.id == editingId && item.phone == row.phone
+          (item) => item.Profile_ID == editingId && item.Phone == row.Phone
         ) &&
         listInflu.some(
-          (item) => item.id == editingId && item.address == row.address
+          (item) => item.Profile_ID == editingId && item.Address == row.Address
         )
       ) {
         return false;
-      } else return true;
+      } else {
+        return true;
+      }
     }
   };
 
   const isEditing = (record) => {
-    return record.id === editingId;
+    return record.Profile_ID === editingId;
   };
 
   const EditableCell = ({
@@ -259,20 +233,19 @@ const AdminInfluencerLayout = () => {
 
   const edit = (record) => {
     form.setFieldsValue({
-      name: "",
-      age: "",
-      gender: "",
-      relationship: "",
-      email: "",
-      phone: "",
-      address: "",
+      fullnName: "",
+      Age: "",
+      Gender: "",
+      Relationship: "",
+      Email: "",
+      Phone: "",
+      Address: "",
       ...record,
     });
-    setEditingId(record.id);
+    setEditingId(record.Profile_ID);
   };
 
   const cancel = () => {
-    // console.log(true);
     setOpenConfirm(false);
   };
   const ok = () => {
@@ -281,16 +254,18 @@ const AdminInfluencerLayout = () => {
   };
 
   const handleSave = async (id) => {
+    // setIsLoading(true);
     try {
       const row = await form.validateFields();
       const newInfoInflu = [...listInflu];
-      const index = newInfoInflu.findIndex((item) => id === item.id);
+      const index = newInfoInflu.findIndex((item) => id === item.Profile_ID);
       if (index > -1) {
         const item = newInfoInflu[index];
         newInfoInflu.splice(index, 1, {
           ...item,
           ...row,
         });
+
         setListInflu(newInfoInflu);
         setEditingId("");
       } else {
@@ -298,11 +273,27 @@ const AdminInfluencerLayout = () => {
         setListInflu(newInfoInflu);
         setEditingId("");
       }
+
+      const formData = new FormData();
+      formData.append("influ", JSON.stringify(row));
+      formData.append("influId", JSON.stringify(id));
+
+      axios
+        .put("http://localhost:4000/api/admin/edit-influ", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          setForce((prev) => prev + 1);
+        })
+        .catch((error) => {
+          console.error("Lỗi khi cập nhật thông tin:", error);
+        });
     } catch (errInfo) {
       console.log("Validate Failed:", errInfo);
     }
   };
-  // console.log(listInflu);
 
   const mergedTags = tags.map((col) => {
     if (!col.editable) {
@@ -313,7 +304,7 @@ const AdminInfluencerLayout = () => {
       onCell: (record) => {
         return {
           record,
-          inputType: col.dataIndex === ("phone" && "age") ? "number" : "text",
+          inputType: col.dataIndex === ("Phone" && "Age") ? "number" : "text",
           dataIndex: col.dataIndex,
           title: col.title,
           editing: isEditing(record),
@@ -322,10 +313,69 @@ const AdminInfluencerLayout = () => {
     };
   });
 
-  const handleDelete = (id) => {
-    const newListInflu = listInflu.filter((item) => item.id !== id);
-    setListInflu(newListInflu);
+  const handleAllow = (id) => {
+    const formData = new FormData();
+    formData.append("influId", JSON.stringify(id));
+    axios
+      .put("http://localhost:4000/api/admin/unlock-influ", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        messageApi.open({
+          type: "success",
+          content: response.data.message,
+        });
+        setForce((prev) => prev + 1);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi cập nhật thông tin:", error);
+      });
   };
+
+  const handleLock = (id) => {
+    const formData = new FormData();
+    formData.append("influId", JSON.stringify(id));
+
+    axios
+      .put("http://localhost:4000/api/admin/lock-influ", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        messageApi.open({
+          type: "success",
+          content: response.data.message,
+        });
+        setForce((prev) => prev + 1);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi cập nhật thông tin:", error);
+      });
+  };
+
+  React.useEffect(() => {
+    setIsLoading(true);
+    axios
+      .get("http://localhost:4000/api/admin/get-influencer-account", {
+        params: {
+          // email: user.influencerEmail,
+        },
+      })
+      .then((response) => {
+        const info = response.data.data;
+        setListInflu(info);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error while fetching profile information:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [force]);
 
   return (
     <>
@@ -333,21 +383,23 @@ const AdminInfluencerLayout = () => {
         <div className="admin-influencer-list-layout">
           <div className="admin-influencer-table">
             <Form form={form} component={false}>
-              <Table
-                components={{
-                  body: {
-                    cell: EditableCell,
-                  },
-                }}
-                columns={mergedTags}
-                dataSource={listInflu}
-                rowClassName="editable-row"
-                pagination={{
-                  onChange: cancel,
-                  pageSize: 12,
-                }}
-                size="large"
-              />
+              <Spin tip="Saving" size="large" spinning={isLoading}>
+                <Table
+                  components={{
+                    body: {
+                      cell: EditableCell,
+                    },
+                  }}
+                  columns={mergedTags}
+                  dataSource={listInflu}
+                  rowClassName="editable-row"
+                  pagination={{
+                    onChange: cancel,
+                    pageSize: 12,
+                  }}
+                  size="large"
+                />
+              </Spin>
             </Form>
           </div>
         </div>
