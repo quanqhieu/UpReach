@@ -39,7 +39,8 @@ const InfluencerProfile = () => {
       navigate('/homepage')
     }
   },[status])
-  console.log(formValues)
+
+  
   const onFinish = () => {
     console.log(formValues)
     FetchDataProfile(formValues)
