@@ -1,13 +1,25 @@
 import React from "react";
-import default_img from "../../../Assets/Image/Default/DefaultImg.jpg";
 import "./InfluImage.css";
-const InfluImage = () => {
+const InfluImage = ({ influInfo }) => {
+  const [images, setImages] = React.useState([]);
+  React.useEffect(() => {
+    setImages(influInfo?.dataImage);
+  }, [influInfo?.dataImage]);
   return (
     <>
-      <div className="influ-images">
-        <img className="influ-image" src={default_img} alt="" />
-        <img className="influ-image" src={default_img} alt="" />
-        <img className="influ-image" src={default_img} alt="" />
+      <div className="approve-influ-images">
+        {images
+          ?.filter(
+            (imageObj) => imageObj.image !== null && imageObj.imageId !== null
+          )
+          .map((imageObj, index) => (
+            <img
+              key={index}
+              className="influ-image"
+              src={imageObj.image}
+              alt=""
+            />
+          ))}
       </div>
     </>
   );

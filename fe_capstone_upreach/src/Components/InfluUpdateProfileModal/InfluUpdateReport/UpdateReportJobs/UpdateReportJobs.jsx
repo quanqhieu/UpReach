@@ -110,7 +110,8 @@ const UpdateComponent = ({
           >
             <MinusCircleOutlined
               onClick={() => {
-                onItemRemove();
+                // onItemRemove();
+                setEditPost("");
               }}
             />
             <Form.Item

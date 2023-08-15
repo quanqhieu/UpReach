@@ -2,33 +2,40 @@ import "./ReportAudience.css";
 import { Row, Col } from "antd";
 import { Line, Pie, Bar } from "@ant-design/plots";
 import React from "react";
-const ReportAudience = (influInfo) => {
+const ReportAudience = ({ influInfo, dataReportVersion }) => {
   const [audienceFollower, setAudienceFollower] = React.useState([]);
   const [audienceGender, setAudienceGender] = React.useState([]);
   const [audienceAge, setAudienceAge] = React.useState([]);
   const [audienceLocation, setAudienceLocation] = React.useState([]);
+  console.log(audienceGender);
+  console.log(audienceAge);
 
   React.useEffect(() => {
-    setAudienceFollower(influInfo.influInfo.influInfo.audienceFollower);
-    setAudienceGender(influInfo.influInfo.influInfo.audienceGender);
-    setAudienceAge(influInfo.influInfo.influInfo.audienceAge);
-    setAudienceLocation(influInfo.influInfo.influInfo.audienceLocation);
+    setAudienceFollower(dataReportVersion.dataFollower);
+    setAudienceGender(dataReportVersion.dataGender);
+    setAudienceAge(dataReportVersion.dataAge);
+    setAudienceLocation(dataReportVersion.dataLocation);
   }, [
-    influInfo.influInfo.influInfo.audienceFollower,
-    influInfo.influInfo.influInfo.audienceGender,
-    influInfo.influInfo.influInfo.audienceAge,
-    influInfo.influInfo.influInfo.audienceLocation,
+    dataReportVersion.dataFollower,
+    dataReportVersion.dataGender,
+    dataReportVersion.dataAge,
+    dataReportVersion.dataLocation,
   ]);
 
+  const dataFollower =
+    audienceFollower[0]?.monthFollow === null ||
+    audienceFollower[0]?.value === null
+      ? []
+      : audienceFollower;
   const configFollower = {
-    data: audienceFollower,
-    xField: "AudienceFollowerMonth",
-    yField: "Quantity",
+    data: dataFollower,
+    xField: "monthFollow",
+    yField: "value",
   };
 
   configFollower.data.sort((a, b) => {
-    const [aMonth, aYear] = a.AudienceFollowerMonth.split("/");
-    const [bMonth, bYear] = b.AudienceFollowerMonth.split("/");
+    const [aMonth, aYear] = a.monthFollow.split("/");
+    const [bMonth, bYear] = b.monthFollow.split("/");
 
     if (parseInt(aYear, 10) !== parseInt(bYear, 10)) {
       return parseInt(aYear, 10) - parseInt(bYear, 10);
@@ -36,10 +43,14 @@ const ReportAudience = (influInfo) => {
     return parseInt(aMonth, 10) - parseInt(bMonth, 10);
   });
 
+  const dataGender =
+    audienceGender[0]?.sex === null || audienceGender[0]?.value === null
+      ? []
+      : audienceGender;
   const configGender = {
-    data: audienceGender,
-    angleField: "Quantity",
-    colorField: "Gender",
+    data: dataGender,
+    angleField: "value",
+    colorField: "sex",
     label: {
       type: "inner",
       offset: "-35%",
@@ -51,10 +62,15 @@ const ReportAudience = (influInfo) => {
     },
   };
 
+  const dataAge =
+    audienceAge[0]?.type === null || audienceAge[0]?.value === null
+      ? []
+      : audienceAge;
+
   const configAge = {
-    data: audienceAge,
-    xField: "Quantity",
-    yField: "AgeRange",
+    data: dataAge,
+    xField: "value",
+    yField: "type",
     meta: {
       type: {
         alias: "Age",
@@ -66,14 +82,14 @@ const ReportAudience = (influInfo) => {
     minBarWidth: 16,
     maxBarWidth: 16,
   };
-
   configAge.data.sort((a, b) => {
-    return a.AgeRange.localeCompare(b.AgeRange);
+    return a.type.localeCompare(b.type);
   });
+
   const configLocation = {
     data: audienceLocation,
-    xField: "Quantity",
-    yField: "AudienceLocation",
+    xField: "value",
+    yField: "type",
     meta: {
       type: {
         alias: "Location",

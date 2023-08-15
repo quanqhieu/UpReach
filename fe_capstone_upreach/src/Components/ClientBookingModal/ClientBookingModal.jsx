@@ -1,13 +1,23 @@
 import "./ClientBookingModal.css";
 import React from "react";
 import { Button, Input, DatePicker } from "antd";
+import axios from "axios";
+import { useUserStore } from "../../Stores/user";
+
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);
+
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
-const ClientBookingModal = ({ setIsChange, data }) => {
+
+const ClientBookingModal = ({ data }) => {
+  const [user, setUserInfo] = useUserStore((state) => [
+    state.user,
+    state.setUserInfo,
+  ]);
   const [bookingJob, setBookingJob] = React.useState(data);
+  const [isSending, setIsSending] = React.useState(false);
   const [describes, setDescribes] = React.useState("");
   const [dates, setDates] = React.useState(null);
   const [value, setValue] = React.useState(null);
@@ -41,10 +51,27 @@ const ClientBookingModal = ({ setIsChange, data }) => {
       describes: describes,
       startDate: formatStartDate,
       endDate: formatEndDate,
+      clientId: user.Client_ID,
+      clientName: user.fullNameClient,
     };
-    setBookingJob(updatedBookingJob);
+    setIsSending(true);
+    const formData = new FormData();
+    formData.append("bookingJob", JSON.stringify(updatedBookingJob));
+    axios
+      .put("http://localhost:4000/api/client/bookingJob", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        setIsSending(false);
+        // setForce((prev) => prev + 1);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi cập nhật thông tin:", error);
+      });
   };
-  console.log(bookingJob);
+
   return (
     <>
       <div className="client-booking-modal">

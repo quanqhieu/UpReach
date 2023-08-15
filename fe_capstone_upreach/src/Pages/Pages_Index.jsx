@@ -37,7 +37,6 @@ function Pages_Index() {
   const navigateUpgrade = () => {
     navigate("/upgrade");
   };
-  
 
   const navigateAdmin = () => {
     navigate("/admin/dashboard");

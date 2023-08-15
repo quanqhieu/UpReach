@@ -17,10 +17,11 @@ import {
   LockFilled,
 } from "@ant-design/icons";
 
-const VersionInfluSideBar = ({ influInfo }) => {
+const VersionInfluSideBar = ({ influInfo, profileSideBar }) => {
+  console.log(profileSideBar);
   const [badgeColor, setBadgeColor] = React.useState("");
   React.useEffect(() => {
-    switch (influInfo?.influencerTypeName[0]) {
+    switch (profileSideBar?.influencerTypeName[0]) {
       case "Professional":
         setBadgeColor("#C837AB");
         break;
@@ -39,7 +40,7 @@ const VersionInfluSideBar = ({ influInfo }) => {
       default:
         return;
     }
-  }, [influInfo?.influencerTypeName[0]]);
+  }, [profileSideBar?.influencerTypeName[0]]);
 
   return (
     <>
@@ -47,7 +48,7 @@ const VersionInfluSideBar = ({ influInfo }) => {
         <div className="side-bar-header-body">
           <div className="influ-side-bar-header">
             <img className="profile-avatar" src={default_img} alt="" />
-            <p className="profile-name">{influInfo?.influencerfullName}</p>
+            <p className="profile-name">{profileSideBar?.influencerfullName}</p>
             <div className="badge-block">
               <div
                 style={{
@@ -62,7 +63,7 @@ const VersionInfluSideBar = ({ influInfo }) => {
                     marginRight: "8px",
                   }}
                 />
-                {influInfo?.influencerTypeName[0]}
+                {profileSideBar?.influencerTypeName[0]}
               </div>
             </div>
             <div className="profile-socials">
@@ -101,17 +102,19 @@ const VersionInfluSideBar = ({ influInfo }) => {
             <div className="profile-contents">
               <div className="profile-content">
                 <div className="profile-topics">
-                  {influInfo?.influencerContentTopicName.map((topic, index) => (
-                    <div key={index} className="profile-topic">
-                      <Tooltip placement="top" title={topic}>
-                        <div>
-                          {topic?.length > 8
-                            ? `${topic?.slice(0, 8)}...`
-                            : topic}
-                        </div>
-                      </Tooltip>
-                    </div>
-                  ))}
+                  {profileSideBar?.influencerContentTopicName.map(
+                    (topic, index) => (
+                      <div key={index} className="profile-topic">
+                        <Tooltip placement="top" title={topic}>
+                          <div>
+                            {topic?.length > 8
+                              ? `${topic?.slice(0, 8)}...`
+                              : topic}
+                          </div>
+                        </Tooltip>
+                      </div>
+                    )
+                  )}
                 </div>
                 <div className="profile-location">
                   <Location style={{ marginRight: "8px" }} />

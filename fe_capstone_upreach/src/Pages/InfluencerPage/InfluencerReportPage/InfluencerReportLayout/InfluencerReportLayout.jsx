@@ -11,10 +11,8 @@ import {
   LoadingOutlined,
 } from "@ant-design/icons";
 import Buttons from "../../../../Components/UI/Buttons";
-import { VERSION_PROFILE_INFLU } from "../../../HomePage/ConstHomePage";
 import { useUserStore } from "../../../../Stores/user";
 import { useEffect } from "react";
-import { useLayoutEffect } from "react";
 import axios from "axios";
 
 const InfluencerReportLayout = () => {
@@ -218,10 +216,9 @@ const InfluencerReportLayout = () => {
       .post("http://localhost:4000/api/influ/dataReportInfluencer", {
         email: user.email,
       })
-
       .then((response) => {
         const info = response.data.Influencer;
-        console.log("run", response);
+
         setProfileVersion(info);
         setPreviewInflu(() => {
           return info.sort(
@@ -247,37 +244,6 @@ const InfluencerReportLayout = () => {
         setIsChange(false);
       });
   }, [force]);
-
-  React.useLayoutEffect(() => {
-    axios
-      .get("http://localhost:4000/api/influ/get-images-influencer", {
-        params: {
-          email: user.email,
-        },
-      })
-      .then((response) => {
-        const ImageData = response.data.data;
-        const imageList = ImageData.map((data) => {
-          if (data?.Image) {
-            return {
-              url: data.Image,
-              uid: data.Image_ID,
-            };
-          }
-          return null;
-        }).filter((item) => item !== null);
-        previewInflu.Image.splice(0, previewInflu.Image.length);
-        for (const image of imageList) {
-          previewInflu.Image.push(image);
-        }
-
-        setIsChange(false);
-      })
-      .catch((error) => {
-        console.error("Error while fetching Image information:", error);
-      });
-  }, []);
-  console.log(previewInflu.Image);
 
   return (
     <>
@@ -316,7 +282,10 @@ const InfluencerReportLayout = () => {
         width={1400}
         bodyStyle={{ borderRadius: "30px" }}
       >
-        <InfluVersionModal profileInflu={reportVersion} />
+        <InfluVersionModal
+          profileInflu={reportVersion}
+          profileSideBar={oldVerInflu}
+        />
       </Modal>
 
       {/* -----------------Modal update---------------------- */}
