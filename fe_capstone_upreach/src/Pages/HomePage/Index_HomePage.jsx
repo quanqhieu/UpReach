@@ -6,7 +6,7 @@ import FilterSearch from "./FilterSearch/FilterSearch";
 import ProfileCardLayout from "./ProfileCardLayout/ProfileCardLayout";
 import { Link } from "react-router-dom";
 import ApiGetInfoAndFilterInfluencer from "../../Api/ApiGetInfoAndFilterInfluencer";
-import { FireOutlined } from "@ant-design/icons";
+import { FireFilled } from "@ant-design/icons";
 
 const Index_HomePage = () => {
   const [allInfluencer, setAllInfluencer] = useState();
@@ -70,7 +70,7 @@ const Index_HomePage = () => {
           Enjoy full search results with one of our paid plans
           <Link to="/upgrade">
             <button className="bg-dark ms-4 btnUpgrade">
-              <FireOutlined
+              <FireFilled
                 style={{
                   color: "orange",
                   fontSize: "32px",

@@ -66,6 +66,10 @@ const HeaderHomepage = (onClickIntroduce) => {
     navigate("/myinfluencer");
   };
 
+  const navigateProfileInfluencer =()=>{
+    navigate("/influencer/profile")
+  }
+
   const handleLogout = () => {
     removeCookie("token", { path: "/" });
     setUserInfo({});
@@ -74,7 +78,7 @@ const HeaderHomepage = (onClickIntroduce) => {
   };
   const items = [
     {
-      label: <p>Profile</p>,
+      label: <p onClick={navigateProfileInfluencer}>Profile</p>,
       key: "0",
     },
     {

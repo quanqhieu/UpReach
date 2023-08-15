@@ -15,6 +15,7 @@ import AdminUpgrade from "./AdminPage/AdminUpgrade/AdminUpgrade";
 
 import InfluencerBookingPage from "./InfluencerPage/InfluencerBookingPage/InfluencerBookingPage.jsx";
 import InfluencerReportPage from "./InfluencerPage/InfluencerReportPage/InfluencerReportPage.jsx";
+import InfluencerProfile from "./InfluencerPage/InfluencerProfilePage/influencerProfile";
 
 import ForgotPasswordPage from "./ForgotPassword/ForgotPasswordPage";
 import VerifyRegisterPage from "./VerifyRegister/VerifyRegisterPage";
@@ -208,11 +209,19 @@ function Pages_Index() {
           </>
         }
       />
-      <Route
+      {/* <Route
         path="/create-influencer-page"
         element={
           <>
             <CreatInfluencerProfilePage />
+          </>
+        }
+      /> */}
+      <Route
+        path="influencer/profile"
+        element={
+          <>
+            <InfluencerProfile />
           </>
         }
       />

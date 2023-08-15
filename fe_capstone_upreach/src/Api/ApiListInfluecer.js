@@ -33,7 +33,10 @@ const ApiListInfluecer = {
         const url = '/addtotablekols';
         return axiosClient.post(url, {ListKOLsID: listKOLsID,KOLsID : kOLsID ,ClientListID: idList})
     },
-
+    getStatusListOfKOLs(clientID,kOLsID){
+        const url = '/getstatuslistofkols';
+        return axiosClient.post(url, {ClientID: clientID,KOLsID : kOLsID})
+    },
     
 }
 
