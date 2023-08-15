@@ -39,6 +39,7 @@ const ProfileCardLayout = ({ allInfluencer, loading }) => {
     <>
       <Modal
         className="custom-modal"
+        destroyOnClose={true}
         centered
         open={isOpenProfileInflu}
         footer={null}
