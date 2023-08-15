@@ -1,6 +1,6 @@
 import default_img from "../../../Assets/Image/Default/DefaultImg.jpg";
 import "./InfluSideBar.css";
-import { Button, Tooltip, Dropdown, Checkbox, Row, Col } from "antd";
+import { Button, Tooltip, Dropdown, Checkbox, Row, Col, Modal } from "antd";
 import { ReactComponent as Facebook } from "../../../Assets/Icon/Facebook.svg";
 import { ReactComponent as Instagram } from "../../../Assets/Icon/Instagram.svg";
 import { ReactComponent as Youtube } from "../../../Assets/Icon/Youtube.svg";
@@ -19,10 +19,12 @@ import {
   LockFilled,
 } from "@ant-design/icons";
 
-function RenderListCheckbox({ valueCheckbox, titleCheckbox }) {
+function RenderListCheckbox({ valueCheckbox, titleCheckbox, status }) {
   return (
     <Col span={24}>
-      <Checkbox value={valueCheckbox}>{titleCheckbox}</Checkbox>
+      <Checkbox disabled={status == 1 ? true : false} value={valueCheckbox}>
+        {titleCheckbox}
+      </Checkbox>
     </Col>
   );
 }
@@ -33,15 +35,28 @@ const InfluSideBar = ({ influInfo }) => {
   const [listSelected, setListSelected] = useState();
   const [listInfluencer, setListInfluencer] = useState([]);
   const [idAccClient, setIdAccClient] = useState("");
+
+  const success = () => {
+    Modal.success({
+      width: "800px",
+      content: "Added to a list",
+    });
+  };
+
+  function SaveToListOnClick() {
+    fetchDataGetList(influInfo.influencerId);
+  }
+
   //====================== Get Data Back End Of List ======================
-  const fetchDataGetList = async () => {
+  const fetchDataGetList = async (kOLsID) => {
     try {
       const dataLocalStorge = await JSON.parse(
         localStorage.getItem("user-draw-storage")
       ).state.user.Client_ID;
       setIdAccClient(dataLocalStorge);
-      const response = (await ApiListInfluecer.getListMenu(dataLocalStorge))
-        .data;
+      const response = (
+        await ApiListInfluecer.getStatusListOfKOLs(dataLocalStorge, kOLsID)
+      ).data;
       setListInfluencer(response);
     } catch (error) {
       console.log("Error fetching data:", error);
@@ -68,11 +83,13 @@ const InfluSideBar = ({ influInfo }) => {
     console.log(checkedValues);
   };
   //click add to list
-  const AddTableKOLs = () => {
+  const AddTableKOLs = (e) => {
     listSelected.forEach((idListSelected) => {
       const listKOLsID = uuid().slice(0, 8);
       fetchAddTableKOLs(listKOLsID, influInfo.influencerId, idListSelected);
     });
+    fetchDataGetList(influInfo.influencerId);
+    success();
   };
   useEffect(() => {
     switch (influInfo.influencerTypeName[0]) {
@@ -97,8 +114,8 @@ const InfluSideBar = ({ influInfo }) => {
   }, [influInfo.influencerTypeName]);
 
   useEffect(() => {
-    fetchDataGetList();
-  }, []);
+    fetchDataGetList(influInfo.influencerId);
+  }, [influInfo.influencerId]);
 
   return (
     <>
@@ -156,6 +173,8 @@ const InfluSideBar = ({ influInfo }) => {
                           key={index}
                           valueCheckbox={item.ClientLists_ID}
                           titleCheckbox={item.Name_list}
+                          status={item.Status}
+                          influInfo={influInfo}
                         />
                       ))}
                     </Row>
@@ -186,6 +205,7 @@ const InfluSideBar = ({ influInfo }) => {
                   type="primary"
                   shape="round"
                   size="large"
+                  onClick={SaveToListOnClick}
                 >
                   <p
                     style={{
