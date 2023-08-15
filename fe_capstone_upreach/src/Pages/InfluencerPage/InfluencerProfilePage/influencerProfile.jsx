@@ -40,7 +40,7 @@ const InfluencerProfile = () => {
     }
   },[status])
 
-  
+
   const onFinish = () => {
     console.log(formValues)
     FetchDataProfile(formValues)
@@ -90,7 +90,6 @@ const InfluencerProfile = () => {
         style={{
           marginTop: 8
         }}
-        className= ""
       >
         Upload
       </div>
