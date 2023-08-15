@@ -58,7 +58,6 @@ const InfluSideBar = ({ influInfo }) => {
         await ApiListInfluecer.getStatusListOfKOLs(dataLocalStorge, kOLsID)
       ).data;
       setListInfluencer(response);
-      console.log(response);
     } catch (error) {
       console.log("Error fetching data:", error);
     }
@@ -84,11 +83,12 @@ const InfluSideBar = ({ influInfo }) => {
     console.log(checkedValues);
   };
   //click add to list
-  const AddTableKOLs = () => {
+  const AddTableKOLs = (e) => {
     listSelected.forEach((idListSelected) => {
       const listKOLsID = uuid().slice(0, 8);
       fetchAddTableKOLs(listKOLsID, influInfo.influencerId, idListSelected);
     });
+    fetchDataGetList(influInfo.influencerId);
     success();
   };
   useEffect(() => {
@@ -154,7 +154,6 @@ const InfluSideBar = ({ influInfo }) => {
               </p>
             </Button> */}
             <Dropdown
-              destroyOnClose={true}
               dropdownRender={() => (
                 <div className={"popupFilter shadowBox"}>
                   <div className="titleAddToList">
@@ -175,6 +174,7 @@ const InfluSideBar = ({ influInfo }) => {
                           valueCheckbox={item.ClientLists_ID}
                           titleCheckbox={item.Name_list}
                           status={item.Status}
+                          influInfo={influInfo}
                         />
                       ))}
                     </Row>
