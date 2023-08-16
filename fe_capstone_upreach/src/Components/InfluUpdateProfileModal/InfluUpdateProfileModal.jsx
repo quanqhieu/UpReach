@@ -4,8 +4,7 @@ import InfluUpdateImage from "./InfluUpdateImage/InfluUpdateImage";
 import InfluUpdateReport from "./InfluUpdateReport/InfluUpdateReport";
 import React from "react";
 import axios from "axios";
-import { Button, Spin } from "antd";
-
+import { Button, Spin, notification } from "antd";
 const InfluUpdateProfileModal = ({
   setForce,
   oldVerInflu,
@@ -22,8 +21,21 @@ const InfluUpdateProfileModal = ({
   setIdJobsRemove,
   previewChart,
   setPreviewChart,
+  setIsOpenProfileInflu,
 }) => {
+  const [api, contextHolder] = notification.useNotification();
+
+  const openNotification = (placement) => {
+    api.info({
+      message: `Notification about booking`,
+      description:
+        "This is UpReach's notice, please check the booking job of client send to you in My Booking!!!",
+      placement,
+    });
+  };
   const [isSaving, setIsSaving] = React.useState(false);
+  const [isNotCheck, setIsNotCheck] = React.useState(false);
+
   const handleSave = () => {
     setIsSaving(true);
     var dateUTC = new Date();
@@ -48,6 +60,7 @@ const InfluUpdateProfileModal = ({
         setIsAllowEdit(false);
         setIsChange(false);
         setIsSaving(false);
+        setIsOpenProfileInflu(false);
         setForce((prev) => prev + 1);
         localStorage.setItem("editDate", new Date());
       })
@@ -56,8 +69,48 @@ const InfluUpdateProfileModal = ({
       });
   };
 
+  React.useEffect(() => {
+    axios
+      .get("http://localhost:4000/api/influ/get-jobs-influencer", {
+        params: {
+          email: previewInflu.influencerEmail,
+        },
+      })
+      .then((response) => {
+        const jobDataArray = response.data.data;
+
+        const bookingList = jobDataArray?.map((data) => ({
+          jobName: data?.Name_Job,
+          platform: data?.Platform_Job,
+          jobLink: data?.Link,
+          quantity: data?.Quantity,
+          costEstimateFrom: data?.CostEstimate_From_Job,
+          costEstimateTo: data?.CostEstimate_To_Job,
+          formatContent: data?.Format_Id,
+          jobId: data?.Job_ID,
+          JobList_ID: data?.JobList_ID,
+          status: data?.status,
+        }));
+        setPreviewBooking(bookingList);
+      })
+      .catch((error) => {
+        console.error("Error while fetching job information:", error);
+      });
+  }, []);
+
+  React.useEffect(() => {
+    if (previewBooking == undefined) {
+      setPreviewBooking([]);
+    }
+    const hasPendingJob = previewBooking?.some(
+      (job) => job?.status === "Pending"
+    );
+    setIsNotCheck(hasPendingJob);
+  }, [previewBooking]);
+
   return (
     <>
+      {contextHolder}
       <div className="influ-update-profile">
         <div className="influ-update-side-bar">
           <InfluUpdateSideBar
@@ -87,13 +140,19 @@ const InfluUpdateProfileModal = ({
                 setIdJobsRemove={setIdJobsRemove}
                 chartInfo={previewChart}
                 setChartInfo={setPreviewChart}
+                isNotCheck={isNotCheck}
               />
+              {/* {console.log(isNotCheck)} */}
               <Button
                 disabled={!isChange}
+                style={{ background: isNotCheck ? "#cccccc" : "##1677ff" }}
                 type="primary"
                 size={18}
                 className="influ-update-report-btn"
-                onClick={handleSave}
+                // onClick={handleSave}
+                onClick={() => {
+                  isNotCheck ? openNotification("topRight") : handleSave();
+                }}
               >
                 SAVE
               </Button>

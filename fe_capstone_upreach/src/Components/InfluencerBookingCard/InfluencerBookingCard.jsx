@@ -19,7 +19,7 @@ const InfluencerBookingCard = ({ bookingList }) => {
   };
 
   const handleReject = (info) => {
-    setStatus((info.status = "Reject"));
+    setStatus((info.status = "Rejected"));
     const formData = new FormData();
     formData.append("booking", JSON.stringify(info));
     // formData.append("influName", JSON.stringify(user.fullNameInfluencer));
@@ -69,7 +69,7 @@ const InfluencerBookingCard = ({ bookingList }) => {
       },
       cancelText: "No",
       onOk() {
-        if (action === "Reject") {
+        if (action === "Rejected") {
           handleReject(info);
         } else if (action === "Processing") {
           handleProcessing(info);
@@ -131,16 +131,16 @@ const InfluencerBookingCard = ({ bookingList }) => {
 
           <Button
             className="influ-booking-card-icon"
-            onClick={() => showConfirm(bookingList, "Reject")}
+            onClick={() => showConfirm(bookingList, "Rejected")}
             disabled={
-              bookingList.status === "Reject" ||
+              bookingList.status === "Rejected" ||
               bookingList.status === "Processing"
             }
             icon={
               <Icon
                 icon="iconoir:cancel"
                 color={
-                  bookingList.status === "Reject" ||
+                  bookingList.status === "Rejected" ||
                   bookingList.status === "Processing"
                     ? "#ccc"
                     : "#fa0000"
@@ -155,14 +155,14 @@ const InfluencerBookingCard = ({ bookingList }) => {
             className="influ-booking-card-icon"
             onClick={() => showConfirm(bookingList, "Processing")}
             disabled={
-              bookingList.status === "Reject" ||
+              bookingList.status === "Rejected" ||
               bookingList.status === "Processing"
             }
             icon={
               <Icon
                 icon="ic:round-check"
                 color={
-                  bookingList.status === "Reject" ||
+                  bookingList.status === "Rejected" ||
                   bookingList.status === "Processing"
                     ? "#ccc"
                     : "#00dd1a"

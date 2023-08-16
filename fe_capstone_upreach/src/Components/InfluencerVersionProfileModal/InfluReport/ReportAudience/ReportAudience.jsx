@@ -11,15 +11,15 @@ const ReportAudience = ({ influInfo, dataReportVersion }) => {
   console.log(audienceAge);
 
   React.useEffect(() => {
-    setAudienceFollower(dataReportVersion.dataFollower);
-    setAudienceGender(dataReportVersion.dataGender);
-    setAudienceAge(dataReportVersion.dataAge);
-    setAudienceLocation(dataReportVersion.dataLocation);
+    setAudienceFollower(dataReportVersion?.dataFollower);
+    setAudienceGender(dataReportVersion?.dataGender);
+    setAudienceAge(dataReportVersion?.dataAge);
+    setAudienceLocation(dataReportVersion?.dataLocation);
   }, [
-    dataReportVersion.dataFollower,
-    dataReportVersion.dataGender,
-    dataReportVersion.dataAge,
-    dataReportVersion.dataLocation,
+    dataReportVersion?.dataFollower,
+    dataReportVersion?.dataGender,
+    dataReportVersion?.dataAge,
+    dataReportVersion?.dataLocation,
   ]);
 
   const dataFollower =

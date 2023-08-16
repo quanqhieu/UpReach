@@ -80,7 +80,7 @@ const InfluSideBar = ({ influInfo }) => {
   //========================================================================
   const OnChange = (checkedValues) => {
     setListSelected(checkedValues);
-    console.log(checkedValues);
+    // console.log(checkedValues);
   };
   //click add to list
   const AddTableKOLs = (e) => {

@@ -6,17 +6,18 @@ import { useUserStore } from "../../Stores/user";
 import { useNavigate } from "react-router-dom";
 
 const Introduce = ({ navigateHome, navigateLogin, navigateMyInfluencer }) => {
+  const [user] = useUserStore((state) => [state.user]);
   const navigate = useNavigate();
 
-  const [user] = useUserStore((state) => [state.user]);
-
   React.useEffect(() => {
-    if (user.roleId == 3) {
-      navigate("/influencer/my-report");
+    if (user.roleId == 1) {
+      navigate("/admin/dashboard");
     } else if (user.roleId == 2) {
       navigate("/homepage");
-    } else if (user.roleId == 1) {
-      navigate("/admin/dashboard");
+    } else if (user.roleId == 3) {
+      navigate("/influencer/my-report");
+    } else {
+      navigate("/");
     }
   }, []);
 

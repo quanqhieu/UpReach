@@ -11,7 +11,7 @@ dayjs.extend(customParseFormat);
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
 
-const ClientBookingModal = ({ data }) => {
+const ClientBookingModal = ({ data, setIsOpenBooking }) => {
   const [user, setUserInfo] = useUserStore((state) => [
     state.user,
     state.setUserInfo,
@@ -65,6 +65,7 @@ const ClientBookingModal = ({ data }) => {
       })
       .then((response) => {
         setIsSending(false);
+        setIsOpenBooking(false);
         // setForce((prev) => prev + 1);
       })
       .catch((error) => {

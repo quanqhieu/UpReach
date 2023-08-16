@@ -30,7 +30,7 @@ const ApproveJobItem = ({ jobInfo }) => {
       case "CF03":
         return "Video";
       default:
-        return null;
+        return "";
     }
   };
   return (
@@ -41,9 +41,7 @@ const ApproveJobItem = ({ jobInfo }) => {
           <div className="post-item-sub-title">
             <p>{jobInfo?.Name_Job || ""}</p>
             <div style={{ display: "flex" }}>
-              {jobInfo?.Format_Id?.map((item) => getFormatContent(item))?.join(
-                ", "
-              )}
+              {getFormatContent(jobInfo?.Format_Id)}
             </div>
             <Tooltip placement="top" title={jobInfo?.Link}>
               <a>

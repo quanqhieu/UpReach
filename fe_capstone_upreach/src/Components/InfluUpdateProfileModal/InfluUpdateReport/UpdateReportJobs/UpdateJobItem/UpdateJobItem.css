@@ -28,6 +28,7 @@
     width: fit-content;
 }
 
+
 .update-report-post-item .cover-quantity-cost {
 	height: 70px;
     width: 385px;
@@ -38,7 +39,7 @@
 }
 
 .update-report-post-item .cover-quantity-cost p {
-	color: #9b9a9a;
+	color: #222222;
 }
 
 .post-item-btn {

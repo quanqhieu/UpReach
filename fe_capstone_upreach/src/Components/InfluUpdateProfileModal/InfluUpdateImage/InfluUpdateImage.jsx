@@ -19,13 +19,13 @@ const InfluUpdateImage = ({
   mokPreviewInflu,
 }) => {
   const [fileList, setFileList] = React.useState(
-    Array.isArray(influInfo?.Image) ? influInfo?.Image : []
+    Array.isArray(influInfo?.dataImage) ? influInfo?.dataImage : []
   );
 
   const sortableItemIds = fileList?.map((file) => file?.uid);
   const [previewOpen, setPreviewOpen] = React.useState(false);
   const [previewImage, setPreviewImage] = React.useState("");
-
+  console.log(influInfo);
   const getBase64 = (file) =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -63,7 +63,7 @@ const InfluUpdateImage = ({
   React.useEffect(() => {
     setInfluInfo({
       ...influInfo,
-      Image: fileList,
+      dataImage: fileList,
     });
   }, [fileList]);
 
@@ -81,10 +81,10 @@ const InfluUpdateImage = ({
     return true;
   };
   React.useEffect(() => {
-    if (!checkImages(influInfo?.Image, mokPreviewInflu?.Image)) {
+    if (!checkImages(influInfo?.dataImage, mokPreviewInflu?.dataImage)) {
       setIsChange(true);
     }
-  }, [mokPreviewInflu?.Image, influInfo?.Image]);
+  }, [mokPreviewInflu?.dataImage, influInfo?.dataImage]);
 
   return (
     <>
@@ -118,7 +118,7 @@ const InfluUpdateImage = ({
                 beforeUpload={() => true}
                 onChange={onChange}
                 onPreview={onPreview}
-                data={influInfo?.Image}
+                data={influInfo?.dataImage}
                 itemRender={(originNode, file) => (
                   <DraggableUploadListItem
                     originNode={originNode}

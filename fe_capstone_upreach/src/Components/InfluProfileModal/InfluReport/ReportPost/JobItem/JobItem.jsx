@@ -9,6 +9,7 @@ import { ExclamationCircleOutlined, LoadingOutlined } from "@ant-design/icons";
 import ClientBookingModal from "../../../../../Components/ClientBookingModal/ClientBookingModal";
 
 const JobItem = ({ data }) => {
+  console.log(data);
   const [isChange, setIsChange] = React.useState(false);
   const [openConfirmForm, setOpenConfirmForm] = React.useState(false);
   const [isOpenBooking, setIsOpenBooking] = React.useState(false);
@@ -64,7 +65,11 @@ const JobItem = ({ data }) => {
         width={900}
         bodyStyle={{ borderRadius: "30px" }}
       >
-        <ClientBookingModal setIsChange={setIsChange} data={data} />
+        <ClientBookingModal
+          setIsChange={setIsChange}
+          data={data}
+          setIsOpenBooking={setIsOpenBooking}
+        />
       </Modal>
       <div className="report-post-item">
         <div className="post-item-title">

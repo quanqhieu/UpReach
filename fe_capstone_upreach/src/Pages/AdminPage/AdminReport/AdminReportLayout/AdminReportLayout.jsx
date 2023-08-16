@@ -74,7 +74,11 @@ const AdminReportLayout = () => {
         width={1400}
         bodyStyle={{ borderRadius: "30px" }}
       >
-        <AdminApproveProfile approveReport={reportInfo} setForce={setForce} />
+        <AdminApproveProfile
+          approveReport={reportInfo}
+          setForce={setForce}
+          setIsOpenApproveProfile={setIsOpenApproveProfile}
+        />
       </Modal>
 
       {/* ------------------------------------------ */}

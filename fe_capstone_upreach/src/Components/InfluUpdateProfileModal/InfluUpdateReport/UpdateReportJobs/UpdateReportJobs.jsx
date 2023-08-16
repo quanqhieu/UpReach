@@ -5,10 +5,11 @@ import {
   PlusOutlined,
   EditOutlined,
 } from "@ant-design/icons";
-import { Button, Form, Input, Select, Space } from "antd";
+import { Button, Form, Input, Select, Space, notification } from "antd";
 import UpdateJobItem from "./UpdateJobItem/UpdateJobItem";
 import axios from "axios";
 import { useUserStore } from "../../../../Stores/user";
+import { DeleteOutlined } from "@ant-design/icons";
 
 const UpdateComponent = ({
   item,
@@ -19,13 +20,23 @@ const UpdateComponent = ({
   setEditPost,
   isEditting,
   setIsEditting,
+  isNotCheck,
 }) => {
   const [form] = Form.useForm();
   const { Option } = Select;
   const [estimateFrom, setEstimateFrom] = React.useState(item.costEstimateFrom);
   const [estimateTo, setEstimateTo] = React.useState(item.costEstimateTo);
   const [quantity, setQuantity] = React.useState(item.quantity);
+  const [api, contextHolder] = notification.useNotification();
 
+  const openNotification = (placement) => {
+    api.info({
+      message: `Notification about booking`,
+      description:
+        "This is UpReach's notice, please check the booking job of client send to you in My Booking!!!",
+      placement,
+    });
+  };
   const [dataForm, setDataForm] = React.useState([
     {
       name: ["jobName"],
@@ -84,6 +95,7 @@ const UpdateComponent = ({
 
   return (
     <>
+      {contextHolder}
       {editPost === index && isEditting === true ? (
         <Form
           name="validate_other"
@@ -164,12 +176,12 @@ const UpdateComponent = ({
                 {
                   required: true,
                   message: "Please select format content!",
-                  type: "array",
+                  // type: "array",
                 },
               ]}
             >
               <Select
-                mode="multiple"
+                // mode="multiple"
                 placeholder="Please select format content"
               >
                 <Option value="CF01">Text</Option>
@@ -226,8 +238,6 @@ const UpdateComponent = ({
                   },
                 },
               ]}
-              // validateStatus={EstimateFrom === "" ? "" : "error"}
-              // help={EstimateFrom === "" ? "" : EstimateFrom}
             >
               <div>
                 <Input
@@ -292,8 +302,28 @@ const UpdateComponent = ({
           </Form.Item>
         </Form>
       ) : (
-        <div onClick={() => setEditPost(index)}>
-          <UpdateJobItem bookingItem={item} />
+        <div className="cover-job-delete">
+          <div>
+            <UpdateJobItem bookingItem={item} />
+            <Button
+              type="link"
+              style={{ color: isNotCheck ? "#cccccc" : "#000" }}
+              className="influ-job-delete-btn"
+              onClick={() => {
+                isNotCheck ? openNotification("topRight") : onItemRemove(index);
+              }}
+              icon={<DeleteOutlined className="icon-job-delete" />}
+            ></Button>
+            <Button
+              type="link"
+              style={{ color: isNotCheck ? "#cccccc" : "#000" }}
+              className="influ-job-edit-btn"
+              onClick={() => {
+                isNotCheck ? openNotification("topRight") : setEditPost(index);
+              }}
+              icon={<EditOutlined className="icon-job-edit" />}
+            ></Button>
+          </div>
         </div>
       )}
     </>
@@ -306,8 +336,8 @@ const UpdateReportJobs = ({
   setBookingInfo,
   idJobsRemove,
   setIdJobsRemove,
-  mokPreviewInflu,
   setIsChange,
+  isNotCheck,
 }) => {
   const [isAdding, setIsAdding] = React.useState(false);
   const [isEditting, setIsEditting] = React.useState(false);
@@ -327,7 +357,7 @@ const UpdateReportJobs = ({
   };
 
   const onFinish = (values) => {
-    console.log("run", values);
+    // console.log("run", values);
     if (values?.jobs) {
       setBookingInfo([...bookingInfo, ...values.jobs]);
       setIsAdding(false);
@@ -335,6 +365,7 @@ const UpdateReportJobs = ({
       setIsChange(true);
     }
   };
+
   const handleItemUpdate = (index, updatedItem) => {
     setBookingInfo((prevBookingInfo) => {
       const updatedBookingInfo = [...prevBookingInfo];
@@ -366,41 +397,10 @@ const UpdateReportJobs = ({
     });
   };
 
-  React.useEffect(() => {
-    axios
-      .get("http://localhost:4000/api/influ/get-jobs-influencer", {
-        params: {
-          email: influInfo.influencerEmail,
-        },
-      })
-      .then((response) => {
-        const jobDataArray = response.data.data;
-        console.log(response.data.data);
-        const bookingList = jobDataArray?.map((data) => ({
-          jobId: data?.Job_ID,
-          jobName: data?.Name_Job,
-          platform: data?.Platform_Job,
-          jobLink: data?.Link,
-          quantity: data?.Quantity,
-          costEstimateFrom: data?.CostEstimate_From_Job,
-          costEstimateTo: data?.CostEstimate_To_Job,
-          formatContent: data?.Format_Id,
-          JobList_ID: data?.JobList_ID,
-        }));
-        setBookingInfo(bookingList);
-      })
-      .catch((error) => {
-        console.error(
-          "Error while fetching previewBooking information:",
-          error
-        );
-      });
-  }, []);
-
   return (
     <>
       <div className="report-update-jobs-layout">
-        {bookingInfo.length === 0 ? (
+        {bookingInfo?.length === 0 ? (
           ""
         ) : (
           <div className="job-view">
@@ -421,6 +421,7 @@ const UpdateReportJobs = ({
                   item={item}
                   onItemUpdate={handleItemUpdate}
                   onItemRemove={() => handleItemRemove(index)}
+                  isNotCheck={isNotCheck}
                 />
               </div>
             ))}
@@ -510,12 +511,12 @@ const UpdateReportJobs = ({
                           {
                             required: true,
                             message: "Please select format content!",
-                            type: "array",
+                            // type: "array",
                           },
                         ]}
                       >
                         <Select
-                          mode="multiple"
+                          // mode="multiple"
                           placeholder="Please select format content"
                         >
                           <Option value="CF01">Text</Option>
@@ -634,6 +635,7 @@ const UpdateReportJobs = ({
                           setIsAdding(true);
                           add();
                         }}
+                        disabled={isNotCheck}
                         block
                         icon={<PlusOutlined />}
                         style={{

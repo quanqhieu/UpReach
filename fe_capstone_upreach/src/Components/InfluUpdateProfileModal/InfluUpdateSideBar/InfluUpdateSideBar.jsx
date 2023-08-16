@@ -14,24 +14,26 @@ import { HeartOutlined, MailFilled, PhoneFilled } from "@ant-design/icons";
 const InfluSideBar = ({ oldVerInflu, influInfo }) => {
   const [badgeColor, setBadgeColor] = React.useState("");
   React.useEffect(() => {
-    switch (oldVerInflu?.influencerTypeName[0]) {
-      case "Professional":
-        setBadgeColor("#C837AB");
-        break;
-      case "Talent":
-        setBadgeColor("#FFDD55");
-        break;
-      case "Celebrity":
-        setBadgeColor("#218DE8");
-        break;
-      case "Community":
-        setBadgeColor("#FF004F");
-        break;
-      case "Citizen":
-        setBadgeColor("#96F0AF");
-        break;
-      default:
-        return;
+    if (oldVerInflu?.influencerTypeName[0]) {
+      switch (oldVerInflu?.influencerTypeName[0]) {
+        case "Professional":
+          setBadgeColor("#C837AB");
+          break;
+        case "Talent":
+          setBadgeColor("#FFDD55");
+          break;
+        case "Celebrity":
+          setBadgeColor("#218DE8");
+          break;
+        case "Community":
+          setBadgeColor("#FF004F");
+          break;
+        case "Citizen":
+          setBadgeColor("#96F0AF");
+          break;
+        default:
+          return;
+      }
     }
   }, [oldVerInflu?.influencerTypeName]);
 

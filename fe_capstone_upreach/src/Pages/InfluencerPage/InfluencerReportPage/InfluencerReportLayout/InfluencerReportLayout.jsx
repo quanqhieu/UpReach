@@ -114,6 +114,7 @@ const InfluencerReportLayout = () => {
 
   //   return Math.ceil(6.5 - range);
   // }
+
   function timeLeft(storedTime) {
     const currentTime = new Date();
     const currentMonth = currentTime.getMonth();
@@ -217,24 +218,24 @@ const InfluencerReportLayout = () => {
         email: user.email,
       })
       .then((response) => {
-        const info = response.data.Influencer;
+        const info = response?.data.Influencer;
 
         setProfileVersion(info);
         setPreviewInflu(() => {
-          return info.sort(
+          return info?.sort(
             (a, b) =>
-              new Date(b.dateEdit).getTime() - new Date(a.dateEdit).getTime()
+              new Date(b?.dateEdit).getTime() - new Date(a?.dateEdit).getTime()
           )[0];
         });
 
         setMokPreviewInflu(() => {
-          return info.sort(
+          return info?.sort(
             (a, b) =>
-              new Date(b.dateEdit).getTime() - new Date(a.dateEdit).getTime()
+              new Date(b?.dateEdit).getTime() - new Date(a?.dateEdit).getTime()
           )[0];
         });
         setOldVerInflu(() => {
-          return info.find((item) => item.isPublish);
+          return info?.find((item) => item?.isPublish);
         });
       })
       .catch((error) => {
@@ -316,6 +317,7 @@ const InfluencerReportLayout = () => {
           oldVerInflu={oldVerInflu}
           setPreviewChart={setPreviewChart}
           setForce={setForce}
+          setIsOpenProfileInflu={setIsOpenProfileInflu}
         />
       </Modal>
       <div className="influencer-report-layout">

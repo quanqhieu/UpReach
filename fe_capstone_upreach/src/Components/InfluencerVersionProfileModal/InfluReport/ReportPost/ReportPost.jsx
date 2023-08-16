@@ -6,12 +6,12 @@ const ReportPost = ({ influInfo, dataReportVersion }) => {
   const [jobItems, setJobItems] = useState([]);
 
   useEffect(() => {
-    setJobItems(dataReportVersion.dataJob);
-  }, [dataReportVersion.dataJob]);
+    setJobItems(dataReportVersion?.dataJob);
+  }, [dataReportVersion?.dataJob]);
   return (
     <div className="report-post-layout">
       {jobItems
-        ?.filter((item) => item.jobId !== null)
+        ?.filter((item) => item?.jobId !== null)
         .map((item, index) => (
           <div key={index}>
             <JobItem jobInfo={item} />

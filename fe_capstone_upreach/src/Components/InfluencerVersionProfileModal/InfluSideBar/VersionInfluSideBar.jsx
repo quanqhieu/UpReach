@@ -18,7 +18,6 @@ import {
 } from "@ant-design/icons";
 
 const VersionInfluSideBar = ({ influInfo, profileSideBar }) => {
-  console.log(profileSideBar);
   const [badgeColor, setBadgeColor] = React.useState("");
   React.useEffect(() => {
     switch (profileSideBar?.influencerTypeName[0]) {

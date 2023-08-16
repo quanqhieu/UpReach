@@ -21,6 +21,7 @@ const ReportPost = ({ influInfo }) => {
   useEffect(() => {
     fetchDataForChart(influInfo);
   }, [influInfo]);
+
   return (
     <>
       <div className="report-post-layout">
