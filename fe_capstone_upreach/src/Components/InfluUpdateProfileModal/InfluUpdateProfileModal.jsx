@@ -107,7 +107,7 @@ const InfluUpdateProfileModal = ({
     );
     setIsNotCheck(hasPendingJob);
   }, [previewBooking]);
-
+  console.log(isChange);
   return (
     <>
       {contextHolder}

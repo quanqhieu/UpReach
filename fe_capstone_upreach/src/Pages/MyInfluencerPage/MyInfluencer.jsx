@@ -16,6 +16,7 @@ import { v4 as uuid } from "uuid";
 import ApiListInfluecer from "../../Api/ApiListInfluecer";
 import { useUserStore } from "../../Stores/user";
 import { useNavigate } from "react-router-dom";
+import MyBookingPage from "./MyBookingPage/MyBookingPage";
 
 function getItem(label, key, icon, children, type) {
   return {
@@ -32,6 +33,8 @@ const MyInfluencer = () => {
   const navigate = useNavigate();
   const [addNewList, setAddNewList] = useState(false);
   const [checkTabListPage, setCheckTabListPage] = useState(true);
+  const [tabName, setTabName] = useState("new");
+
   const [object, setObject] = useState();
   const [dataOfList, setdataOfList] = useState([]);
   const [value, setValue] = useState("");
@@ -80,6 +83,13 @@ const MyInfluencer = () => {
       "grp",
       null,
       [getItem("My History Report", "history", <HistoryOutlined />)],
+      "group"
+    ),
+    getItem(
+      "",
+      "bkg",
+      null,
+      [getItem("My History Report", "booking", <HistoryOutlined />)],
       "group"
     ),
   ];
@@ -151,6 +161,10 @@ const MyInfluencer = () => {
   const onClick = (e) => {
     if (e.key === "history") {
       setCheckTabListPage(false);
+      setTabName(e.key);
+    } else if (e.key === "booking") {
+      setCheckTabListPage(false);
+      setTabName(e.key);
     } else {
       setCheckTabListPage(true);
       setListSelected(e.key);
@@ -245,6 +259,7 @@ const MyInfluencer = () => {
 
   return (
     <>
+      {console.log(tabName)}
       {user?.roleId == 2 ? (
         <div className="coverMain">
           <HeaderHomepage />
@@ -280,7 +295,15 @@ const MyInfluencer = () => {
                   // DeleteList={DeleteList}
                 />
               ) : (
-                <MyHistoryReport />
+                <>
+                  {tabName === "history" ? (
+                    <MyHistoryReport />
+                  ) : tabName === "booking" ? (
+                    <MyBookingPage />
+                  ) : (
+                    ""
+                  )}
+                </>
               )}
             </div>
           </div>

@@ -35,7 +35,7 @@ const ApproveJobItem = ({ jobInfo }) => {
   };
   return (
     <>
-      <div className="aprrove-report-post-item">
+      <div className="approve-report-post-item">
         <div className="post-item-title">
           {getPlatformIcon(jobInfo?.Platform_Job)}
           <div className="post-item-sub-title">

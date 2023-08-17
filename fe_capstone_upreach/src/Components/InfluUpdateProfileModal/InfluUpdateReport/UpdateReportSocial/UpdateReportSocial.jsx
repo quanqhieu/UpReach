@@ -87,7 +87,20 @@ const UpdateReportSocial = ({
     } else {
       setIsChange(true);
     }
-  }, [influInfo, mokPreviewInflu, setIsChange]);
+  }, [
+    influInfo?.influencerFollowFb,
+    influInfo?.influencerFollowInsta,
+    influInfo?.influencerFollowYoutube,
+    influInfo?.influencerFollowTikTok,
+    influInfo?.influencerInteractionFb,
+    influInfo?.influencerInteractionInsta,
+    influInfo?.influencerInteractionYoutube,
+    influInfo?.influencerInteractionTiktok,
+    influInfo?.influencerEngagement,
+    influInfo?.influencerCostEstimateFrom,
+    influInfo?.influencerCostEstimateTo,
+    influInfo?.influencerPostsPerWeek,
+  ]);
 
   React.useEffect(() => {
     let sumFollowers = 0;

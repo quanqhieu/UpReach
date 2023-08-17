@@ -21,6 +21,7 @@ const InfluencerBookingPage = () => {
       navigate("/");
     }
   }, []);
+
   return (
     <>
       {user?.roleId == 3 ? (

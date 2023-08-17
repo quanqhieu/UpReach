@@ -25,7 +25,7 @@ const InfluUpdateImage = ({
   const sortableItemIds = fileList?.map((file) => file?.uid);
   const [previewOpen, setPreviewOpen] = React.useState(false);
   const [previewImage, setPreviewImage] = React.useState("");
-  console.log(influInfo);
+
   const getBase64 = (file) =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -69,6 +69,7 @@ const InfluUpdateImage = ({
 
   const checkImages = (arr1, arr2) => {
     if (arr1?.length !== arr2?.length) {
+      console.log("run");
       return false;
     }
 
@@ -77,12 +78,14 @@ const InfluUpdateImage = ({
         return false;
       }
     }
-
     return true;
   };
+
   React.useEffect(() => {
     if (!checkImages(influInfo?.dataImage, mokPreviewInflu?.dataImage)) {
       setIsChange(true);
+    } else {
+      setIsChange(false);
     }
   }, [mokPreviewInflu?.dataImage, influInfo?.dataImage]);
 

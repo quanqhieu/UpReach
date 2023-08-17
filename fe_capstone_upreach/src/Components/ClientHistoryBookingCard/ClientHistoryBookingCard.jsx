@@ -1,13 +1,13 @@
 import React from "react";
-import "./InfluencerBookingCard.css";
+import "./ClientHistoryBookingCard.css";
 import { Icon } from "@iconify/react";
 import { Modal, message, Button } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-import InfluencerBookingModal from "../InfluencerBookingModal/InfluencerBookingModal";
+import ClientHistoryBookingModal from "../ClientHistoryBookingModal/ClientHistoryBookingModal";
 // import { useUserStore } from "../../Stores/user";
 import axios from "axios";
 
-const InfluencerBookingCard = ({ bookingList }) => {
+const ClientHistoryBookingCard = ({ bookingList }) => {
   // const [user] = useUserStore((state) => [state.user]);
   const [bookingDetail, setBookingDetail] = React.useState("");
   const [isOpenBooking, setIsOpenBooking] = React.useState(false);
@@ -18,34 +18,13 @@ const InfluencerBookingCard = ({ bookingList }) => {
     setIsOpenBooking(true);
   };
 
-  const handleReject = (info) => {
-    setStatus((info.status = "Rejected"));
+  const handleDone = (info) => {
+    setStatus((info.status = "Done"));
     const formData = new FormData();
     formData.append("booking", JSON.stringify(info));
-    // formData.append("influName", JSON.stringify(user.fullNameInfluencer));
 
     axios
-      .put("http://localhost:4000/api/influ/reject-booking", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((response) => {
-        // setForce((prev) => prev + 1);
-      })
-      .catch((error) => {
-        console.error("Lỗi khi cập nhật thông tin:", error);
-      });
-  };
-
-  const handleProcessing = (info) => {
-    setStatus((info.status = "Processing"));
-    const formData = new FormData();
-    formData.append("booking", JSON.stringify(info));
-    // formData.append("influName", JSON.stringify(user.fullNameInfluencer));
-
-    axios
-      .put("http://localhost:4000/api/influ/accept-booking", formData, {
+      .put("http://localhost:4000/api/client/check-done", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -65,14 +44,12 @@ const InfluencerBookingCard = ({ bookingList }) => {
       content: `Are you sure you want to ${action} this booking?`,
       okText: "Yes",
       okButtonProps: {
-        disabled: info.status !== "Pending",
+        disabled: info.status !== "Processing",
       },
       cancelText: "No",
       onOk() {
-        if (action === "Rejected") {
-          handleReject(info);
-        } else if (action === "Processing") {
-          handleProcessing(info);
+        if (action === "Done") {
+          handleDone(info);
         }
         message.success(`Successful!`);
       },
@@ -102,16 +79,14 @@ const InfluencerBookingCard = ({ bookingList }) => {
         width={900}
         bodyStyle={{ borderRadius: "30px" }}
       >
-        <InfluencerBookingModal bookingItem={bookingDetail} />
+        <ClientHistoryBookingModal bookingItem={bookingDetail} />
       </Modal>
-      <div className="influ-booking-card">
-        <div className="influ-booking-card-content">
-          <p style={{ width: "18.8%" }}>{bookingList.brandName}</p>
+      <div className="client-history-card">
+        <div className="client-history-card-content">
+          <p style={{ width: "18.8%" }}>{bookingList.kolName}</p>
           <p style={{ width: "12.1%" }}>{bookingList.platform}</p>
           <p style={{ width: "17.1%" }}>
-            {bookingList?.formatContent
-              ?.map((item) => getFormatContent(item))
-              ?.join(", ")}
+            {getFormatContent(bookingList?.formatContent)}
           </p>
 
           <p style={{ width: "10%" }}>{bookingList.quantity}</p>
@@ -119,8 +94,8 @@ const InfluencerBookingCard = ({ bookingList }) => {
           <p style={{ width: "15%" }}>{bookingList.startDate}</p>
           <p style={{ width: "15%" }}>{bookingList.endDate}</p>
         </div>
-        <div className="influ-booking-card-icons">
-          <div className="influ-booking-card-icon">
+        <div className="client-history-card-icons">
+          <div className="client-history-card-icon">
             <Icon
               icon="majesticons:open"
               width="26"
@@ -130,56 +105,44 @@ const InfluencerBookingCard = ({ bookingList }) => {
           </div>
 
           <Button
-            className="influ-booking-card-icon"
-            onClick={() => showConfirm(bookingList, "Rejected")}
+            className="client-history-card-icon"
+            onClick={() => showConfirm(bookingList, "Done")}
             disabled={
-              bookingList.status === "Rejected" ||
-              bookingList.status === "Processing" ||
-              bookingList.status === "Done"
+              bookingList.status === "Done" ||
+              bookingList.status === "Pending" ||
+              bookingList.status === "Rejected"
             }
             icon={
               <Icon
-                icon="iconoir:cancel"
+                icon="iconoir:check"
                 color={
-                  bookingList.status === "Rejected" ||
-                  bookingList.status === "Processing" ||
-                  bookingList.status === "Done"
+                  bookingList.status === "Done" ||
+                  bookingList.status === "Pending" ||
+                  bookingList.status === "Rejected"
                     ? "#ccc"
-                    : "#fa0000"
+                    : "#0bfa00"
                 }
                 width="30"
                 height="30"
               />
             }
           ></Button>
-
           <Button
-            className="influ-booking-card-icon"
-            onClick={() => showConfirm(bookingList, "Processing")}
+            className="client-history-card-feedback"
+            type="link"
+            // onClick={() => showConfirm(bookingList, "Done")}
             disabled={
-              bookingList.status === "Rejected" ||
+              bookingList.status === "Pending" ||
               bookingList.status === "Processing" ||
-              bookingList.status === "Done"
+              bookingList.status === "Rejected"
             }
-            icon={
-              <Icon
-                icon="ic:round-check"
-                color={
-                  bookingList.status === "Rejected" ||
-                  bookingList.status === "Processing" ||
-                  bookingList.status === "Done"
-                    ? "#ccc"
-                    : "#00dd1a"
-                }
-                width="30"
-                height="30"
-              />
-            }
-          ></Button>
+          >
+            Send feedback
+          </Button>
         </div>
       </div>
     </>
   );
 };
 
-export default InfluencerBookingCard;
+export default ClientHistoryBookingCard;
