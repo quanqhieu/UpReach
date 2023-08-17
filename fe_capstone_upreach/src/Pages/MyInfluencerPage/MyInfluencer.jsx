@@ -14,6 +14,9 @@ import MyHistoryReport from "./MyHistoryReportPage";
 import { map } from "highcharts";
 import { v4 as uuid } from "uuid";
 import ApiListInfluecer from "../../Api/ApiListInfluecer";
+import { useUserStore } from "../../Stores/user";
+import { useNavigate } from "react-router-dom";
+import MyBookingPage from "./MyBookingPage/MyBookingPage";
 
 function getItem(label, key, icon, children, type) {
   return {
@@ -26,8 +29,12 @@ function getItem(label, key, icon, children, type) {
 }
 
 const MyInfluencer = () => {
+  const [user] = useUserStore((state) => [state.user]);
+  const navigate = useNavigate();
   const [addNewList, setAddNewList] = useState(false);
   const [checkTabListPage, setCheckTabListPage] = useState(true);
+  const [tabName, setTabName] = useState("new");
+
   const [object, setObject] = useState();
   const [dataOfList, setdataOfList] = useState([]);
   const [value, setValue] = useState("");
@@ -76,6 +83,13 @@ const MyInfluencer = () => {
       "grp",
       null,
       [getItem("My History Report", "history", <HistoryOutlined />)],
+      "group"
+    ),
+    getItem(
+      "",
+      "bkg",
+      null,
+      [getItem("My History Report", "booking", <HistoryOutlined />)],
       "group"
     ),
   ];
@@ -147,6 +161,10 @@ const MyInfluencer = () => {
   const onClick = (e) => {
     if (e.key === "history") {
       setCheckTabListPage(false);
+      setTabName(e.key);
+    } else if (e.key === "booking") {
+      setCheckTabListPage(false);
+      setTabName(e.key);
     } else {
       setCheckTabListPage(true);
       setListSelected(e.key);
@@ -226,49 +244,75 @@ const MyInfluencer = () => {
     setIsEmptyInput(false);
     setIsNameListExist(false);
   };
+
+  React.useEffect(() => {
+    if (user.roleId == 1) {
+      navigate("/admin/dashboard");
+    } else if (user.roleId == 2) {
+      navigate("/myinfluencer");
+    } else if (user.roleId == 3) {
+      navigate("/influencer/my-report");
+    } else {
+      navigate("/");
+    }
+  }, []);
+
   return (
     <>
-      <div className="coverMain">
-        <HeaderHomepage />
-        <div className="row pt-5">
-          <div className="col-2 pt-2 menuList">
-            <Menu
-              onClick={onClick}
-              className="menu"
-              mode="inline"
-              items={items}
-              selectedKeys={[listSelected]}
-            />
-          </div>
-          <div className="col-10">
-            {checkTabListPage ? (
-              <MyListPage
-                listInfluencer={listInfluencer}
-                setdataOfList={setdataOfList}
-                object={object}
-                tableInfluencer={tableInfluencer}
-                editnamelist={editnamelist}
-                setEditNameList={setEditNameList}
-                setListSelected={setListSelected}
-                getDataSelectList={getDataSelectList}
-                flagChangeDataTable={flagChangeDataTable}
-                setFlagChangeDataTable={setFlagChangeDataTable}
-                flagChangeNameList={flagChangeNameList}
-                setFlagChangeNameList={setFlagChangeNameList}
-                flagDeleteList={flagDeleteList}
-                setFlagDeleteList={setFlagDeleteList}
-                idAccClient={idAccClient}
-                // IdList={IdList}
-                // DeleteList={DeleteList}
+      {console.log(tabName)}
+      {user?.roleId == 2 ? (
+        <div className="coverMain">
+          <HeaderHomepage />
+          <div className="row pt-5">
+            <div className="col-2 pt-2 menuList">
+              <Menu
+                onClick={onClick}
+                className="menu"
+                mode="inline"
+                items={items}
+                selectedKeys={[listSelected]}
               />
-            ) : (
-              <MyHistoryReport />
-            )}
+            </div>
+            <div className="col-10">
+              {checkTabListPage ? (
+                <MyListPage
+                  listInfluencer={listInfluencer}
+                  setdataOfList={setdataOfList}
+                  object={object}
+                  tableInfluencer={tableInfluencer}
+                  editnamelist={editnamelist}
+                  setEditNameList={setEditNameList}
+                  setListSelected={setListSelected}
+                  getDataSelectList={getDataSelectList}
+                  flagChangeDataTable={flagChangeDataTable}
+                  setFlagChangeDataTable={setFlagChangeDataTable}
+                  flagChangeNameList={flagChangeNameList}
+                  setFlagChangeNameList={setFlagChangeNameList}
+                  flagDeleteList={flagDeleteList}
+                  setFlagDeleteList={setFlagDeleteList}
+                  idAccClient={idAccClient}
+                  // IdList={IdList}
+                  // DeleteList={DeleteList}
+                />
+              ) : (
+                <>
+                  {tabName === "history" ? (
+                    <MyHistoryReport />
+                  ) : tabName === "booking" ? (
+                    <MyBookingPage />
+                  ) : (
+                    ""
+                  )}
+                </>
+              )}
+            </div>
           </div>
-        </div>
 
-        <FooterHome />
-      </div>
+          <FooterHome />
+        </div>
+      ) : (
+        ""
+      )}
       <Modal
         title="Add New List"
         className="popup-add-new"

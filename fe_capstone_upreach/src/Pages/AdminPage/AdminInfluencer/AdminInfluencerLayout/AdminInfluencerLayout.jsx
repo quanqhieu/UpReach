@@ -11,7 +11,7 @@ import {
   message,
 } from "antd";
 import {
-  IdcardOutlined,
+  UserDeleteOutlined,
   EditOutlined,
   LockOutlined,
   UnlockOutlined,
@@ -29,7 +29,6 @@ const AdminInfluencerLayout = () => {
   const [openConfirm, setOpenConfirm] = React.useState(false);
   const [force, setForce] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(true);
-
   const tags = [
     {
       title: "Full Name",
@@ -127,7 +126,7 @@ const AdminInfluencerLayout = () => {
       },
     },
     {
-      title: <IdcardOutlined />,
+      title: <UserDeleteOutlined />,
       dataIndex: "lock",
       width: "5%",
       render: (_, record) =>
@@ -248,6 +247,7 @@ const AdminInfluencerLayout = () => {
   const cancel = () => {
     setOpenConfirm(false);
   };
+
   const ok = () => {
     setEditingId("");
     setOpenConfirm(false);
@@ -285,6 +285,10 @@ const AdminInfluencerLayout = () => {
           },
         })
         .then((response) => {
+          messageApi.open({
+            type: "success",
+            content: response.data.message,
+          });
           setForce((prev) => prev + 1);
         })
         .catch((error) => {
@@ -379,11 +383,12 @@ const AdminInfluencerLayout = () => {
 
   return (
     <>
+      {contextHolder}
       <div className="admin-influencer-layout">
         <div className="admin-influencer-list-layout">
           <div className="admin-influencer-table">
             <Form form={form} component={false}>
-              <Spin tip="Saving" size="large" spinning={isLoading}>
+              <Spin tip="Loading" size="large" spinning={isLoading}>
                 <Table
                   components={{
                     body: {

@@ -15,10 +15,12 @@ const ProfileCardLayout = ({ allInfluencer, loading }) => {
   const handleOpenModal = async (info) => {
     try {
       const influencerEmail = info.influencerEmail;
-      const idInfluencerInMongoDB = await ApiInfluencer.getIDInfluencer(influencerEmail);
+      const idInfluencerInMongoDB = await ApiInfluencer.getIDInfluencer(
+        influencerEmail
+      );
       setIdInfluMongoDB(idInfluencerInMongoDB.data._id);
       setInfluInfo(info);
-      console.log(info);
+      // console.log(info);
       setIsOpenProfileInflu(true);
     } catch (error) {
       console.log(error);
@@ -45,6 +47,7 @@ const ProfileCardLayout = ({ allInfluencer, loading }) => {
         footer={null}
         onCancel={() => setIsOpenProfileInflu(false)}
         width={1400}
+        s
         bodyStyle={{ borderRadius: "30px" }}
       >
         <InfluProfile profileInflu={influInfo} />

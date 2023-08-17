@@ -19,7 +19,7 @@ const InfluUpdateImage = ({
   mokPreviewInflu,
 }) => {
   const [fileList, setFileList] = React.useState(
-    Array.isArray(influInfo?.Image) ? influInfo?.Image : []
+    Array.isArray(influInfo?.dataImage) ? influInfo?.dataImage : []
   );
 
   const sortableItemIds = fileList?.map((file) => file?.uid);
@@ -63,12 +63,13 @@ const InfluUpdateImage = ({
   React.useEffect(() => {
     setInfluInfo({
       ...influInfo,
-      Image: fileList,
+      dataImage: fileList,
     });
   }, [fileList]);
 
   const checkImages = (arr1, arr2) => {
     if (arr1?.length !== arr2?.length) {
+      console.log("run");
       return false;
     }
 
@@ -77,14 +78,16 @@ const InfluUpdateImage = ({
         return false;
       }
     }
-
     return true;
   };
+
   React.useEffect(() => {
-    if (!checkImages(influInfo?.Image, mokPreviewInflu?.Image)) {
+    if (!checkImages(influInfo?.dataImage, mokPreviewInflu?.dataImage)) {
       setIsChange(true);
+    } else {
+      setIsChange(false);
     }
-  }, [mokPreviewInflu?.Image, influInfo?.Image]);
+  }, [mokPreviewInflu?.dataImage, influInfo?.dataImage]);
 
   return (
     <>
@@ -118,7 +121,7 @@ const InfluUpdateImage = ({
                 beforeUpload={() => true}
                 onChange={onChange}
                 onPreview={onPreview}
-                data={influInfo?.Image}
+                data={influInfo?.dataImage}
                 itemRender={(originNode, file) => (
                   <DraggableUploadListItem
                     originNode={originNode}

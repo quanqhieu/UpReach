@@ -40,7 +40,7 @@ function RenderDropdown({ listItems, title, description }) {
   );
 }
 
-const Index_LandingPage = ({ handleClickLogin }) => {
+const Index_Introduce = ({ handleClickLogin }) => {
   return (
     <div className="contentIntroducePage backgroundPage">
       <div className="row card-bg">
@@ -151,4 +151,4 @@ const Index_LandingPage = ({ handleClickLogin }) => {
   );
 };
 
-export default Index_LandingPage;
+export default Index_Introduce;

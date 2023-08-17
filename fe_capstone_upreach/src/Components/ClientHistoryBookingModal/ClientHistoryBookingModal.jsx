@@ -1,7 +1,7 @@
-import "./InfluencerBookingModal.css";
+import "./ClientHistoryBookingModal.css";
 import React from "react";
 import { Button } from "antd";
-const InfluencerBookingModal = ({ bookingItem }) => {
+const ClientHistoryBookingModal = ({ bookingItem }) => {
   const getFormatContent = (id) => {
     switch (id) {
       case "CF01":
@@ -16,7 +16,7 @@ const InfluencerBookingModal = ({ bookingItem }) => {
   };
   return (
     <>
-      <div className="influ-booking-modal">
+      <div className="client-history-booking-modal">
         <div className="booking-modal-title">Detail Booking</div>
         <div className="booking-modal-content">
           <div className="content-header">
@@ -31,21 +31,15 @@ const InfluencerBookingModal = ({ bookingItem }) => {
             </div>
           </div>
           <div className="content-body">
-            Customer
+            Job Booking
             <div className="content-line">
-              <p className="line-title">Full Name</p>
-              <p className="line-content">{bookingItem.clientName}</p>
-            </div>
-            <div className="content-line">
-              <p className="line-title">Brand Name</p>
-              <p className="line-content">{bookingItem.brandName}</p>
+              <p className="line-title">Influencer Name</p>
+              <p className="line-content">{bookingItem.kolName}</p>
             </div>
             <div className="content-line">
               <p className="line-title">Content</p>
               <p className="line-content">
-                {bookingItem?.formatContent
-                  ?.map((item) => getFormatContent(item))
-                  ?.join(", ")}
+                {getFormatContent(bookingItem?.formatContent)}
               </p>
             </div>
             <div className="content-line">
@@ -77,19 +71,10 @@ const InfluencerBookingModal = ({ bookingItem }) => {
               <p className="line-content-des">{bookingItem.describes}</p>
             </div>
           </div>
-          <div className="content-footer">
-            <Button
-              className="mail-box-btn"
-              type="primary"
-              // htmlType="submit"
-            >
-              Chat with Client
-            </Button>
-          </div>
         </div>
       </div>
     </>
   );
 };
 
-export default InfluencerBookingModal;
+export default ClientHistoryBookingModal;

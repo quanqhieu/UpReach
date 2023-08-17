@@ -16,6 +16,7 @@ const InfluUpdateReport = ({
   setIdJobsRemove,
   chartInfo,
   setChartInfo,
+  isNotCheck,
 }) => {
   const items = [
     {
@@ -51,6 +52,7 @@ const InfluUpdateReport = ({
           setIdJobsRemove={setIdJobsRemove}
           mokPreviewInflu={mokPreviewInflu}
           setIsChange={setIsChange}
+          isNotCheck={isNotCheck}
         />
       ),
     },

@@ -4,7 +4,11 @@ import InfluImage from "./InfluImage/ApproveInfluImage";
 import InfluReport from "./InfluReport/ApproveInfluReport";
 import React from "react";
 import axios from "axios";
-const AdminApproveProfile = ({ approveReport, setForce }) => {
+const AdminApproveProfile = ({
+  approveReport,
+  setForce,
+  setIsOpenApproveProfile,
+}) => {
   const handleApprove = () => {
     axios
       .post("http://localhost:4000/api/admin/approve-report", {
@@ -19,6 +23,7 @@ const AdminApproveProfile = ({ approveReport, setForce }) => {
       })
       .then((response) => {
         setForce((prev) => prev + 1);
+        setIsOpenApproveProfile(false);
       })
       .catch((error) => {
         console.error("Lỗi khi cập nhật thông tin:", error);
