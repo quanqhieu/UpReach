@@ -125,9 +125,6 @@ const Index_ClientProfile = () => {
     </div>
   );
 
-  function handleClickShowDialog() {
-    setIsModalOpenUpdateEmail(true);
-  }
   function handleClickShowDialogChangePassword() {
     setIsModalOpenChangePassword(true);
   }
@@ -139,16 +136,7 @@ const Index_ClientProfile = () => {
       children: (
         <>
           <div>
-            <p>Sign-In Email</p>
-            <EditOutlined onClick={handleClickShowDialog} />
-            <UpdateEmail
-              isModalOpenUpdateEmail={isModalOpenUpdateEmail}
-              setIsModalOpenUpdateEmail={setIsModalOpenUpdateEmail}
-              isSubModel={isSubModel}
-              setSubModel={setSubModel}
-            />
-
-            <p>Password</p>
+            <p>Change Password</p>
             <EditOutlined onClick={handleClickShowDialogChangePassword} />
             <ChangePassword
               isModalOpenChangePassword={isModalOpenChangePassword}
