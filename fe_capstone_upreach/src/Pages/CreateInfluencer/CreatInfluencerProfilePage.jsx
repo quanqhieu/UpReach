@@ -25,14 +25,12 @@ const CreatInfluencerProfilePage = () => {
   const [informationDetails, setInformationDetails] = useState(null);
   const [overviewDetails, setOverviewDetails] = useState(null);
   const [contentDetails, setContentFormDetails] = useState([null]);
-  const [socialDetails, setSocialFormDetails] = useState(null);
   const [checkDataAddSuccess, setCheckDataAddSuccess] = useState(false);
 
   const [allDetails, setAllDetails] = useState({
     informationDetails: null,
     overviewDetails: null,
     contentDetails: null,
-    socialDetails: null,
     influencerDetail: null,
   });
 
@@ -59,18 +57,19 @@ const CreatInfluencerProfilePage = () => {
 
   const onFinishContentForm = (values) => {
     console.log("Content Form");
+    console.log(contentDetails) 
     setAllDetails((prevDetails) => ({
       ...prevDetails,
       contentDetails: contentDetails,
     }));
     setCurrent(3); // khi bấm continue chuyển qua tab 3
   };
+
   const areAllStepsCompleted = () => {
     return (
       allDetails.informationDetails !== null &&
       allDetails.overviewDetails !== null &&
-      allDetails.contentDetails !== null &&
-      allDetails.socialDetails !== null
+      allDetails.contentDetails !== null 
     );
   };
 
@@ -97,7 +96,7 @@ const CreatInfluencerProfilePage = () => {
       influencerDetail: formDataJson,
     }));
 
-    if (current === 4) {
+    if (current === 3) {
       handleFinishAllForms();
     }
   }, [current]);
