@@ -16,7 +16,6 @@ const UpdateReportSocial = ({
 }) => {
   const [edit, setEdit] = React.useState("");
   const [isError, setIsError] = React.useState(false);
-
   const handleSubmit = () => {
     if (
       (edit === "facebook follower" &&
@@ -342,7 +341,17 @@ const UpdateReportSocial = ({
         <div className="report-social">
           <div className="social-icon-title">
             <Facebook className="social-icon" />
-            <p>Facebook</p>
+            <a
+              href={mokPreviewInflu?.influencerLinkFb}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {mokPreviewInflu?.influencerLinkFb === null
+                ? "Facebook"
+                : mokPreviewInflu?.influencerLinkFb.length <= 32
+                ? mokPreviewInflu?.influencerLinkFb
+                : mokPreviewInflu?.influencerLinkFb.slice(0, 32) + "..."}
+            </a>
           </div>
           <div className="cover-follower-interaction">
             <div className="follower-interaction">
@@ -432,7 +441,17 @@ const UpdateReportSocial = ({
         <div className="report-social">
           <div className="social-icon-title">
             <Instagram className="social-icon" />
-            <p>Instagram</p>
+            <a
+              href={mokPreviewInflu?.influencerLinkInsta}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {mokPreviewInflu?.influencerLinkInsta === null
+                ? "Instagram"
+                : mokPreviewInflu?.influencerLinkInsta.length <= 32
+                ? mokPreviewInflu?.influencerLinkInsta
+                : mokPreviewInflu?.influencerLinkInsta.slice(0, 32) + "..."}
+            </a>
           </div>
           <div className="cover-follower-interaction">
             <div className="follower-interaction">
@@ -521,7 +540,17 @@ const UpdateReportSocial = ({
         <div className="report-social">
           <div className="social-icon-title">
             <Youtube className="social-icon" />
-            <p>Youtube</p>
+            <a
+              href={mokPreviewInflu?.influencerLinkYoutube}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {mokPreviewInflu?.influencerLinkYoutube === null
+                ? "Youtube"
+                : mokPreviewInflu?.influencerLinkYoutube.length <= 32
+                ? mokPreviewInflu?.influencerLinkYoutube
+                : mokPreviewInflu?.influencerLinkYoutube.slice(0, 32) + "..."}
+            </a>
           </div>
           <div className="cover-follower-interaction">
             <div className="follower-interaction">
@@ -609,7 +638,17 @@ const UpdateReportSocial = ({
         <div className="report-social">
           <div className="social-icon-title">
             <Tiktok className="social-icon" />
-            <p>Tiktok</p>
+            <a
+              href={mokPreviewInflu?.influencerLinkTiktok}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {mokPreviewInflu?.influencerLinkTiktok === null
+                ? "Tiktok"
+                : mokPreviewInflu?.influencerLinkTiktok.length <= 32
+                ? mokPreviewInflu?.influencerLinkTiktok
+                : mokPreviewInflu?.influencerLinkTiktok.slice(0, 32) + "..."}
+            </a>
           </div>
           <div className="cover-follower-interaction">
             <div className="follower-interaction">

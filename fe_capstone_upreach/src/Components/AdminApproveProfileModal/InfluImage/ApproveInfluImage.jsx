@@ -1,11 +1,12 @@
 import React from "react";
 import default_img from "../../../Assets/Image/Default/DefaultImg.jpg";
 import "./ApproveInfluImage.css";
-const ApproveInfluImage = (influInfo) => {
+const ApproveInfluImage = ({ influInfo }) => {
+  console.log(influInfo);
   const [images, setImages] = React.useState([]);
   React.useEffect(() => {
-    setImages(influInfo?.influInfo.image);
-  }, [influInfo?.influInfo.image]);
+    setImages(influInfo?.image);
+  }, [influInfo?.image]);
   return (
     <>
       <div className="approve-influ-images">

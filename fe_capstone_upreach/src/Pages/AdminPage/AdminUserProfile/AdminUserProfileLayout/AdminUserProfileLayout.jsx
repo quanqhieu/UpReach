@@ -14,15 +14,15 @@ import {
   DeleteOutlined,
   UserDeleteOutlined,
   EditOutlined,
+  LockOutlined,
+  UnlockOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
 
 const AdminUserProfileLayout = () => {
   const [messageApi, contextHolder] = message.useMessage();
-
   const [form] = Form.useForm();
   const [editingId, setEditingId] = React.useState("");
-  const [isChange, setIsChange] = React.useState(false);
   const [openConfirm, setOpenConfirm] = React.useState(false);
   const [force, setForce] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -138,41 +138,25 @@ const AdminUserProfileLayout = () => {
     },
     {
       title: <UserDeleteOutlined />,
-      dataIndex: "delete",
+      dataIndex: "lock",
       width: "5%",
       render: (_, record) =>
-        listClient.length >= 1 ? (
+        listClient.length >= 1 && record.isAccept == false ? (
           <Popconfirm
-            title="Sure to delete?"
-            onConfirm={() => handleDelete(record.clientId)}
+            title="Sure to unlock account?"
+            onConfirm={() => handleAllow(record.clientId)}
           >
-            <DeleteOutlined />
+            <LockOutlined />
           </Popconfirm>
         ) : (
-          ""
+          <Popconfirm
+            title="Sure to lock account?"
+            onConfirm={() => handleLock(record.clientId)}
+          >
+            <UnlockOutlined />
+          </Popconfirm>
         ),
     },
-    // {
-    //   title: <UserDeleteOutlined />,
-    //   dataIndex: "lock",
-    //   width: "5%",
-    //   render: (_, record) =>
-    //   listClient.length >= 1 && record.isAccepted == false ? (
-    //       <Popconfirm
-    //         title="Sure to unlock account?"
-    //         onConfirm={() => handleAllow(record.clientId)}
-    //       >
-    //         <LockOutlined />
-    //       </Popconfirm>
-    //     ) : (
-    //       <Popconfirm
-    //         title="Sure to lock account?"
-    //         onConfirm={() => handleLock(record.clientId)}
-    //       >
-    //         <UnlockOutlined />
-    //       </Popconfirm>
-    //     ),
-    // },
   ];
 
   const [listClient, setListClient] = React.useState([]);
@@ -236,7 +220,6 @@ const AdminUserProfileLayout = () => {
   };
 
   const cancel = () => {
-    console.log(true);
     setOpenConfirm(false);
   };
   const ok = () => {
@@ -307,11 +290,54 @@ const AdminUserProfileLayout = () => {
     };
   });
 
-  const handleDelete = (clientId) => {
-    const newListClient = listClient.filter(
-      (item) => item.clientId !== clientId
-    );
-    setListClient(newListClient);
+  // const handleDelete = (clientId) => {
+  //   const newListClient = listClient.filter(
+  //     (item) => item.clientId !== clientId
+  //   );
+  //   setListClient(newListClient);
+  // };
+
+  const handleAllow = (id) => {
+    const formData = new FormData();
+    formData.append("clientId", JSON.stringify(id));
+    axios
+      .put("http://localhost:4000/api/admin/unlock-client", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        messageApi.open({
+          type: "success",
+          content: response.data.message,
+        });
+        setForce((prev) => prev + 1);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi cập nhật thông tin:", error);
+      });
+  };
+
+  const handleLock = (id) => {
+    const formData = new FormData();
+    formData.append("clientId", JSON.stringify(id));
+
+    axios
+      .put("http://localhost:4000/api/admin/lock-client", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        messageApi.open({
+          type: "success",
+          content: response.data.message,
+        });
+        setForce((prev) => prev + 1);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi cập nhật thông tin:", error);
+      });
   };
 
   React.useEffect(() => {
@@ -334,6 +360,8 @@ const AdminUserProfileLayout = () => {
         setIsLoading(false);
       });
   }, [force]);
+
+  console.log(listClient);
   return (
     <>
       {contextHolder}

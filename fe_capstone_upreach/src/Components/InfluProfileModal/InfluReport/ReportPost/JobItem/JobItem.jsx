@@ -7,8 +7,11 @@ import { ReactComponent as TikTok } from "../../../../../Assets/Icon/Tiktok.svg"
 import { Button, Modal } from "antd";
 import { ExclamationCircleOutlined, LoadingOutlined } from "@ant-design/icons";
 import ClientBookingModal from "../../../../../Components/ClientBookingModal/ClientBookingModal";
+import { useUserStore } from "../../../../../Stores/user";
 
 const JobItem = ({ data }) => {
+  const [user] = useUserStore((state) => [state.user]);
+
   console.log(data);
   const [isChange, setIsChange] = React.useState(false);
   const [openConfirmForm, setOpenConfirmForm] = React.useState(false);
@@ -32,6 +35,12 @@ const JobItem = ({ data }) => {
     setIsOpenBooking(false);
   };
 
+  // const check = (user, data) => {
+  //   const isClientBooking = data.clientId.includes(user.Client_ID);
+  //   console.log(isClientBooking);
+  //   return isClientBooking;
+  // };
+  // console.log(check(user, data));
   return (
     <>
       <Modal
@@ -83,6 +92,8 @@ const JobItem = ({ data }) => {
                 return <Youtube className="social-icon" />;
               case "tiktok":
                 return <TikTok className="social-icon" />;
+              default:
+                return "";
             }
           })()}
           <div className="post-item-sub-title">
@@ -102,6 +113,7 @@ const JobItem = ({ data }) => {
             className="booking-btn"
             type="primary"
             onClick={handleOpenModal}
+            disabled={data.clientId.includes(user.Client_ID)}
           >
             Booking
           </Button>

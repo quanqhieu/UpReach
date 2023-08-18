@@ -30,6 +30,17 @@
 	font-weight: 600;
 }
 
+.report-social-layout .social-icon-title a {
+	color: #808080;
+	text-decoration: none;
+	height: fit-content;
+}
+
+.report-social-layout .social-icon-title a:hover {
+	opacity: 0.9;
+	color: #000;
+}
+
 .report-social-layout .social-icon {
 	width: 70px;
 	height: 70px;
@@ -173,20 +184,6 @@
 	font-size: 19px;
 	font-weight: 600;
 	padding-bottom: 10px;
-}
-
-.report-social-layout .social-icon-title {
-	display: flex;
-}
-
-.report-social-layout .social-icon-title p {
-	font-weight: 600;
-}
-
-.report-social-layout .social-icon {
-	width: 70px;
-	height: 70px;
-	margin-right: 10px;
 }
 
 .report-social-layout .cover-follower-interaction {

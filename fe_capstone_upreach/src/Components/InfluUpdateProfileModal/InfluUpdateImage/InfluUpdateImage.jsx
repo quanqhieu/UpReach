@@ -18,10 +18,22 @@ const InfluUpdateImage = ({
   setIsChange,
   mokPreviewInflu,
 }) => {
-  const [fileList, setFileList] = React.useState(
-    Array.isArray(influInfo?.dataImage) ? influInfo?.dataImage : []
-  );
+  const [fileList, setFileList] = React.useState(() => {
+    if (Array.isArray(influInfo?.dataImage)) {
+      const hasNonNullImage = influInfo.dataImage.some(
+        (image) => image.url !== null || image.uid !== null
+      );
 
+      if (hasNonNullImage) {
+        return influInfo.dataImage;
+      } else {
+        return [];
+      }
+    } else {
+      return [];
+    }
+  });
+  console.log(influInfo?.dataImage);
   const sortableItemIds = fileList?.map((file) => file?.uid);
   const [previewOpen, setPreviewOpen] = React.useState(false);
   const [previewImage, setPreviewImage] = React.useState("");
