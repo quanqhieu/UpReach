@@ -2,22 +2,22 @@ import "./ReportAudience.css";
 import { Row, Col } from "antd";
 import { Line, Pie, Bar } from "@ant-design/plots";
 import React from "react";
-const ReportAudience = (influInfo) => {
+const ReportAudience = ({ influInfo }) => {
   const [audienceFollower, setAudienceFollower] = React.useState([]);
   const [audienceGender, setAudienceGender] = React.useState([]);
   const [audienceAge, setAudienceAge] = React.useState([]);
   const [audienceLocation, setAudienceLocation] = React.useState([]);
 
   React.useEffect(() => {
-    setAudienceFollower(influInfo.influInfo.influInfo.audienceFollower);
-    setAudienceGender(influInfo.influInfo.influInfo.audienceGender);
-    setAudienceAge(influInfo.influInfo.influInfo.audienceAge);
-    setAudienceLocation(influInfo.influInfo.influInfo.audienceLocation);
+    setAudienceFollower(influInfo.audienceFollower);
+    setAudienceGender(influInfo.audienceGender);
+    setAudienceAge(influInfo.audienceAge);
+    setAudienceLocation(influInfo.audienceLocation);
   }, [
-    influInfo.influInfo.influInfo.audienceFollower,
-    influInfo.influInfo.influInfo.audienceGender,
-    influInfo.influInfo.influInfo.audienceAge,
-    influInfo.influInfo.influInfo.audienceLocation,
+    influInfo.audienceFollower,
+    influInfo.audienceGender,
+    influInfo.audienceAge,
+    influInfo.audienceLocation,
   ]);
 
   const configFollower = {

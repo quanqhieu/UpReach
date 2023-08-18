@@ -6,6 +6,7 @@ import {
   SettingOutlined,
   UnorderedListOutlined,
   HistoryOutlined,
+  FileProtectOutlined,
 } from "@ant-design/icons";
 import { Menu, Modal, Input, Form, Button, List } from "antd";
 import "./MyInfluencer.css";
@@ -89,7 +90,7 @@ const MyInfluencer = () => {
       "",
       "bkg",
       null,
-      [getItem("My History Report", "booking", <HistoryOutlined />)],
+      [getItem("History Booking", "booking", <FileProtectOutlined />)],
       "group"
     ),
   ];

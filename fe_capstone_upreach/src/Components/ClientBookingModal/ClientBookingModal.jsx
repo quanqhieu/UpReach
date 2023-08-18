@@ -12,10 +12,7 @@ const { TextArea } = Input;
 const { RangePicker } = DatePicker;
 
 const ClientBookingModal = ({ data, setIsOpenBooking }) => {
-  const [user, setUserInfo] = useUserStore((state) => [
-    state.user,
-    state.setUserInfo,
-  ]);
+  const [user] = useUserStore((state) => [state.user]);
   const [bookingJob, setBookingJob] = React.useState(data);
   const [isSending, setIsSending] = React.useState(false);
   const [describes, setDescribes] = React.useState("");

@@ -1,6 +1,15 @@
 import default_img from "../../../Assets/Image/Default/DefaultImg.jpg";
 import "./InfluSideBar.css";
-import { Button, Tooltip, Dropdown, Checkbox, Row, Col, Modal } from "antd";
+import {
+  Button,
+  Tooltip,
+  Dropdown,
+  Checkbox,
+  Row,
+  Col,
+  Modal,
+  Rate,
+} from "antd";
 import { ReactComponent as Facebook } from "../../../Assets/Icon/Facebook.svg";
 import { ReactComponent as Instagram } from "../../../Assets/Icon/Instagram.svg";
 import { ReactComponent as Youtube } from "../../../Assets/Icon/Youtube.svg";
@@ -35,6 +44,7 @@ const InfluSideBar = ({ influInfo }) => {
   const [listSelected, setListSelected] = useState();
   const [listInfluencer, setListInfluencer] = useState([]);
   const [idAccClient, setIdAccClient] = useState("");
+  const [valueRate, setValueRate] = React.useState(3.7);
 
   const success = () => {
     Modal.success({
@@ -219,40 +229,10 @@ const InfluSideBar = ({ influInfo }) => {
                 </Button>
               </a>
             </Dropdown>
-            {/* <div className="profile-socials">
-              <div className="profile-social">
-                <Facebook />
-                <p>
-                  {(parseInt(influInfo?.influencerFollowFb) / 1000000).toFixed(
-                    1
-                  ) + "M"}
-                </p>
-              </div>
-              <div className="profile-social">
-                <Instagram />
-                <p>
-                  {(
-                    parseInt(influInfo?.influencerFollowInsta) / 1000000
-                  ).toFixed(1) + "M"}
-                </p>
-              </div>
-              <div className="profile-social">
-                <Youtube />
-                <p>
-                  {(
-                    parseInt(influInfo?.influencerFollowYoutube) / 1000000
-                  ).toFixed(1) + "M"}
-                </p>
-              </div>
-              <div className="profile-social">
-                <Tiktok />
-                <p>
-                  {(
-                    parseInt(influInfo?.influencerFollowTikTok) / 1000000
-                  ).toFixed(1) + "M"}
-                </p>
-              </div>
-            </div> */}
+            <div className="profile-feedback">
+              <Rate value={valueRate} disabled allowHalf />
+              <p>(1)</p>
+            </div>
           </div>
           <div className="influ-side-bar-body">
             <p className="profile-description">Description & Content type</p>

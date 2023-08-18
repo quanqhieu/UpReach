@@ -25,7 +25,6 @@ const AdminInfluencerLayout = () => {
   const [listInflu, setListInflu] = React.useState([]);
 
   const [editingId, setEditingId] = React.useState("");
-  const [allowAccount, setAllowAccount] = React.useState(0);
   const [openConfirm, setOpenConfirm] = React.useState(false);
   const [force, setForce] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -319,7 +318,7 @@ const AdminInfluencerLayout = () => {
 
   const handleAllow = (id) => {
     const formData = new FormData();
-    formData.append("influId", JSON.stringify(id));
+    formData.append("profileId", JSON.stringify(id));
     axios
       .put("http://localhost:4000/api/admin/unlock-influ", formData, {
         headers: {
@@ -340,7 +339,7 @@ const AdminInfluencerLayout = () => {
 
   const handleLock = (id) => {
     const formData = new FormData();
-    formData.append("influId", JSON.stringify(id));
+    formData.append("profileId", JSON.stringify(id));
 
     axios
       .put("http://localhost:4000/api/admin/lock-influ", formData, {

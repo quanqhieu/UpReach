@@ -5,7 +5,7 @@ import ReportSocial from "./ReportSocial/ReportSocial";
 import ReportAudience from "./ReportAudience/ReportAudience";
 import ReportPost from "./ReportPost/ReportPost";
 
-const ApproveInfluReport = (influInfo) => {
+const ApproveInfluReport = ({ influInfo }) => {
   const items = [
     { title: "SOCIAL", children: <ReportSocial influInfo={influInfo} /> },
     {
