@@ -7,7 +7,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Button, Form, Input, Steps } from "antd";
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import InformationForm from "./InformationForm";
 import "./CreateInfluencerPage.css";
 import OverviewForm from "./OverviewForm";
@@ -35,36 +35,36 @@ const CreatInfluencerProfilePage = () => {
     socialDetails: null,
     influencerDetail: null,
   });
-  
+
   const onFinishInformationForm = (values) => {
-    console.log('Information Form')
+    console.log("Information Form");
     console.log(values);
     // setInformationDetails(values);
-    setAllDetails(prevDetails => ({ ...prevDetails, informationDetails: values }));
+    setAllDetails((prevDetails) => ({
+      ...prevDetails,
+      informationDetails: values,
+    }));
     setCurrent(1);
   };
 
   const onFinishOverviewForm = (values) => {
-    console.log('Overview Form')
+    console.log("Overview Form");
     // setOverviewDetails(values); // vẫn chưa lưu value OverviewDetails
-    setAllDetails(prevDetails => ({ ...prevDetails, overviewDetails: values }));
+    setAllDetails((prevDetails) => ({
+      ...prevDetails,
+      overviewDetails: values,
+    }));
     setCurrent(2);
   };
 
   const onFinishContentForm = (values) => {
-    console.log('Content Form')
-    setAllDetails(prevDetails => ({ ...prevDetails, contentDetails: contentDetails }));
+    console.log("Content Form");
+    setAllDetails((prevDetails) => ({
+      ...prevDetails,
+      contentDetails: contentDetails,
+    }));
     setCurrent(3); // khi bấm continue chuyển qua tab 3
   };
-
-  const onFinishSocialForm = (values) => {
-    console.log('Social Form')
-    console.log(values);
-    // setSocialFormDetails(values);
-    setAllDetails(prevDetails => ({ ...prevDetails, socialDetails: values }));
-    setCurrent(4);
-  };
-
   const areAllStepsCompleted = () => {
     return (
       allDetails.informationDetails !== null &&
@@ -76,31 +76,32 @@ const CreatInfluencerProfilePage = () => {
 
   const handleFinishAllForms = async () => {
     try {
-      if(areAllStepsCompleted()){
+      if (areAllStepsCompleted()) {
         const result = await ApiInfluencer.addNewInfluencer(allDetails);
-        console.log(allDetails)
-        console.log(result)
+        console.log(allDetails);
+        console.log(result);
         if (result) {
-          setCheckDataAddSuccess(true) 
-        } 
+          setCheckDataAddSuccess(true);
+        }
       }
-      
     } catch (error) {
       console.log(error);
     }
   };
-  
-  useEffect (() =>{
-    
-    const data = localStorage.getItem('formData');
+
+  useEffect(() => {
+    const data = localStorage.getItem("formData");
     const formDataJson = JSON.parse(data);
-    setAllDetails(prevDetails => ({ ...prevDetails, influencerDetail: formDataJson }));
-    
-    if(current === 4){
-        handleFinishAllForms()
+    setAllDetails((prevDetails) => ({
+      ...prevDetails,
+      influencerDetail: formDataJson,
+    }));
+
+    if (current === 4) {
+      handleFinishAllForms();
     }
-  }, [current])
-  
+  }, [current]);
+
   const forms = [
     <InformationForm
       onFinish={onFinishInformationForm}
@@ -111,15 +112,11 @@ const CreatInfluencerProfilePage = () => {
       initialValues={overviewDetails}
     />,
     <ContentForm
-      onFinish={onFinishContentForm} 
+      onFinish={onFinishContentForm}
       setContentFormDetails={setContentFormDetails}
       contentDetails={contentDetails}
     />,
-    <SocialForm 
-      onFinish={onFinishSocialForm}
-      initialValues={socialDetails}
-    />,
-    <>{checkDataAddSuccess ? <FinishForm />: <FailForm/>}</>,
+    <>{checkDataAddSuccess ? <FinishForm /> : <FailForm />}</>,
   ];
   const isStepDisabled = (stepNumber) => {
     if (stepNumber === 0) {
@@ -138,17 +135,8 @@ const CreatInfluencerProfilePage = () => {
         contentDetails === null
       );
     }
-    if (stepNumber === 4) {
-      return (
-        informationDetails === null ||
-        overviewDetails === null ||
-        contentDetails === null ||
-        socialDetails === null
-      );
-    }
   };
 
-  
   return (
     <>
       <div className="create-page">
@@ -157,7 +145,7 @@ const CreatInfluencerProfilePage = () => {
             <Steps.Step
               disabled={isStepDisabled(0)}
               title="Information"
-              icon={<UserOutlined/>}
+              icon={<UserOutlined />}
             />
             <Steps.Step
               disabled={isStepDisabled(1)}
@@ -167,12 +155,7 @@ const CreatInfluencerProfilePage = () => {
             <Steps.Step
               disabled={isStepDisabled(2)}
               title="Content Topic"
-              icon={<TagOutlined/>}
-            />
-            <Steps.Step
-              disabled={isStepDisabled(3)}
-              title="Social"
-              icon={<GlobalOutlined/>}
+              icon={<TagOutlined />}
             />
             <Steps.Step
               disabled={isStepDisabled(4)}
@@ -180,7 +163,7 @@ const CreatInfluencerProfilePage = () => {
               icon={<CheckCircleOutlined />}
             />
           </Steps>
-          
+
           {forms[current]}
         </div>
       </div>

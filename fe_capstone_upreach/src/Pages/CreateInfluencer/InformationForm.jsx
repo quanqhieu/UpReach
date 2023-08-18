@@ -20,7 +20,7 @@ const InformationForm = ({ onFinish, initialValues }) => {
                 className="information-btn"
                 rules={[
                   {
-                    required: true,
+                    required: false,
                     message: "Please input your nickname!",
                   },
                 ]}
@@ -32,7 +32,7 @@ const InformationForm = ({ onFinish, initialValues }) => {
                 className="information-btn"
                 rules={[
                   {
-                    required: true,
+                    required: false,
                     message: "Please select your location",
                   },
                 ]}
@@ -48,7 +48,7 @@ const InformationForm = ({ onFinish, initialValues }) => {
                 className="information-btn"
                 rules={[
                   {
-                    required: true,
+                    required: false,
                     message: "Please select your gender",
                   },
                 ]}
@@ -66,7 +66,7 @@ const InformationForm = ({ onFinish, initialValues }) => {
                     type: "number",
                     min: 18,
                     max: 99,
-                    required: true,
+                    required: false,
                     message: "Please enter your age",
                   },
                 ]}
@@ -78,7 +78,7 @@ const InformationForm = ({ onFinish, initialValues }) => {
                 className="information-btn"
                 rules={[
                   {
-                    required: true,
+                    required: false,
                     message: "Please enter your Intro",
                   },
                 ]}
@@ -94,7 +94,7 @@ const InformationForm = ({ onFinish, initialValues }) => {
                 className="information-btn"
                 rules={[
                   {
-                    required: true,
+                    required: false,
                     message: "Please enter your influencer type",
                   },
                 ]}
@@ -112,7 +112,7 @@ const InformationForm = ({ onFinish, initialValues }) => {
                 className="information-btn"
                 rules={[
                   {
-                    required: true,
+                    required: false,
                     message: "Please enter your relationship",
                   },
                 ]}
