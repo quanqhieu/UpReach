@@ -102,6 +102,7 @@ const Index_ClientProfile = () => {
     <div>
       <PlusOutlined />
       <div
+      className="ant-upload"
         style={{
           marginTop: 8,
         }}
