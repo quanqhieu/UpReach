@@ -49,7 +49,6 @@ const ChangePassword = ({
                 />
               </Form.Item>
             </div>
-            <div></div>
             <div className="btn-button">
               <FormItem>
                 <Button className="btn_verification">

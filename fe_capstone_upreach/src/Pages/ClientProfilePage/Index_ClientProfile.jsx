@@ -15,8 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Navigate, useNavigate } from "react-router-dom";
 
 const Index_ClientProfile = () => {
-  const [isModalOpenUpdateEmail, setIsModalOpenUpdateEmail] = useState(false);
-  const [isSubModel, setSubModel] = useState(false);
+ const [isSubModel, setSubModel] = useState(false);
   const [isModalOpenChangePassword, setIsModalOpenChangePassword] =useState(false);
   const [message, setMessage] = useState()
   const [status, setStatus] = useState()
