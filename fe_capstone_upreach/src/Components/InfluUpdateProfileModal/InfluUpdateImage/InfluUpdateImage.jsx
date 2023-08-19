@@ -33,7 +33,7 @@ const InfluUpdateImage = ({
       return [];
     }
   });
-  console.log(influInfo?.dataImage);
+
   const sortableItemIds = fileList?.map((file) => file?.uid);
   const [previewOpen, setPreviewOpen] = React.useState(false);
   const [previewImage, setPreviewImage] = React.useState("");

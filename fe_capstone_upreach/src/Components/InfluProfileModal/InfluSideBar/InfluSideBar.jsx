@@ -95,14 +95,14 @@ const InfluSideBar = ({ influInfo }) => {
   //click add to list
   const AddTableKOLs = (e) => {
     listSelected.forEach((idListSelected) => {
-      const listKOLsID = uuid().slice(0, 8);
-      fetchAddTableKOLs(listKOLsID, influInfo.influencerId, idListSelected);
+      const listKOLsID = uuid()?.slice(0, 8);
+      fetchAddTableKOLs(listKOLsID, influInfo?.influencerId, idListSelected);
     });
-    fetchDataGetList(influInfo.influencerId);
+    fetchDataGetList(influInfo?.influencerId);
     success();
   };
   useEffect(() => {
-    switch (influInfo.influencerTypeName[0]) {
+    switch (influInfo?.influencerTypeName[0]) {
       case "Professional":
         setBadgeColor("#C837AB");
         break;

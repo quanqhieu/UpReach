@@ -81,7 +81,7 @@ const ReportSocial = ({ influInfo }) => {
                       ).toLocaleString("vi-VN")}
                     >
                       <span className="text-tooltip">
-                        {influInfo?.influencerCostEstimateTo.length > 8
+                        {influInfo?.influencerCostEstimateTo?.length > 8
                           ? `${Number(influInfo?.influencerCostEstimateTo)
                               .toLocaleString("vi-VN")
                               .slice(0, 10)}...`

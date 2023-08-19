@@ -257,7 +257,7 @@ const UpdateReportSocial = ({
                       onBlur={handleSubmit}
                       type="number"
                       onPressEnter={handleSubmit}
-                      value={influInfo.influencerCostEstimateTo}
+                      value={influInfo?.influencerCostEstimateTo}
                       maxLength={16}
                       style={{ width: "135px" }}
                       autoFocus
