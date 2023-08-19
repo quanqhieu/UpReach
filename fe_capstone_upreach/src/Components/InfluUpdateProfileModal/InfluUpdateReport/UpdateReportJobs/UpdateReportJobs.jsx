@@ -198,6 +198,16 @@ const UpdateComponent = ({
                   required: true,
                   message: "Please input cost estimate!",
                 },
+                {
+                  validator: (rule, value) => {
+                    if (Number(estimateTo) <= Number(value)) {
+                      return Promise.reject(
+                        "cost estimate from must smaller than cost estimate to!"
+                      );
+                    }
+                    return Promise.resolve();
+                  },
+                },
               ]}
             >
               <div>
@@ -231,8 +241,10 @@ const UpdateComponent = ({
                 },
                 {
                   validator: (rule, value) => {
-                    if (value <= estimateFrom) {
-                      return Promise.reject("Error");
+                    if (Number(value) <= Number(estimateFrom)) {
+                      return Promise.reject(
+                        "cost estimate to must bigger than cost estimate from!"
+                      );
                     }
                     return Promise.resolve();
                   },
@@ -567,8 +579,10 @@ const UpdateReportJobs = ({
                           {
                             validator: (rule, value) => {
                               // Custom validation function to check for the 'EstimateFrom' value
-                              if (value <= estimateFrom) {
-                                return Promise.reject("Error");
+                              if (Number(value) <= Number(estimateFrom)) {
+                                return Promise.reject(
+                                  "cost estimate to must bigger than cost estimate from!"
+                                );
                               }
                               return Promise.resolve();
                             },

@@ -101,7 +101,7 @@ const VersionInfluSideBar = ({ influInfo, profileSideBar }) => {
             <div className="profile-contents">
               <div className="profile-content">
                 <div className="profile-topics">
-                  {profileSideBar?.influencerContentTopicName.map(
+                  {profileSideBar?.influencerContentTopicName?.map(
                     (topic, index) => (
                       <div key={index} className="profile-topic">
                         <Tooltip placement="top" title={topic}>

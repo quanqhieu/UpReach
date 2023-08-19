@@ -6,13 +6,15 @@ import React from "react";
 import axios from "axios";
 const InfluVersionProfile = ({ profileInflu, profileSideBar }) => {
   const [dataReportVersion, setDataReportVersion] = React.useState([]);
+
   React.useEffect(() => {
     axios
       .post("http://localhost:4000/api/influ/data-version", {
-        influencerId: profileInflu.influencerId,
+        influencerId: profileInflu?.influencerId,
       })
       .then((response) => {
-        const info = response.data.data[0];
+        const info = response?.data?.data[0];
+        console.log(info);
         setDataReportVersion(info);
       })
       .catch((error) => {
