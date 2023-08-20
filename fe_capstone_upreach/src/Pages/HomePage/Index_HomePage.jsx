@@ -9,11 +9,12 @@ import ApiGetInfoAndFilterInfluencer from "../../Api/ApiGetInfoAndFilterInfluenc
 import { FireFilled } from "@ant-design/icons";
 import { Spin, Space } from "antd";
 
-const Index_HomePage = () => {
+const Index_HomePage = ({ setLoadingFullPage }) => {
   const [allInfluencer, setAllInfluencer] = useState();
   const [loading, setLoading] = useState(true);
   const [pointReport, setpointReport] = useState();
   const [pointSearch, setPointSearch] = useState();
+  const [isShowPopupUpgrade, setIsShowPopupUpgrade] = useState(false);
 
   // BE get Influencer
   const fetchDataGetList = async () => {
@@ -32,7 +33,6 @@ const Index_HomePage = () => {
         response.data[j] = temp;
       }
       setAllInfluencer(response);
-
       setpointReport(response.Client.pointReport);
       setPointSearch(response.Client.pointSearch);
       console.log("++++++++++");
@@ -74,6 +74,8 @@ const Index_HomePage = () => {
           loading={loading}
           pointSearch={pointSearch}
           setPointSearch={setPointSearch}
+          isShowPopupUpgrade={isShowPopupUpgrade}
+          setIsShowPopupUpgrade={setIsShowPopupUpgrade}
         />
       </div>
       <div className="row text-center">
@@ -125,6 +127,9 @@ const Index_HomePage = () => {
           loading={loading}
           setpointReport={setpointReport}
           pointReport={pointReport}
+          isShowPopupUpgrade={isShowPopupUpgrade}
+          setIsShowPopupUpgrade={setIsShowPopupUpgrade}
+          setLoadingFullPage={setLoadingFullPage}
         />
       </div>
     </div>

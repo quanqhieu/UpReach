@@ -194,3 +194,12 @@
 	margin-bottom: 10px;
 }
 
+.influ-side-bar-container .profile-topic {
+    margin-right: 5px;
+    padding: 2px 10px;
+    width: -moz-fit-content;
+    width: fit-content;
+    font-size: 14px;
+    background-color: #ccc;
+    border-radius: 20px;
+}

@@ -14,12 +14,17 @@ const ProfileCardLayout = ({
   loading,
   setpointReport,
   pointReport,
+  isShowPopupUpgrade,
+  setIsShowPopupUpgrade,
+  setLoadingFullPage,
 }) => {
   const [influInfo, setInfluInfo] = useState("");
   const [isOpenProfileInflu, setIsOpenProfileInflu] = useState(false);
   const [idInfluMongoDB, setIdInfluMongoDB] = useState();
   const [profileInflus, setProfileInflus] = useState(PROFILE_INFLUS);
-  const [isShowPopupUpgrade, setIsShowPopupUpgrade] = useState(false);
+  // const [isShowPopupUpgrade, setIsShowPopupUpgrade] = useState(false);
+  const [isExitsHistoryReport, setIsExitsHistoryReport] = useState(false);
+  const [user, setUser] = useState();
 
   // Time out popup
   const countDownPopupSubPoint = () => {
@@ -46,58 +51,78 @@ const ProfileCardLayout = ({
     }, secondsToGo * 1000);
   };
   // ============================================================
-  const PopupSubPoint = () => {
-    console.log(Modal);
-    Modal.info({
-      title: "Info",
-      closable: "true",
-      destroyOnClose: "true",
-      footer: "",
-      zIndex: "9999",
-      width: "600px",
-      content: "Your remaining balance will be: " + (pointReport - 1) + ".",
-    });
-  };
 
-  const addDataToHistoryReport = async (InfluencerId) => {
+  // BE addDataToHistoryReport updatePointReport
+  // const addDataToHistoryReport = async (InfluencerId) => {
+  //   try {
+  //     const User = await JSON.parse(localStorage.getItem("user-draw-storage"))
+  //       .state.user;
+  //     const response = await PointAndHistoryReport.insertDataToHistory(
+  //       InfluencerId,
+  //       User.Client_ID
+  //     );
+  //     if (response.status === "True") {
+  //       setIsExitsHistoryReport(false);
+  //     } else {
+  //       setIsExitsHistoryReport(true);
+  //     }
+  //   } catch (error) {
+  //     console.log("Error fetching data:", error);
+  //   }
+  // };
+
+  const updatePointReport = async (PointReport) => {
     try {
-      const User = await JSON.parse(localStorage.getItem("user-draw-storage"))
-        .state.user;
-      const response = await PointAndHistoryReport.insertDataToHistory(
-        InfluencerId,
-        User.Client_ID
+      // const User = await JSON.parse(localStorage.getItem("user-draw-storage"))
+      //   .state.user;
+      const response = await PointAndHistoryReport.updatePointReport(
+        user.Client_ID,
+        PointReport
       );
-      console.log(response);
     } catch (error) {
       console.log("Error fetching data:", error);
     }
   };
 
-  const handleOpenModal = async (info) => {
+  const influencerEmail = async (info) => {
     try {
       const influencerEmail = info.influencerEmail;
       const idInfluencerInMongoDB = await ApiInfluencer.getIDInfluencer(
         influencerEmail
       );
       setIdInfluMongoDB(idInfluencerInMongoDB.data._id);
+    } catch (error) {
+      console.log("Error fetching data:", error);
+    }
+  };
+  const handleOpenModal = async (info) => {
+    try {
+      setLoadingFullPage(true);
+      const response = await PointAndHistoryReport.insertDataToHistory(
+        info.influencerId,
+        user.Client_ID
+      );
       setInfluInfo(info);
-
+      // open popup client
       setIsOpenProfileInflu(true);
-      // caculator point
+      // check and add point
       if (pointReport - 1 > 0) {
-        setpointReport(pointReport - 1);
-        addDataToHistoryReport(info.influencerId);
-        // PopupSubPoint();
-        countDownPopupSubPoint();
+        if (response.status === "True") {
+          countDownPopupSubPoint();
+          updatePointReport(pointReport - 1);
+          setpointReport(pointReport - 1);
+        }
       } else {
         setIsOpenProfileInflu(false);
         setIsShowPopupUpgrade(true);
       }
+      setLoadingFullPage(false);
+      influencerEmail(info);
     } catch (error) {
       console.log(error);
     }
   };
-
+  //=============================================================
   const itemRender = (_, type, originalElement) => {
     if (type === "prev") {
       return <a>Previous</a>;
@@ -107,7 +132,11 @@ const ProfileCardLayout = ({
     }
     return originalElement;
   };
-
+  useEffect(() => {
+    const User = JSON.parse(localStorage.getItem("user-draw-storage")).state
+      .user;
+    setUser(User);
+  }, []);
   return (
     <>
       <Modal
