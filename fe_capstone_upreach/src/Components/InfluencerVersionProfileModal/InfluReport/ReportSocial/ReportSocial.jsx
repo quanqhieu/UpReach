@@ -61,11 +61,11 @@ const ReportSocial = ({ influInfo }) => {
                       <span className="text-tooltip">
                         {influInfo?.influencerCostEstimateFrom?.length > 8
                           ? `${Number(influInfo?.influencerCostEstimateFrom)
-                              .toLocaleString("vi-VN")
-                              .slice(0, 10)}...`
+                              ?.toLocaleString("vi-VN")
+                              ?.slice(0, 10)}...`
                           : Number(
                               influInfo?.influencerCostEstimateFrom
-                            ).toLocaleString("vi-VN")}
+                            )?.toLocaleString("vi-VN")}
                       </span>
                     </Tooltip>
                   </div>
@@ -83,11 +83,11 @@ const ReportSocial = ({ influInfo }) => {
                       <span className="text-tooltip">
                         {influInfo?.influencerCostEstimateTo?.length > 8
                           ? `${Number(influInfo?.influencerCostEstimateTo)
-                              .toLocaleString("vi-VN")
-                              .slice(0, 10)}...`
+                              ?.toLocaleString("vi-VN")
+                              ?.slice(0, 10)}...`
                           : Number(
                               influInfo?.influencerCostEstimateTo
-                            ).toLocaleString("vi-VN")}
+                            )?.toLocaleString("vi-VN")}
                       </span>
                     </Tooltip>
                   </div>

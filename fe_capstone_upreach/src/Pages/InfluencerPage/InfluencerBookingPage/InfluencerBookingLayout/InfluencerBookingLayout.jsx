@@ -53,8 +53,8 @@ const InfluencerBookingLayout = () => {
     let sortedList = [...bookingList];
     if (sortOption === "Name") {
       return sortedList.sort((a, b) => {
-        const nameA = a.clientName.toUpperCase();
-        const nameB = b.clientName.toUpperCase();
+        const nameA = a?.clientName.toUpperCase();
+        const nameB = b?.clientName.toUpperCase();
 
         if (nameA < nameB) {
           return -1;
@@ -92,8 +92,8 @@ const InfluencerBookingLayout = () => {
         const bookingJobList = bookingDataArray?.map((data) => ({
           bookingId: data?.clientBooking_ID,
           jobId: data?.Job_ID,
-          brandName: data?.clientInfo.Brand_Client,
-          clientName: data?.clientInfo.FullName,
+          brandName: data?.clientInfo?.Brand_Client,
+          clientName: data?.clientInfo?.FullName,
           jobName: data?.Name_Job,
           platform: data?.Platform_Job,
           jobLink: data?.Link,

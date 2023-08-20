@@ -26,67 +26,75 @@ const AdminUserProfileLayout = () => {
   const [openConfirm, setOpenConfirm] = React.useState(false);
   const [force, setForce] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [listClient, setListClient] = React.useState([]);
+
   const check = async () => {
     if (editingId !== "") {
       const row = await form.validateFields();
 
       if (
-        listClient.some(
-          (item) => item.clientId == editingId && item.fullName == row.fullName
+        listClient?.some(
+          (item) =>
+            item?.clientId == editingId && item?.fullName == row?.fullName
         ) &&
-        listClient.some(
-          (item) => item.clientId == editingId && item.brand == row.brand
+        listClient?.some(
+          (item) => item?.clientId == editingId && item?.brand == row?.brand
         ) &&
-        listClient.some(
-          (item) => item.clientId == editingId && item.email == row.email
+        listClient?.some(
+          (item) => item?.clientId == editingId && item?.email == row?.email
         ) &&
-        listClient.some(
-          (item) => item.clientId == editingId && item.phone == row.phone
+        listClient?.some(
+          (item) => item?.clientId == editingId && item?.phone == row?.phone
         ) &&
-        listClient.some(
-          (item) => item.clientId == editingId && item.address == row.address
+        listClient?.some(
+          (item) => item?.clientId == editingId && item?.address == row?.address
         )
       ) {
         return false;
       } else return true;
     }
   };
+
+  const isEditing = (record) => {
+    return record?.clientId === editingId;
+  };
+
   const tags = [
     {
       title: "Full Name",
       dataIndex: "fullName",
-      width: "15%",
+      width: "18%",
       editable: true,
     },
     {
       title: "Brand Name",
       dataIndex: "brand",
-      width: "15%",
+      width: "14%",
       editable: true,
     },
     {
       title: "Email",
       dataIndex: "email",
-      width: "20%",
+      width: "19%",
       editable: true,
     },
     {
       title: "Phone Number",
       dataIndex: "phone",
-      width: "15%",
+      width: "14%",
       editable: true,
     },
     {
       title: "Address",
       dataIndex: "address",
-      width: "25%",
+      width: "19%",
       editable: true,
     },
 
     {
       title: <EditOutlined />,
       dataIndex: "edit",
-      width: "15%",
+      width: "11%",
       render: (_, record) => {
         const editable = isEditing(record);
 
@@ -98,7 +106,7 @@ const AdminUserProfileLayout = () => {
             }}
           >
             <Typography.Link
-              onClick={() => handleSave(record.clientId)}
+              onClick={() => handleSave(record?.clientId)}
               style={{
                 marginRight: 8,
               }}
@@ -141,29 +149,23 @@ const AdminUserProfileLayout = () => {
       dataIndex: "lock",
       width: "5%",
       render: (_, record) =>
-        listClient.length >= 1 && record.isAccept == false ? (
+        listClient?.length >= 1 && record?.isAccept == false ? (
           <Popconfirm
             title="Sure to unlock account?"
-            onConfirm={() => handleAllow(record.clientId)}
+            onConfirm={() => handleAllow(record?.clientId)}
           >
             <LockOutlined />
           </Popconfirm>
         ) : (
           <Popconfirm
             title="Sure to lock account?"
-            onConfirm={() => handleLock(record.clientId)}
+            onConfirm={() => handleLock(record?.clientId)}
           >
             <UnlockOutlined />
           </Popconfirm>
         ),
     },
   ];
-
-  const [listClient, setListClient] = React.useState([]);
-
-  const isEditing = (record) => {
-    return record.clientId === editingId;
-  };
 
   const EditableCell = ({
     editing,
@@ -216,7 +218,7 @@ const AdminUserProfileLayout = () => {
       address: "",
       ...record,
     });
-    setEditingId(record.clientId);
+    setEditingId(record?.clientId);
   };
 
   const cancel = () => {
@@ -231,12 +233,12 @@ const AdminUserProfileLayout = () => {
     try {
       const row = await form.validateFields();
       const newInfoClient = [...listClient];
-      const index = newInfoClient.findIndex(
-        (item) => clientId === item.clientId
+      const index = newInfoClient?.findIndex(
+        (item) => clientId === item?.clientId
       );
       if (index > -1) {
         const item = newInfoClient[index];
-        newInfoClient.splice(index, 1, {
+        newInfoClient?.splice(index, 1, {
           ...item,
           ...row,
         });
@@ -260,7 +262,7 @@ const AdminUserProfileLayout = () => {
         .then((response) => {
           messageApi.open({
             type: "success",
-            content: response.data.message,
+            content: response?.data.message,
           });
           setForce((prev) => prev + 1);
         })
@@ -272,7 +274,7 @@ const AdminUserProfileLayout = () => {
     }
   };
 
-  const mergedTags = tags.map((col) => {
+  const mergedTags = tags?.map((col) => {
     if (!col.editable) {
       return col;
     }
@@ -291,8 +293,8 @@ const AdminUserProfileLayout = () => {
   });
 
   // const handleDelete = (clientId) => {
-  //   const newListClient = listClient.filter(
-  //     (item) => item.clientId !== clientId
+  //   const newListClient = listClient?.filter(
+  //     (item) => item?.clientId !== clientId
   //   );
   //   setListClient(newListClient);
   // };
@@ -309,7 +311,7 @@ const AdminUserProfileLayout = () => {
       .then((response) => {
         messageApi.open({
           type: "success",
-          content: response.data.message,
+          content: response?.data.message,
         });
         setForce((prev) => prev + 1);
       })
@@ -331,7 +333,7 @@ const AdminUserProfileLayout = () => {
       .then((response) => {
         messageApi.open({
           type: "success",
-          content: response.data.message,
+          content: response?.data.message,
         });
         setForce((prev) => prev + 1);
       })
@@ -349,7 +351,7 @@ const AdminUserProfileLayout = () => {
         },
       })
       .then((response) => {
-        const info = response.data.data;
+        const info = response?.data?.data;
         setListClient(info);
         setIsLoading(false);
       })
@@ -361,7 +363,7 @@ const AdminUserProfileLayout = () => {
       });
   }, [force]);
 
-  console.log(listClient);
+  // console.log(listClient);
   return (
     <>
       {contextHolder}

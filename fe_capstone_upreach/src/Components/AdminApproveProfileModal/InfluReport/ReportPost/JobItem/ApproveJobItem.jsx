@@ -58,30 +58,30 @@ const ApproveJobItem = ({ jobInfo }) => {
             Cost Estimate:{" "}
             <Tooltip
               placement="top"
-              title={Number(jobInfo?.CostEstimate_From_Job).toLocaleString(
+              title={Number(jobInfo?.CostEstimate_From_Job)?.toLocaleString(
                 "vi-VN"
               )}
             >
               {jobInfo?.CostEstimate_From_Job?.length > 8
                 ? `${Number(jobInfo?.CostEstimate_From_Job)
-                    .toLocaleString("vi-VN")
-                    .slice(0, 8)}...`
-                : Number(jobInfo?.CostEstimate_From_Job).toLocaleString(
+                    ?.toLocaleString("vi-VN")
+                    ?.slice(0, 8)}...`
+                : Number(jobInfo?.CostEstimate_From_Job)?.toLocaleString(
                     "vi-VN"
                   )}
             </Tooltip>{" "}
             ~{" "}
             <Tooltip
               placement="top"
-              title={Number(jobInfo?.CostEstimate_To_Job).toLocaleString(
+              title={Number(jobInfo?.CostEstimate_To_Job)?.toLocaleString(
                 "vi-VN"
               )}
             >
               {jobInfo?.CostEstimate_To_Job?.length > 8
                 ? `${Number(jobInfo?.CostEstimate_To_Job)
-                    .toLocaleString("vi-VN")
-                    .slice(0, 8)}...`
-                : Number(jobInfo?.CostEstimate_To_Job).toLocaleString("vi-VN")}
+                    ?.toLocaleString("vi-VN")
+                    ?.slice(0, 8)}...`
+                : Number(jobInfo?.CostEstimate_To_Job)?.toLocaleString("vi-VN")}
             </Tooltip>{" "}
             VND
           </p>

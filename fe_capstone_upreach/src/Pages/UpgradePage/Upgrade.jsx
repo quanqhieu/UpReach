@@ -41,15 +41,6 @@ const Upgrade = () => {
           <HeaderHomepage />
           <div className="upgrade-bg backgroundMainPage">
             <div className="upgrade-header">
-              <div className="d-inline mt-3 countTime pt-2 countTime-bg">
-                Remaining results:{" "}
-                <div className="d-inline numberCount">100</div>
-                <div className="d-inline mt-3 ms-3 pt-2">
-                  Remaining reports:{" "}
-                  <div className="d-inline numberCount">100</div>
-                  <button className="ms-3 btnAdd">Add More</button>
-                </div>
-              </div>
               <div className="upgrade-header-title">
                 Pick the plan that's right for you
               </div>

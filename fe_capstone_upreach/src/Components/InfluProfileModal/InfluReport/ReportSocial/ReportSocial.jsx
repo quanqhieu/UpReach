@@ -61,7 +61,7 @@ const ReportSocial = ({ influInfo }) => {
                         {influInfo?.influencerCostEstimateFrom?.length > 8
                           ? `${Number(influInfo?.influencerCostEstimateFrom)
                               .toLocaleString("vi-VN")
-                              .slice(0, 10)}...`
+                              ?.slice(0, 10)}...`
                           : Number(
                               influInfo?.influencerCostEstimateFrom
                             ).toLocaleString("vi-VN")}
@@ -83,7 +83,7 @@ const ReportSocial = ({ influInfo }) => {
                         {influInfo?.influencerCostEstimateTo?.length > 8
                           ? `${Number(influInfo?.influencerCostEstimateTo)
                               .toLocaleString("vi-VN")
-                              .slice(0, 10)}...`
+                              ?.slice(0, 10)}...`
                           : Number(
                               influInfo?.influencerCostEstimateTo
                             ).toLocaleString("vi-VN")}
@@ -151,9 +151,9 @@ const ReportSocial = ({ influInfo }) => {
             >
               {influInfo?.influencerLinkInsta === null
                 ? "Instagram"
-                : influInfo?.influencerLinkInsta.length <= 32
+                : influInfo?.influencerLinkInsta?.length <= 32
                 ? influInfo?.influencerLinkInsta
-                : influInfo?.influencerLinkInsta.slice(0, 32) + "..."}
+                : influInfo?.influencerLinkInsta?.slice(0, 32) + "..."}
             </a>
           </div>
           <div className="cover-follower-interaction">
@@ -180,9 +180,9 @@ const ReportSocial = ({ influInfo }) => {
             >
               {influInfo?.influencerLinkYoutube === null
                 ? "Youtube"
-                : influInfo?.influencerLinkYoutube.length <= 32
+                : influInfo?.influencerLinkYoutube?.length <= 32
                 ? influInfo?.influencerLinkYoutube
-                : influInfo?.influencerLinkYoutube.slice(0, 32) + "..."}
+                : influInfo?.influencerLinkYoutube?.slice(0, 32) + "..."}
             </a>
           </div>
           <div className="cover-follower-interaction">
@@ -210,9 +210,9 @@ const ReportSocial = ({ influInfo }) => {
             >
               {influInfo?.influencerLinkTiktok === null
                 ? "Tiktok"
-                : influInfo?.influencerLinkTiktok.length <= 32
+                : influInfo?.influencerLinkTiktok?.length <= 32
                 ? influInfo?.influencerLinkTiktok
-                : influInfo?.influencerLinkTiktok.slice(0, 32) + "..."}
+                : influInfo?.influencerLinkTiktok?.slice(0, 32) + "..."}
             </a>
           </div>
           <div className="cover-follower-interaction">

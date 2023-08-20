@@ -32,7 +32,7 @@ const AdminInfluencerLayout = () => {
     {
       title: "Full Name",
       dataIndex: "fullName",
-      width: "14%",
+      width: "19%",
       editable: true,
     },
     {
@@ -50,7 +50,7 @@ const AdminInfluencerLayout = () => {
     {
       title: "Relationship",
       dataIndex: "Relationship",
-      width: "8%",
+      width: "9%",
       editable: true,
     },
     {
@@ -68,14 +68,14 @@ const AdminInfluencerLayout = () => {
     {
       title: "Address",
       dataIndex: "Address",
-      width: "20%",
+      width: "15%",
       editable: true,
     },
 
     {
       title: <EditOutlined />,
       dataIndex: "edit",
-      width: "12%",
+      width: "11%",
       render: (_, record) => {
         const editable = isEditing(record);
 
@@ -87,7 +87,7 @@ const AdminInfluencerLayout = () => {
             }}
           >
             <Typography.Link
-              onClick={() => handleSave(record.Profile_ID)}
+              onClick={() => handleSave(record?.Profile_ID)}
               style={{
                 marginRight: 8,
               }}
@@ -129,17 +129,17 @@ const AdminInfluencerLayout = () => {
       dataIndex: "lock",
       width: "5%",
       render: (_, record) =>
-        listInflu.length >= 1 && record.isAccepted == false ? (
+        listInflu?.length >= 1 && record?.isAccepted == false ? (
           <Popconfirm
             title="Sure to unlock account?"
-            onConfirm={() => handleAllow(record.Profile_ID)}
+            onConfirm={() => handleAllow(record?.Profile_ID)}
           >
             <LockOutlined />
           </Popconfirm>
         ) : (
           <Popconfirm
             title="Sure to lock account?"
-            onConfirm={() => handleLock(record.Profile_ID)}
+            onConfirm={() => handleLock(record?.Profile_ID)}
           >
             <UnlockOutlined />
           </Popconfirm>
@@ -153,27 +153,28 @@ const AdminInfluencerLayout = () => {
       if (
         listInflu.some(
           (item) =>
-            item.Profile_ID == editingId && item.fullName == row.fullName
+            item?.Profile_ID == editingId && item?.fullName == row.fullName
         ) &&
         listInflu.some(
-          (item) => item.Profile_ID == editingId && item.Age == row.Age
+          (item) => item?.Profile_ID == editingId && item?.Age == row.Age
         ) &&
         listInflu.some(
-          (item) => item.Profile_ID == editingId && item.Gender == row.Gender
+          (item) => item?.Profile_ID == editingId && item?.Gender == row.Gender
         ) &&
         listInflu.some(
           (item) =>
-            item.Profile_ID == editingId &&
-            item.Relationship == row.Relationship
+            item?.Profile_ID == editingId &&
+            item?.Relationship == row.Relationship
         ) &&
         listInflu.some(
-          (item) => item.Profile_ID == editingId && item.Email == row.Email
+          (item) => item?.Profile_ID == editingId && item?.Email == row.Email
         ) &&
         listInflu.some(
-          (item) => item.Profile_ID == editingId && item.Phone == row.Phone
+          (item) => item?.Profile_ID == editingId && item?.Phone == row.Phone
         ) &&
         listInflu.some(
-          (item) => item.Profile_ID == editingId && item.Address == row.Address
+          (item) =>
+            item?.Profile_ID == editingId && item?.Address == row.Address
         )
       ) {
         return false;
@@ -184,7 +185,7 @@ const AdminInfluencerLayout = () => {
   };
 
   const isEditing = (record) => {
-    return record.Profile_ID === editingId;
+    return record?.Profile_ID === editingId;
   };
 
   const EditableCell = ({
@@ -240,7 +241,7 @@ const AdminInfluencerLayout = () => {
       Address: "",
       ...record,
     });
-    setEditingId(record.Profile_ID);
+    setEditingId(record?.Profile_ID);
   };
 
   const cancel = () => {
@@ -257,7 +258,7 @@ const AdminInfluencerLayout = () => {
     try {
       const row = await form.validateFields();
       const newInfoInflu = [...listInflu];
-      const index = newInfoInflu.findIndex((item) => id === item.Profile_ID);
+      const index = newInfoInflu.findIndex((item) => id === item?.Profile_ID);
       if (index > -1) {
         const item = newInfoInflu[index];
         newInfoInflu.splice(index, 1, {
@@ -286,7 +287,7 @@ const AdminInfluencerLayout = () => {
         .then((response) => {
           messageApi.open({
             type: "success",
-            content: response.data.message,
+            content: response?.data.message,
           });
           setForce((prev) => prev + 1);
         })
@@ -298,7 +299,7 @@ const AdminInfluencerLayout = () => {
     }
   };
 
-  const mergedTags = tags.map((col) => {
+  const mergedTags = tags?.map((col) => {
     if (!col.editable) {
       return col;
     }
@@ -328,7 +329,7 @@ const AdminInfluencerLayout = () => {
       .then((response) => {
         messageApi.open({
           type: "success",
-          content: response.data.message,
+          content: response?.data.message,
         });
         setForce((prev) => prev + 1);
       })
@@ -368,7 +369,7 @@ const AdminInfluencerLayout = () => {
         },
       })
       .then((response) => {
-        const info = response.data.data;
+        const info = response?.data.data;
         setListInflu(info);
         setIsLoading(false);
       })

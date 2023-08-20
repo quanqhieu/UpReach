@@ -5,8 +5,8 @@ import Index_InfluencerProfile from "./Index_InfluencerProfile";
 const influencerProfile = () => {
   return (
     <div className="coverMain-client-profile">
-      <HeaderHomepage/>
-      <Index_InfluencerProfile/>
+      <HeaderHomepage />
+      <Index_InfluencerProfile />
     </div>
   );
 };

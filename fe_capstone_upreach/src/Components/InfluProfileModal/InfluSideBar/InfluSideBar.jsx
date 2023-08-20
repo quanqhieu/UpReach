@@ -75,7 +75,7 @@ const InfluSideBar = ({ influInfo }) => {
   };
 
   function SaveToListOnClick() {
-    fetchDataGetList(influInfo.influencerId);
+    fetchDataGetList(influInfo?.influencerId);
   }
 
   //====================== Get Data Back End Of List ======================
@@ -83,7 +83,7 @@ const InfluSideBar = ({ influInfo }) => {
     try {
       const dataLocalStorge = await JSON.parse(
         localStorage.getItem("user-draw-storage")
-      ).state.user.Client_ID;
+      ).state?.user?.Client_ID;
       setIdAccClient(dataLocalStorge);
       const response = (
         await ApiListInfluecer.getStatusListOfKOLs(dataLocalStorge, kOLsID)
@@ -97,7 +97,7 @@ const InfluSideBar = ({ influInfo }) => {
     try {
       const dataLocalStorge = await JSON.parse(
         localStorage.getItem("user-draw-storage")
-      ).state.user.Client_ID;
+      ).state?.user?.Client_ID;
       setIdAccClient(dataLocalStorge);
       const response = await ApiListInfluecer.addTableKOLs(
         listKOLsID,
@@ -148,11 +148,11 @@ const InfluSideBar = ({ influInfo }) => {
       default:
         return;
     }
-  }, [influInfo.influencerTypeName]);
+  }, [influInfo?.influencerTypeName]);
 
   useEffect(() => {
-    fetchDataGetList(influInfo.influencerId);
-  }, [influInfo.influencerId]);
+    fetchDataGetList(influInfo?.influencerId);
+  }, [influInfo?.influencerId]);
 
   return (
     <>

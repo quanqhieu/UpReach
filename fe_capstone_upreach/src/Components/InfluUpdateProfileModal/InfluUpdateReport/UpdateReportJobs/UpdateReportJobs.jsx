@@ -24,9 +24,11 @@ const UpdateComponent = ({
 }) => {
   const [form] = Form.useForm();
   const { Option } = Select;
-  const [estimateFrom, setEstimateFrom] = React.useState(item.costEstimateFrom);
-  const [estimateTo, setEstimateTo] = React.useState(item.costEstimateTo);
-  const [quantity, setQuantity] = React.useState(item.quantity);
+  const [estimateFrom, setEstimateFrom] = React.useState(
+    item?.costEstimateFrom
+  );
+  const [estimateTo, setEstimateTo] = React.useState(item?.costEstimateTo);
+  const [quantity, setQuantity] = React.useState(item?.quantity);
   const [api, contextHolder] = notification.useNotification();
 
   const openNotification = (placement) => {
@@ -40,31 +42,31 @@ const UpdateComponent = ({
   const [dataForm, setDataForm] = React.useState([
     {
       name: ["jobName"],
-      value: item.jobName,
+      value: item?.jobName,
     },
     {
       name: ["costEstimateFrom"],
-      value: Number(item.costEstimateFrom),
+      value: Number(item?.costEstimateFrom),
     },
     {
       name: ["costEstimateTo"],
-      value: Number(item.costEstimateTo),
+      value: Number(item?.costEstimateTo),
     },
     {
       name: ["formatContent"],
-      value: item.formatContent,
+      value: item?.formatContent,
     },
     {
       name: ["jobLink"],
-      value: item.jobLink,
+      value: item?.jobLink,
     },
     {
       name: ["platform"],
-      value: item.platform,
+      value: item?.platform,
     },
     {
       name: ["quantity"],
-      value: Number(item.quantity),
+      value: Number(item?.quantity),
     },
   ]);
   const formItemLayout = {
@@ -80,13 +82,13 @@ const UpdateComponent = ({
     setIsEditting(false);
     const updatedItem = {
       ...item,
-      jobName: values.jobName,
-      costEstimateFrom: values.costEstimateFrom,
-      costEstimateTo: values.costEstimateTo,
-      formatContent: values.formatContent,
-      jobLink: values.jobLink,
-      platform: values.platform,
-      quantity: values.quantity,
+      jobName: values?.jobName,
+      costEstimateFrom: values?.costEstimateFrom,
+      costEstimateTo: values?.costEstimateTo,
+      formatContent: values?.formatContent,
+      jobLink: values?.jobLink,
+      platform: values?.platform,
+      quantity: values?.quantity,
     };
     onItemUpdate(index, updatedItem);
     console.log(updatedItem);
@@ -371,7 +373,7 @@ const UpdateReportJobs = ({
   const onFinish = (values) => {
     // console.log("run", values);
     if (values?.jobs) {
-      setBookingInfo([...bookingInfo, ...values.jobs]);
+      setBookingInfo([...bookingInfo, ...values?.jobs]);
       setIsAdding(false);
       form.resetFields();
       setIsChange(true);
@@ -399,7 +401,7 @@ const UpdateReportJobs = ({
         // Store the jobId of the removed job in deletedJobIds state
         setIdJobsRemove((prevDeletedJobIds) => [
           ...prevDeletedJobIds,
-          removedItem.jobId,
+          removedItem?.jobId,
         ]);
         setIsChange(true);
       }
@@ -454,9 +456,9 @@ const UpdateReportJobs = ({
             <Form.List name="jobs">
               {(fields, { add, remove }) => (
                 <>
-                  {fields.map((field) => (
+                  {fields?.map((field) => (
                     <Space
-                      key={field.id}
+                      key={field?.id}
                       style={{
                         display: "grid",
                         marginBottom: 8,
@@ -466,12 +468,12 @@ const UpdateReportJobs = ({
                       <MinusCircleOutlined
                         onClick={() => {
                           setIsAdding(false);
-                          remove(field.name);
+                          remove(field?.name);
                         }}
                       />
                       <Form.Item
                         {...field}
-                        name={[field.name, "jobName"]}
+                        name={[field?.name, "jobName"]}
                         label="Job Name:"
                         rules={[
                           {
@@ -484,7 +486,7 @@ const UpdateReportJobs = ({
                       </Form.Item>
                       <Form.Item
                         {...field}
-                        name={[field.name, "jobLink"]}
+                        name={[field?.name, "jobLink"]}
                         label="Link:"
                         rules={[
                           {
@@ -497,7 +499,7 @@ const UpdateReportJobs = ({
                       </Form.Item>
                       <Form.Item
                         {...field}
-                        name={[field.name, "platform"]}
+                        name={[field?.name, "platform"]}
                         label="Choose Platform"
                         hasFeedback
                         rules={[
@@ -517,7 +519,7 @@ const UpdateReportJobs = ({
 
                       <Form.Item
                         {...field}
-                        name={[field.name, "formatContent"]}
+                        name={[field?.name, "formatContent"]}
                         label="Format content"
                         rules={[
                           {
@@ -539,7 +541,7 @@ const UpdateReportJobs = ({
 
                       <Form.Item
                         {...field}
-                        name={[field.name, "costEstimateFrom"]}
+                        name={[field?.name, "costEstimateFrom"]}
                         label="Cost Estimate From"
                         rules={[
                           {
@@ -569,7 +571,7 @@ const UpdateReportJobs = ({
                       </Form.Item>
                       <Form.Item
                         {...field}
-                        name={[field.name, "costEstimateTo"]}
+                        name={[field?.name, "costEstimateTo"]}
                         label="Cost Estimate To"
                         rules={[
                           {
@@ -611,7 +613,7 @@ const UpdateReportJobs = ({
                       </Form.Item>
                       <Form.Item
                         {...field}
-                        name={[field.name, "quantity"]}
+                        name={[field?.name, "quantity"]}
                         label="Quantity"
                         rules={[
                           {

@@ -1,7 +1,7 @@
 .admin-dashboard-layout {
     width: 100%;
     height: 100%;
-    padding: 30px 20px;
+    padding: 25px 20px;
     position: relative;
     overflow: hidden;
 }
@@ -51,7 +51,7 @@
 
 .admin-top {
     width: 100%;
-    height: 350px;
+    height: 345px;
     display: flex;
 }
 
@@ -62,7 +62,148 @@
 
 .admin-top-income {
     width: 45%;
-    height: 350px;
+    height: 345px;
     padding: 0 10px 0 30px;
     padding-right: 10px;
+}
+
+.admin-dashboard-layout .upgrade-packages{
+    padding: 10px 5px 5px 5px;
+    width: 100%;
+    height: 260px;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.admin-dashboard-layout .upgrade-package-free {
+    width: 260px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.upgrade-package-free .upgrade-package-header {
+    background-color: #2b4c70;
+    color: aliceblue;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+}
+.upgrade-package-free .upgrade-package-footer {
+    background-color: #2b4c70;
+    color: aliceblue;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+}
+.upgrade-package-body {
+    width: 100%;
+    height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 5px 10px;
+}
+
+.upgrade-package-body-line {
+    display: flex;
+}
+
+.admin-dashboard-layout .upgrade-package-starter {
+    width: 260px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.upgrade-package-starter .upgrade-package-header {
+    background-color: #2b6e35;
+    color: aliceblue;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+}
+
+.upgrade-package-starter .upgrade-package-footer {
+    background-color: #2b6e35;
+    color: aliceblue;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+}
+
+.admin-dashboard-layout .upgrade-package-business {
+    width: 260px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.upgrade-package-business .upgrade-package-header {
+    background-color: #7d354d;
+    color: aliceblue;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+}
+.upgrade-package-business .upgrade-package-footer {
+    background-color: #7d354d;
+    color: aliceblue;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+}
+
+.admin-dashboard-layout .upgrade-package-gold {
+    width: 260px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.upgrade-package-gold .upgrade-package-header {
+    background-color: #6b2b69;
+    color: aliceblue;
+    width: 100%;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+}
+.upgrade-package-gold .upgrade-package-footer {
+    background-color: #6b2b69;
+    color: aliceblue;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
 }

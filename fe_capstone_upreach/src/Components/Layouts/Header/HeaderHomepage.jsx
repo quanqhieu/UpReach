@@ -8,11 +8,15 @@ import "./HeaderHomepage.css";
 import { UPREACH } from "../../Constant/Const";
 import { useUserStore } from "../../../Stores/user";
 
-function RenderLogo({ onClickIntroduce }) {
-  const [user] = useUserStore((state) => [state.user]);
+function RenderLogo({ onClickIntroduce, onClickHomeMain }) {
+  const [user] = useUserStore((state) => [state?.user]);
   return (
     <div className="headerContent">
-      {user ? (
+      {user.roleId == 2 ? (
+        <div className="logoText" onClick={onClickHomeMain}>
+          {UPREACH}
+        </div>
+      ) : user.roleId == 3 ? (
         <div className="logoText">{UPREACH}</div>
       ) : (
         <div className="logoText" onClick={onClickIntroduce}>
@@ -48,8 +52,8 @@ const HeaderHomepage = (onClickIntroduce) => {
   let navigate = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies();
   const [user, setUserInfo] = useUserStore((state) => [
-    state.user,
-    state.setUserInfo,
+    state?.user,
+    state?.setUserInfo,
   ]);
 
   //click button will go to home page not logged in yet
@@ -95,9 +99,15 @@ const HeaderHomepage = (onClickIntroduce) => {
 
   return (
     <div className="HeaderHomepage">
-      <RenderLogo onClickIntroduce={navigateIntroduce} />
+      {user?.roleId == 2 ? (
+        <RenderLogo onClickHomeMain={navigateHomeMain} />
+      ) : user?.roleId == 3 ? (
+        <RenderLogo onClickHomeMain={navigateHomeMain} />
+      ) : (
+        <RenderLogo onClickIntroduce={navigateIntroduce} />
+      )}
       <div className="authBtn">
-        {user.roleId == 3 ? (
+        {user?.roleId == 3 ? (
           <div className="influencer-btn">
             <img
               className="influencer-avatar"

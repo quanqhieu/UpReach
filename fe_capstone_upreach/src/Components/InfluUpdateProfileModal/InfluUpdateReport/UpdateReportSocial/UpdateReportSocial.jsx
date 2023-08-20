@@ -59,28 +59,29 @@ const UpdateReportSocial = ({
 
   React.useEffect(() => {
     if (
-      influInfo?.influencerFollowFb == mokPreviewInflu.influencerFollowFb &&
+      influInfo?.influencerFollowFb == mokPreviewInflu?.influencerFollowFb &&
       influInfo?.influencerFollowInsta ==
-        mokPreviewInflu.influencerFollowInsta &&
+        mokPreviewInflu?.influencerFollowInsta &&
       influInfo?.influencerFollowYoutube ==
-        mokPreviewInflu.influencerFollowYoutube &&
+        mokPreviewInflu?.influencerFollowYoutube &&
       influInfo?.influencerFollowTikTok ==
-        mokPreviewInflu.influencerFollowTikTok &&
+        mokPreviewInflu?.influencerFollowTikTok &&
       influInfo?.influencerInteractionFb ==
-        mokPreviewInflu.influencerInteractionFb &&
+        mokPreviewInflu?.influencerInteractionFb &&
       influInfo?.influencerInteractionInsta ==
-        mokPreviewInflu.influencerInteractionInsta &&
+        mokPreviewInflu?.influencerInteractionInsta &&
       influInfo?.influencerInteractionYoutube ==
-        mokPreviewInflu.influencerInteractionYoutube &&
+        mokPreviewInflu?.influencerInteractionYoutube &&
       influInfo?.influencerInteractionTiktok ==
-        mokPreviewInflu.influencerInteractionTiktok &&
-      influInfo?.influencerEngagement == mokPreviewInflu.influencerEngagement &&
+        mokPreviewInflu?.influencerInteractionTiktok &&
+      influInfo?.influencerEngagement ==
+        mokPreviewInflu?.influencerEngagement &&
       influInfo?.influencerCostEstimateFrom ==
-        mokPreviewInflu.influencerCostEstimateFrom &&
+        mokPreviewInflu?.influencerCostEstimateFrom &&
       influInfo?.influencerCostEstimateTo ==
-        mokPreviewInflu.influencerCostEstimateTo &&
+        mokPreviewInflu?.influencerCostEstimateTo &&
       influInfo?.influencerPostsPerWeek ==
-        mokPreviewInflu.influencerPostsPerWeek
+        mokPreviewInflu?.influencerPostsPerWeek
     ) {
       setIsChange(false);
     } else {
@@ -164,7 +165,7 @@ const UpdateReportSocial = ({
                     onBlur={handleSubmit}
                     type="number"
                     onPressEnter={handleSubmit}
-                    value={influInfo.influencerEngagement}
+                    value={influInfo?.influencerEngagement}
                     maxLength={16}
                     style={{ width: "100px" }}
                     autoFocus
@@ -227,11 +228,11 @@ const UpdateReportSocial = ({
                         <span className="text-tooltip">
                           {influInfo?.influencerCostEstimateFrom?.length > 8
                             ? `${Number(influInfo?.influencerCostEstimateFrom)
-                                .toLocaleString("vi-VN")
-                                .slice(0, 10)}...`
+                                ?.toLocaleString("vi-VN")
+                                ?.slice(0, 10)}...`
                             : Number(
                                 influInfo?.influencerCostEstimateFrom
-                              ).toLocaleString("vi-VN")}
+                              )?.toLocaleString("vi-VN")}
                         </span>
                       </Tooltip>
                       <EditOutlined
@@ -274,11 +275,11 @@ const UpdateReportSocial = ({
                         <span className="text-tooltip">
                           {influInfo?.influencerCostEstimateTo?.length > 8
                             ? `${Number(influInfo?.influencerCostEstimateTo)
-                                .toLocaleString("vi-VN")
-                                .slice(0, 10)}...`
+                                ?.toLocaleString("vi-VN")
+                                ?.slice(0, 10)}...`
                             : Number(
                                 influInfo?.influencerCostEstimateTo
-                              ).toLocaleString("vi-VN")}
+                              )?.toLocaleString("vi-VN")}
                         </span>
                       </Tooltip>
                       <EditOutlined
@@ -348,9 +349,9 @@ const UpdateReportSocial = ({
             >
               {mokPreviewInflu?.influencerLinkFb === null
                 ? "Facebook"
-                : mokPreviewInflu?.influencerLinkFb.length <= 32
+                : mokPreviewInflu?.influencerLinkFb?.length <= 32
                 ? mokPreviewInflu?.influencerLinkFb
-                : mokPreviewInflu?.influencerLinkFb.slice(0, 32) + "..."}
+                : mokPreviewInflu?.influencerLinkFb?.slice(0, 32) + "..."}
             </a>
           </div>
           <div className="cover-follower-interaction">
@@ -448,9 +449,9 @@ const UpdateReportSocial = ({
             >
               {mokPreviewInflu?.influencerLinkInsta === null
                 ? "Instagram"
-                : mokPreviewInflu?.influencerLinkInsta.length <= 32
+                : mokPreviewInflu?.influencerLinkInsta?.length <= 32
                 ? mokPreviewInflu?.influencerLinkInsta
-                : mokPreviewInflu?.influencerLinkInsta.slice(0, 32) + "..."}
+                : mokPreviewInflu?.influencerLinkInsta?.slice(0, 32) + "..."}
             </a>
           </div>
           <div className="cover-follower-interaction">
@@ -547,9 +548,9 @@ const UpdateReportSocial = ({
             >
               {mokPreviewInflu?.influencerLinkYoutube === null
                 ? "Youtube"
-                : mokPreviewInflu?.influencerLinkYoutube.length <= 32
+                : mokPreviewInflu?.influencerLinkYoutube?.length <= 32
                 ? mokPreviewInflu?.influencerLinkYoutube
-                : mokPreviewInflu?.influencerLinkYoutube.slice(0, 32) + "..."}
+                : mokPreviewInflu?.influencerLinkYoutube?.slice(0, 32) + "..."}
             </a>
           </div>
           <div className="cover-follower-interaction">
@@ -645,9 +646,9 @@ const UpdateReportSocial = ({
             >
               {mokPreviewInflu?.influencerLinkTiktok === null
                 ? "Tiktok"
-                : mokPreviewInflu?.influencerLinkTiktok.length <= 32
+                : mokPreviewInflu?.influencerLinkTiktok?.length <= 32
                 ? mokPreviewInflu?.influencerLinkTiktok
-                : mokPreviewInflu?.influencerLinkTiktok.slice(0, 32) + "..."}
+                : mokPreviewInflu?.influencerLinkTiktok?.slice(0, 32) + "..."}
             </a>
           </div>
           <div className="cover-follower-interaction">

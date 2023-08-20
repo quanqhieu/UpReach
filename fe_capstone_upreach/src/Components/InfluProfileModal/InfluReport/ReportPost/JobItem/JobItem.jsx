@@ -10,9 +10,8 @@ import ClientBookingModal from "../../../../../Components/ClientBookingModal/Cli
 import { useUserStore } from "../../../../../Stores/user";
 
 const JobItem = ({ data }) => {
-  const [user] = useUserStore((state) => [state.user]);
+  // const [user] = useUserStore((state) => [state.user]);
 
-  console.log(data);
   const [isChange, setIsChange] = React.useState(false);
   const [openConfirmForm, setOpenConfirmForm] = React.useState(false);
   const [isOpenBooking, setIsOpenBooking] = React.useState(false);
@@ -113,7 +112,7 @@ const JobItem = ({ data }) => {
             className="booking-btn"
             type="primary"
             onClick={handleOpenModal}
-            disabled={data.clientId.includes(user.Client_ID)}
+            // disabled={data?.clientId?.includes(user?.Client_ID)}
           >
             Booking
           </Button>

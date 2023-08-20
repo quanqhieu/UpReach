@@ -29,7 +29,11 @@ const CardFilter = ({ onClick }) => {
     <div className="cardFilter">
       <div className="row">
         {LIST_CARD_FILTER.map((item, index) => (
-          <RenderFilter key={index} title={item.title} listItems={item.list} />
+          <RenderFilter
+            key={index}
+            title={item?.title}
+            listItems={item?.list}
+          />
         ))}
       </div>
       <div className="filterBtn">

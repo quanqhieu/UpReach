@@ -22,11 +22,11 @@ const ApproveInfluReport = ({ influInfo }) => {
           defaultActiveKey="1"
           type="card"
           size={"large"}
-          items={items.map((item, i) => {
+          items={items?.map((item, i) => {
             return {
-              label: item.title,
+              label: item?.title,
               key: i,
-              children: item.children,
+              children: item?.children,
             };
           })}
         />

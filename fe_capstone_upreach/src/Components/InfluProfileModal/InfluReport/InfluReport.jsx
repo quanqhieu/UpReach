@@ -10,11 +10,11 @@ const InfluReport = ({ influInfo }) => {
     { title: "SOCIAL", children: <ReportSocial influInfo={influInfo} /> },
     {
       title: "AUDIENCE",
-      children: <ReportAudience influInfo={influInfo.influencerId} />,
+      children: <ReportAudience influInfo={influInfo?.influencerId} />,
     },
     {
       title: "JOB",
-      children: <ReportPost influInfo={influInfo.influencerId} />,
+      children: <ReportPost influInfo={influInfo?.influencerId} />,
     },
   ];
 
@@ -25,11 +25,11 @@ const InfluReport = ({ influInfo }) => {
           defaultActiveKey="1"
           type="card"
           size={"large"}
-          items={items.map((item, i) => {
+          items={items?.map((item, i) => {
             return {
-              label: item.title,
+              label: item?.title,
               key: i,
-              children: item.children,
+              children: item?.children,
             };
           })}
         />

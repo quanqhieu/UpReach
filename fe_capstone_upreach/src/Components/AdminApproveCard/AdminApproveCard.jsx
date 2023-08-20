@@ -38,19 +38,19 @@ const AdminApproveCard = ({ reportApprove }) => {
         <div className="profile-socials">
           <div className="profile-social">
             <Facebook />
-            <p>{roundNumber(reportApprove?.platform.Follow_FB)}</p>
+            <p>{roundNumber(reportApprove?.platform?.Follow_FB)}</p>
           </div>
           <div className="profile-social">
             <Instagram />
-            <p>{roundNumber(reportApprove?.platform.Follow_Insta)}</p>
+            <p>{roundNumber(reportApprove?.platform?.Follow_Insta)}</p>
           </div>
           <div className="profile-social">
             <Youtube />
-            <p>{roundNumber(reportApprove?.platform.Follow_TikTok)}</p>
+            <p>{roundNumber(reportApprove?.platform?.Follow_TikTok)}</p>
           </div>
           <div className="profile-social">
             <Tiktok />
-            <p>{roundNumber(reportApprove?.platform.Follow_Youtube)}</p>
+            <p>{roundNumber(reportApprove?.platform?.Follow_Youtube)}</p>
           </div>
         </div>
         <div className="profile-images">

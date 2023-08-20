@@ -39,13 +39,13 @@ const ProfileCardComponent = ({ profileInflu }) => {
                   <></>
                 ) : (
                   profileInflu?.influencerContentTopicName
-                    .slice(0, 2)
-                    .map((topic, index) => (
+                    ?.slice(0, 2)
+                    ?.map((topic, index) => (
                       <div key={index} className="profile-topic">
                         <Tooltip placement="top" title={topic}>
                           <div>
                             {topic?.length > 8
-                              ? `${topic.slice(0, 8)}...`
+                              ? `${topic?.slice(0, 8)}...`
                               : topic}
                           </div>
                         </Tooltip>

@@ -11,14 +11,14 @@ import { EyeOutlined } from "@ant-design/icons";
 
 const InfluencerProfileCard = ({ profileInflu, previewInflu, oldVerInflu }) => {
   const currentDate = new Date();
-  const currentMonth = currentDate.getMonth();
-  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate?.getMonth();
+  const currentYear = currentDate?.getFullYear();
 
   let profileInfluMonth = currentMonth;
   let profileInfluYear = currentYear;
 
-  if (profileInflu.date) {
-    const [month, year] = profileInflu.date.split("/");
+  if (profileInflu?.date) {
+    const [month, year] = profileInflu?.date?.split("/");
 
     profileInfluMonth = parseInt(month, 10) - 1;
     profileInfluYear = parseInt(year, 10);
@@ -44,8 +44,8 @@ const InfluencerProfileCard = ({ profileInflu, previewInflu, oldVerInflu }) => {
               <div className="profile-topics">
                 {oldVerInflu?.influencerContentTopicName
                   ?.filter((topic) => topic)
-                  .slice(0, 2)
-                  .map((topic, index) => (
+                  ?.slice(0, 2)
+                  ?.map((topic, index) => (
                     <div key={index} className="profile-topic">
                       <Tooltip placement="top" title={topic}>
                         <div>
@@ -61,7 +61,7 @@ const InfluencerProfileCard = ({ profileInflu, previewInflu, oldVerInflu }) => {
           </div>
           <div className="profile-date-view">
             <div className="profile-date">
-              {profileInflu.isPublish ? "Available" : "Waiting"}
+              {profileInflu?.isPublish ? "Available" : "Waiting"}
             </div>
             {/* <div className="profile-view">
               <Tooltip

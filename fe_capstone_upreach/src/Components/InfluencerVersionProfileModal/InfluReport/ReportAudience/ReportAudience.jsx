@@ -7,8 +7,8 @@ const ReportAudience = ({ influInfo, dataReportVersion }) => {
   const [audienceGender, setAudienceGender] = React.useState([]);
   const [audienceAge, setAudienceAge] = React.useState([]);
   const [audienceLocation, setAudienceLocation] = React.useState([]);
-  console.log(audienceGender);
-  console.log(audienceAge);
+  // console.log(audienceGender);
+  // console.log(audienceAge);
 
   React.useEffect(() => {
     setAudienceFollower(dataReportVersion?.dataFollower);
@@ -33,9 +33,9 @@ const ReportAudience = ({ influInfo, dataReportVersion }) => {
     yField: "value",
   };
 
-  configFollower.data.sort((a, b) => {
-    const [aMonth, aYear] = a.monthFollow.split("/");
-    const [bMonth, bYear] = b.monthFollow.split("/");
+  configFollower?.data?.sort((a, b) => {
+    const [aMonth, aYear] = a.monthFollow?.split("/");
+    const [bMonth, bYear] = b.monthFollow?.split("/");
 
     if (parseInt(aYear, 10) !== parseInt(bYear, 10)) {
       return parseInt(aYear, 10) - parseInt(bYear, 10);
@@ -82,7 +82,7 @@ const ReportAudience = ({ influInfo, dataReportVersion }) => {
     minBarWidth: 16,
     maxBarWidth: 16,
   };
-  configAge.data.sort((a, b) => {
+  configAge?.data?.sort((a, b) => {
     return a.type.localeCompare(b.type);
   });
 

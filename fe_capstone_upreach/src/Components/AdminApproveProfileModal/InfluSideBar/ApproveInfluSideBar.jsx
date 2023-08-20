@@ -18,7 +18,7 @@ import {
 } from "@ant-design/icons";
 
 const ApproveInfluSideBar = ({ influInfo }) => {
-  console.log(influInfo);
+  // console.log(influInfo);
   const [badgeColor, setBadgeColor] = React.useState("");
   // React.useEffect(() => {
   //   switch (influInfo?.type?.at(0)) {
@@ -72,28 +72,28 @@ const ApproveInfluSideBar = ({ influInfo }) => {
                   className="profile-social-icon"
                   style={{ marginRight: "2px" }}
                 />
-                <p> {roundNumber(influInfo?.platform.Follow_FB)}</p>
+                <p> {roundNumber(influInfo?.platform?.Follow_FB)}</p>
               </div>
               <div className="profile-social">
                 <Instagram
                   className="profile-social-icon"
                   style={{ marginRight: "2px" }}
                 />
-                <p> {roundNumber(influInfo?.platform.Follow_Insta)}</p>
+                <p> {roundNumber(influInfo?.platform?.Follow_Insta)}</p>
               </div>
               <div className="profile-social">
                 <Youtube
                   className="profile-social-icon"
                   style={{ marginRight: "2px" }}
                 />
-                <p> {roundNumber(influInfo?.platform.Follow_Youtube)}</p>
+                <p> {roundNumber(influInfo?.platform?.Follow_Youtube)}</p>
               </div>
               <div className="profile-social">
                 <Tiktok
                   className="profile-social-icon"
                   style={{ marginRight: "2px" }}
                 />
-                <p> {roundNumber(influInfo?.platform.Follow_TikTok)}</p>
+                <p> {roundNumber(influInfo?.platform?.Follow_TikTok)}</p>
               </div>
             </div>
           </div>
