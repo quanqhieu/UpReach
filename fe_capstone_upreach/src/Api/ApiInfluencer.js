@@ -11,7 +11,7 @@ const ApiInfluencer = {
         return axiosClient.post(url, { email: email })
     },
     updateAvatarInfluencer(data){
-        const url = '/influ/updateAvatar'
+        const url = '/influ/updateInfluencer'
         return axiosClient.post(url,  data )
     }
 }

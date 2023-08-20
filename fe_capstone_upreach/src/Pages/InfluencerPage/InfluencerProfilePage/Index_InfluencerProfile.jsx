@@ -12,26 +12,91 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Navigate, useNavigate } from "react-router-dom";
 import ChangePassword from "../../ClientProfilePage/ChangePassword";
 import { Option } from "antd/es/mentions";
+import ApiInfluencer from "../../../Api/ApiInfluencer";
 
 const Index_InfluencerProfile = () => {
   const [isModalOpenChangePassword, setIsModalOpenChangePassword] =useState(false);
   const navigate = useNavigate(); 
-
+  const [status, setStatus] = useState()
+  const [message, setMessage] = useState()
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const [previewImage, setPreviewImage] = useState('');
+  const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState()
 
   const [formValues, setFormValues] = useState({
     image: '',
     fullName: '',
-    brandName: '',
-    phoneNumber: '',
+    nickName: '',
     location: '',
-    emailContact: '',
-    clientDetail: null,
+    gender: '',
+    age: '',
+    bio:"",
+    influencerType: "",
+    relationship: "",
+    emailContact: "",
+    phoneContact: "",
+    influencerDetail: null,
   });
-   
+
   function handleClickShowDialogChangePassword() {
     setIsModalOpenChangePassword(true);
   }
+  useEffect(() =>{
+    const influencerData = localStorage.getItem('user-draw-storage');
+    const formDataInfluencer = JSON.parse(influencerData);
+    const data = formDataInfluencer.state.user
+    setFormValues(prevDetails => ({ ...prevDetails, influencerDetail: data }));
+  },[])
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8000,
+    pauseOnFocusLoss: true,
+    draggable: true,
+    theme: "dark",
+  }
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({
+      ...formValues,
+      [name]: value
+    });
+  };
+  const handleSelectChange = (value, name) => {
+    setFormValues({
+      ...formValues,
+      [name]: value
+    });
+  };
+  const handleInputNumberChange = (value, name) => {
+    setFormValues({
+      ...formValues,
+      [name]: value
+    });
+  };
+
+  const onFinishUpdate = () => {
+    console.log(formValues)
+    FetchDataToUpdateInfluencer(formValues)
+  }
+  const FetchDataToUpdateInfluencer = async (data) => {
+    try {
+      const response = await ApiInfluencer.updateAvatarInfluencer(data);
+      if(response.status === "False"){
+        toast.error(response.message, toastOptions)
+        setStatus(response.status)
+        console.log(response)
+        return response;
+      }
+      toast.success(response.message, toastOptions)
+      setStatus(response.status)
+      console.log(response)
+      return response;
+    } catch (error) {
+      setMessage(error)
+      console.log(error);
+    }
+  };
 
   const items = [
     {
@@ -52,6 +117,47 @@ const Index_InfluencerProfile = () => {
     },
   ];
 
+  const getBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
+
+  const updateImageValue = (newValue) => {
+    setFormValues({
+      ...formValues, // Sao chép tất cả các giá trị hiện tại của formValues
+      image: newValue // Thay đổi giá trị của image thành newValue
+    });
+  };
+  const handleCancel = () => setPreviewOpen(false);
+  const handlePreview = async (file) => {
+    if (!file.url && !file.preview) {
+      file.preview = await getBase64(file.originFileObj);
+    }
+    setPreviewImage(file.url || file.preview);
+    setPreviewOpen(true);
+    setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
+  };
+  const handleChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+    updateImageValue(newFileList)
+  }
+  const uploadButton = (
+    <div>
+      <PlusOutlined />
+      <div
+      className="ant-upload"
+        style={{
+          marginTop: 8,
+        }}
+      >
+        Upload
+      </div>
+    </div>
+  );
+
   return (
     <Row style={{ marginTop: "4%" }}>
       <Col span={6}>
@@ -68,6 +174,7 @@ const Index_InfluencerProfile = () => {
                 name="validateOnly"
                 layout="vertical"
                 autoComplete="off"
+                onFinish={onFinishUpdate}
                 labelCol={{
                   span: 4,
                 }}
@@ -79,7 +186,7 @@ const Index_InfluencerProfile = () => {
                 }}
               >
                 <div>
-                  {/* <Form.Item>
+                  <Form.Item>
                   <Upload
                     action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                     listType="picture-card"
@@ -98,7 +205,7 @@ const Index_InfluencerProfile = () => {
                       src={previewImage}
                     />
                   </Modal>
-                  </Form.Item> */}
+                  </Form.Item>
                   <Form.Item
                     rules={[
                       {
@@ -106,10 +213,10 @@ const Index_InfluencerProfile = () => {
                         message: "Please input your Full Name!",
                       },
                     ]}
-                    name="fullname"
+                    name="fullName"
                     label="Full Name"
                   >
-                    <Input name="fullName"  style={{ border: "1px solid #9B9A9A" }} />
+                    <Input name="fullName" onChange={handleInputChange} style={{ border: "1px solid #9B9A9A" }} />
                   </Form.Item>
                   <Form.Item
                 name="nickname"
@@ -121,7 +228,7 @@ const Index_InfluencerProfile = () => {
                   },
                 ]}
               >
-                <Input placeholder="Enter Your Nickname" />
+                <Input name="nickName" onChange={handleInputChange}  placeholder="Enter Your Nickname" />
               </Form.Item>
               <Form.Item
                 name="location"
@@ -133,10 +240,10 @@ const Index_InfluencerProfile = () => {
                   },
                 ]}
               >
-                <Select placeholder="Select Your Location">
-                  <Option value="location1">TP Hồ Chí MInh</Option>
+                <Select placeholder="Select Your Location" name="location" onChange={(value) => handleSelectChange(value, 'location')}>
+                  <Option value="location1">TP Hồ Chí Minh</Option>
                   <Option value="location2">TP Hà Nội</Option>
-                  <Option value="location3">TP Hà Nội</Option>
+                  <Option value="location3">TP Đà Nẵng</Option>
                 </Select>
               </Form.Item>
               <Form.Item
@@ -149,7 +256,7 @@ const Index_InfluencerProfile = () => {
                   },
                 ]}
               >
-                <Select placeholder="Select Your Gender">
+                <Select placeholder="Select Your Gender" name="gender" onChange={(value) => handleSelectChange(value, 'gender')}>
                   <Option value="Male">Male</Option>
                   <Option value="Female">Female</Option>
                 </Select>
@@ -167,7 +274,7 @@ const Index_InfluencerProfile = () => {
                   },
                 ]}
               >
-                <InputNumber placeholder="Age" />
+                <InputNumber name="age" onChange={(value) => handleInputNumberChange(value, 'age')} placeholder="Age" />
               </Form.Item>
               <Form.Item
                 name="intro"
@@ -183,6 +290,7 @@ const Index_InfluencerProfile = () => {
                   placeholder="Enter Your Bio"
                   showCount
                   maxLength={500}
+                  name="bio" onChange={handleInputChange}
                 />
               </Form.Item>
               <Form.Item
@@ -195,7 +303,7 @@ const Index_InfluencerProfile = () => {
                   },
                 ]}
               >
-                <Select placeholder="Select Your Influencer Type ">
+                <Select placeholder="Select Your Influencer Type " name="influencerType" onChange={(value) => handleSelectChange(value, 'influencerType')}>
                   <Option value="IT01">Celebrity</Option>
                   <Option value="IT02">Talent</Option>
                   <Option value="IT03">Professional</Option>
@@ -213,7 +321,7 @@ const Index_InfluencerProfile = () => {
                   },
                 ]}
               >
-                <Select placeholder="Select Your Relationship ">
+                <Select placeholder="Select Your Relationship"  name="relationship" onChange={(value) => handleSelectChange(value, 'relationship')}>
                   <Option value="Single">Single</Option>
                   <Option value="Married">Married</Option>
                   <Option value="Single Mom">Single Mom</Option>
@@ -236,6 +344,7 @@ const Index_InfluencerProfile = () => {
                   <Input
                     className="information-btn"
                     placeholder="Email we can contact with you!"
+                    name="emailContact" onChange={handleInputChange}
                   />
                 </Form.Item>
                 <Form.Item
@@ -249,7 +358,7 @@ const Index_InfluencerProfile = () => {
                     },
                   ]}
                 >
-                  <Input placeholder="Phone we can contact with you!" />
+                  <Input name="phoneContact" onChange={handleInputChange} placeholder="Phone we can contact with you!" />
                 </Form.Item>
               </div>
                 </div>
