@@ -26,6 +26,8 @@ const AdminUserProfileLayout = () => {
   const [openConfirm, setOpenConfirm] = React.useState(false);
   const [force, setForce] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [listClient, setListClient] = React.useState([]);
+
   const check = async () => {
     if (editingId !== "") {
       const row = await form.validateFields();
@@ -52,42 +54,47 @@ const AdminUserProfileLayout = () => {
       } else return true;
     }
   };
+
+  const isEditing = (record) => {
+    return record?.clientId === editingId;
+  };
+
   const tags = [
     {
       title: "Full Name",
       dataIndex: "fullName",
-      width: "15%",
+      width: "18%",
       editable: true,
     },
     {
       title: "Brand Name",
       dataIndex: "brand",
-      width: "15%",
+      width: "14%",
       editable: true,
     },
     {
       title: "Email",
       dataIndex: "email",
-      width: "20%",
+      width: "19%",
       editable: true,
     },
     {
       title: "Phone Number",
       dataIndex: "phone",
-      width: "15%",
+      width: "14%",
       editable: true,
     },
     {
       title: "Address",
       dataIndex: "address",
-      width: "25%",
+      width: "19%",
       editable: true,
     },
 
     {
       title: <EditOutlined />,
       dataIndex: "edit",
-      width: "15%",
+      width: "11%",
       render: (_, record) => {
         const editable = isEditing(record);
 
@@ -159,12 +166,6 @@ const AdminUserProfileLayout = () => {
         ),
     },
   ];
-
-  const [listClient, setListClient] = React.useState([]);
-
-  const isEditing = (record) => {
-    return record?.clientId === editingId;
-  };
 
   const EditableCell = ({
     editing,

@@ -32,7 +32,7 @@ const AdminInfluencerLayout = () => {
     {
       title: "Full Name",
       dataIndex: "fullName",
-      width: "14%",
+      width: "19%",
       editable: true,
     },
     {
@@ -50,7 +50,7 @@ const AdminInfluencerLayout = () => {
     {
       title: "Relationship",
       dataIndex: "Relationship",
-      width: "8%",
+      width: "9%",
       editable: true,
     },
     {
@@ -68,14 +68,14 @@ const AdminInfluencerLayout = () => {
     {
       title: "Address",
       dataIndex: "Address",
-      width: "20%",
+      width: "15%",
       editable: true,
     },
 
     {
       title: <EditOutlined />,
       dataIndex: "edit",
-      width: "12%",
+      width: "11%",
       render: (_, record) => {
         const editable = isEditing(record);
 

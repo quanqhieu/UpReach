@@ -43,7 +43,7 @@ const VersionInfluSideBar = ({ influInfo, profileSideBar }) => {
 
   return (
     <>
-      <div className="approve-influ-side-bar-container">
+      <div className="version-influ-side-bar-container">
         <div className="side-bar-header-body">
           <div className="influ-side-bar-header">
             <img className="profile-avatar" src={default_img} alt="" />

@@ -25,7 +25,7 @@ const ReportPost = ({ influInfo }) => {
   return (
     <>
       <div className="report-post-layout">
-        {data?.data[0]?.dataJob === undefined ? (
+        {data?.data?.at(0)?.dataJob === undefined ? (
           <></>
         ) : (
           data?.data[0]?.dataJob.map((item) =>

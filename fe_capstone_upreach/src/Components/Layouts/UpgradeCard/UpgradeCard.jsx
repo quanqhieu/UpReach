@@ -31,9 +31,9 @@ const UpgradeCard = ({ upgradeCards }) => {
           </div>
           <div className="upgrade-card-cost">
             <p style={{ fontSize: "26px", fontWeight: "600" }}>
-              ${upgradeCards?.cost}
+              {upgradeCards?.cost}
             </p>
-            <p style={{ fontSize: "14px", fontWeight: "600" }}>/month</p>
+            <p style={{ fontSize: "14px", fontWeight: "600" }}>VND/month</p>
           </div>
 
           <Button
