@@ -71,7 +71,13 @@ const HeaderHomepage = (onClickIntroduce) => {
   };
 
   const navigateProfileInfluencer = () => {
-    navigate("/influencer/profile");
+    if(user.roleId == 3){
+      navigate("/influencer/profile");
+    }
+    if(user.roleId == 2){
+      navigate("/client-profile");
+    }
+    
   };
 
   const handleLogout = () => {

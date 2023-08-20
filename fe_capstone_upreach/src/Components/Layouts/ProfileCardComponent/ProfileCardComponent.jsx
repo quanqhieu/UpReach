@@ -7,14 +7,27 @@ import { ReactComponent as Tiktok } from "../../../Assets/Icon/Tiktok.svg";
 import { ReactComponent as Location } from "../../../Assets/Icon/Location.svg";
 import { ReactComponent as Addlist } from "../../../Assets/Icon/Addlist.svg";
 import { Tooltip } from "antd";
+import React, { useState, useEffect } from "react";
 
 const ProfileCardComponent = ({ profileInflu }) => {
+  const [images, setImages] = useState([]);
+  useEffect(() => {
+    setImages(profileInflu?.dataImage);
+  }, [profileInflu?.dataImage]);
   return (
     <>
       <div className="profile-layout">
         <div className="profile-content-layout">
           <div className="profile-avatar-content">
-            <img className="profile-avatar" src={default_img} alt="" />
+            <img
+              className="profile-avatar"
+              src={
+                profileInflu?.Avatar === null
+                  ? default_img
+                  : profileInflu?.Avatar
+              }
+              alt=""
+            />
             <div className="profile-content">
               <p className="profile-name">{profileInflu?.influencerNickName}</p>
               <div className="profile-location">
@@ -84,9 +97,21 @@ const ProfileCardComponent = ({ profileInflu }) => {
           </div>
         </div>
         <div className="profile-images">
+          {/* <img className="profile-image" src={default_img} alt="" />
           <img className="profile-image" src={default_img} alt="" />
-          <img className="profile-image" src={default_img} alt="" />
-          <img className="profile-image" src={default_img} alt="" />
+          <img className="profile-image" src={default_img} alt="" /> */}
+          {images
+            ?.filter(
+              (imageObj) => imageObj.url !== null && imageObj.uid !== null
+            )
+            .map((imageObj, index) => (
+              <img
+                key={index}
+                className="profile-image"
+                src={imageObj.url}
+                alt=""
+              />
+            ))}
         </div>
       </div>
     </>

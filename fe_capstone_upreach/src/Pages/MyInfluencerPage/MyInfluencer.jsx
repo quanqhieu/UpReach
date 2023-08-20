@@ -7,6 +7,7 @@ import {
   UnorderedListOutlined,
   HistoryOutlined,
   FileProtectOutlined,
+  FolderAddOutlined,
 } from "@ant-design/icons";
 import { Menu, Modal, Input, Form, Button, List } from "antd";
 import "./MyInfluencer.css";
@@ -68,7 +69,7 @@ const MyInfluencer = () => {
   listInfluencer.forEach((item) => {
     listMenu.push(getItem(item.Name_list, item.ClientLists_ID));
   });
-  listMenu.push(getItem("+ Add New", "new"));
+  listMenu.push(getItem("Add New", "new", <FolderAddOutlined />));
   const items = [
     {
       type: "divider",
@@ -259,7 +260,6 @@ const MyInfluencer = () => {
 
   return (
     <>
-
       {console.log(tabName)}
       {user?.roleId == 2 ? (
         <div className="coverMain">
@@ -274,7 +274,7 @@ const MyInfluencer = () => {
                 selectedKeys={[listSelected]}
               />
             </div>
-             <div className="col-10 padding-0">
+            <div className="col-10 padding-0">
               {checkTabListPage ? (
                 <MyListPage
                   listInfluencer={listInfluencer}
@@ -298,7 +298,9 @@ const MyInfluencer = () => {
               ) : (
                 <>
                   {tabName === "history" ? (
-                    <MyHistoryReport />
+                    <div className="content-history-bg">
+                      <MyHistoryReport />
+                    </div>
                   ) : tabName === "booking" ? (
                     <MyBookingPage />
                   ) : (

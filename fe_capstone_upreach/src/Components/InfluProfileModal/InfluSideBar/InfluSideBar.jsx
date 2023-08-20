@@ -49,7 +49,6 @@ const InfluSideBar = ({ influInfo }) => {
 
   const [valueRate, setValueRate] = React.useState(3.7);
 
-
   // coundown popup success
   const countDownSuccess = () => {
     let secondsToGo = 2;
@@ -118,7 +117,6 @@ const InfluSideBar = ({ influInfo }) => {
     if (checkedValues.length == 0) {
       setIsEnableAddBtn(true);
     }
-
   };
   //click add to list
   const AddTableKOLs = (e) => {
@@ -161,7 +159,11 @@ const InfluSideBar = ({ influInfo }) => {
       <div className="influ-side-bar-container">
         <div className="side-bar-header-body">
           <div className="influ-side-bar-header">
-            <img className="profile-avatar" src={default_img} alt="" />
+            <img
+              className="profile-avatar"
+              src={influInfo?.Avatar === null ? default_img : influInfo?.Avatar}
+              alt=""
+            />
             <p className="profile-name">{influInfo?.influencerfullName}</p>
             <div className="badge-block">
               <div
@@ -177,7 +179,7 @@ const InfluSideBar = ({ influInfo }) => {
                     marginRight: "8px",
                   }}
                 />
-                {influInfo?.influencerTypeName[0]}
+                {console.log(influInfo)}
               </div>
             </div>
             {/* <Button
@@ -268,16 +270,16 @@ const InfluSideBar = ({ influInfo }) => {
             <p className="profile-description">Description & Content type</p>
             <div className="profile-contents">
               <div className="profile-content">
-                <div className="profile-topics">
+                <div className="d-flex w-100">
                   {influInfo?.influencerContentTopicName?.map(
                     (topic, index) => (
                       <div key={index} className="profile-topic">
                         <Tooltip placement="top" title={topic}>
-                          <div>
-                            {topic?.length > 8
-                              ? `${topic?.slice(0, 8)}...`
-                              : topic}
-                          </div>
+                          {/* <div className="profile-topic"> */}
+                          {topic?.length > 8
+                            ? `${topic?.slice(0, 8)}...`
+                            : topic}
+                          {/* </div> */}
                         </Tooltip>
                       </div>
                     )

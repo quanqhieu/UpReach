@@ -10,6 +10,7 @@ import {
   SettingOutlined,
   EditOutlined,
   RestOutlined,
+  FolderAddOutlined
 } from "@ant-design/icons";
 import {
   Menu,
