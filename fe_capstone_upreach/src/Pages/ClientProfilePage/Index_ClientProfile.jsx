@@ -15,8 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Navigate, useNavigate } from "react-router-dom";
 
 const Index_ClientProfile = () => {
-  const [isModalOpenUpdateEmail, setIsModalOpenUpdateEmail] = useState(false);
-  const [isSubModel, setSubModel] = useState(false);
+ const [isSubModel, setSubModel] = useState(false);
   const [isModalOpenChangePassword, setIsModalOpenChangePassword] =useState(false);
   const [message, setMessage] = useState()
   const [status, setStatus] = useState()
@@ -111,9 +110,6 @@ const Index_ClientProfile = () => {
     </div>
   );
 
-  function handleClickShowDialog() {
-    setIsModalOpenUpdateEmail(true);
-  }
   function handleClickShowDialogChangePassword() {
     setIsModalOpenChangePassword(true);
   }
@@ -125,16 +121,7 @@ const Index_ClientProfile = () => {
       children: (
         <>
           <div>
-            <p>Sign-In Email</p>
-            <EditOutlined onClick={handleClickShowDialog} />
-            <UpdateEmail
-              isModalOpenUpdateEmail={isModalOpenUpdateEmail}
-              setIsModalOpenUpdateEmail={setIsModalOpenUpdateEmail}
-              isSubModel={isSubModel}
-              setSubModel={setSubModel}
-            />
-
-            <p>Password</p>
+            <p>Change Password</p>
             <EditOutlined onClick={handleClickShowDialogChangePassword} />
             <ChangePassword
               isModalOpenChangePassword={isModalOpenChangePassword}
