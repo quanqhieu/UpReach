@@ -25,7 +25,7 @@ const Index_ClientProfile = () => {
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState()
-
+  const [checkClientExist, setCheckClientExist] = useState(false)
   const [formValues, setFormValues] = useState({
     image: '',
     fullName: '',
@@ -36,23 +36,71 @@ const Index_ClientProfile = () => {
     clientDetail: null,
   });
 
- 
 
   useEffect(() =>{
-    const data = localStorage.getItem('formData');
-    const formDataJson = JSON.parse(data);
-    setFormValues(prevDetails => ({ ...prevDetails, clientDetail: formDataJson }));
+    const newClient = localStorage.getItem('formData');
+    if(localStorage.getItem('user-draw-storage') !== null){
+      const oldClient = localStorage.getItem('user-draw-storage');
+      const formDataOldClientJson = JSON.parse(oldClient);
+      const data = formDataOldClientJson.state.user
+      console.log(data)
+      setFormValues(prevDetails => ({ ...prevDetails, clientDetail: data }));
+      FetchDataCheckProfile(data)
+      return
+    }
+    const formDataNewClientJson = JSON.parse(newClient);
+    setFormValues(prevDetails => ({ ...prevDetails, clientDetail: formDataNewClientJson }));
+    console.log(formDataNewClientJson)
+    FetchDataCheckProfile(formDataNewClientJson)
     if(status ==='True'){
       navigate('/homepage')
-    }
+    } 
   },[status])
 
-  const onFinish = () => {
+  const onFinishInsertClient = () => {
     console.log(formValues)
-    FetchDataProfile(formValues)
+    FetchInsertClientProfile(formValues)
   }
 
-  const FetchDataProfile = async (data) => {
+  const onFinishUpdateClient = () => {
+    console.log(formValues)
+    FetchUpdateClientProfile(formValues)
+  }
+
+  const FetchDataCheckProfile = async (data) => {
+    try {
+      const response = await ApiListClient.checkClientExisted(data);
+      if(response.status === "True"){
+        setCheckClientExist(true)
+      }
+      console.log(response)
+      return response;
+    } catch (error) {
+      setMessage(error)
+      console.log(error);
+    }
+    
+  }
+
+  const FetchInsertClientProfile = async (data) => {
+    try {
+      const response = await ApiListClient.addProfileClient(data);
+      if(response.status === "False"){
+        toast.error(response.message, toastOptions)
+        setStatus(response.status)
+        return ;
+      }
+      toast.success(response.message, toastOptions)
+      setStatus(response.status)
+      console.log(response)
+      return response;
+    } catch (error) {
+      setMessage(error)
+      console.log(error);
+    }
+  };
+  
+  const FetchUpdateClientProfile = async (data) => {
     try {
       const response = await ApiListClient.updateProfileClient(data);
       if(response.status === "False"){
@@ -163,7 +211,7 @@ const Index_ClientProfile = () => {
             <div>
               <Form
                 className="client-form"
-                onFinish= {onFinish}
+                onFinish= {checkClientExist ? onFinishUpdateClient : onFinishInsertClient}
                 name="validateOnly"
                 layout="vertical"
                 autoComplete="off"
