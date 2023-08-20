@@ -261,3 +261,6 @@
 .result-content{
 	background-color: #ececec;
 }
+.overflow-hidden{
+	overflow: hidden !important;
+}

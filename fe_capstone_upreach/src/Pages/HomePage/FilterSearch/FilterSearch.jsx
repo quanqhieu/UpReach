@@ -22,6 +22,7 @@ import DropdownOfSlider from "./DropdownOfSlider";
 import ButtonDropdown from "./ButtonDropdown";
 import DropdownOfAudience from "./DropdownOfAudience";
 import ApiGetInfoAndFilterInfluencer from "../../../Api/ApiGetInfoAndFilterInfluencer";
+import PointAndHistoryReport from "../../../Api/ApiPointAndHistoryReport";
 
 function RenderSelectSearch({
   className,
@@ -263,6 +264,8 @@ const FilterSearch = ({
   loading,
   pointSearch,
   setPointSearch,
+  isShowPopupUpgrade,
+  setIsShowPopupUpgrade,
 }) => {
   const [platform, setPlatform] = useState([]);
   const [category, setCategory] = useState([]);
@@ -271,13 +274,30 @@ const FilterSearch = ({
   const [oldDataSearchToCheck, setOldDataSearchToCheck] = useState([]);
   const [checkClearAllInputSearch, setcheckClearAllInputSearch] =
     useState(false);
-
-  const handleSubmitFilter = () => {
-    if (dataSearchToCheck != oldDataSearchToCheck) {
-      setPointSearch(pointSearch - 10);
+  // BE update point search
+  const updatePointSearch = async (PointSearch) => {
+    try {
+      const User = await JSON.parse(localStorage.getItem("user-draw-storage"))
+        .state.user;
+      const response = await PointAndHistoryReport.updatePointSearch(
+        User.Client_ID,
+        PointSearch
+      );
+      console.log(response);
+    } catch (error) {
+      console.log("Error fetching data:", error);
     }
-    setIsClickSearch(true);
-    setLoading(true);
+  };
+  //===========================================
+  const handleSubmitFilter = () => {
+    if (dataSearchToCheck != oldDataSearchToCheck && pointSearch - 10 > 0) {
+      updatePointSearch(pointSearch - 10);
+      setPointSearch(pointSearch - 10);
+      setIsClickSearch(true);
+      setLoading(true);
+    } else {
+      setIsShowPopupUpgrade(true);
+    }
   };
 
   const handleChangePlatform = (selectPlatfrom) => {
