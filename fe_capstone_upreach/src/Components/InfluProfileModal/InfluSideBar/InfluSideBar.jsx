@@ -44,13 +44,35 @@ const InfluSideBar = ({ influInfo }) => {
   const [listSelected, setListSelected] = useState();
   const [listInfluencer, setListInfluencer] = useState([]);
   const [idAccClient, setIdAccClient] = useState("");
+
+  const [isEnableAddBtn, setIsEnableAddBtn] = useState(true);
+
   const [valueRate, setValueRate] = React.useState(3.7);
 
-  const success = () => {
-    Modal.success({
-      width: "800px",
-      content: "Added to a list",
+
+  // coundown popup success
+  const countDownSuccess = () => {
+    let secondsToGo = 2;
+
+    const instance = Modal.success({
+      style: { top: "75vh", marginLeft: "2%" },
+      title: "Success",
+      closable: "true",
+      destroyOnClose: "true",
+      footer: "",
+      zIndex: "1001",
+      width: "600px",
+      content: "Added to a list successful ",
     });
+
+    const timer = setInterval(() => {
+      secondsToGo -= 1;
+    }, 1000);
+
+    setTimeout(() => {
+      clearInterval(timer);
+      instance.destroy();
+    }, secondsToGo * 1000);
   };
 
   function SaveToListOnClick() {
@@ -90,7 +112,13 @@ const InfluSideBar = ({ influInfo }) => {
   //========================================================================
   const OnChange = (checkedValues) => {
     setListSelected(checkedValues);
-    // console.log(checkedValues);
+
+    console.log(checkedValues);
+    setIsEnableAddBtn(false);
+    if (checkedValues.length == 0) {
+      setIsEnableAddBtn(true);
+    }
+
   };
   //click add to list
   const AddTableKOLs = (e) => {
@@ -98,8 +126,9 @@ const InfluSideBar = ({ influInfo }) => {
       const listKOLsID = uuid()?.slice(0, 8);
       fetchAddTableKOLs(listKOLsID, influInfo?.influencerId, idListSelected);
     });
-    fetchDataGetList(influInfo?.influencerId);
-    success();
+
+    fetchDataGetList(influInfo.influencerId);
+    countDownSuccess();
   };
   useEffect(() => {
     switch (influInfo?.influencerTypeName[0]) {
@@ -190,11 +219,12 @@ const InfluSideBar = ({ influInfo }) => {
                     </Row>
                   </Checkbox.Group>
                   <Button
-                    className="profile-btn"
+                    className="add-list-btn"
                     type="default"
                     shape="round"
                     size="large"
                     onClick={AddTableKOLs}
+                    disabled={isEnableAddBtn}
                   >
                     <p
                       style={{

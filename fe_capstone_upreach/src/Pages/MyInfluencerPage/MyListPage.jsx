@@ -57,6 +57,8 @@ const MyListPage = ({
   const [isEmptyInput, setIsEmptyInput] = useState(false);
   const [isNameListExist, setIsNameListExist] = useState(false);
   const [form] = Form.useForm();
+  const [dataPieChart, setDataPieChart] = useState();
+  const [dataBarChart, setDataBarChart] = useState();
   // const [namelist, setNameList] = useState();
 
   // var numberElement = findUserById(IDList);
@@ -65,91 +67,91 @@ const MyListPage = ({
 
   // Data apply ==================================
 
-  const dataPieChart = {
-    chart: {
-      type: "pie",
-      height: 250,
-    },
-    title: {
-      text: "",
-    },
-    credits: {
-      enabled: false,
-    },
-    plotOptions: {
-      pie: {
-        innerSize: 100,
-        depth: 45,
-      },
-    },
+  // const dataPieChart = {
+  //   chart: {
+  //     type: "pie",
+  //     height: 250,
+  //   },
+  //   title: {
+  //     text: "",
+  //   },
+  //   credits: {
+  //     enabled: false,
+  //   },
+  //   plotOptions: {
+  //     pie: {
+  //       innerSize: 100,
+  //       depth: 45,
+  //     },
+  //   },
 
-    series: [
-      {
-        name: "Ratio ",
-        data: [
-          {
-            name: "Male",
-            // y: object?.Table.length === 0 ? [] : object?.dataMale,
-            y: null,
-          },
-          {
-            name: "Female",
-            // y: object?.Table.length === 0 ? [] : object?.dataFemale,
-            y: null,
-          },
-        ],
-      },
-    ],
-  };
-  const dataBarChart = {
-    chart: {
-      type: "bar",
-      height: 250,
-    },
-    title: {
-      text: "",
-    },
-    credits: {
-      enabled: false,
-    },
-    legend: {
-      align: "right",
-      verticalAlign: "top",
-      layout: "vertical",
-    },
-    xAxis: {
-      categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
-    },
-    yAxis: {
-      gridLineWidth: 0,
-    },
-    plotOptions: {
-      series: {
-        pointWidth: 10,
-      },
-    },
+  //   series: [
+  //     {
+  //       name: "Ratio ",
+  //       data: [
+  //         {
+  //           name: "Male",
+  //           // y: object?.Table.length === 0 ? [] : object?.dataMale,
+  //           y: null,
+  //         },
+  //         {
+  //           name: "Female",
+  //           // y: object?.Table.length === 0 ? [] : object?.dataFemale,
+  //           y: null,
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // };
+  // const dataBarChart = {
+  //   chart: {
+  //     type: "bar",
+  //     height: 250,
+  //   },
+  //   title: {
+  //     text: "",
+  //   },
+  //   credits: {
+  //     enabled: false,
+  //   },
+  //   legend: {
+  //     align: "right",
+  //     verticalAlign: "top",
+  //     layout: "vertical",
+  //   },
+  //   xAxis: {
+  //     categories: [
+  //       "Jan",
+  //       "Feb",
+  //       "Mar",
+  //       "Apr",
+  //       "May",
+  //       "Jun",
+  //       "Jul",
+  //       "Aug",
+  //       "Sep",
+  //       "Oct",
+  //       "Nov",
+  //       "Dec",
+  //     ],
+  //   },
+  //   yAxis: {
+  //     gridLineWidth: 0,
+  //   },
+  //   plotOptions: {
+  //     series: {
+  //       pointWidth: 10,
+  //     },
+  //   },
 
-    series: [
-      {
-        name: "Age",
-        // data: object?.Table.length === 0 ? [] : object?.bar,
-        data: [],
-      },
-    ],
-  };
+  //   series: [
+  //     {
+  //       name: "Age",
+  //       // data: object?.Table.length === 0 ? [] : object?.bar,
+  //       data: [],
+  //     },
+  //   ],
+  // };
   const columns = [
     {
       title: "All",
@@ -162,7 +164,9 @@ const MyListPage = ({
       title: "Followers",
       dataIndex: "followers",
       key: "followers",
-      render: (text) => <Tag color="blue">{(parseInt(text) / 1000).toFixed(1) + "K"}</Tag>,
+      render: (text) => (
+        <Tag color="blue">{(parseInt(text) / 1000).toFixed(1) + "K"}</Tag>
+      ),
     },
     {
       title: "Interactions",
@@ -260,6 +264,127 @@ const MyListPage = ({
     }
   };
   //===============================================================================
+  //============================= Get Data Chart Audiance=============================
+  const fetchDataAge = async () => {
+    try {
+      const ListKOLsIndenifier = [];
+      object?.Table.forEach((element) => {
+        ListKOLsIndenifier.push(element.key);
+      });
+      const response = await ApiListInfluecer.getAudienceDataAge(
+        ListKOLsIndenifier
+      );
+      setDataPieChart({
+        chart: {
+          type: "pie",
+          height: 250,
+        },
+        title: {
+          text: "",
+        },
+        credits: {
+          enabled: false,
+        },
+        plotOptions: {
+          pie: {
+            innerSize: 100,
+            depth: 45,
+          },
+        },
+
+        series: [
+          {
+            name: "Ratio ",
+            data: [
+              {
+                name: "Male",
+                y:
+                  object?.Table.length === 0
+                    ? []
+                    : (response.data[0]?.Quantity * 100) /
+                      (response.data[0]?.Quantity + response.data[1]?.Quantity),
+                // y: null,
+              },
+              {
+                name: "Female",
+                y:
+                  object?.Table.length === 0
+                    ? []
+                    : (response.data[1]?.Quantity * 100) /
+                      (response.data[0]?.Quantity + response.data[1]?.Quantity),
+                // y: null,
+              },
+            ],
+          },
+        ],
+      });
+    } catch (error) {
+      console.log("Error fetching data:", error);
+    }
+  };
+
+  const fetchDataGender = async () => {
+    try {
+      const ListKOLsIndenifier = [];
+      object?.Table.forEach((element) => {
+        ListKOLsIndenifier.push(element.key);
+      });
+      const response = await ApiListInfluecer.getAudienceDataGender(
+        ListKOLsIndenifier
+      );
+      const ListDataBarChart = [];
+      response.data.forEach((item) => {
+        ListDataBarChart.push(item.Quantity);
+      });
+      setDataBarChart({
+        chart: {
+          type: "bar",
+          height: 250,
+        },
+        title: {
+          text: "",
+        },
+        credits: {
+          enabled: false,
+        },
+        legend: {
+          align: "right",
+          verticalAlign: "top",
+          layout: "vertical",
+        },
+        xAxis: {
+          categories:
+            object?.Table.length === 0
+              ? []
+              : [
+                  response.data[0].AudienceAge,
+                  response.data[1].AudienceAge,
+                  response.data[2].AudienceAge,
+                  response.data[3].AudienceAge,
+                ],
+        },
+        yAxis: {
+          gridLineWidth: 0,
+        },
+        plotOptions: {
+          series: {
+            pointWidth: 10,
+          },
+        },
+
+        series: [
+          {
+            name: "Age",
+            data: object?.Table.length === 0 ? [] : ListDataBarChart,
+            // data: [],
+          },
+        ],
+      });
+    } catch (error) {
+      console.log("Error fetching data:", error);
+    }
+  };
+  //===============================================================================
   // delete Influencer
   const handleDelete = (key) => {
     console.log(key + "," + object.id);
@@ -308,11 +433,8 @@ const MyListPage = ({
   }, [object, form, editValue]);
 
   useEffect(() => {
-    // if (pieChart.current) {
-    //   pieChart.current.chart.series[0].remove(false);
-    //   series.remove();
-    //   pieChart.current.chart.redraw();
-    // }
+    fetchDataAge();
+    fetchDataGender();
   }, [object]);
 
   const handleChangeValue = (event) => {

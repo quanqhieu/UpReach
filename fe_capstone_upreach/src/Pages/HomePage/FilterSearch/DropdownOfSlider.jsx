@@ -115,6 +115,7 @@ const DropdownOfSlider = ({
       setDataSearch({ ...dataSearch, postsPerWeekTo: defaultValue[1] });
       setValue(defaultValue);
     }
+
     // change background when onchange filter
     document.getElementById(titleBtn).classList.remove("active-filter");
   };
