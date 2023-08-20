@@ -219,7 +219,6 @@ const InfluencerReportLayout = () => {
       })
       .then((response) => {
         const info = response?.data.Influencer;
-
         setProfileVersion(info);
         setPreviewInflu(() => {
           return info?.sort(
@@ -227,16 +226,21 @@ const InfluencerReportLayout = () => {
               new Date(b?.dateEdit).getTime() - new Date(a?.dateEdit).getTime()
           )[0];
         });
-
         setMokPreviewInflu(() => {
           return info?.sort(
             (a, b) =>
               new Date(b?.dateEdit).getTime() - new Date(a?.dateEdit).getTime()
           )[0];
         });
-        setOldVerInflu(() => {
-          return info?.find((item) => item?.isPublish);
-        });
+        if (info?.some((item) => item?.isPublish)) {
+          setOldVerInflu(() => {
+            return info?.find((item) => item?.isPublish);
+          });
+        } else {
+          setOldVerInflu(() => {
+            return info?.find((item) => !item?.isPublish);
+          });
+        }
       })
       .catch((error) => {
         console.error("Error while fetching profile information:", error);

@@ -10,16 +10,13 @@ const AdminApproveProfile = ({
   setIsOpenApproveProfile,
 }) => {
   const handleApprove = () => {
+    console.log(approveReport);
     axios
       .post("http://localhost:4000/api/admin/approve-report", {
         userId: approveReport.user.User_ID,
         kolsId: approveReport.user.KOLs_ID,
         profilesId: approveReport.user.Profile_ID,
         platformsId: approveReport.user.Platform_ID,
-        profile: {
-          topics: approveReport.topics,
-          types: approveReport.type,
-        },
       })
       .then((response) => {
         setForce((prev) => prev + 1);

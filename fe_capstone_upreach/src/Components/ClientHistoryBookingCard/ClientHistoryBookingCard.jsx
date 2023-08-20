@@ -212,11 +212,11 @@ const ClientHistoryBookingCard = ({ bookingList }) => {
                 bookingList.status === "Pending" ||
                 bookingList.status === "Processing" ||
                 bookingList.status === "Rejected" ||
-                bookingList.feedback === 1 ||
-                bookingList.feedback === 2 ||
-                bookingList.feedback === 3 ||
-                bookingList.feedback === 4 ||
-                bookingList.feedback === 5
+                bookingList.feedback == 1 ||
+                bookingList.feedback == 2 ||
+                bookingList.feedback == 3 ||
+                bookingList.feedback == 4 ||
+                bookingList.feedback == 5
               }
             >
               Send feedback

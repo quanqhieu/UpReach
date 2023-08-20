@@ -50,8 +50,9 @@ const AdminReportLayout = () => {
         },
       })
       .then((response) => {
-        const info = response.data.data;
+        const info = response?.data?.data;
         setApproveReport(info);
+        console.log(info);
         setIsLoading(false);
       })
       .catch((error) => {

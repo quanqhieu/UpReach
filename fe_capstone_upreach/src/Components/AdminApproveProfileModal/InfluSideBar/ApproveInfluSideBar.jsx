@@ -18,28 +18,29 @@ import {
 } from "@ant-design/icons";
 
 const ApproveInfluSideBar = ({ influInfo }) => {
+  console.log(influInfo);
   const [badgeColor, setBadgeColor] = React.useState("");
-  React.useEffect(() => {
-    switch (influInfo.type[0]) {
-      case "Professional":
-        setBadgeColor("#C837AB");
-        break;
-      case "Talent":
-        setBadgeColor("#FFDD55");
-        break;
-      case "Celebrity":
-        setBadgeColor("#218DE8");
-        break;
-      case "Community":
-        setBadgeColor("#FF004F");
-        break;
-      case "Citizen":
-        setBadgeColor("#96F0AF");
-        break;
-      default:
-        return;
-    }
-  }, [influInfo.type[0]]);
+  // React.useEffect(() => {
+  //   switch (influInfo?.type?.at(0)) {
+  //     case "Professional":
+  //       setBadgeColor("#C837AB");
+  //       break;
+  //     case "Talent":
+  //       setBadgeColor("#FFDD55");
+  //       break;
+  //     case "Celebrity":
+  //       setBadgeColor("#218DE8");
+  //       break;
+  //     case "Community":
+  //       setBadgeColor("#FF004F");
+  //       break;
+  //     case "Citizen":
+  //       setBadgeColor("#96F0AF");
+  //       break;
+  //     default:
+  //       return;
+  //   }
+  // }, [influInfo?.type?.at(0)]);
 
   return (
     <>
@@ -47,8 +48,8 @@ const ApproveInfluSideBar = ({ influInfo }) => {
         <div className="side-bar-header-body">
           <div className="influ-side-bar-header">
             <img className="profile-avatar" src={default_img} alt="" />
-            <p className="profile-name">{influInfo.profile.fullName}</p>
-            <div className="badge-block">
+            <p className="profile-name">{influInfo?.profile?.fullName}</p>
+            {/* <div className="badge-block">
               <div
                 style={{
                   border: `2px solid ${badgeColor}`,
@@ -62,37 +63,37 @@ const ApproveInfluSideBar = ({ influInfo }) => {
                     marginRight: "8px",
                   }}
                 />
-                {influInfo.type[0]}
+                {influInfo?.type?.at(0)}
               </div>
-            </div>
+            </div> */}
             <div className="profile-socials">
               <div className="profile-social">
                 <Facebook
                   className="profile-social-icon"
                   style={{ marginRight: "2px" }}
                 />
-                <p> {roundNumber(influInfo.platform.Follow_FB)}</p>
+                <p> {roundNumber(influInfo?.platform.Follow_FB)}</p>
               </div>
               <div className="profile-social">
                 <Instagram
                   className="profile-social-icon"
                   style={{ marginRight: "2px" }}
                 />
-                <p> {roundNumber(influInfo.platform.Follow_Insta)}</p>
+                <p> {roundNumber(influInfo?.platform.Follow_Insta)}</p>
               </div>
               <div className="profile-social">
                 <Youtube
                   className="profile-social-icon"
                   style={{ marginRight: "2px" }}
                 />
-                <p> {roundNumber(influInfo.platform.Follow_Youtube)}</p>
+                <p> {roundNumber(influInfo?.platform.Follow_Youtube)}</p>
               </div>
               <div className="profile-social">
                 <Tiktok
                   className="profile-social-icon"
                   style={{ marginRight: "2px" }}
                 />
-                <p> {roundNumber(influInfo.platform.Follow_TikTok)}</p>
+                <p> {roundNumber(influInfo?.platform.Follow_TikTok)}</p>
               </div>
             </div>
           </div>
@@ -100,39 +101,41 @@ const ApproveInfluSideBar = ({ influInfo }) => {
             <p className="profile-description">Description & Content type</p>
             <div className="profile-contents">
               <div className="profile-content">
-                <div className="profile-topics">
-                  {influInfo.topics.map((topic, index) => (
+                {/* <div className="profile-topics">
+                  {influInfo?.topics?.map((topic, index) => (
                     <div key={index} className="profile-topic">
                       <Tooltip placement="top" title={topic}>
                         <div>
-                          {topic.length > 8 ? `${topic.slice(0, 8)}...` : topic}
+                          {topic?.length > 8
+                            ? `${topic?.slice(0, 8)}...`
+                            : topic}
                         </div>
                       </Tooltip>
                     </div>
                   ))}
-                </div>
+                </div> */}
                 <div className="profile-location">
                   <Location style={{ marginRight: "8px" }} />
-                  <p>{influInfo.profile.Address}</p>
+                  <p>{influInfo?.profile?.Address}</p>
                 </div>
                 <div className="profile-gender">
                   <p style={{ marginRight: "5px" }}>Gender:</p>
-                  <p>{influInfo.profile.Gender}</p>
+                  <p>{influInfo?.profile?.Gender}</p>
                 </div>
                 <div className="profile-age">
                   <p style={{ marginRight: "5px" }}>Age:</p>
-                  <p>{influInfo.profile.Age}</p>
+                  <p>{influInfo?.profile?.Age}</p>
                 </div>
                 <div className="profile-marriage-status">
                   <HeartOutlined style={{ marginRight: "8px" }} />
 
-                  <p>{influInfo.profile.Relationship}</p>
+                  <p>{influInfo?.profile?.Relationship}</p>
                 </div>
               </div>
               <div className="profile-biography">
                 <p className="profile-biography-title">Biography</p>
                 <p className="profile-biography-content">
-                  {influInfo.profile.Bio}
+                  {influInfo?.profile?.Bio}
                 </p>
               </div>
             </div>
@@ -144,11 +147,11 @@ const ApproveInfluSideBar = ({ influInfo }) => {
             <div className="contact-info ">
               <div className={"contact-email lock-info"}>
                 <MailFilled style={{ marginRight: "8px" }} />
-                <p className="contact-text">{influInfo.profile.Email}</p>
+                <p className="contact-text">{influInfo?.profile?.Email}</p>
               </div>
               <div className={"contact-phone lock-info"}>
                 <PhoneFilled style={{ marginRight: "8px" }} />
-                <p className="contact-text">{influInfo.profile.Phone}</p>
+                <p className="contact-text">{influInfo?.profile?.Phone}</p>
               </div>
             </div>
           </div>

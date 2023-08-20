@@ -25,6 +25,7 @@ const InfluUpdateProfileModal = ({
 }) => {
   const [api, contextHolder] = notification.useNotification();
 
+  console.log(oldVerInflu);
   const openNotification = (placement) => {
     api.info({
       message: `Notification about booking`,
@@ -47,6 +48,12 @@ const InfluUpdateProfileModal = ({
     formData.append("chart", JSON.stringify(previewChart));
     formData.append("booking", JSON.stringify(previewBooking));
     formData.append("idRemove", JSON.stringify(idJobsRemove));
+    formData.append(
+      "topics",
+      JSON.stringify(oldVerInflu?.influencerContentTopicName)
+    );
+    formData.append("type", JSON.stringify(oldVerInflu?.influencerTypeName));
+
     formData.append("editDate", dateVN7);
 
     axios
@@ -107,7 +114,7 @@ const InfluUpdateProfileModal = ({
     );
     setIsNotCheck(hasPendingJob);
   }, [previewBooking]);
-  console.log(isChange);
+  // console.log(isChange);
   return (
     <>
       {contextHolder}
