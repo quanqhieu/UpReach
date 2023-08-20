@@ -26,7 +26,7 @@ const ProfileCardComponent = ({ profileInflu }) => {
                   <></>
                 ) : (
                   profileInflu?.influencerContentTopicName
-                    .slice(0, profileInflu?.influencerContentTopicName?.length)
+                    .slice(0, 2)
                     .map((topic, index) => (
                       <div key={index} className="profile-topic">
                         <Tooltip placement="top" title={topic}>
@@ -39,6 +39,7 @@ const ProfileCardComponent = ({ profileInflu }) => {
                       </div>
                     ))
                 )}
+
               </div>
             </div>
           </div>

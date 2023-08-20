@@ -2,25 +2,40 @@ import "./ReportAudience.css";
 import { Row, Col } from "antd";
 import { Line, Pie, Bar } from "@ant-design/plots";
 import React from "react";
-const ReportAudience = (influInfo) => {
-  const [audienceFollower, setAudienceFollower] = React.useState(
-    influInfo.influInfo.influInfo.audienceFollower
-  );
-  const [audienceGender, setAudienceGender] = React.useState(
-    influInfo.influInfo.influInfo.audienceGender
-  );
-  const [audienceAge, setAudienceAge] = React.useState(
-    influInfo.influInfo.influInfo.audienceAge
-  );
-  const [audienceLocation, setAudienceLocation] = React.useState(
-    influInfo.influInfo.influInfo.audienceLocation
-  );
+const ReportAudience = ({ influInfo }) => {
+  const [audienceFollower, setAudienceFollower] = React.useState([]);
+  const [audienceGender, setAudienceGender] = React.useState([]);
+  const [audienceAge, setAudienceAge] = React.useState([]);
+  const [audienceLocation, setAudienceLocation] = React.useState([]);
+
+  React.useEffect(() => {
+    setAudienceFollower(influInfo.audienceFollower);
+    setAudienceGender(influInfo.audienceGender);
+    setAudienceAge(influInfo.audienceAge);
+    setAudienceLocation(influInfo.audienceLocation);
+  }, [
+    influInfo.audienceFollower,
+    influInfo.audienceGender,
+    influInfo.audienceAge,
+    influInfo.audienceLocation,
+  ]);
 
   const configFollower = {
     data: audienceFollower,
     xField: "AudienceFollowerMonth",
     yField: "Quantity",
   };
+
+  configFollower.data.sort((a, b) => {
+    const [aMonth, aYear] = a.AudienceFollowerMonth.split("/");
+    const [bMonth, bYear] = b.AudienceFollowerMonth.split("/");
+
+    if (parseInt(aYear, 10) !== parseInt(bYear, 10)) {
+      return parseInt(aYear, 10) - parseInt(bYear, 10);
+    }
+    return parseInt(aMonth, 10) - parseInt(bMonth, 10);
+  });
+
   const configGender = {
     data: audienceGender,
     angleField: "Quantity",
@@ -52,6 +67,9 @@ const ReportAudience = (influInfo) => {
     maxBarWidth: 16,
   };
 
+  configAge.data.sort((a, b) => {
+    return a.AgeRange.localeCompare(b.AgeRange);
+  });
   const configLocation = {
     data: audienceLocation,
     xField: "Quantity",

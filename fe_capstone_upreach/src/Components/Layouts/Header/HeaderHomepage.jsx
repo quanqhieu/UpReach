@@ -9,11 +9,16 @@ import { UPREACH } from "../../Constant/Const";
 import { useUserStore } from "../../../Stores/user";
 
 function RenderLogo({ onClickIntroduce }) {
+  const [user] = useUserStore((state) => [state.user]);
   return (
     <div className="headerContent">
-      <div className="logoText" onClick={onClickIntroduce}>
-        {UPREACH}
-      </div>
+      {user ? (
+        <div className="logoText">{UPREACH}</div>
+      ) : (
+        <div className="logoText" onClick={onClickIntroduce}>
+          {UPREACH}
+        </div>
+      )}
     </div>
   );
 }
@@ -61,9 +66,9 @@ const HeaderHomepage = (onClickIntroduce) => {
     navigate("/myinfluencer");
   };
 
-  const navigateProfileInfluencer =()=>{
-    navigate("/influencer/profile")
-  }
+  const navigateProfileInfluencer = () => {
+    navigate("/influencer/profile");
+  };
 
   const handleLogout = () => {
     removeCookie("token", { path: "/" });
@@ -82,7 +87,6 @@ const HeaderHomepage = (onClickIntroduce) => {
     },
   ];
 
-  console.log(user);
   return (
     <div className="HeaderHomepage">
       <RenderLogo onClickIntroduce={navigateIntroduce} />
@@ -139,6 +143,23 @@ const HeaderHomepage = (onClickIntroduce) => {
                   </p>
                 </Dropdown>
               </div>
+            </div>
+          </div>
+        ) : user.roleId == 1 ? (
+          <div className="influencer-btn">
+            <img
+              className="influencer-avatar"
+              src="https://demoda.vn/wp-content/uploads/2022/09/hinh-anh-avatar-anime-nu.jpg"
+              alt="anh"
+            />
+
+            <div className="influencer-dropdown-block">
+              <Dropdown menu={{ items }} trigger={"click"}>
+                <p style={{ height: "45px" }}>
+                  <Space>admin</Space>
+                  <DownOutlined />
+                </p>
+              </Dropdown>
             </div>
           </div>
         ) : (

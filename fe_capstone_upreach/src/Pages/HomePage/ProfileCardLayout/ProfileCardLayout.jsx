@@ -81,6 +81,7 @@ const ProfileCardLayout = ({
       );
       setIdInfluMongoDB(idInfluencerInMongoDB.data._id);
       setInfluInfo(info);
+
       setIsOpenProfileInflu(true);
       // caculator point
       if (pointReport - 1 > 0) {
@@ -117,6 +118,7 @@ const ProfileCardLayout = ({
         footer={null}
         onCancel={() => setIsOpenProfileInflu(false)}
         width={1400}
+        s
         bodyStyle={{ borderRadius: "30px" }}
       >
         <InfluProfile profileInflu={influInfo} />

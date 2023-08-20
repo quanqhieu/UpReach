@@ -1,6 +1,15 @@
 import default_img from "../../../Assets/Image/Default/DefaultImg.jpg";
 import "./InfluSideBar.css";
-import { Button, Tooltip, Dropdown, Checkbox, Row, Col, Modal } from "antd";
+import {
+  Button,
+  Tooltip,
+  Dropdown,
+  Checkbox,
+  Row,
+  Col,
+  Modal,
+  Rate,
+} from "antd";
 import { ReactComponent as Facebook } from "../../../Assets/Icon/Facebook.svg";
 import { ReactComponent as Instagram } from "../../../Assets/Icon/Instagram.svg";
 import { ReactComponent as Youtube } from "../../../Assets/Icon/Youtube.svg";
@@ -35,7 +44,11 @@ const InfluSideBar = ({ influInfo }) => {
   const [listSelected, setListSelected] = useState();
   const [listInfluencer, setListInfluencer] = useState([]);
   const [idAccClient, setIdAccClient] = useState("");
+
   const [isEnableAddBtn, setIsEnableAddBtn] = useState(true);
+
+  const [valueRate, setValueRate] = React.useState(3.7);
+
 
   // coundown popup success
   const countDownSuccess = () => {
@@ -99,23 +112,26 @@ const InfluSideBar = ({ influInfo }) => {
   //========================================================================
   const OnChange = (checkedValues) => {
     setListSelected(checkedValues);
+
     console.log(checkedValues);
     setIsEnableAddBtn(false);
     if (checkedValues.length == 0) {
       setIsEnableAddBtn(true);
     }
+
   };
   //click add to list
   const AddTableKOLs = (e) => {
     listSelected.forEach((idListSelected) => {
-      const listKOLsID = uuid().slice(0, 8);
-      fetchAddTableKOLs(listKOLsID, influInfo.influencerId, idListSelected);
+      const listKOLsID = uuid()?.slice(0, 8);
+      fetchAddTableKOLs(listKOLsID, influInfo?.influencerId, idListSelected);
     });
+
     fetchDataGetList(influInfo.influencerId);
     countDownSuccess();
   };
   useEffect(() => {
-    switch (influInfo.influencerTypeName[0]) {
+    switch (influInfo?.influencerTypeName[0]) {
       case "Professional":
         setBadgeColor("#C837AB");
         break;
@@ -191,7 +207,7 @@ const InfluSideBar = ({ influInfo }) => {
                     value={listSelected}
                   >
                     <Row>
-                      {listInfluencer.map((item, index) => (
+                      {listInfluencer?.map((item, index) => (
                         <RenderListCheckbox
                           key={index}
                           valueCheckbox={item.ClientLists_ID}
@@ -243,55 +259,29 @@ const InfluSideBar = ({ influInfo }) => {
                 </Button>
               </a>
             </Dropdown>
-            {/* <div className="profile-socials">
-              <div className="profile-social">
-                <Facebook />
-                <p>
-                  {(parseInt(influInfo?.influencerFollowFb) / 1000000).toFixed(
-                    1
-                  ) + "M"}
-                </p>
-              </div>
-              <div className="profile-social">
-                <Instagram />
-                <p>
-                  {(
-                    parseInt(influInfo?.influencerFollowInsta) / 1000000
-                  ).toFixed(1) + "M"}
-                </p>
-              </div>
-              <div className="profile-social">
-                <Youtube />
-                <p>
-                  {(
-                    parseInt(influInfo?.influencerFollowYoutube) / 1000000
-                  ).toFixed(1) + "M"}
-                </p>
-              </div>
-              <div className="profile-social">
-                <Tiktok />
-                <p>
-                  {(
-                    parseInt(influInfo?.influencerFollowTikTok) / 1000000
-                  ).toFixed(1) + "M"}
-                </p>
-              </div>
-            </div> */}
+            <div className="profile-feedback">
+              <Rate value={valueRate} disabled allowHalf />
+              <p>(1)</p>
+            </div>
           </div>
           <div className="influ-side-bar-body">
             <p className="profile-description">Description & Content type</p>
             <div className="profile-contents">
               <div className="profile-content">
                 <div className="profile-topics">
-                  {influInfo?.influencerContentTopicName.map((topic, index) => (
-                    <div key={index} className="profile-topic">
-                      <Tooltip placement="top" title={topic}>
-                        <div>
-                          {topic.length > 8 ? `${topic.slice(0, 8)}...` : topic}
-                        </div>
-                      </Tooltip>
-                    </div>
-                  ))}
+                  {influInfo?.influencerContentTopicName?.map(
+                    (topic, index) => (
+                      <div key={index} className="profile-topic">
+                        <Tooltip placement="top" title={topic}>
+                          <div>
+                            {topic?.length > 8
+                              ? `${topic?.slice(0, 8)}...`
+                              : topic}
+                          </div>
+                        </Tooltip>
+                      </div>
+                    )
+                  )}
                 </div>
                 <div className="profile-location">
                   <Location style={{ marginRight: "8px" }} />

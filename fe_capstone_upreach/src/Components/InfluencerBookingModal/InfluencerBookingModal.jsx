@@ -2,7 +2,18 @@ import "./InfluencerBookingModal.css";
 import React from "react";
 import { Button } from "antd";
 const InfluencerBookingModal = ({ bookingItem }) => {
-  //   console.log(bookingItem);
+  const getFormatContent = (id) => {
+    switch (id) {
+      case "CF01":
+        return "Text";
+      case "CF02":
+        return "Picture";
+      case "CF03":
+        return "Video";
+      default:
+        return null;
+    }
+  };
   return (
     <>
       <div className="influ-booking-modal">
@@ -16,14 +27,14 @@ const InfluencerBookingModal = ({ bookingItem }) => {
             </div>
             <div className="content-line">
               <p className="line-title">Job Name</p>
-              <p className="line-content">Quang cao tu lanh</p>
+              <p className="line-content">{bookingItem.jobName}</p>
             </div>
           </div>
           <div className="content-body">
             Customer
             <div className="content-line">
               <p className="line-title">Full Name</p>
-              <p className="line-content">{bookingItem.name}</p>
+              <p className="line-content">{bookingItem.clientName}</p>
             </div>
             <div className="content-line">
               <p className="line-title">Brand Name</p>
@@ -31,30 +42,27 @@ const InfluencerBookingModal = ({ bookingItem }) => {
             </div>
             <div className="content-line">
               <p className="line-title">Content</p>
-              <p className="line-content">{bookingItem.content}</p>
+              <p className="line-content">
+                {bookingItem?.formatContent
+                  ?.map((item) => getFormatContent(item))
+                  ?.join(", ")}
+              </p>
             </div>
             <div className="content-line">
               <p className="line-title">Quantities</p>
-              <p className="line-content">{bookingItem.quantities}</p>
+              <p className="line-content">{bookingItem.quantity}</p>
             </div>
             <div className="content-line">
               <p className="line-title">Link</p>
-              <p className="line-content">facebook.com</p>
+              <p className="line-content">{bookingItem.jobLink}</p>
             </div>
             <div className="content-line">
               <p className="line-title">Cost Estimate From</p>
-              <p className="line-content">{bookingItem.costFrom}</p>
+              <p className="line-content">{bookingItem.costEstimateFrom}</p>
             </div>
             <div className="content-line">
               <p className="line-title">Cost Estimate To</p>
-              <p className="line-content">{bookingItem.costTo}</p>
-            </div>
-            <div className="content-line">
-              <p className="line-title">Describes</p>
-              <p className="line-content">
-                Quay cai tu lanh thiet la
-                depaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-              </p>
+              <p className="line-content">{bookingItem.costEstimateTo}</p>
             </div>
             <div className="content-line">
               <p className="line-title">Start Date</p>
@@ -63,6 +71,10 @@ const InfluencerBookingModal = ({ bookingItem }) => {
             <div className="content-line">
               <p className="line-title">End Date</p>
               <p className="line-content">{bookingItem.endDate}</p>
+            </div>
+            <div className="content-line-des">
+              <p className="line-title-des">Describes</p>
+              <p className="line-content-des">{bookingItem.describes}</p>
             </div>
           </div>
           <div className="content-footer">

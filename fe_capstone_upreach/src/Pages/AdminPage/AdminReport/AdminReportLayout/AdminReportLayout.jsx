@@ -1,6 +1,6 @@
 import React from "react";
 import "./AdminReportLayout.css";
-import { List, Modal } from "antd";
+import { List, Modal, Spin } from "antd";
 import {
   VERSION_PROFILE_INFLU,
   PROFILE_INFLUS,
@@ -16,8 +16,10 @@ const AdminReportLayout = () => {
   const [reportInfo, setReportInfo] = React.useState("");
   const [isOpenApproveProfile, setIsOpenApproveProfile] = React.useState(false);
   const [isOpenProfileInflu, setIsOpenProfileInflu] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
   const [profileInflus, setProfileInflus] = React.useState(PROFILE_INFLUS);
   const [approveReport, setApproveReport] = React.useState([]);
+  const [force, setForce] = React.useState(0);
 
   const handleOpenInfluModal = (info) => {
     setInfluInfo(info);
@@ -39,40 +41,27 @@ const AdminReportLayout = () => {
     return originalElement;
   };
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
+    setIsLoading(true);
     axios
       .get("http://localhost:4000/api/admin/get-approve-report", {
         params: {
           // email: user.influencerEmail,
         },
       })
-
       .then((response) => {
-        const info = response.data.data;
+        const info = response?.data?.data;
         setApproveReport(info);
-      })
-      .catch((error) => {
-        console.error("Error while fetching profile information:", error);
-      });
-  }, []);
-
-  React.useEffect(() => {
-    axios
-      .get("http://localhost:4000/api/admin/get-influ-report", {
-        params: {
-          // email: user.influencerEmail,
-        },
-      })
-
-      .then((response) => {
-        const info = response.data.data;
         console.log(info);
-        // setApproveReport(info);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Error while fetching profile information:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
-  }, []);
+  }, [force]);
 
   return (
     <>
@@ -86,7 +75,11 @@ const AdminReportLayout = () => {
         width={1400}
         bodyStyle={{ borderRadius: "30px" }}
       >
-        <AdminApproveProfile approveReport={reportInfo} />
+        <AdminApproveProfile
+          approveReport={reportInfo}
+          setForce={setForce}
+          setIsOpenApproveProfile={setIsOpenApproveProfile}
+        />
       </Modal>
 
       {/* ------------------------------------------ */}
@@ -110,24 +103,26 @@ const AdminReportLayout = () => {
         <div className="report-management-wait">
           Wait to approve
           {/* -----------------Approve List---------------------- */}
-          <div className="report-management-wait-items">
-            {approveReport?.map((item, index) => (
-              <div
-                className="report-management-wait-item"
-                key={index}
-                onClick={() => handleOpenApproveModal(item)}
-              >
-                <AdminApproveCard reportApprove={item} />
-              </div>
-            ))}
-          </div>
+          <Spin tip="Loading" size="large" spinning={isLoading}>
+            <div className="report-management-wait-items">
+              {approveReport?.map((item, index) => (
+                <div
+                  className="report-management-wait-item"
+                  key={index}
+                  onClick={() => handleOpenApproveModal(item)}
+                >
+                  <AdminApproveCard reportApprove={item} />
+                </div>
+              ))}
+            </div>
+          </Spin>
           {/* ----------------------------------------------------- */}
         </div>
 
         <div className="report-management-admin-view">
           {/* -----------------Influ List---------------------- */}
 
-          <div className="admin-view-title">All Influencer</div>
+          {/* <div className="admin-view-title">All Influencer</div>
           <List
             grid={{
               xs: 1,
@@ -155,7 +150,7 @@ const AdminReportLayout = () => {
                 <ProfileCardComponent profileInflu={item} />
               </List.Item>
             )}
-          />
+          /> */}
           {/* ------------------------------------------------ */}
         </div>
       </div>

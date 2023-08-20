@@ -21,6 +21,7 @@ const UpdateJobItem = ({ bookingItem }) => {
         return null;
     }
   };
+
   const getFormatContent = (id) => {
     switch (id) {
       case "CF01":
@@ -30,9 +31,10 @@ const UpdateJobItem = ({ bookingItem }) => {
       case "CF03":
         return "Video";
       default:
-        return null;
+        return "";
     }
   };
+
   return (
     <>
       <div className="update-report-post-item">
@@ -41,14 +43,12 @@ const UpdateJobItem = ({ bookingItem }) => {
           <div className="post-item-sub-title">
             <p>{bookingItem?.jobName || ""}</p>
             <div style={{ display: "flex" }}>
-              {bookingItem.formatContent
-                ?.map((item) => getFormatContent(item))
-                ?.join(", ")}
+              {getFormatContent(bookingItem?.formatContent)}
             </div>
             <Tooltip placement="top" title={bookingItem?.jobLink}>
               <a>
-                {bookingItem?.jobLink.length > 29
-                  ? `${bookingItem?.jobLink.slice(0, 29)}...`
+                {bookingItem?.jobLink?.length > 29
+                  ? `${bookingItem?.jobLink?.slice(0, 29)}...`
                   : bookingItem?.jobLink}
               </a>
             </Tooltip>
@@ -64,7 +64,7 @@ const UpdateJobItem = ({ bookingItem }) => {
                 "vi-VN"
               )}
             >
-              {bookingItem?.costEstimateFrom.length > 8
+              {bookingItem?.costEstimateFrom?.length > 8
                 ? `${Number(bookingItem?.costEstimateFrom)
                     .toLocaleString("vi-VN")
                     .slice(0, 8)}...`
@@ -77,7 +77,7 @@ const UpdateJobItem = ({ bookingItem }) => {
                 "vi-VN"
               )}
             >
-              {bookingItem?.costEstimateTo.length > 8
+              {bookingItem?.costEstimateTo?.length > 8
                 ? `${Number(bookingItem?.costEstimateTo)
                     .toLocaleString("vi-VN")
                     .slice(0, 8)}...`

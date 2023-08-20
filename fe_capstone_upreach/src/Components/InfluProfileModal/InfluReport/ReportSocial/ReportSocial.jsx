@@ -115,7 +115,17 @@ const ReportSocial = ({ influInfo }) => {
         <div className="report-social">
           <div className="social-icon-title">
             <Facebook className="social-icon" />
-            <p>Facebook</p>
+            <a
+              href={influInfo?.influencerLinkFb}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {influInfo?.influencerLinkFb === null
+                ? "Facebook"
+                : influInfo?.influencerLinkFb.length <= 32
+                ? influInfo?.influencerLinkFb
+                : influInfo?.influencerLinkFb.slice(0, 32) + "..."}
+            </a>
           </div>
           <div className="cover-follower-interaction">
             <div className="follower-interaction">
@@ -134,7 +144,17 @@ const ReportSocial = ({ influInfo }) => {
         <div className="report-social">
           <div className="social-icon-title">
             <Instagram className="social-icon" />
-            <p>Instagram</p>
+            <a
+              href={influInfo?.influencerLinkInsta}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {influInfo?.influencerLinkInsta === null
+                ? "Instagram"
+                : influInfo?.influencerLinkInsta.length <= 32
+                ? influInfo?.influencerLinkInsta
+                : influInfo?.influencerLinkInsta.slice(0, 32) + "..."}
+            </a>
           </div>
           <div className="cover-follower-interaction">
             <div className="follower-interaction">
@@ -153,7 +173,17 @@ const ReportSocial = ({ influInfo }) => {
         <div className="report-social">
           <div className="social-icon-title">
             <Youtube className="social-icon" />
-            <p>Youtube</p>
+            <a
+              href={influInfo?.influencerLinkYoutube}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {influInfo?.influencerLinkYoutube === null
+                ? "Youtube"
+                : influInfo?.influencerLinkYoutube.length <= 32
+                ? influInfo?.influencerLinkYoutube
+                : influInfo?.influencerLinkYoutube.slice(0, 32) + "..."}
+            </a>
           </div>
           <div className="cover-follower-interaction">
             <div className="follower-interaction">
@@ -173,7 +203,17 @@ const ReportSocial = ({ influInfo }) => {
         <div className="report-social">
           <div className="social-icon-title">
             <Tiktok className="social-icon" />
-            <p>Tiktok</p>
+            <a
+              href={influInfo?.influencerLinkTiktok}
+              target="_blank"
+              rel="noreferrer"
+            >
+              {influInfo?.influencerLinkTiktok === null
+                ? "Tiktok"
+                : influInfo?.influencerLinkTiktok.length <= 32
+                ? influInfo?.influencerLinkTiktok
+                : influInfo?.influencerLinkTiktok.slice(0, 32) + "..."}
+            </a>
           </div>
           <div className="cover-follower-interaction">
             <div className="follower-interaction">

@@ -21,6 +21,7 @@ const ReportPost = ({ influInfo }) => {
   useEffect(() => {
     fetchDataForChart(influInfo);
   }, [influInfo]);
+
   return (
     <>
       <div className="report-post-layout">
@@ -28,6 +29,7 @@ const ReportPost = ({ influInfo }) => {
           <></>
         ) : (
           data?.data[0]?.dataJob.map((item) =>
+
             item.jobId != null && item.isPublish === true ? (
               <JobItem data={item} />
             ) : (

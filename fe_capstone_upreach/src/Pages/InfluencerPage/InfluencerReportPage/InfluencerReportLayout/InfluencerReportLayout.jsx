@@ -2,6 +2,7 @@ import React from "react";
 import "./InfluencerReportLayout.css";
 import InfluencerProfileCard from "../../../../Components/InfluencerProfileCard/InfluencerProfileCard";
 import InfluUpdateProfileModal from "../../../../Components/InfluUpdateProfileModal/InfluUpdateProfileModal";
+import InfluVersionModal from "../../../../Components/InfluencerVersionProfileModal/InfluVersionProfile";
 import { ReactComponent as IconArrow } from "../../../../Assets/Icon/IconArrow.svg";
 import { List, Modal, Dropdown, Space, Progress, Spin } from "antd";
 import {
@@ -10,33 +11,39 @@ import {
   LoadingOutlined,
 } from "@ant-design/icons";
 import Buttons from "../../../../Components/UI/Buttons";
-import { VERSION_PROFILE_INFLU } from "../../../HomePage/ConstHomePage";
 import { useUserStore } from "../../../../Stores/user";
 import { useEffect } from "react";
-import { useLayoutEffect } from "react";
 import axios from "axios";
 
 const InfluencerReportLayout = () => {
   const [user] = useUserStore((state) => [state.user]);
-  const [previewInflu, setPreviewInflu] = React.useState(user);
+  const [previewInflu, setPreviewInflu] = React.useState({});
+  const [mokPreviewInflu, setMokPreviewInflu] = React.useState({});
+  const [oldVerInflu, setOldVerInflu] = React.useState({});
+
   const [previewBooking, setPreviewBooking] = React.useState([]);
   const [previewChart, setPreviewChart] = React.useState([]);
   const [idJobsRemove, setIdJobsRemove] = React.useState([]);
   const [profileVersion, setProfileVersion] = React.useState([]);
+  const [reportVersion, setReportVersion] = React.useState([]);
+  const [force, setForce] = React.useState(0);
 
   const [isChange, setIsChange] = React.useState(false);
   const [openConfirmForm, setOpenConfirmForm] = React.useState(false);
   const [isOpenProfileInflu, setIsOpenProfileInflu] = React.useState(false);
+  const [isOpenVersionInflu, setIsOpenVersionInflu] = React.useState(false);
 
   const [isAllowEdit, setIsAllowEdit] = React.useState(false);
   const [waitedDate, setWaitedDate] = React.useState(0);
   const [timerId, setTimerId] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [versionProfile, setVersionProfile] = React.useState(
-    VERSION_PROFILE_INFLU
-  );
 
   const handleOpenModal = () => {
+    // previewInflu={previewInflu}
+    // mokPreviewInflu={mokPreviewInflu}
+    // if(!previewInflu.isPublish) {
+    //   set
+    // }
     setIsOpenProfileInflu(true);
   };
 
@@ -79,7 +86,7 @@ const InfluencerReportLayout = () => {
     setOpenConfirmForm(false);
     setIsChange(false);
     setIsOpenProfileInflu(false);
-    setPreviewInflu(user);
+    setPreviewInflu(mokPreviewInflu);
   };
 
   function is7DaysOrMoreAgo(storedTime) {
@@ -107,6 +114,7 @@ const InfluencerReportLayout = () => {
 
   //   return Math.ceil(6.5 - range);
   // }
+
   function timeLeft(storedTime) {
     const currentTime = new Date();
     const currentMonth = currentTime.getMonth();
@@ -209,21 +217,42 @@ const InfluencerReportLayout = () => {
       .post("http://localhost:4000/api/influ/dataReportInfluencer", {
         email: user.email,
       })
-
       .then((response) => {
-        const info = response.data.Influencer;
+        const info = response?.data.Influencer;
         setProfileVersion(info);
         setPreviewInflu(() => {
-          return info.find((item) => item.isPublish);
+          return info?.sort(
+            (a, b) =>
+              new Date(b?.dateEdit).getTime() - new Date(a?.dateEdit).getTime()
+          )[0];
         });
+        setMokPreviewInflu(() => {
+          return info?.sort(
+            (a, b) =>
+              new Date(b?.dateEdit).getTime() - new Date(a?.dateEdit).getTime()
+          )[0];
+        });
+        if (info?.some((item) => item?.isPublish)) {
+          setOldVerInflu(() => {
+            return info?.find((item) => item?.isPublish);
+          });
+        } else {
+          setOldVerInflu(() => {
+            return info?.find((item) => !item?.isPublish);
+          });
+        }
       })
       .catch((error) => {
         console.error("Error while fetching profile information:", error);
+      })
+      .finally(() => {
+        setIsChange(false);
       });
-  }, []);
+  }, [force]);
 
   return (
     <>
+      {/* -----------------Modal confirm---------------------- */}
       <Modal
         centered
         icon={ExclamationCircleOutlined}
@@ -246,6 +275,26 @@ const InfluencerReportLayout = () => {
           <p>Sure to cancel?</p>
         </div>
       </Modal>
+      {/* -----------------Modal version---------------------- */}
+      <Modal
+        className="custom-modal"
+        centered
+        open={isOpenVersionInflu}
+        footer={null}
+        onCancel={() => {
+          setIsOpenVersionInflu(false);
+        }}
+        width={1400}
+        bodyStyle={{ borderRadius: "30px" }}
+      >
+        <InfluVersionModal
+          profileInflu={reportVersion}
+          profileSideBar={oldVerInflu}
+        />
+      </Modal>
+
+      {/* -----------------Modal update---------------------- */}
+
       <Modal
         className="custom-modal"
         centered
@@ -259,15 +308,20 @@ const InfluencerReportLayout = () => {
         <InfluUpdateProfileModal
           setWaitedDate={setWaitedDate}
           setIsAllowEdit={setIsAllowEdit}
+          isChange={isChange}
           setIsChange={setIsChange}
           previewInflu={previewInflu}
+          mokPreviewInflu={mokPreviewInflu}
           setPreviewInflu={setPreviewInflu}
           previewBooking={previewBooking}
           setPreviewBooking={setPreviewBooking}
           idJobsRemove={idJobsRemove}
           setIdJobsRemove={setIdJobsRemove}
           previewChart={previewChart}
+          oldVerInflu={oldVerInflu}
           setPreviewChart={setPreviewChart}
+          setForce={setForce}
+          setIsOpenProfileInflu={setIsOpenProfileInflu}
         />
       </Modal>
       <div className="influencer-report-layout">
@@ -346,10 +400,15 @@ const InfluencerReportLayout = () => {
                   width: "423px",
                   height: "270px",
                 }}
+                onClick={() => {
+                  setIsOpenVersionInflu(true);
+                  setReportVersion(item);
+                }}
               >
                 <InfluencerProfileCard
                   profileInflu={item}
                   previewInflu={previewInflu}
+                  oldVerInflu={oldVerInflu}
                 />
               </List.Item>
             )}

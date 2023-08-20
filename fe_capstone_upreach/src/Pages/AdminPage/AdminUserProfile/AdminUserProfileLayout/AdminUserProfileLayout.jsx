@@ -1,37 +1,50 @@
 import React from "react";
 import "./AdminUserProfileLayout.css";
-import { Table, Popconfirm, Form, Input, Typography } from "antd";
+import {
+  Table,
+  Popconfirm,
+  Form,
+  Input,
+  Typography,
+  message,
+  Spin,
+} from "antd";
+
 import {
   DeleteOutlined,
   UserDeleteOutlined,
   EditOutlined,
+  LockOutlined,
+  UnlockOutlined,
 } from "@ant-design/icons";
+import axios from "axios";
 
 const AdminUserProfileLayout = () => {
+  const [messageApi, contextHolder] = message.useMessage();
   const [form] = Form.useForm();
   const [editingId, setEditingId] = React.useState("");
-  const [isChange, setIsChange] = React.useState(false);
   const [openConfirm, setOpenConfirm] = React.useState(false);
-
+  const [force, setForce] = React.useState(0);
+  const [isLoading, setIsLoading] = React.useState(true);
   const check = async () => {
     if (editingId !== "") {
       const row = await form.validateFields();
 
       if (
         listClient.some(
-          (item) => item.id == editingId && item.name == row.name
+          (item) => item.clientId == editingId && item.fullName == row.fullName
         ) &&
         listClient.some(
-          (item) => item.id == editingId && item.brand == row.brand
+          (item) => item.clientId == editingId && item.brand == row.brand
         ) &&
         listClient.some(
-          (item) => item.id == editingId && item.email == row.email
+          (item) => item.clientId == editingId && item.email == row.email
         ) &&
         listClient.some(
-          (item) => item.id == editingId && item.phone == row.phone
+          (item) => item.clientId == editingId && item.phone == row.phone
         ) &&
         listClient.some(
-          (item) => item.id == editingId && item.location == row.location
+          (item) => item.clientId == editingId && item.address == row.address
         )
       ) {
         return false;
@@ -41,7 +54,7 @@ const AdminUserProfileLayout = () => {
   const tags = [
     {
       title: "Full Name",
-      dataIndex: "name",
+      dataIndex: "fullName",
       width: "15%",
       editable: true,
     },
@@ -64,8 +77,8 @@ const AdminUserProfileLayout = () => {
       editable: true,
     },
     {
-      title: "Location",
-      dataIndex: "location",
+      title: "Address",
+      dataIndex: "address",
       width: "25%",
       editable: true,
     },
@@ -85,7 +98,7 @@ const AdminUserProfileLayout = () => {
             }}
           >
             <Typography.Link
-              onClick={() => handleSave(record.id)}
+              onClick={() => handleSave(record.clientId)}
               style={{
                 marginRight: 8,
               }}
@@ -125,57 +138,31 @@ const AdminUserProfileLayout = () => {
     },
     {
       title: <UserDeleteOutlined />,
-      dataIndex: "delete",
+      dataIndex: "lock",
       width: "5%",
       render: (_, record) =>
-        listClient.length >= 1 ? (
+        listClient.length >= 1 && record.isAccept == false ? (
           <Popconfirm
-            title="Sure to delete?"
-            onConfirm={() => handleDelete(record.id)}
+            title="Sure to unlock account?"
+            onConfirm={() => handleAllow(record.clientId)}
           >
-            <DeleteOutlined />
+            <LockOutlined />
           </Popconfirm>
-        ) : null,
+        ) : (
+          <Popconfirm
+            title="Sure to lock account?"
+            onConfirm={() => handleLock(record.clientId)}
+          >
+            <UnlockOutlined />
+          </Popconfirm>
+        ),
     },
   ];
 
-  const [listClient, setListClient] = React.useState([
-    {
-      id: "1",
-      name: "hieu",
-      brand: "H&M",
-      email: "lequanghieu0701@gmail.com",
-      phone: "0398357123",
-      location: "Da Nang",
-    },
-    {
-      id: "2",
-      name: "minh",
-      brand: "H&M",
-      email: "lequanghieu0701@gmail.com",
-      phone: "0398357123",
-      location: "Da Nang",
-    },
-    {
-      id: "3",
-      name: "Son",
-      brand: "H&M",
-      email: "lequanghieu0701@gmail.com",
-      phone: "0398357123",
-      location: "Da Nang",
-    },
-    {
-      id: "4",
-      name: "Le Quang Hieu",
-      brand: "H&M",
-      email: "lequanghieu0701@gmail.com",
-      phone: "0398357123",
-      location: "Da Nang",
-    },
-  ]);
+  const [listClient, setListClient] = React.useState([]);
 
   const isEditing = (record) => {
-    return record.id === editingId;
+    return record.clientId === editingId;
   };
 
   const EditableCell = ({
@@ -222,18 +209,17 @@ const AdminUserProfileLayout = () => {
 
   const edit = (record) => {
     form.setFieldsValue({
-      name: "",
+      fullName: "",
       brand: "",
       email: "",
       phone: "",
-      location: "",
+      address: "",
       ...record,
     });
-    setEditingId(record.id);
+    setEditingId(record.clientId);
   };
 
   const cancel = () => {
-    console.log(true);
     setOpenConfirm(false);
   };
   const ok = () => {
@@ -241,11 +227,13 @@ const AdminUserProfileLayout = () => {
     setOpenConfirm(false);
   };
 
-  const handleSave = async (id) => {
+  const handleSave = async (clientId) => {
     try {
       const row = await form.validateFields();
       const newInfoClient = [...listClient];
-      const index = newInfoClient.findIndex((item) => id === item.id);
+      const index = newInfoClient.findIndex(
+        (item) => clientId === item.clientId
+      );
       if (index > -1) {
         const item = newInfoClient[index];
         newInfoClient.splice(index, 1, {
@@ -259,6 +247,26 @@ const AdminUserProfileLayout = () => {
         setListClient(newInfoClient);
         setEditingId("");
       }
+      const formData = new FormData();
+      formData.append("client", JSON.stringify(row));
+      formData.append("clientId", JSON.stringify(clientId));
+
+      axios
+        .put("http://localhost:4000/api/admin/edit-client", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          messageApi.open({
+            type: "success",
+            content: response.data.message,
+          });
+          setForce((prev) => prev + 1);
+        })
+        .catch((error) => {
+          console.error("Lỗi khi cập nhật thông tin:", error);
+        });
     } catch (errInfo) {
       console.log("Validate Failed:", errInfo);
     }
@@ -282,13 +290,81 @@ const AdminUserProfileLayout = () => {
     };
   });
 
-  const handleDelete = (id) => {
-    const newListClient = listClient.filter((item) => item.id !== id);
-    setListClient(newListClient);
+  // const handleDelete = (clientId) => {
+  //   const newListClient = listClient.filter(
+  //     (item) => item.clientId !== clientId
+  //   );
+  //   setListClient(newListClient);
+  // };
+
+  const handleAllow = (id) => {
+    const formData = new FormData();
+    formData.append("clientId", JSON.stringify(id));
+    axios
+      .put("http://localhost:4000/api/admin/unlock-client", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        messageApi.open({
+          type: "success",
+          content: response.data.message,
+        });
+        setForce((prev) => prev + 1);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi cập nhật thông tin:", error);
+      });
   };
 
+  const handleLock = (id) => {
+    const formData = new FormData();
+    formData.append("clientId", JSON.stringify(id));
+
+    axios
+      .put("http://localhost:4000/api/admin/lock-client", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        messageApi.open({
+          type: "success",
+          content: response.data.message,
+        });
+        setForce((prev) => prev + 1);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi cập nhật thông tin:", error);
+      });
+  };
+
+  React.useEffect(() => {
+    setIsLoading(true);
+    axios
+      .get("http://localhost:4000/api/admin/get-client-account", {
+        params: {
+          // email: user.influencerEmail,
+        },
+      })
+      .then((response) => {
+        const info = response.data.data;
+        setListClient(info);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error while fetching profile information:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [force]);
+
+  console.log(listClient);
   return (
     <>
+      {contextHolder}
       <div className="admin-user-layout">
         {/* <div className="admin-user-title">
           <p>OVERVIEW</p>
@@ -296,21 +372,23 @@ const AdminUserProfileLayout = () => {
         <div className="admin-user-list-layout">
           <div className="admin-user-table">
             <Form form={form} component={false}>
-              <Table
-                components={{
-                  body: {
-                    cell: EditableCell,
-                  },
-                }}
-                columns={mergedTags}
-                dataSource={listClient}
-                rowClassName="editable-row"
-                pagination={{
-                  onChange: cancel,
-                  pageSize: 12,
-                }}
-                size="large"
-              />
+              <Spin tip="Loading" size="large" spinning={isLoading}>
+                <Table
+                  components={{
+                    body: {
+                      cell: EditableCell,
+                    },
+                  }}
+                  columns={mergedTags}
+                  dataSource={listClient}
+                  rowClassName="editable-row"
+                  pagination={{
+                    onChange: cancel,
+                    pageSize: 12,
+                  }}
+                  size="large"
+                />
+              </Spin>
             </Form>
           </div>
         </div>

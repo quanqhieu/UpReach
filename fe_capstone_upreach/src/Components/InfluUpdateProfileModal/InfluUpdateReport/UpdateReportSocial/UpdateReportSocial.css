@@ -70,14 +70,14 @@
 	font-weight: 600;
 }
 
-.cost-estimate-edit-from {
+.update-report-social-layout .cost-estimate-edit-from {
 	height: 35px;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 }
 
-.cost-estimate-edit-to {
+.update-report-social-layout .cost-estimate-edit-to {
 	height: 35px;
 	display: flex;
 	justify-content: space-between;
@@ -88,14 +88,14 @@
 	padding: 0 17px;
 }
 
-.report-general-content-item{
+.update-report-social-layout .report-general-content-item{
 	width: fit-content;
 	height: 55px;
 	display: flex;
 	align-items: center;
 }
 
-.report-general-content-item p {
+.update-report-social-layout .report-general-content-item p {
 	font-size: 19px;
 	--font-weight: 600;
 	padding: 0 17px 0 50px;
@@ -123,6 +123,17 @@
 
 .update-report-social-layout .social-icon-title p {
 	font-weight: 600;
+}
+
+.update-report-social-layout .social-icon-title a {
+	color: #808080;
+	text-decoration: none;
+	height: fit-content;
+}
+
+.update-report-social-layout .social-icon-title a:hover {
+	opacity: 0.9;
+	color: #000;
 }
 
 .update-report-social-layout .social-icon {

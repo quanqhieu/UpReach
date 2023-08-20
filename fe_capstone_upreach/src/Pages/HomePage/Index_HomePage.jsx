@@ -32,10 +32,12 @@ const Index_HomePage = () => {
         response.data[j] = temp;
       }
       setAllInfluencer(response);
+
       setpointReport(response.Client.pointReport);
       setPointSearch(response.Client.pointSearch);
       console.log("++++++++++");
       console.log(response);
+
       setLoading(false);
     } catch (error) {
       console.log("Error fetching data:", error);
@@ -48,7 +50,7 @@ const Index_HomePage = () => {
   }, []);
 
   useEffect(() => {
-    console.log(allInfluencer);
+    // console.log(allInfluencer);
   }, [allInfluencer]);
 
   return (

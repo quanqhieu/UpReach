@@ -11,30 +11,31 @@ import React from "react";
 import roundNumber from "../roundNumber";
 import { HeartOutlined, MailFilled, PhoneFilled } from "@ant-design/icons";
 
-const InfluSideBar = ({ influInfo }) => {
-  console.log(influInfo);
+const InfluSideBar = ({ oldVerInflu, influInfo }) => {
   const [badgeColor, setBadgeColor] = React.useState("");
   React.useEffect(() => {
-    switch (influInfo.influencerTypeName[0]) {
-      case "Professional":
-        setBadgeColor("#C837AB");
-        break;
-      case "Talent":
-        setBadgeColor("#FFDD55");
-        break;
-      case "Celebrity":
-        setBadgeColor("#218DE8");
-        break;
-      case "Community":
-        setBadgeColor("#FF004F");
-        break;
-      case "Citizen":
-        setBadgeColor("#96F0AF");
-        break;
-      default:
-        return;
+    if (oldVerInflu?.influencerTypeName[0]) {
+      switch (oldVerInflu?.influencerTypeName[0]) {
+        case "Professional":
+          setBadgeColor("#C837AB");
+          break;
+        case "Talent":
+          setBadgeColor("#FFDD55");
+          break;
+        case "Celebrity":
+          setBadgeColor("#218DE8");
+          break;
+        case "Community":
+          setBadgeColor("#FF004F");
+          break;
+        case "Citizen":
+          setBadgeColor("#96F0AF");
+          break;
+        default:
+          return;
+      }
     }
-  }, [influInfo.influencerTypeName]);
+  }, [oldVerInflu?.influencerTypeName]);
 
   return (
     <>
@@ -42,10 +43,10 @@ const InfluSideBar = ({ influInfo }) => {
         <div className="side-bar-header-body">
           <div className="influ-side-bar-header">
             <img className="profile-avatar" src={default_img} alt="" />
-            <p className="profile-name">{influInfo.influencerfullName}</p>
+            <p className="profile-name">{oldVerInflu?.influencerfullName}</p>
             <div className="badge-block">
-              {influInfo.influencerTypeName &&
-                influInfo.influencerTypeName[0] !== null && (
+              {oldVerInflu?.influencerTypeName &&
+                oldVerInflu?.influencerTypeName[0] !== null && (
                   <div
                     style={{
                       border: `2px solid ${badgeColor}`,
@@ -59,7 +60,7 @@ const InfluSideBar = ({ influInfo }) => {
                         marginRight: "8px",
                       }}
                     />
-                    {influInfo.influencerTypeName[0]}
+                    {oldVerInflu?.influencerTypeName[0]}
                   </div>
                 )}
             </div>
@@ -67,19 +68,19 @@ const InfluSideBar = ({ influInfo }) => {
               <div className="profile-socials">
                 <div className="profile-social">
                   <Facebook className="profile-social-icon" />
-                  <p>{roundNumber(influInfo.influencerFollowFb)}</p>
+                  <p>{roundNumber(influInfo?.influencerFollowFb)}</p>
                 </div>
                 <div className="profile-social">
                   <Instagram className="profile-social-icon" />
-                  <p>{roundNumber(influInfo.influencerFollowInsta)}</p>
+                  <p>{roundNumber(influInfo?.influencerFollowInsta)}</p>
                 </div>
                 <div className="profile-social">
                   <Youtube className="profile-social-icon" />
-                  <p>{roundNumber(influInfo.influencerFollowYoutube)}</p>
+                  <p>{roundNumber(influInfo?.influencerFollowYoutube)}</p>
                 </div>
                 <div className="profile-social">
                   <Tiktok className="profile-social-icon" />
-                  <p>{roundNumber(influInfo.influencerFollowTikTok)}</p>
+                  <p>{roundNumber(influInfo?.influencerFollowTikTok)}</p>
                 </div>
               </div>
             </div>
@@ -89,8 +90,8 @@ const InfluSideBar = ({ influInfo }) => {
             <div className="profile-contents">
               <div className="profile-content">
                 <div className="profile-topics">
-                  {Array.isArray(influInfo.influencerContentTopicName)
-                    ? influInfo.influencerContentTopicName
+                  {Array.isArray(oldVerInflu?.influencerContentTopicName)
+                    ? oldVerInflu?.influencerContentTopicName
                         .filter((topic) => topic !== null)
                         .map((topic, index) => (
                           <div key={index} className="profile-topic">
@@ -103,19 +104,20 @@ const InfluSideBar = ({ influInfo }) => {
                             </Tooltip>
                           </div>
                         ))
-                    : influInfo.influencerContentTopicName !== null && (
+                    : oldVerInflu?.influencerContentTopicName !== null && (
                         <div className="profile-topic">
                           <Tooltip
                             placement="top"
-                            title={influInfo.influencerContentTopicName}
+                            title={oldVerInflu?.influencerContentTopicName}
                           >
                             <div>
-                              {influInfo.influencerContentTopicName?.length > 8
-                                ? `${influInfo.influencerContentTopicName.slice(
+                              {oldVerInflu?.influencerContentTopicName?.length >
+                              8
+                                ? `${oldVerInflu?.influencerContentTopicName.slice(
                                     0,
                                     8
                                   )}...`
-                                : influInfo.influencerContentTopicName}
+                                : oldVerInflu?.influencerContentTopicName}
                             </div>
                           </Tooltip>
                         </div>
@@ -123,26 +125,26 @@ const InfluSideBar = ({ influInfo }) => {
                 </div>
                 <div className="profile-location">
                   <Location style={{ marginRight: "8px" }} />
-                  <p>{influInfo.influencerAddress}</p>
+                  <p>{oldVerInflu?.influencerAddress}</p>
                 </div>
                 <div className="profile-gender">
                   <p style={{ marginRight: "5px" }}>Gender:</p>
-                  <p>{influInfo.influencerGender}</p>
+                  <p>{oldVerInflu?.influencerGender}</p>
                 </div>
                 <div className="profile-age">
                   <p style={{ marginRight: "5px" }}>Age:</p>
-                  <p>{influInfo.influencerAge}</p>
+                  <p>{oldVerInflu?.influencerAge}</p>
                 </div>
                 <div className="profile-marriage-status">
                   <HeartOutlined style={{ marginRight: "8px" }} />
 
-                  <p>{influInfo.influencerRelationship}</p>
+                  <p>{oldVerInflu?.influencerRelationship}</p>
                 </div>
               </div>
               <div className="profile-biography">
                 <p className="profile-biography-title">Biography</p>
                 <p className="profile-biography-content">
-                  {influInfo.influencerBio}
+                  {oldVerInflu?.influencerBio}
                 </p>
               </div>
             </div>
@@ -154,11 +156,11 @@ const InfluSideBar = ({ influInfo }) => {
             <div className="contact-info ">
               <div className={"contact-email"}>
                 <MailFilled style={{ marginRight: "8px" }} />
-                <p className="contact-text">{influInfo.influencerEmail}</p>
+                <p className="contact-text">{oldVerInflu?.influencerEmail}</p>
               </div>
               <div className={"contact-phone"}>
                 <PhoneFilled style={{ marginRight: "8px" }} />
-                <p className="contact-text">{influInfo.influencerPhone}</p>
+                <p className="contact-text">{oldVerInflu?.influencerPhone}</p>
               </div>
             </div>
           </div>

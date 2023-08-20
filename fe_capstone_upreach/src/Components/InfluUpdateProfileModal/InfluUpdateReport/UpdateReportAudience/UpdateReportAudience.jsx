@@ -4,14 +4,12 @@ import { Line, Pie, Bar } from "@ant-design/plots";
 import React from "react";
 import { ExcelRenderer } from "react-excel-renderer";
 import axios from "axios";
-import { useUserStore } from "../../../../Stores/user";
 
-const UpdateReportAudience = ({ previewChart, setPreviewChart }) => {
+const UpdateReportAudience = ({ influInfo, setPreviewChart, setIsChange }) => {
   const [dataFollower, setDataFollower] = React.useState([]);
   const [dataGender, setDataGender] = React.useState([]);
   const [dataAge, setDataAge] = React.useState([]);
   const [dataLocation, setDataLocation] = React.useState([]);
-  const [user] = useUserStore((state) => [state.user]);
 
   const configFollower = {
     data: dataFollower,
@@ -146,92 +144,16 @@ const UpdateReportAudience = ({ previewChart, setPreviewChart }) => {
     }
   };
 
-  // React.useEffect(() => {
-  //   axios
-  //     .get("http://localhost:4000/api/influ/get-audience-influencer", {
-  //       params: {
-  //         email: user.influencerEmail,
-  //       },
-  //     })
-  //     .then((response) => {
-  //       // console.log(response.data.data.selectedFollowers);
-  //       const audienceFollowerData = response.data.data.selectedFollowers;
-  //       const followerList = audienceFollowerData
-  //         .map((data) => {
-  //           if (data?.AudienceFollowerMonth && data?.Quantity) {
-  //             return {
-  //               date: data.AudienceFollowerMonth,
-  //               value: data.Quantity,
-  //             };
-  //           }
-  //           return null;
-  //         })
-  //         .filter((item) => item !== null)
-  //         .sort((a, b) => {
-  //           const [aMonth, aYear] = a.date.split("/");
-  //           const [bMonth, bYear] = b.date.split("/");
-
-  //           if (parseInt(aYear, 10) !== parseInt(bYear, 10)) {
-  //             return parseInt(aYear, 10) - parseInt(bYear, 10);
-  //           }
-  //           return parseInt(aMonth, 10) - parseInt(bMonth, 10);
-  //         });
-
-  //       setDataFollower(followerList);
-
-  //       // console.log(response.data.data.selectedGenders);
-  //       const audienceGenderData = response.data.data.selectedGenders;
-  //       const genderList = audienceGenderData
-  //         .map((data) => {
-  //           if (data?.Gender && data?.Quantity) {
-  //             return {
-  //               sex: data.Gender,
-  //               value: data.Quantity,
-  //             };
-  //           }
-  //           return null;
-  //         })
-  //         .filter((item) => item !== null);
-  //       setDataGender(genderList);
-
-  //       // console.log(response.data.data.selectedAges);
-  //       const audienceAgeData = response.data.data.selectedAges;
-  //       const ageList = audienceAgeData
-  //         .map((data) => {
-  //           if (data?.AgeRange && data?.Quantity && data?.AudienceAge_ID) {
-  //             return {
-  //               age: data.AgeRange,
-  //               value: data.Quantity,
-  //               ageId: data.AudienceAge_ID,
-  //             };
-  //           }
-  //           return null;
-  //         })
-  //         .filter((item) => item !== null)
-  //         .sort((a, b) => {
-  //           return a.ageId.localeCompare(b.ageId);
-  //         });
-  //       setDataAge(ageList);
-
-  //       // console.log(response.data.data.selectedLocations);
-  //       const audienceLocationData = response.data.data.selectedLocations;
-  //       const locationList = audienceLocationData
-  //         .map((data) => {
-  //           if (data?.AudienceLocation && data?.Quantity) {
-  //             return {
-  //               location: data.AudienceLocation,
-  //               value: data.Quantity,
-  //             };
-  //           }
-  //           return null;
-  //         })
-  //         .filter((item) => item !== null);
-  //       setDataLocation(locationList);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error while fetching Audience information:", error);
-  //     });
-  // }, []);
+  React.useEffect(() => {
+    if (
+      dataFollower.length > 0 ||
+      dataGender.length > 0 ||
+      dataAge.length > 0 ||
+      dataLocation.length > 0
+    ) {
+      setIsChange(true);
+    } else setIsChange(false);
+  }, [dataFollower, dataGender, dataAge, dataLocation]);
 
   return (
     <div className="update-report-audience-layout">

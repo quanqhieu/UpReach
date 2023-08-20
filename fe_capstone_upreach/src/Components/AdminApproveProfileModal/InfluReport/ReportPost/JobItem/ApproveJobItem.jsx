@@ -30,20 +30,18 @@ const ApproveJobItem = ({ jobInfo }) => {
       case "CF03":
         return "Video";
       default:
-        return null;
+        return "";
     }
   };
   return (
     <>
-      <div className="aprrove-report-post-item">
+      <div className="approve-report-post-item">
         <div className="post-item-title">
           {getPlatformIcon(jobInfo?.Platform_Job)}
           <div className="post-item-sub-title">
             <p>{jobInfo?.Name_Job || ""}</p>
             <div style={{ display: "flex" }}>
-              {jobInfo?.Format_Id?.map((item) => getFormatContent(item))?.join(
-                ", "
-              )}
+              {getFormatContent(jobInfo?.Format_Id)}
             </div>
             <Tooltip placement="top" title={jobInfo?.Link}>
               <a>
@@ -64,7 +62,7 @@ const ApproveJobItem = ({ jobInfo }) => {
                 "vi-VN"
               )}
             >
-              {jobInfo?.CostEstimate_From_Job.length > 8
+              {jobInfo?.CostEstimate_From_Job?.length > 8
                 ? `${Number(jobInfo?.CostEstimate_From_Job)
                     .toLocaleString("vi-VN")
                     .slice(0, 8)}...`
@@ -79,7 +77,7 @@ const ApproveJobItem = ({ jobInfo }) => {
                 "vi-VN"
               )}
             >
-              {jobInfo?.CostEstimate_To_Job.length > 8
+              {jobInfo?.CostEstimate_To_Job?.length > 8
                 ? `${Number(jobInfo?.CostEstimate_To_Job)
                     .toLocaleString("vi-VN")
                     .slice(0, 8)}...`

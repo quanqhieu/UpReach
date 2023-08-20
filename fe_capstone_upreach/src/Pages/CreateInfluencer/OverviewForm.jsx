@@ -5,27 +5,6 @@ import React, { useState } from "react";
 
 const OverviewForm = ({ onFinish, initialValues }) => {
   const [size] = useState("small");
-  const suffixSelector1 = (
-    <Form.Item name="suffix" noStyle>
-      <Select defaultValue="percent">
-        <Option value="percent">%</Option>
-      </Select>
-    </Form.Item>
-  );
-  const suffixSelector2 = (
-    <Form.Item name="suffix" noStyle>
-      <Select defaultValue="fans">
-        <Option value="fans">fans</Option>
-      </Select>
-    </Form.Item>
-  );
-  const suffixSelector3 = (
-    <Form.Item name="suffix" noStyle>
-      <Select defaultValue="post">
-        <Option value="post">post/week</Option>
-      </Select>
-    </Form.Item>
-  );
   return (
     <>
       <div id="content">
@@ -41,7 +20,7 @@ const OverviewForm = ({ onFinish, initialValues }) => {
                   name="emailContact"
                   rules={[
                     {
-                      required: true,
+                      required: false,
                       message: "Please input your email",
                     },
                     { type: "email", message: "Invalid email" },
@@ -58,113 +37,13 @@ const OverviewForm = ({ onFinish, initialValues }) => {
                     {
                       min: 10,
                       max: 10,
-                      required: true,
+                      required: false,
                       message: "Please input your phone number",
                     },
                   ]}
                 >
                   <Input placeholder="Phone we can contact with you!" />
                 </Form.Item>
-              </div>
-              <div className="overview-form-pub">
-                <h5>Your Publication</h5>
-                <Form.Item
-                  name="engagement"
-                  rules={[
-                    {
-                      type: "number",
-                      min: 0,
-                      max: 100,
-                      required: true,
-                      message: "Please input your engagement of social",
-                    },
-                  ]}
-                >
-                  <InputNumber
-                    style={{
-                      width: "100%",
-                      textAlign: "center",
-                    }}
-                    addonAfter={suffixSelector1}
-                    placeholder="Engagement"
-                  />
-                </Form.Item>
-                <Form.Item
-                  name="post"
-                  rules={[
-                    {
-                      type: "number",
-                      min: 0,
-                      max: 100,
-                      required: true,
-                      message: "Please input your post per week",
-                    },
-                  ]}
-                >
-                  <InputNumber
-                    style={{
-                      width: "100%",
-                      textAlign: "center",
-                    }}
-                    addonAfter={suffixSelector3}
-                    placeholder="Post per week"
-                  />
-                </Form.Item>
-                <div className="cost-select-form">
-                  <Form.Item
-                    name="costFrom"
-                    label="Cost estimatie"
-                    tooltip="This estimate depends on the influencer's stats, country, and if they're a personality off social media."
-                    rules={[
-                      {
-                        type: "number",
-                        min: 0,
-                        required: true,
-                        message: "Please input your cost estimatie ",
-                      },
-                    ]}
-                  >
-                    <InputNumber
-                      type="number"
-                      style={{
-                        width: "159px",
-                        textAlign: "center",
-                      }}
-                      placeholder="From"
-                    />
-                  </Form.Item>
-                  <FormItem>
-                    <p
-                      style={{
-                        width: 30,
-                        padding: "5px",
-                        textAlign: "center",
-                      }}
-                    >
-                      ~
-                    </p>
-                  </FormItem>
-                  <FormItem
-                    name="costTo"
-                    rules={[
-                      {
-                        type: "number",
-                        min: 0,
-                        required: true,
-                        message: "Please input your cost estimatie ",
-                      },
-                    ]}
-                  >
-                    <InputNumber
-                      type="number"
-                      style={{
-                        width: "159px",
-                        textAlign: "center",
-                      }}
-                      placeholder="To"
-                    />
-                  </FormItem>
-                </div>
               </div>
               <div>
                 <Button
