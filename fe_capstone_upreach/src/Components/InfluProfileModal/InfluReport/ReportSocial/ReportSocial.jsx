@@ -18,12 +18,12 @@ const ReportSocial = ({ influInfo }) => {
                 <div className="interact-block">
                   <Tooltip
                     placement="top"
-                    title={Number(influInfo.influencerFollowers).toLocaleString(
-                      "vi-VN"
-                    )}
+                    title={Number(
+                      influInfo?.influencerFollowers
+                    ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo.influencerFollowers)}
+                      {roundNumber(influInfo?.influencerFollowers)}
                     </span>
                   </Tooltip>
                 </div>
@@ -35,11 +35,11 @@ const ReportSocial = ({ influInfo }) => {
                   <Tooltip
                     placement="top"
                     title={Number(
-                      influInfo.influencerEngagement
+                      influInfo?.influencerEngagement
                     ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo.influencerEngagement)}%
+                      {roundNumber(influInfo?.influencerEngagement)}%
                     </span>
                   </Tooltip>
                 </div>
@@ -54,16 +54,16 @@ const ReportSocial = ({ influInfo }) => {
                     <Tooltip
                       placement="top"
                       title={Number(
-                        influInfo.influencerCostEstimateFrom
+                        influInfo?.influencerCostEstimateFrom
                       ).toLocaleString("vi-VN")}
                     >
                       <span className="text-tooltip">
-                        {influInfo.influencerCostEstimateFrom?.length > 8
-                          ? `${Number(influInfo.influencerCostEstimateFrom)
+                        {influInfo?.influencerCostEstimateFrom?.length > 8
+                          ? `${Number(influInfo?.influencerCostEstimateFrom)
                               .toLocaleString("vi-VN")
-                              .slice(0, 10)}...`
+                              ?.slice(0, 10)}...`
                           : Number(
-                              influInfo.influencerCostEstimateFrom
+                              influInfo?.influencerCostEstimateFrom
                             ).toLocaleString("vi-VN")}
                       </span>
                     </Tooltip>
@@ -76,16 +76,16 @@ const ReportSocial = ({ influInfo }) => {
                     <Tooltip
                       placement="top"
                       title={Number(
-                        influInfo.influencerCostEstimateTo
+                        influInfo?.influencerCostEstimateTo
                       ).toLocaleString("vi-VN")}
                     >
                       <span className="text-tooltip">
-                        {influInfo.influencerCostEstimateTo.length > 8
-                          ? `${Number(influInfo.influencerCostEstimateTo)
+                        {influInfo?.influencerCostEstimateTo?.length > 8
+                          ? `${Number(influInfo?.influencerCostEstimateTo)
                               .toLocaleString("vi-VN")
-                              .slice(0, 10)}...`
+                              ?.slice(0, 10)}...`
                           : Number(
-                              influInfo.influencerCostEstimateTo
+                              influInfo?.influencerCostEstimateTo
                             ).toLocaleString("vi-VN")}
                       </span>
                     </Tooltip>
@@ -100,11 +100,11 @@ const ReportSocial = ({ influInfo }) => {
                   <Tooltip
                     placement="top"
                     title={Number(
-                      influInfo.influencerPostsPerWeek
+                      influInfo?.influencerPostsPerWeek
                     ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo.influencerPostsPerWeek)}
+                      {roundNumber(influInfo?.influencerPostsPerWeek)}
                     </span>
                   </Tooltip>
                 </div>
@@ -122,9 +122,9 @@ const ReportSocial = ({ influInfo }) => {
             >
               {influInfo?.influencerLinkFb === null
                 ? "Facebook"
-                : influInfo?.influencerLinkFb.length <= 32
+                : influInfo?.influencerLinkFb?.length <= 32
                 ? influInfo?.influencerLinkFb
-                : influInfo?.influencerLinkFb.slice(0, 32) + "..."}
+                : influInfo?.influencerLinkFb?.slice(0, 32) + "..."}
             </a>
           </div>
           <div className="cover-follower-interaction">
@@ -151,9 +151,9 @@ const ReportSocial = ({ influInfo }) => {
             >
               {influInfo?.influencerLinkInsta === null
                 ? "Instagram"
-                : influInfo?.influencerLinkInsta.length <= 32
+                : influInfo?.influencerLinkInsta?.length <= 32
                 ? influInfo?.influencerLinkInsta
-                : influInfo?.influencerLinkInsta.slice(0, 32) + "..."}
+                : influInfo?.influencerLinkInsta?.slice(0, 32) + "..."}
             </a>
           </div>
           <div className="cover-follower-interaction">
@@ -180,9 +180,9 @@ const ReportSocial = ({ influInfo }) => {
             >
               {influInfo?.influencerLinkYoutube === null
                 ? "Youtube"
-                : influInfo?.influencerLinkYoutube.length <= 32
+                : influInfo?.influencerLinkYoutube?.length <= 32
                 ? influInfo?.influencerLinkYoutube
-                : influInfo?.influencerLinkYoutube.slice(0, 32) + "..."}
+                : influInfo?.influencerLinkYoutube?.slice(0, 32) + "..."}
             </a>
           </div>
           <div className="cover-follower-interaction">
@@ -210,9 +210,9 @@ const ReportSocial = ({ influInfo }) => {
             >
               {influInfo?.influencerLinkTiktok === null
                 ? "Tiktok"
-                : influInfo?.influencerLinkTiktok.length <= 32
+                : influInfo?.influencerLinkTiktok?.length <= 32
                 ? influInfo?.influencerLinkTiktok
-                : influInfo?.influencerLinkTiktok.slice(0, 32) + "..."}
+                : influInfo?.influencerLinkTiktok?.slice(0, 32) + "..."}
             </a>
           </div>
           <div className="cover-follower-interaction">

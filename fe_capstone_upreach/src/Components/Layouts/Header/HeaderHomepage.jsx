@@ -9,7 +9,7 @@ import { UPREACH } from "../../Constant/Const";
 import { useUserStore } from "../../../Stores/user";
 
 function RenderLogo({ onClickIntroduce }) {
-  const [user] = useUserStore((state) => [state.user]);
+  const [user] = useUserStore((state) => [state?.user]);
   return (
     <div className="headerContent">
       {user ? (
@@ -48,8 +48,8 @@ const HeaderHomepage = (onClickIntroduce) => {
   let navigate = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies();
   const [user, setUserInfo] = useUserStore((state) => [
-    state.user,
-    state.setUserInfo,
+    state?.user,
+    state?.setUserInfo,
   ]);
 
   //click button will go to home page not logged in yet
@@ -91,7 +91,7 @@ const HeaderHomepage = (onClickIntroduce) => {
     <div className="HeaderHomepage">
       <RenderLogo onClickIntroduce={navigateIntroduce} />
       <div className="authBtn">
-        {user.roleId == 3 ? (
+        {user?.roleId == 3 ? (
           <div className="influencer-btn">
             <img
               className="influencer-avatar"

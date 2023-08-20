@@ -6,11 +6,11 @@ const ReportPost = ({ influInfo }) => {
   const [jobItems, setJobItems] = useState([]);
 
   useEffect(() => {
-    setJobItems(influInfo.jobs);
-  }, [influInfo.jobs]);
+    setJobItems(influInfo?.jobs);
+  }, [influInfo?.jobs]);
   return (
     <div className="report-post-layout">
-      {jobItems.map((item, index) => (
+      {jobItems?.map((item, index) => (
         <div key={index}>
           <JobItem jobInfo={item} />
         </div>

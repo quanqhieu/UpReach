@@ -4,7 +4,7 @@ import JobItem from "./JobItem/ApproveJobItem";
 
 const ReportPost = ({ influInfo, dataReportVersion }) => {
   const [jobItems, setJobItems] = useState([]);
-  console.log(dataReportVersion.dataJob);
+  // console.log(dataReportVersion.dataJob);
 
   useEffect(() => {
     setJobItems(dataReportVersion?.dataJob);

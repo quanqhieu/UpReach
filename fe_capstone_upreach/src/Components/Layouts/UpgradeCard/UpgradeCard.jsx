@@ -13,7 +13,7 @@ const UpgradeCard = ({ upgradeCards }) => {
       <div className="upgrade-card-bg">
         <div className="upgrade-card-header">
           <div className="upgrade-card-tag-socials">
-            <div className="upgrade-card-tag">{upgradeCards.tag}</div>
+            <div className="upgrade-card-tag">{upgradeCards?.tag}</div>
             <div className="upgrade-card-socials">
               <div className="upgrade-card-social">
                 <Facebook />
@@ -31,7 +31,7 @@ const UpgradeCard = ({ upgradeCards }) => {
           </div>
           <div className="upgrade-card-cost">
             <p style={{ fontSize: "26px", fontWeight: "600" }}>
-              ${upgradeCards.cost}
+              ${upgradeCards?.cost}
             </p>
             <p style={{ fontSize: "14px", fontWeight: "600" }}>/month</p>
           </div>
@@ -42,7 +42,7 @@ const UpgradeCard = ({ upgradeCards }) => {
             shape="round"
             size="large"
           >
-            <Link to={upgradeCards.link}>{upgradeCards.btnTag}</Link>
+            <Link to={upgradeCards?.link}>{upgradeCards?.btnTag}</Link>
           </Button>
         </div>
         <div className="upgrade-card-content">
@@ -55,9 +55,9 @@ const UpgradeCard = ({ upgradeCards }) => {
           <div className="upgrade-card-content-sub-title">
             <div className="upgrade-card-content-line-item">
               <div className="line-item-check-title">
-                <img src={upgradeCards.sub1[0]} alt="" />
+                <img src={upgradeCards?.sub1[0]} alt="" />
                 <span style={{ marginLeft: "5px" }}>
-                  {upgradeCards.sub1[1]}
+                  {upgradeCards?.sub1[1]}
                 </span>
               </div>
               <Question />
@@ -65,9 +65,9 @@ const UpgradeCard = ({ upgradeCards }) => {
 
             <div className="upgrade-card-content-line-item">
               <div className="line-item-check-title">
-                <img src={upgradeCards.sub2[0]} alt="" />
+                <img src={upgradeCards?.sub2[0]} alt="" />
                 <span style={{ marginLeft: "5px" }}>
-                  {upgradeCards.sub2[1]}
+                  {upgradeCards?.sub2[1]}
                 </span>
               </div>
               <Question />
@@ -75,9 +75,9 @@ const UpgradeCard = ({ upgradeCards }) => {
 
             <div className="upgrade-card-content-line-item">
               <div className="line-item-check-title">
-                <img src={upgradeCards.sub3[0]} alt="" />
+                <img src={upgradeCards?.sub3[0]} alt="" />
                 <span style={{ marginLeft: "5px" }}>
-                  {upgradeCards.sub3[1]}
+                  {upgradeCards?.sub3[1]}
                 </span>
               </div>
               <Question />
@@ -85,9 +85,9 @@ const UpgradeCard = ({ upgradeCards }) => {
 
             <div className="upgrade-card-content-line-item">
               <div className="line-item-check-title">
-                <img src={upgradeCards.sub4[0]} alt="" />
+                <img src={upgradeCards?.sub4[0]} alt="" />
                 <span style={{ marginLeft: "5px" }}>
-                  {upgradeCards.sub4[1]}
+                  {upgradeCards?.sub4[1]}
                 </span>
               </div>
               <Question />
@@ -95,9 +95,9 @@ const UpgradeCard = ({ upgradeCards }) => {
 
             <div className="upgrade-card-content-line-item">
               <div className="line-item-check-title">
-                <img src={upgradeCards.sub5[0]} alt="" />
+                <img src={upgradeCards?.sub5[0]} alt="" />
                 <span style={{ marginLeft: "5px" }}>
-                  {upgradeCards.sub5[1]}
+                  {upgradeCards?.sub5[1]}
                 </span>
               </div>
               <Question />
@@ -105,9 +105,9 @@ const UpgradeCard = ({ upgradeCards }) => {
 
             <div className="upgrade-card-content-line-item">
               <div className="line-item-check-title">
-                <img src={upgradeCards.sub6[0]} alt="" />
+                <img src={upgradeCards?.sub6[0]} alt="" />
                 <span style={{ marginLeft: "5px" }}>
-                  {upgradeCards.sub6[1]}
+                  {upgradeCards?.sub6[1]}
                 </span>
               </div>
               <Question />
@@ -115,9 +115,9 @@ const UpgradeCard = ({ upgradeCards }) => {
 
             <div className="upgrade-card-content-line-item">
               <div className="line-item-check-title">
-                <img src={upgradeCards.sub7[0]} alt="" />
+                <img src={upgradeCards?.sub7[0]} alt="" />
                 <span style={{ marginLeft: "5px" }}>
-                  {upgradeCards.sub7[1]}
+                  {upgradeCards?.sub7[1]}
                 </span>
               </div>
               <Question />
@@ -125,9 +125,9 @@ const UpgradeCard = ({ upgradeCards }) => {
 
             <div className="upgrade-card-content-line-item">
               <div className="line-item-check-title">
-                <img src={upgradeCards.sub8[0]} alt="" />
+                <img src={upgradeCards?.sub8[0]} alt="" />
                 <span style={{ marginLeft: "5px" }}>
-                  {upgradeCards.sub8[1]}
+                  {upgradeCards?.sub8[1]}
                 </span>
               </div>
               <Question />
@@ -135,9 +135,9 @@ const UpgradeCard = ({ upgradeCards }) => {
 
             <div className="upgrade-card-content-line-item">
               <div className="line-item-check-title">
-                <img src={upgradeCards.sub9[0]} alt="" />
+                <img src={upgradeCards?.sub9[0]} alt="" />
                 <span style={{ marginLeft: "5px" }}>
-                  {upgradeCards.sub9[1]}
+                  {upgradeCards?.sub9[1]}
                 </span>
               </div>
               <Question />
@@ -145,9 +145,9 @@ const UpgradeCard = ({ upgradeCards }) => {
 
             <div className="upgrade-card-content-line-item">
               <div className="line-item-check-title">
-                <img src={upgradeCards.sub10[0]} alt="" />
+                <img src={upgradeCards?.sub10[0]} alt="" />
                 <span style={{ marginLeft: "5px" }}>
-                  {upgradeCards.sub10[1]}
+                  {upgradeCards?.sub10[1]}
                 </span>
               </div>
               <Question />
@@ -155,9 +155,9 @@ const UpgradeCard = ({ upgradeCards }) => {
 
             <div className="upgrade-card-content-line-item">
               <div className="line-item-check-title">
-                <img src={upgradeCards.sub11[0]} alt="" />
+                <img src={upgradeCards?.sub11[0]} alt="" />
                 <span style={{ marginLeft: "5px" }}>
-                  {upgradeCards.sub11[1]}
+                  {upgradeCards?.sub11[1]}
                 </span>
               </div>
               <Question />

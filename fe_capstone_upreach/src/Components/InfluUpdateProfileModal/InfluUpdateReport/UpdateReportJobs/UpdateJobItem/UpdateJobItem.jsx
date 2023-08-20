@@ -66,22 +66,24 @@ const UpdateJobItem = ({ bookingItem }) => {
             >
               {bookingItem?.costEstimateFrom?.length > 8
                 ? `${Number(bookingItem?.costEstimateFrom)
-                    .toLocaleString("vi-VN")
-                    .slice(0, 8)}...`
-                : Number(bookingItem?.costEstimateFrom).toLocaleString("vi-VN")}
+                    ?.toLocaleString("vi-VN")
+                    ?.slice(0, 8)}...`
+                : Number(bookingItem?.costEstimateFrom)?.toLocaleString(
+                    "vi-VN"
+                  )}
             </Tooltip>{" "}
             ~{" "}
             <Tooltip
               placement="top"
-              title={Number(bookingItem?.costEstimateTo).toLocaleString(
+              title={Number(bookingItem?.costEstimateTo)?.toLocaleString(
                 "vi-VN"
               )}
             >
               {bookingItem?.costEstimateTo?.length > 8
                 ? `${Number(bookingItem?.costEstimateTo)
-                    .toLocaleString("vi-VN")
-                    .slice(0, 8)}...`
-                : Number(bookingItem?.costEstimateTo).toLocaleString("vi-VN")}
+                    ?.toLocaleString("vi-VN")
+                    ?.slice(0, 8)}...`
+                : Number(bookingItem?.costEstimateTo)?.toLocaleString("vi-VN")}
             </Tooltip>{" "}
             VND
           </p>

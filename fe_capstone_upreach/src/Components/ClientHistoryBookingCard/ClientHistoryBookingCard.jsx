@@ -22,7 +22,7 @@ const ClientHistoryBookingCard = ({ bookingList }) => {
   const [isOpenBooking, setIsOpenBooking] = React.useState(false);
   const [openConfirmForm, setOpenConfirmForm] = React.useState(false);
 
-  const [status, setStatus] = React.useState(bookingList.status);
+  const [status, setStatus] = React.useState(bookingList?.status);
   const [valueRate, setValueRate] = React.useState("");
   const desc = ["terrible", "bad", "normal", "good", "wonderful"];
   const handleOpenModal = (info) => {
@@ -56,7 +56,7 @@ const ClientHistoryBookingCard = ({ bookingList }) => {
       content: `Are you sure you want to ${action} this booking?`,
       okText: "Yes",
       okButtonProps: {
-        disabled: info.status !== "Processing",
+        disabled: info?.status !== "Processing",
       },
       cancelText: "No",
       onOk() {
@@ -99,7 +99,7 @@ const ClientHistoryBookingCard = ({ bookingList }) => {
   const handleSendFeedback = () => {
     setOpenConfirmForm(false);
     setOpen(false);
-    console.log(valueRate);
+    // console.log(valueRate);
     bookingList.feedback = valueRate;
     const formData = new FormData();
     formData.append("booking", JSON.stringify(bookingList));
@@ -160,16 +160,16 @@ const ClientHistoryBookingCard = ({ bookingList }) => {
 
         <div className="client-history-card">
           <div className="client-history-card-content">
-            <p style={{ width: "18.8%" }}>{bookingList.kolName}</p>
-            <p style={{ width: "12.1%" }}>{bookingList.platform}</p>
+            <p style={{ width: "18.8%" }}>{bookingList?.kolName}</p>
+            <p style={{ width: "12.1%" }}>{bookingList?.platform}</p>
             <p style={{ width: "17.1%" }}>
               {getFormatContent(bookingList?.formatContent)}
             </p>
 
-            <p style={{ width: "10%" }}>{bookingList.quantity}</p>
-            <p style={{ width: "12%" }}>{bookingList.status}</p>
-            <p style={{ width: "15%" }}>{bookingList.startDate}</p>
-            <p style={{ width: "15%" }}>{bookingList.endDate}</p>
+            <p style={{ width: "10%" }}>{bookingList?.quantity}</p>
+            <p style={{ width: "12%" }}>{bookingList?.status}</p>
+            <p style={{ width: "15%" }}>{bookingList?.startDate}</p>
+            <p style={{ width: "15%" }}>{bookingList?.endDate}</p>
           </div>
           <div className="client-history-card-icons">
             <div className="client-history-card-icon">
@@ -185,17 +185,17 @@ const ClientHistoryBookingCard = ({ bookingList }) => {
               className="client-history-card-icon"
               onClick={() => showConfirm(bookingList, "Done")}
               disabled={
-                bookingList.status === "Done" ||
-                bookingList.status === "Pending" ||
-                bookingList.status === "Rejected"
+                bookingList?.status === "Done" ||
+                bookingList?.status === "Pending" ||
+                bookingList?.status === "Rejected"
               }
               icon={
                 <Icon
                   icon="iconoir:check"
                   color={
-                    bookingList.status === "Done" ||
-                    bookingList.status === "Pending" ||
-                    bookingList.status === "Rejected"
+                    bookingList?.status === "Done" ||
+                    bookingList?.status === "Pending" ||
+                    bookingList?.status === "Rejected"
                       ? "#ccc"
                       : "#0bfa00"
                   }
@@ -209,14 +209,14 @@ const ClientHistoryBookingCard = ({ bookingList }) => {
               type="link"
               onClick={showDrawer}
               disabled={
-                bookingList.status === "Pending" ||
-                bookingList.status === "Processing" ||
-                bookingList.status === "Rejected" ||
-                bookingList.feedback == 1 ||
-                bookingList.feedback == 2 ||
-                bookingList.feedback == 3 ||
-                bookingList.feedback == 4 ||
-                bookingList.feedback == 5
+                bookingList?.status === "Pending" ||
+                bookingList?.status === "Processing" ||
+                bookingList?.status === "Rejected" ||
+                bookingList?.feedback == 1 ||
+                bookingList?.feedback == 2 ||
+                bookingList?.feedback == 3 ||
+                bookingList?.feedback == 4 ||
+                bookingList?.feedback == 5
               }
             >
               Send feedback

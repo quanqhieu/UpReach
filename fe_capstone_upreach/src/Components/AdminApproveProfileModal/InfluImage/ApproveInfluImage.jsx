@@ -14,7 +14,7 @@ const ApproveInfluImage = ({ influInfo }) => {
           <img
             key={index}
             className="influ-image"
-            src={imageObj.Image}
+            src={imageObj?.Image}
             alt=""
           />
         ))}

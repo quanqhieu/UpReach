@@ -11,7 +11,7 @@ const InfluencerBookingCard = ({ bookingList }) => {
   // const [user] = useUserStore((state) => [state.user]);
   const [bookingDetail, setBookingDetail] = React.useState("");
   const [isOpenBooking, setIsOpenBooking] = React.useState(false);
-  const [status, setStatus] = React.useState(bookingList.status);
+  const [status, setStatus] = React.useState(bookingList?.status);
 
   const handleOpenModal = (info) => {
     setBookingDetail(info);
@@ -65,7 +65,7 @@ const InfluencerBookingCard = ({ bookingList }) => {
       content: `Are you sure you want to ${action} this booking?`,
       okText: "Yes",
       okButtonProps: {
-        disabled: info.status !== "Pending",
+        disabled: info?.status !== "Pending",
       },
       cancelText: "No",
       onOk() {
@@ -106,18 +106,18 @@ const InfluencerBookingCard = ({ bookingList }) => {
       </Modal>
       <div className="influ-booking-card">
         <div className="influ-booking-card-content">
-          <p style={{ width: "18.8%" }}>{bookingList.brandName}</p>
-          <p style={{ width: "12.1%" }}>{bookingList.platform}</p>
+          <p style={{ width: "18.8%" }}>{bookingList?.brandName}</p>
+          <p style={{ width: "12.1%" }}>{bookingList?.platform}</p>
           <p style={{ width: "17.1%" }}>
             {bookingList?.formatContent
               ?.map((item) => getFormatContent(item))
               ?.join(", ")}
           </p>
 
-          <p style={{ width: "10%" }}>{bookingList.quantity}</p>
-          <p style={{ width: "12%" }}>{bookingList.status}</p>
-          <p style={{ width: "15%" }}>{bookingList.startDate}</p>
-          <p style={{ width: "15%" }}>{bookingList.endDate}</p>
+          <p style={{ width: "10%" }}>{bookingList?.quantity}</p>
+          <p style={{ width: "12%" }}>{bookingList?.status}</p>
+          <p style={{ width: "15%" }}>{bookingList?.startDate}</p>
+          <p style={{ width: "15%" }}>{bookingList?.endDate}</p>
         </div>
         <div className="influ-booking-card-icons">
           <div className="influ-booking-card-icon">
@@ -133,17 +133,17 @@ const InfluencerBookingCard = ({ bookingList }) => {
             className="influ-booking-card-icon"
             onClick={() => showConfirm(bookingList, "Rejected")}
             disabled={
-              bookingList.status === "Rejected" ||
-              bookingList.status === "Processing" ||
-              bookingList.status === "Done"
+              bookingList?.status === "Rejected" ||
+              bookingList?.status === "Processing" ||
+              bookingList?.status === "Done"
             }
             icon={
               <Icon
                 icon="iconoir:cancel"
                 color={
-                  bookingList.status === "Rejected" ||
-                  bookingList.status === "Processing" ||
-                  bookingList.status === "Done"
+                  bookingList?.status === "Rejected" ||
+                  bookingList?.status === "Processing" ||
+                  bookingList?.status === "Done"
                     ? "#ccc"
                     : "#fa0000"
                 }
@@ -157,17 +157,17 @@ const InfluencerBookingCard = ({ bookingList }) => {
             className="influ-booking-card-icon"
             onClick={() => showConfirm(bookingList, "Processing")}
             disabled={
-              bookingList.status === "Rejected" ||
-              bookingList.status === "Processing" ||
-              bookingList.status === "Done"
+              bookingList?.status === "Rejected" ||
+              bookingList?.status === "Processing" ||
+              bookingList?.status === "Done"
             }
             icon={
               <Icon
                 icon="ic:round-check"
                 color={
-                  bookingList.status === "Rejected" ||
-                  bookingList.status === "Processing" ||
-                  bookingList.status === "Done"
+                  bookingList?.status === "Rejected" ||
+                  bookingList?.status === "Processing" ||
+                  bookingList?.status === "Done"
                     ? "#ccc"
                     : "#00dd1a"
                 }

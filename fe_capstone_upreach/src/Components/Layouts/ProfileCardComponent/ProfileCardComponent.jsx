@@ -24,8 +24,8 @@ const ProfileCardComponent = ({ profileInflu }) => {
               <div className="profile-topics">
                 {profileInflu?.influencerContentTopicName
                   ?.filter((topic) => topic)
-                  .slice(0, 2)
-                  .map((topic, index) => (
+                  ?.slice(0, 2)
+                  ?.map((topic, index) => (
                     <div key={index} className="profile-topic">
                       <Tooltip placement="top" title={topic}>
                         <div>

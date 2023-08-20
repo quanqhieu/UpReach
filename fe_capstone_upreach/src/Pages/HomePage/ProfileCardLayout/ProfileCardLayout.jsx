@@ -14,7 +14,7 @@ const ProfileCardLayout = ({ allInfluencer, loading }) => {
 
   const handleOpenModal = async (info) => {
     try {
-      const influencerEmail = info.influencerEmail;
+      const influencerEmail = info?.influencerEmail;
       const idInfluencerInMongoDB = await ApiInfluencer.getIDInfluencer(
         influencerEmail
       );
