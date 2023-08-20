@@ -22,20 +22,24 @@ const ProfileCardComponent = ({ profileInflu }) => {
                 <p>{profileInflu?.influencerAddress}</p>
               </div>
               <div className="profile-topics">
-                {profileInflu?.influencerContentTopicName
-                  ?.filter((topic) => topic)
-                  .slice(0, 2)
-                  .map((topic, index) => (
-                    <div key={index} className="profile-topic">
-                      <Tooltip placement="top" title={topic}>
-                        <div>
-                          {topic?.length > 8
-                            ? `${topic?.slice(0, 8)}...`
-                            : topic}
-                        </div>
-                      </Tooltip>
-                    </div>
-                  ))}
+                {profileInflu?.influencerContentTopicName?.length === 0 ? (
+                  <></>
+                ) : (
+                  profileInflu?.influencerContentTopicName
+                    .slice(0, 2)
+                    .map((topic, index) => (
+                      <div key={index} className="profile-topic">
+                        <Tooltip placement="top" title={topic}>
+                          <div>
+                            {topic?.length > 8
+                              ? `${topic.slice(0, 8)}...`
+                              : topic}
+                          </div>
+                        </Tooltip>
+                      </div>
+                    ))
+                )}
+
               </div>
             </div>
           </div>

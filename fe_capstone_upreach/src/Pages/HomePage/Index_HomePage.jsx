@@ -7,10 +7,14 @@ import ProfileCardLayout from "./ProfileCardLayout/ProfileCardLayout";
 import { Link } from "react-router-dom";
 import ApiGetInfoAndFilterInfluencer from "../../Api/ApiGetInfoAndFilterInfluencer";
 import { FireFilled } from "@ant-design/icons";
+import { Spin, Space } from "antd";
 
 const Index_HomePage = () => {
   const [allInfluencer, setAllInfluencer] = useState();
   const [loading, setLoading] = useState(true);
+  const [pointReport, setpointReport] = useState();
+  const [pointSearch, setPointSearch] = useState();
+
   // BE get Influencer
   const fetchDataGetList = async () => {
     try {
@@ -21,14 +25,19 @@ const Index_HomePage = () => {
         User.roleId
       );
       console.log("res", response);
-      for (var i = response.Influencer.length - 1; i > 0; i--) {
+      for (var i = response.data.length - 1; i > 0; i--) {
         var j = Math.floor(Math.random() * (i + 1));
-        var temp = response.Influencer[i];
-        response.Influencer[i] = response.Influencer[j];
-        response.Influencer[j] = temp;
+        var temp = response.data[i];
+        response.data[i] = response.data[j];
+        response.data[j] = temp;
       }
       setAllInfluencer(response);
-      // console.log(response);
+
+      setpointReport(response.Client.pointReport);
+      setPointSearch(response.Client.pointSearch);
+      console.log("++++++++++");
+      console.log(response);
+
       setLoading(false);
     } catch (error) {
       console.log("Error fetching data:", error);
@@ -63,6 +72,8 @@ const Index_HomePage = () => {
           setAllInfluencer={setAllInfluencer}
           setLoading={setLoading}
           loading={loading}
+          pointSearch={pointSearch}
+          setPointSearch={setPointSearch}
         />
       </div>
       <div className="row text-center">
@@ -88,18 +99,33 @@ const Index_HomePage = () => {
             <div className="row text-center">
               <div className="d-inline mt-3 countTime pt-2">
                 Remaining results:{" "}
-                <div className="d-inline numberCount">100</div>
+                {loading ? (
+                  <Spin size="small" spinning={loading}></Spin>
+                ) : (
+                  <div className="d-inline numberCount">{pointSearch}</div>
+                )}
                 <div className="d-inline mt-3 ms-3 pt-2">
                   Remaining reports:{" "}
-                  <div className="d-inline numberCount">100</div>
-                  <button className="ms-3 btnAdd">Add More</button>
+                  {loading ? (
+                    <Spin size="small" spinning={loading}></Spin>
+                  ) : (
+                    <div className="d-inline numberCount">{pointReport}</div>
+                  )}
+                  <Link to="/upgrade">
+                    <button className="ms-3 btnAdd">Add More</button>
+                  </Link>
                 </div>
               </div>
             </div>
             <div className="col-3"></div>
           </div>
         </div>
-        <ProfileCardLayout allInfluencer={allInfluencer} loading={loading} />
+        <ProfileCardLayout
+          allInfluencer={allInfluencer}
+          loading={loading}
+          setpointReport={setpointReport}
+          pointReport={pointReport}
+        />
       </div>
     </div>
   );

@@ -102,3 +102,10 @@ select::-ms-expand {
 p {
 	margin-bottom: 0 !important;
 }
+
+.ant-modal-confirm-content{
+	font-size: 22px !important;
+}
+.ant-modal-confirm-title{
+	font-size: 22px !important;
+}

@@ -29,7 +29,8 @@ const ReportPost = ({ influInfo }) => {
           <></>
         ) : (
           data?.data[0]?.dataJob.map((item) =>
-            item.jobId != null && item.isPublish != false ? (
+
+            item.jobId != null && item.isPublish === true ? (
               <JobItem data={item} />
             ) : (
               <></>

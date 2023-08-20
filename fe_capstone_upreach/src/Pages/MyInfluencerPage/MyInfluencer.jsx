@@ -101,7 +101,6 @@ const MyInfluencer = () => {
       const dataLocalStorge = await JSON.parse(
         localStorage.getItem("user-draw-storage")
       ).state.user.Client_ID;
-      console.log(dataLocalStorge);
       setIdAccClient(dataLocalStorge);
       const response = (await ApiListInfluecer.getListMenu(dataLocalStorge))
         .data;
@@ -260,12 +259,13 @@ const MyInfluencer = () => {
 
   return (
     <>
+
       {console.log(tabName)}
       {user?.roleId == 2 ? (
         <div className="coverMain">
           <HeaderHomepage />
           <div className="row pt-5">
-            <div className="col-2 pt-2 menuList">
+            <div className="col-2 pt-2 menuList padding-0">
               <Menu
                 onClick={onClick}
                 className="menu"
@@ -274,7 +274,7 @@ const MyInfluencer = () => {
                 selectedKeys={[listSelected]}
               />
             </div>
-            <div className="col-10">
+             <div className="col-10 padding-0">
               {checkTabListPage ? (
                 <MyListPage
                   listInfluencer={listInfluencer}

@@ -37,6 +37,14 @@ const ApiListInfluecer = {
         const url = '/getstatuslistofkols';
         return axiosClient.post(url, {ClientID: clientID,KOLsID : kOLsID})
     },
+    getAudienceDataAge(listKOLsID){
+        const url = '/getdatachartageaudi';
+        return axiosClient.post(url, {ListKOLsID: listKOLsID})
+    },
+    getAudienceDataGender(listKOLsID){
+        const url = '/getdatachartgenderaudi';
+        return axiosClient.post(url, {ListKOLsID: listKOLsID})
+    },
     
 }
 

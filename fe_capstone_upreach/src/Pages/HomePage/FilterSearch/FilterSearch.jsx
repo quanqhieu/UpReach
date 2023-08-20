@@ -29,6 +29,7 @@ function RenderSelectSearch({
   title,
   description,
   onChange,
+  value,
 }) {
   return (
     <Selects
@@ -36,6 +37,8 @@ function RenderSelectSearch({
       mode="multiple"
       options={options}
       onChange={onChange}
+      value={value}
+      allowClears
       placeholder={
         <>
           <p className="searchTitle">{title}</p>
@@ -52,12 +55,18 @@ function RenderFilter({
   setLoading,
   setAllInfluencer,
   category,
+  setDataSearchToCheck,
+  setOldDataSearchToCheck,
+  pointSearch,
+  setcheckClearAllInputSearch,
 }) {
+  const dataLocalStorge = JSON.parse(localStorage.getItem("user-draw-storage"))
+    .state.user.Client_ID;
   const [checkClearAll, setcheckClearAll] = useState(true);
   const [dataSearch, setDataSearch] = useState({
     // input to filter Influencer
-    clientId: "CL001",
-    pointSearch: 100,
+    clientId: dataLocalStorge,
+    pointSearch: pointSearch,
     costEstimateFrom: 0,
     costEstimateTo: 5000000,
     followerFrom: 0,
@@ -68,7 +77,7 @@ function RenderFilter({
     engagementTo: 20,
     ageFrom: 0,
     ageTo: 100,
-    contentTopic: [""],
+    contentTopic: [],
     nameType: [""],
     contentFormats: [""],
     audienceGender: [""],
@@ -76,8 +85,8 @@ function RenderFilter({
   });
 
   const defaultSearch = {
-    clientId: "CL001",
-    pointSearch: 100,
+    clientId: dataLocalStorge,
+    pointSearch: pointSearch,
     costEstimateFrom: 0,
     costEstimateTo: 5000000,
     followerFrom: 0,
@@ -88,7 +97,7 @@ function RenderFilter({
     engagementTo: 20,
     ageFrom: 0,
     ageTo: 100,
-    contentTopic: [""],
+    contentTopic: [],
     nameType: [""],
     contentFormats: [""],
     audienceGender: [""],
@@ -97,6 +106,7 @@ function RenderFilter({
 
   function handleClearAll() {
     setcheckClearAll(!checkClearAll);
+    setcheckClearAllInputSearch(!checkClearAll);
     setDataSearch(defaultSearch);
   }
   // fetch Data search BE
@@ -115,13 +125,21 @@ function RenderFilter({
       console.log("Error fetching data:", error);
     }
   };
+
   // UseEffect
   useEffect(() => {
-    console.log(dataSearch);
+    setcheckClearAll(!checkClearAll);
+    setOldDataSearchToCheck(dataSearch);
   }, []);
 
   useEffect(() => {
+    setDataSearchToCheck(dataSearch);
+  }, [dataSearch]);
+
+  //check duplicate search
+  useEffect(() => {
     if (isClickSearch === true) {
+      setOldDataSearchToCheck(dataSearch);
       fetchDataSearch(dataSearch);
     }
     setIsClickSearch(false);
@@ -239,12 +257,25 @@ function RenderFilter({
   );
 }
 
-const FilterSearch = ({ setAllInfluencer, setLoading, loading }) => {
-  const [platform, setPlatform] = useState();
-  const [category, setCategory] = useState();
+const FilterSearch = ({
+  setAllInfluencer,
+  setLoading,
+  loading,
+  pointSearch,
+  setPointSearch,
+}) => {
+  const [platform, setPlatform] = useState([]);
+  const [category, setCategory] = useState([]);
   const [isClickSearch, setIsClickSearch] = useState(false);
+  const [dataSearchToCheck, setDataSearchToCheck] = useState([]);
+  const [oldDataSearchToCheck, setOldDataSearchToCheck] = useState([]);
+  const [checkClearAllInputSearch, setcheckClearAllInputSearch] =
+    useState(false);
 
   const handleSubmitFilter = () => {
+    if (dataSearchToCheck != oldDataSearchToCheck) {
+      setPointSearch(pointSearch - 10);
+    }
     setIsClickSearch(true);
     setLoading(true);
   };
@@ -258,6 +289,11 @@ const FilterSearch = ({ setAllInfluencer, setLoading, loading }) => {
     console.log(`selected: ${selectCategory}`);
     setCategory(selectCategory);
   };
+
+  useEffect(() => {
+    setCategory([]);
+    setPlatform([]);
+  }, [checkClearAllInputSearch]);
 
   useEffect(() => {
     if (loading) {
@@ -279,6 +315,7 @@ const FilterSearch = ({ setAllInfluencer, setLoading, loading }) => {
                 options={LIST_LEFT_BUTTON_SELECT_SEARCH.options}
                 title={LIST_LEFT_BUTTON_SELECT_SEARCH.title}
                 description={LIST_LEFT_BUTTON_SELECT_SEARCH.description}
+                value={platform}
                 onChange={handleChangePlatform}
               />
               <RenderSelectSearch
@@ -286,6 +323,7 @@ const FilterSearch = ({ setAllInfluencer, setLoading, loading }) => {
                 options={LIST_RIGHT_BUTTON_SELECT_SEARCH.options}
                 title={LIST_RIGHT_BUTTON_SELECT_SEARCH.title}
                 description={LIST_RIGHT_BUTTON_SELECT_SEARCH.description}
+                value={category}
                 onChange={handleChangeCategory}
               />
               <Button className="bntSreach ms-3" onClick={handleSubmitFilter}>
@@ -299,6 +337,10 @@ const FilterSearch = ({ setAllInfluencer, setLoading, loading }) => {
                 setAllInfluencer={setAllInfluencer}
                 setLoading={setLoading}
                 category={category}
+                setDataSearchToCheck={setDataSearchToCheck}
+                setOldDataSearchToCheck={setOldDataSearchToCheck}
+                pointSearch={pointSearch}
+                setcheckClearAllInputSearch={setcheckClearAllInputSearch}
               />
             </div>
           </div>
