@@ -126,6 +126,7 @@ const InfluencerReportLayout = () => {
   // }
 
   function timeLeft(storedTime) {
+    console.log(storedTime);
     const currentTime = new Date();
     const currentMonth = currentTime.getMonth();
     const currentYear = currentTime.getFullYear();
@@ -247,19 +248,10 @@ const InfluencerReportLayout = () => {
           setOldVerInflu(() => {
             return info?.find((item) => item?.isPublish);
           });
-          // const editDate = new Date(oldVerInflu.dateEdit);
-          // localStorage.setItem("editDate", editDate);
         } else {
           setOldVerInflu(() => {
             return info?.find((item) => !item?.isPublish);
           });
-          // const editDate = new Date(oldVerInflu.dateEdit);
-          // const fakeUpdateDate = new Date(editDate);
-          // fakeUpdateDate.setDate(editDate.getDate() - 8);
-          // const formattedNewDate = fakeUpdateDate.toISOString();
-
-          // localStorage.setItem("editDate", formattedNewDate);
-          // setIsAllowEdit(true);
         }
       })
       .catch((error) => {
@@ -270,18 +262,23 @@ const InfluencerReportLayout = () => {
       });
   }, [force]);
   React.useEffect(() => {
-    setIsLoading(true);
     const editDate = new Date(oldVerInflu.dateEdit);
-    if (!oldVerInflu.isPublish) {
-      const eightDaysAgoTimestamp = editDate - 8 * 24 * 60 * 60 * 1000;
-      const formattedNewDate = new Date(eightDaysAgoTimestamp);
-      localStorage.setItem("editDate", formattedNewDate);
-      setIsLoading(false);
-    } else {
-      localStorage.setItem("editDate", editDate);
-      setIsLoading(false);
-    }
+    localStorage.setItem("editDate", editDate);
   }, [oldVerInflu]);
+  // React.useEffect(() => {
+  //   setIsLoading(true);
+
+  // const editDate = new Date(oldVerInflu.dateEdit);
+  //   if (!oldVerInflu.isPublish ) {
+  //     const eightDaysAgoTimestamp = editDate - 8 * 24 * 60 * 60 * 1000;
+  //     const formattedNewDate = new Date(eightDaysAgoTimestamp);
+  //     localStorage.setItem("editDate", formattedNewDate);
+  //     setIsLoading(false);
+  //   } else {
+  //     localStorage.setItem("editDate", editDate);
+  //     setIsLoading(false);
+  //   }
+  // }, [oldVerInflu]);
   // console.log(oldVerInflu);
   // console.log(isAllowEdit, "allow");
   return (
@@ -373,14 +370,19 @@ const InfluencerReportLayout = () => {
             </div>
           </div>
         </div>
-
         <div className="update-block">
           <Progress
-            percent={(waitedDate / 7) * 100}
+            percent={
+              !oldVerInflu.dateEdit
+                ? 100
+                : isLoadVersion
+                ? 0
+                : (waitedDate / 7) * 100
+            }
             format={() => {
-              if (!isLoading) {
+              if (isLoadVersion) {
                 return <Spin indicator={antIcon} />;
-              } else if (waitedDate >= 7) {
+              } else if (waitedDate >= 7 || !oldVerInflu.dateEdit) {
                 return `Ready to update`;
               } else return `${waitedDate} Days`;
             }}
@@ -400,7 +402,7 @@ const InfluencerReportLayout = () => {
             text="Update Now"
             icon={<IconArrow />}
             onClick={() => {
-              if (isAllowEdit) {
+              if (isAllowEdit || !oldVerInflu.dateEdit) {
                 handleOpenModal();
               } else {
                 messageApi.error("You can not update report now!");
@@ -445,7 +447,6 @@ const InfluencerReportLayout = () => {
                 >
                   <InfluencerProfileCard
                     profileInflu={item}
-                    previewInflu={previewInflu}
                     oldVerInflu={oldVerInflu}
                   />
                 </List.Item>

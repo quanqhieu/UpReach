@@ -1,6 +1,6 @@
 import default_img from "../../../Assets/Image/Default/DefaultImg.jpg";
 import "./ApproveInfluSideBar.css";
-import { Button, Tooltip } from "antd";
+import { Button, Tooltip, Avatar } from "antd";
 import { ReactComponent as Facebook } from "../../../Assets/Icon/Facebook.svg";
 import { ReactComponent as Instagram } from "../../../Assets/Icon/Instagram.svg";
 import { ReactComponent as Youtube } from "../../../Assets/Icon/Youtube.svg";
@@ -18,54 +18,26 @@ import {
 } from "@ant-design/icons";
 
 const ApproveInfluSideBar = ({ influInfo }) => {
-  // console.log(influInfo);
-  const [badgeColor, setBadgeColor] = React.useState("");
-  // React.useEffect(() => {
-  //   switch (influInfo?.type?.at(0)) {
-  //     case "Professional":
-  //       setBadgeColor("#C837AB");
-  //       break;
-  //     case "Talent":
-  //       setBadgeColor("#FFDD55");
-  //       break;
-  //     case "Celebrity":
-  //       setBadgeColor("#218DE8");
-  //       break;
-  //     case "Community":
-  //       setBadgeColor("#FF004F");
-  //       break;
-  //     case "Citizen":
-  //       setBadgeColor("#96F0AF");
-  //       break;
-  //     default:
-  //       return;
-  //   }
-  // }, [influInfo?.type?.at(0)]);
+  console.log(influInfo);
 
   return (
     <>
       <div className="approve-influ-side-bar-container">
         <div className="side-bar-header-body">
           <div className="influ-side-bar-header">
-            <img className="profile-avatar" src={default_img} alt="" />
-            <p className="profile-name">{influInfo?.profile?.fullName}</p>
-            {/* <div className="badge-block">
-              <div
-                style={{
-                  border: `2px solid ${badgeColor}`,
-                }}
-                className="badge-text"
-              >
-                <Diamond
-                  style={{
-                    height: "15px",
-                    fill: `${badgeColor}`,
-                    marginRight: "8px",
+            <Avatar
+              src={
+                <img
+                  src={influInfo?.profile?.Avatar || default_img}
+                  alt="avatar"
+                  onError={(e) => {
+                    e.target.src = default_img;
                   }}
                 />
-                {influInfo?.type?.at(0)}
-              </div>
-            </div> */}
+              }
+              className="profile-avatar"
+            />
+            <p className="profile-name">{influInfo?.profile?.fullName}</p>
             <div className="profile-socials">
               <div className="profile-social">
                 <Facebook
@@ -101,19 +73,6 @@ const ApproveInfluSideBar = ({ influInfo }) => {
             <p className="profile-description">Description & Content type</p>
             <div className="profile-contents">
               <div className="profile-content">
-                {/* <div className="profile-topics">
-                  {influInfo?.topics?.map((topic, index) => (
-                    <div key={index} className="profile-topic">
-                      <Tooltip placement="top" title={topic}>
-                        <div>
-                          {topic?.length > 8
-                            ? `${topic?.slice(0, 8)}...`
-                            : topic}
-                        </div>
-                      </Tooltip>
-                    </div>
-                  ))}
-                </div> */}
                 <div className="profile-location">
                   <Location style={{ marginRight: "8px" }} />
                   <p>{influInfo?.profile?.Address}</p>

@@ -97,7 +97,7 @@ const UpdateReportAudience = ({ influInfo, setPreviewChart, setIsChange }) => {
             const rows = resp?.rows?.slice(2, 8);
             const data = rows.map((row) => {
               return {
-                date: convertExcelDateToNormalDate(row[1]),
+                date: row[1],
                 // date: row[1],
                 value: row[2],
               };
@@ -160,7 +160,7 @@ const UpdateReportAudience = ({ influInfo, setPreviewChart, setIsChange }) => {
       dataLocation?.length > 0
     ) {
       setIsChange(true);
-    } else setIsChange(false);
+    }
   }, [dataFollower, dataGender, dataAge, dataLocation]);
 
   React.useEffect(() => {

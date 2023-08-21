@@ -10,8 +10,11 @@ import { ReactComponent as Diamond } from "../../../Assets/Icon/Diamond.svg";
 import React from "react";
 import roundNumber from "../roundNumber";
 import { HeartOutlined, MailFilled, PhoneFilled } from "@ant-design/icons";
+import { useUserStore } from "../../../Stores/user";
 
 const InfluSideBar = ({ oldVerInflu, influInfo }) => {
+  const [user] = useUserStore((state) => [state.user]);
+
   const [badgeColor, setBadgeColor] = React.useState("");
   React.useEffect(() => {
     if (oldVerInflu?.influencerTypeName?.at(0)) {
@@ -42,7 +45,14 @@ const InfluSideBar = ({ oldVerInflu, influInfo }) => {
       <div className="influ-update-side-bar-container">
         <div className="side-bar-header-body">
           <div className="influ-side-bar-header">
-            <img className="profile-avatar" src={default_img} alt="" />
+            <img
+              className="profile-avatar"
+              src={user?.avatar || default_img}
+              alt=""
+              onError={(e) => {
+                e.target.src = default_img;
+              }}
+            />
             <p className="profile-name">{oldVerInflu?.influencerfullName}</p>
             <div className="badge-block">
               {oldVerInflu?.influencerTypeName &&
@@ -68,19 +78,19 @@ const InfluSideBar = ({ oldVerInflu, influInfo }) => {
               <div className="profile-socials">
                 <div className="profile-social">
                   <Facebook className="profile-social-icon" />
-                  <p>{roundNumber(influInfo?.influencerFollowFb)}</p>
+                  <p>{roundNumber(influInfo?.influencerFollowFb || 0)}</p>
                 </div>
                 <div className="profile-social">
                   <Instagram className="profile-social-icon" />
-                  <p>{roundNumber(influInfo?.influencerFollowInsta)}</p>
+                  <p>{roundNumber(influInfo?.influencerFollowInsta || 0)}</p>
                 </div>
                 <div className="profile-social">
                   <Youtube className="profile-social-icon" />
-                  <p>{roundNumber(influInfo?.influencerFollowYoutube)}</p>
+                  <p>{roundNumber(influInfo?.influencerFollowYoutube || 0)}</p>
                 </div>
                 <div className="profile-social">
                   <Tiktok className="profile-social-icon" />
-                  <p>{roundNumber(influInfo?.influencerFollowTikTok)}</p>
+                  <p>{roundNumber(influInfo?.influencerFollowTikTok || 0)}</p>
                 </div>
               </div>
             </div>

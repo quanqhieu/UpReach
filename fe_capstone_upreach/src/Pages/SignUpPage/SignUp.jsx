@@ -51,13 +51,29 @@ const SignUp = () => {
   const onChangeInput = (value) => {
     setForm({ ...form, [value.target.name]: value.target.value });
   };
+  const validateEmail = (emailFromInput) => {
+    const emailPattern =
+      /^[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.(-?[a-zA-Z0-9])+$/;
+
+    if (emailFromInput === "") {
+      return false;
+    } else if (!emailPattern.test(emailFromInput)) {
+      return false;
+    } else {
+      return true;
+    }
+  };
   const handleClickSignUpClient = () => {
     form.role = ROLE_CLIENT;
-    const result = FetchRegisterUser(form);
+    if (validateEmail(form.email)) {
+      const result = FetchRegisterUser(form);
+    }
   };
   const handleClickSignUpInfluencer = () => {
     form.role = ROLE_INFLUENCER;
-    const result = FetchRegisterUser(form);
+    if (validateEmail(form.email)) {
+      const result = FetchRegisterUser(form);
+    }
   };
 
   React.useEffect(() => {

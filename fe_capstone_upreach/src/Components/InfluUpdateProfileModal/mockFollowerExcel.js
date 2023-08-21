@@ -1,11 +1,4 @@
-const dataFollower = [
-    {month :"Mar", value: ""},
-    {month :"Apr", value: ""},
-    {month :"May", value: ""},
-    {month :"Jun", value: ""},
-    {month :"Jul", value: ""},
-    {month :"Aug", value: ""},
-];
+const date =new Date
 
 const dataFollowerArr = [
     ["","",""],

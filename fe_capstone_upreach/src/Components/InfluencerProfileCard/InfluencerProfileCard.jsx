@@ -5,11 +5,14 @@ import { ReactComponent as Instagram } from "../../Assets/Icon/Instagram.svg";
 import { ReactComponent as Youtube } from "../../Assets/Icon/Youtube.svg";
 import { ReactComponent as Tiktok } from "../../Assets/Icon/Tiktok.svg";
 import { ReactComponent as Location } from "../../Assets/Icon/Location.svg";
-import { Tooltip } from "antd";
+import { Tooltip, Avatar } from "antd";
 import roundNumber from "../../Components/InfluUpdateProfileModal/roundNumber";
 import { EyeOutlined } from "@ant-design/icons";
+import { useUserStore } from "../../Stores/user";
 
-const InfluencerProfileCard = ({ profileInflu, previewInflu, oldVerInflu }) => {
+const InfluencerProfileCard = ({ profileInflu, oldVerInflu }) => {
+  const [user] = useUserStore((state) => [state.user]);
+
   const currentDate = new Date();
   const currentMonth = currentDate?.getMonth();
   const currentYear = currentDate?.getFullYear();
@@ -34,7 +37,19 @@ const InfluencerProfileCard = ({ profileInflu, previewInflu, oldVerInflu }) => {
         {/* <div className="profile-layout"> */}
         <div className="profile-content-layout">
           <div className="profile-avatar-content">
-            <img className="profile-avatar" src={default_img} alt="" />
+            <Avatar
+              src={
+                <img
+                  src={user?.avatar || default_img}
+                  alt="avatar"
+                  onError={(e) => {
+                    e.target.src = default_img;
+                  }}
+                />
+              }
+              className="profile-avatar"
+              size={80}
+            />
             <div className="profile-content">
               <p className="profile-name">{oldVerInflu?.influencerfullName}</p>
               <div className="profile-location">
@@ -77,28 +92,49 @@ const InfluencerProfileCard = ({ profileInflu, previewInflu, oldVerInflu }) => {
           <div className="profile-social">
             <Facebook />
 
-            <p> {roundNumber(profileInflu?.influencerFollowFb)}</p>
+            <p> {roundNumber(profileInflu?.influencerFollowFb || 0)}</p>
           </div>
           <div className="profile-social">
             <Instagram />
 
-            <p> {roundNumber(profileInflu?.influencerFollowInsta)}</p>
+            <p> {roundNumber(profileInflu?.influencerFollowInsta || 0)}</p>
           </div>
           <div className="profile-social">
             <Youtube />
 
-            <p>{roundNumber(profileInflu?.influencerFollowYoutube)}</p>
+            <p>{roundNumber(profileInflu?.influencerFollowYoutube || 0)}</p>
           </div>
           <div className="profile-social">
             <Tiktok />
 
-            <p>{roundNumber(profileInflu?.influencerFollowTikTok)}</p>
+            <p>{roundNumber(profileInflu?.influencerFollowTikTok || 0)}</p>
           </div>
         </div>
         <div className="profile-images">
-          <img className="profile-image" src={default_img} alt="" />
-          <img className="profile-image" src={default_img} alt="" />
-          <img className="profile-image" src={default_img} alt="" />
+          <img
+            className="profile-image"
+            src={profileInflu?.dataImage?.at(0)?.url || default_img}
+            alt=""
+            onError={(e) => {
+              e.target.src = default_img;
+            }}
+          />
+          <img
+            className="profile-image"
+            src={profileInflu?.dataImage?.at(1)?.url || default_img}
+            alt=""
+            onError={(e) => {
+              e.target.src = default_img;
+            }}
+          />
+          <img
+            className="profile-image"
+            src={profileInflu?.dataImage?.at(2)?.url || default_img}
+            alt=""
+            onError={(e) => {
+              e.target.src = default_img;
+            }}
+          />
         </div>
       </div>
     </>

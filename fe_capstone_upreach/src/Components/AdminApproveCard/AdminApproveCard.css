@@ -19,7 +19,7 @@
 	padding: 0 15px;
 }
 
-.profile-layout .profile-avatar-content {
+.profile-layout .approve-profile-avatar-content {
 	height: 80px;
 	display: flex;
 	align-items: flex-start;
@@ -32,13 +32,13 @@
 	margin-right: 10px;
 }
 
-.profile-layout .profile-content {
+.profile-layout .approve-profile-avatar-content .profile-content {
 	width: fit-content;
 	height: 80px;
 	display: flex;
 	justify-items: start;
 	flex-direction: column;
-	justify-content: space-between;
+	justify-content: space-evenly;
 }
 
 .profile-layout .profile-name {
