@@ -39,6 +39,7 @@ const ForgotPasswordPage = () => {
                     height: "50px",
                   }}
                   className="submit btn"
+                  
                 >
                   Send Reset Email
                 </Button>
