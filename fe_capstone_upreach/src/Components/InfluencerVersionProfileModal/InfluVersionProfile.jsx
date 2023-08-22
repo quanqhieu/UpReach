@@ -14,7 +14,6 @@ const InfluVersionProfile = ({ profileInflu, profileSideBar }) => {
       })
       .then((response) => {
         const info = response?.data?.data[0];
-        console.log(info);
         setDataReportVersion(info);
       })
       .catch((error) => {

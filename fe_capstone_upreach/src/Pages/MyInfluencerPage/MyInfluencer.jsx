@@ -19,6 +19,7 @@ import ApiListInfluecer from "../../Api/ApiListInfluecer";
 import { useUserStore } from "../../Stores/user";
 import { useNavigate } from "react-router-dom";
 import MyBookingPage from "./MyBookingPage/MyBookingPage";
+import Chat from "../ChatPage/Chat";
 
 function getItem(label, key, icon, children, type) {
   return {
@@ -94,6 +95,13 @@ const MyInfluencer = () => {
       [getItem("History Booking", "booking", <FileProtectOutlined />)],
       "group"
     ),
+    getItem(
+      "",
+      "bkg",
+      null,
+      [getItem("Chat With Influe", "chat", <FileProtectOutlined />)],
+      "group"
+    ),
   ];
 
   //====================== Get Data Back End ======================
@@ -160,10 +168,14 @@ const MyInfluencer = () => {
   //================================================================
   //====================== click item in list=======================
   const onClick = (e) => {
+    console.log("ee", e)
     if (e.key === "history") {
       setCheckTabListPage(false);
       setTabName(e.key);
     } else if (e.key === "booking") {
+      setCheckTabListPage(false);
+      setTabName(e.key);
+    } else if (e.key === "chat") {
       setCheckTabListPage(false);
       setTabName(e.key);
     } else {
@@ -292,8 +304,8 @@ const MyInfluencer = () => {
                   flagDeleteList={flagDeleteList}
                   setFlagDeleteList={setFlagDeleteList}
                   idAccClient={idAccClient}
-                  // IdList={IdList}
-                  // DeleteList={DeleteList}
+                // IdList={IdList}
+                // DeleteList={DeleteList}
                 />
               ) : (
                 <>
@@ -303,6 +315,8 @@ const MyInfluencer = () => {
                     </div>
                   ) : tabName === "booking" ? (
                     <MyBookingPage />
+                  ) : tabName === "chat" ? (
+                    <Chat />
                   ) : (
                     ""
                   )}

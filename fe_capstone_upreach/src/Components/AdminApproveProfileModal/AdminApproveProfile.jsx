@@ -10,7 +10,6 @@ const AdminApproveProfile = ({
   setIsOpenApproveProfile,
 }) => {
   const handleApprove = () => {
-    console.log(approveReport);
     axios
       .post("http://localhost:4000/api/admin/approve-report", {
         userId: approveReport.user.User_ID,
