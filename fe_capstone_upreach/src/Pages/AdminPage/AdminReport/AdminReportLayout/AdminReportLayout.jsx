@@ -1,10 +1,6 @@
 import React from "react";
 import "./AdminReportLayout.css";
 import { List, Modal, Spin } from "antd";
-import {
-  VERSION_PROFILE_INFLU,
-  PROFILE_INFLUS,
-} from "../../../HomePage/ConstHomePage";
 import AdminApproveCard from "../../../../Components/AdminApproveCard/AdminApproveCard";
 import ProfileCardComponent from "../../../../Components/Layouts/ProfileCardComponent/ProfileCardComponent";
 import InfluProfile from "../../../../Components/InfluProfileModal/InfluProfile";
@@ -17,10 +13,9 @@ const AdminReportLayout = () => {
   const [isOpenApproveProfile, setIsOpenApproveProfile] = React.useState(false);
   const [isOpenProfileInflu, setIsOpenProfileInflu] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [profileInflus, setProfileInflus] = React.useState(PROFILE_INFLUS);
   const [approveReport, setApproveReport] = React.useState([]);
   const [force, setForce] = React.useState(0);
-
+  // console.log(approveReport);
   const handleOpenInfluModal = (info) => {
     setInfluInfo(info);
     setIsOpenProfileInflu(true);
@@ -52,7 +47,7 @@ const AdminReportLayout = () => {
       .then((response) => {
         const info = response?.data?.data;
         setApproveReport(info);
-        console.log(info);
+        // console.log(info);
         setIsLoading(false);
       })
       .catch((error) => {

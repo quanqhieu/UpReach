@@ -86,7 +86,7 @@ const ProfileCardLayout = ({
 
   const influencerEmail = async (info) => {
     try {
-      const influencerEmail = info.influencerEmail;
+      const influencerEmail = info?.influencerEmail;
       const idInfluencerInMongoDB = await ApiInfluencer.getIDInfluencer(
         influencerEmail
       );

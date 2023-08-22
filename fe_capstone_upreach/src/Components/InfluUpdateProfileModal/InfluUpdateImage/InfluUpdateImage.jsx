@@ -20,12 +20,12 @@ const InfluUpdateImage = ({
 }) => {
   const [fileList, setFileList] = React.useState(() => {
     if (Array.isArray(influInfo?.dataImage)) {
-      const hasNonNullImage = influInfo.dataImage.some(
-        (image) => image.url !== null || image.uid !== null
+      const hasNonNullImage = influInfo?.dataImage?.some(
+        (image) => image?.url !== null || image?.uid !== null
       );
 
       if (hasNonNullImage) {
-        return influInfo.dataImage;
+        return influInfo?.dataImage;
       } else {
         return [];
       }
@@ -143,7 +143,7 @@ const InfluUpdateImage = ({
               >
                 {!fileList
                   ? "+ Upload"
-                  : fileList.length < 3
+                  : fileList?.length < 3
                   ? "+ Upload"
                   : null}
               </Upload>

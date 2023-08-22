@@ -10,12 +10,15 @@ import { ReactComponent as Diamond } from "../../../Assets/Icon/Diamond.svg";
 import React from "react";
 import roundNumber from "../roundNumber";
 import { HeartOutlined, MailFilled, PhoneFilled } from "@ant-design/icons";
+import { useUserStore } from "../../../Stores/user";
 
 const InfluSideBar = ({ oldVerInflu, influInfo }) => {
+  const [user] = useUserStore((state) => [state.user]);
+
   const [badgeColor, setBadgeColor] = React.useState("");
   React.useEffect(() => {
-    if (oldVerInflu?.influencerTypeName[0]) {
-      switch (oldVerInflu?.influencerTypeName[0]) {
+    if (oldVerInflu?.influencerTypeName?.at(0)) {
+      switch (oldVerInflu?.influencerTypeName?.at(0)) {
         case "Professional":
           setBadgeColor("#C837AB");
           break;
@@ -42,11 +45,18 @@ const InfluSideBar = ({ oldVerInflu, influInfo }) => {
       <div className="influ-update-side-bar-container">
         <div className="side-bar-header-body">
           <div className="influ-side-bar-header">
-            <img className="profile-avatar" src={default_img} alt="" />
+            <img
+              className="profile-avatar"
+              src={user?.avatar || default_img}
+              alt=""
+              onError={(e) => {
+                e.target.src = default_img;
+              }}
+            />
             <p className="profile-name">{oldVerInflu?.influencerfullName}</p>
             <div className="badge-block">
               {oldVerInflu?.influencerTypeName &&
-                oldVerInflu?.influencerTypeName[0] !== null && (
+                oldVerInflu?.influencerTypeName?.at(0) !== null && (
                   <div
                     style={{
                       border: `2px solid ${badgeColor}`,
@@ -60,7 +70,7 @@ const InfluSideBar = ({ oldVerInflu, influInfo }) => {
                         marginRight: "8px",
                       }}
                     />
-                    {oldVerInflu?.influencerTypeName[0]}
+                    {oldVerInflu?.influencerTypeName?.at(0)}
                   </div>
                 )}
             </div>
@@ -68,19 +78,19 @@ const InfluSideBar = ({ oldVerInflu, influInfo }) => {
               <div className="profile-socials">
                 <div className="profile-social">
                   <Facebook className="profile-social-icon" />
-                  <p>{roundNumber(influInfo?.influencerFollowFb)}</p>
+                  <p>{roundNumber(influInfo?.influencerFollowFb || 0)}</p>
                 </div>
                 <div className="profile-social">
                   <Instagram className="profile-social-icon" />
-                  <p>{roundNumber(influInfo?.influencerFollowInsta)}</p>
+                  <p>{roundNumber(influInfo?.influencerFollowInsta || 0)}</p>
                 </div>
                 <div className="profile-social">
                   <Youtube className="profile-social-icon" />
-                  <p>{roundNumber(influInfo?.influencerFollowYoutube)}</p>
+                  <p>{roundNumber(influInfo?.influencerFollowYoutube || 0)}</p>
                 </div>
                 <div className="profile-social">
                   <Tiktok className="profile-social-icon" />
-                  <p>{roundNumber(influInfo?.influencerFollowTikTok)}</p>
+                  <p>{roundNumber(influInfo?.influencerFollowTikTok || 0)}</p>
                 </div>
               </div>
             </div>
@@ -92,13 +102,13 @@ const InfluSideBar = ({ oldVerInflu, influInfo }) => {
                 <div className="profile-topics">
                   {Array.isArray(oldVerInflu?.influencerContentTopicName)
                     ? oldVerInflu?.influencerContentTopicName
-                        .filter((topic) => topic !== null)
-                        .map((topic, index) => (
+                        ?.filter((topic) => topic !== null)
+                        ?.map((topic, index) => (
                           <div key={index} className="profile-topic">
                             <Tooltip placement="top" title={topic}>
                               <div>
                                 {topic?.length > 8
-                                  ? `${topic.slice(0, 8)}...`
+                                  ? `${topic?.slice(0, 8)}...`
                                   : topic}
                               </div>
                             </Tooltip>
@@ -113,7 +123,7 @@ const InfluSideBar = ({ oldVerInflu, influInfo }) => {
                             <div>
                               {oldVerInflu?.influencerContentTopicName?.length >
                               8
-                                ? `${oldVerInflu?.influencerContentTopicName.slice(
+                                ? `${oldVerInflu?.influencerContentTopicName?.slice(
                                     0,
                                     8
                                   )}...`

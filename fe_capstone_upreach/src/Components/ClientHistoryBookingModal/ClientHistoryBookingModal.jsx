@@ -23,18 +23,18 @@ const ClientHistoryBookingModal = ({ bookingItem }) => {
             Services
             <div className="content-line">
               <p className="line-title">Platform</p>
-              <p className="line-content">{bookingItem.platform}</p>
+              <p className="line-content">{bookingItem?.platform}</p>
             </div>
             <div className="content-line">
               <p className="line-title">Job Name</p>
-              <p className="line-content">{bookingItem.jobName}</p>
+              <p className="line-content">{bookingItem?.jobName}</p>
             </div>
           </div>
           <div className="content-body">
             Job Booking
             <div className="content-line">
               <p className="line-title">Influencer Name</p>
-              <p className="line-content">{bookingItem.kolName}</p>
+              <p className="line-content">{bookingItem?.kolName}</p>
             </div>
             <div className="content-line">
               <p className="line-title">Content</p>
@@ -44,31 +44,31 @@ const ClientHistoryBookingModal = ({ bookingItem }) => {
             </div>
             <div className="content-line">
               <p className="line-title">Quantities</p>
-              <p className="line-content">{bookingItem.quantity}</p>
+              <p className="line-content">{bookingItem?.quantity}</p>
             </div>
             <div className="content-line">
               <p className="line-title">Link</p>
-              <p className="line-content">{bookingItem.jobLink}</p>
+              <p className="line-content">{bookingItem?.jobLink}</p>
             </div>
             <div className="content-line">
               <p className="line-title">Cost Estimate From</p>
-              <p className="line-content">{bookingItem.costEstimateFrom}</p>
+              <p className="line-content">{bookingItem?.costEstimateFrom}</p>
             </div>
             <div className="content-line">
               <p className="line-title">Cost Estimate To</p>
-              <p className="line-content">{bookingItem.costEstimateTo}</p>
+              <p className="line-content">{bookingItem?.costEstimateTo}</p>
             </div>
             <div className="content-line">
               <p className="line-title">Start Date</p>
-              <p className="line-content">{bookingItem.startDate}</p>
+              <p className="line-content">{bookingItem?.startDate}</p>
             </div>
             <div className="content-line">
               <p className="line-title">End Date</p>
-              <p className="line-content">{bookingItem.endDate}</p>
+              <p className="line-content">{bookingItem?.endDate}</p>
             </div>
             <div className="content-line-des">
               <p className="line-title-des">Describes</p>
-              <p className="line-content-des">{bookingItem.describes}</p>
+              <p className="line-content-des">{bookingItem?.describes}</p>
             </div>
           </div>
         </div>

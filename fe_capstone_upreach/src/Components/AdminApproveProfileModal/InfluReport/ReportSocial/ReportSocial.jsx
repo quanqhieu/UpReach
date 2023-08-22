@@ -61,11 +61,11 @@ const ReportSocial = ({ influInfo }) => {
                       <span className="text-tooltip">
                         {influInfo?.profile?.CostEstimateFrom?.length > 8
                           ? `${Number(influInfo?.profile?.CostEstimateFrom)
-                              .toLocaleString("vi-VN")
-                              .slice(0, 10)}...`
+                              ?.toLocaleString("vi-VN")
+                              ?.slice(0, 10)}...`
                           : Number(
                               influInfo?.profile?.CostEstimateFrom
-                            ).toLocaleString("vi-VN")}
+                            )?.toLocaleString("vi-VN")}
                       </span>
                     </Tooltip>
                   </div>
@@ -78,16 +78,16 @@ const ReportSocial = ({ influInfo }) => {
                       placement="top"
                       title={Number(
                         influInfo?.profile?.CostEstimateTo
-                      ).toLocaleString("vi-VN")}
+                      )?.toLocaleString("vi-VN")}
                     >
                       <span className="text-tooltip">
                         {influInfo?.profile?.CostEstimateTo?.length > 8
                           ? `${Number(influInfo?.profile?.CostEstimateTo)
-                              .toLocaleString("vi-VN")
-                              .slice(0, 10)}...`
+                              ?.toLocaleString("vi-VN")
+                              ?.slice(0, 10)}...`
                           : Number(
                               influInfo?.profile?.CostEstimateTo
-                            ).toLocaleString("vi-VN")}
+                            )?.toLocaleString("vi-VN")}
                       </span>
                     </Tooltip>
                   </div>
@@ -166,7 +166,7 @@ const ReportSocial = ({ influInfo }) => {
                   placement="top"
                   title={Number(
                     influInfo?.platform?.Follow_Insta
-                  ).toLocaleString("vi-VN")}
+                  )?.toLocaleString("vi-VN")}
                 >
                   <span className="text-tooltip">
                     {roundNumber(influInfo?.platform?.Follow_Insta)}
@@ -182,7 +182,7 @@ const ReportSocial = ({ influInfo }) => {
                   placement="top"
                   title={Number(
                     influInfo?.platform?.Interaction_Insta
-                  ).toLocaleString("vi-VN")}
+                  )?.toLocaleString("vi-VN")}
                 >
                   <span className="text-tooltip">
                     {roundNumber(influInfo?.platform?.Interaction_Insta)}

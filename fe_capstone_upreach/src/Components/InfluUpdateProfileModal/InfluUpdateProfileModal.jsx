@@ -36,25 +36,17 @@ const InfluUpdateProfileModal = ({
   };
   const [isSaving, setIsSaving] = React.useState(false);
   const [isNotCheck, setIsNotCheck] = React.useState(false);
-
   const handleSave = () => {
     setIsSaving(true);
     var dateUTC = new Date();
-    dateUTC.setHours(dateUTC.getHours() + 7);
-    var dateVN7 = JSON.stringify(dateUTC);
 
+    console.log(previewInflu);
     const formData = new FormData();
     formData.append("influ", JSON.stringify(previewInflu));
     formData.append("chart", JSON.stringify(previewChart));
     formData.append("booking", JSON.stringify(previewBooking));
     formData.append("idRemove", JSON.stringify(idJobsRemove));
-    formData.append(
-      "topics",
-      JSON.stringify(oldVerInflu?.influencerContentTopicName)
-    );
-    formData.append("type", JSON.stringify(oldVerInflu?.influencerTypeName));
-
-    formData.append("editDate", dateVN7);
+    formData.append("editDate", JSON.stringify(dateUTC));
 
     axios
       .put("http://localhost:4000/api/influ/update", formData, {

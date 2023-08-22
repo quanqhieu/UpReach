@@ -9,6 +9,7 @@ import {
   Typography,
   Spin,
   message,
+  Avatar,
 } from "antd";
 import {
   UserDeleteOutlined,
@@ -17,6 +18,7 @@ import {
   UnlockOutlined,
 } from "@ant-design/icons";
 import axios from "axios";
+import default_img from "../../../../Assets/Image/Default/DefaultImg.jpg";
 
 const AdminInfluencerLayout = () => {
   const [messageApi, contextHolder] = message.useMessage();
@@ -27,55 +29,77 @@ const AdminInfluencerLayout = () => {
   const [editingId, setEditingId] = React.useState("");
   const [openConfirm, setOpenConfirm] = React.useState(false);
   const [force, setForce] = React.useState(0);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(false);
+
   const tags = [
     {
+      title: "Avatar",
+      dataIndex: "Avatar",
+      width: "4%",
+      render: (_) => {
+        return (
+          <Avatar
+            src={
+              <img
+                src={_ || default_img}
+                alt="avatar"
+                onError={(e) => {
+                  e.target.src = default_img;
+                }}
+              />
+            }
+            size={45}
+          />
+        );
+      },
+    },
+    {
       title: "Full Name",
-      dataIndex: "fullName",
-      width: "14%",
+      dataIndex: "influencerfullName",
+      width: "18%",
       editable: true,
     },
     {
       title: "Age",
-      dataIndex: "Age",
+      dataIndex: "influencerAge",
       width: "5%",
       editable: true,
     },
     {
       title: "Gender",
-      dataIndex: "Gender",
+      dataIndex: "influencerGender",
       width: "6%",
       editable: true,
     },
     {
       title: "Relationship",
-      dataIndex: "Relationship",
-      width: "8%",
+      dataIndex: "influencerRelationship",
+      width: "9%",
       editable: true,
     },
     {
       title: "Email",
-      dataIndex: "Email",
-      width: "20%",
+      dataIndex: "influencerEmail",
+      width: "18%",
       editable: true,
     },
     {
       title: "Phone Number",
-      dataIndex: "Phone",
-      width: "10%",
+      dataIndex: "influencerPhone",
+      width: "11%",
       editable: true,
     },
     {
       title: "Address",
-      dataIndex: "Address",
-      width: "20%",
+      dataIndex: "influencerAddress",
+      width: "15%",
       editable: true,
     },
 
     {
       title: <EditOutlined />,
       dataIndex: "edit",
-      width: "12%",
+      width: "10%",
       render: (_, record) => {
         const editable = isEditing(record);
 
@@ -87,7 +111,7 @@ const AdminInfluencerLayout = () => {
             }}
           >
             <Typography.Link
-              onClick={() => handleSave(record.Profile_ID)}
+              onClick={() => handleSave(record?.Profile_ID)}
               style={{
                 marginRight: 8,
               }}
@@ -127,19 +151,19 @@ const AdminInfluencerLayout = () => {
     {
       title: <UserDeleteOutlined />,
       dataIndex: "lock",
-      width: "5%",
+      width: "4%",
       render: (_, record) =>
-        listInflu.length >= 1 && record.isAccepted == false ? (
+        listInflu?.length >= 1 && record?.isAccepted == false ? (
           <Popconfirm
             title="Sure to unlock account?"
-            onConfirm={() => handleAllow(record.Profile_ID)}
+            onConfirm={() => handleAllow(record?.Profile_ID)}
           >
             <LockOutlined />
           </Popconfirm>
         ) : (
           <Popconfirm
             title="Sure to lock account?"
-            onConfirm={() => handleLock(record.Profile_ID)}
+            onConfirm={() => handleLock(record?.Profile_ID)}
           >
             <UnlockOutlined />
           </Popconfirm>
@@ -153,27 +177,38 @@ const AdminInfluencerLayout = () => {
       if (
         listInflu.some(
           (item) =>
-            item.Profile_ID == editingId && item.fullName == row.fullName
-        ) &&
-        listInflu.some(
-          (item) => item.Profile_ID == editingId && item.Age == row.Age
-        ) &&
-        listInflu.some(
-          (item) => item.Profile_ID == editingId && item.Gender == row.Gender
+            item?.Profile_ID == editingId &&
+            item?.influencerfullName == row.influencerfullName
         ) &&
         listInflu.some(
           (item) =>
-            item.Profile_ID == editingId &&
-            item.Relationship == row.Relationship
+            item?.Profile_ID == editingId &&
+            item?.influencerAge == row.influencerAge
         ) &&
         listInflu.some(
-          (item) => item.Profile_ID == editingId && item.Email == row.Email
+          (item) =>
+            item?.Profile_ID == editingId &&
+            item?.influencerGender == row.influencerGender
         ) &&
         listInflu.some(
-          (item) => item.Profile_ID == editingId && item.Phone == row.Phone
+          (item) =>
+            item?.Profile_ID == editingId &&
+            item?.influencerRelationship == row.influencerRelationship
         ) &&
         listInflu.some(
-          (item) => item.Profile_ID == editingId && item.Address == row.Address
+          (item) =>
+            item?.Profile_ID == editingId &&
+            item?.influencerEmail == row.influencerEmail
+        ) &&
+        listInflu.some(
+          (item) =>
+            item?.Profile_ID == editingId &&
+            item?.influencerPhone == row.influencerPhone
+        ) &&
+        listInflu.some(
+          (item) =>
+            item?.Profile_ID == editingId &&
+            item?.influencerAddress == row.influencerAddress
         )
       ) {
         return false;
@@ -184,7 +219,7 @@ const AdminInfluencerLayout = () => {
   };
 
   const isEditing = (record) => {
-    return record.Profile_ID === editingId;
+    return record?.Profile_ID === editingId;
   };
 
   const EditableCell = ({
@@ -231,16 +266,16 @@ const AdminInfluencerLayout = () => {
 
   const edit = (record) => {
     form.setFieldsValue({
-      fullnName: "",
-      Age: "",
-      Gender: "",
-      Relationship: "",
-      Email: "",
-      Phone: "",
-      Address: "",
+      influencerfullName: "",
+      influencerAge: "",
+      influencerGender: "",
+      influencerRelationship: "",
+      influencerEmail: "",
+      influencerPhone: "",
+      influencerAddress: "",
       ...record,
     });
-    setEditingId(record.Profile_ID);
+    setEditingId(record?.Profile_ID);
   };
 
   const cancel = () => {
@@ -253,11 +288,11 @@ const AdminInfluencerLayout = () => {
   };
 
   const handleSave = async (id) => {
-    // setIsLoading(true);
+    setIsLoading(true);
     try {
       const row = await form.validateFields();
       const newInfoInflu = [...listInflu];
-      const index = newInfoInflu.findIndex((item) => id === item.Profile_ID);
+      const index = newInfoInflu.findIndex((item) => id === item?.Profile_ID);
       if (index > -1) {
         const item = newInfoInflu[index];
         newInfoInflu.splice(index, 1, {
@@ -286,19 +321,23 @@ const AdminInfluencerLayout = () => {
         .then((response) => {
           messageApi.open({
             type: "success",
-            content: response.data.message,
+            content: response?.data.message,
           });
           setForce((prev) => prev + 1);
+          setIsLoading(false);
         })
         .catch((error) => {
           console.error("Lỗi khi cập nhật thông tin:", error);
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     } catch (errInfo) {
       console.log("Validate Failed:", errInfo);
     }
   };
 
-  const mergedTags = tags.map((col) => {
+  const mergedTags = tags?.map((col) => {
     if (!col.editable) {
       return col;
     }
@@ -307,7 +346,10 @@ const AdminInfluencerLayout = () => {
       onCell: (record) => {
         return {
           record,
-          inputType: col.dataIndex === ("Phone" && "Age") ? "number" : "text",
+          inputType:
+            col.dataIndex === ("influencerPhone" && "influencerAge")
+              ? "number"
+              : "text",
           dataIndex: col.dataIndex,
           title: col.title,
           editing: isEditing(record),
@@ -317,6 +359,7 @@ const AdminInfluencerLayout = () => {
   });
 
   const handleAllow = (id) => {
+    setIsLoading(true);
     const formData = new FormData();
     formData.append("profileId", JSON.stringify(id));
     axios
@@ -328,16 +371,21 @@ const AdminInfluencerLayout = () => {
       .then((response) => {
         messageApi.open({
           type: "success",
-          content: response.data.message,
+          content: response?.data.message,
         });
         setForce((prev) => prev + 1);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Lỗi khi cập nhật thông tin:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
   const handleLock = (id) => {
+    setIsLoading(true);
     const formData = new FormData();
     formData.append("profileId", JSON.stringify(id));
 
@@ -353,9 +401,13 @@ const AdminInfluencerLayout = () => {
           content: response.data.message,
         });
         setForce((prev) => prev + 1);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Lỗi khi cập nhật thông tin:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -368,7 +420,7 @@ const AdminInfluencerLayout = () => {
         },
       })
       .then((response) => {
-        const info = response.data.data;
+        const info = response?.data.data;
         setListInflu(info);
         setIsLoading(false);
       })
@@ -399,7 +451,7 @@ const AdminInfluencerLayout = () => {
                   rowClassName="editable-row"
                   pagination={{
                     onChange: cancel,
-                    pageSize: 12,
+                    pageSize: 11,
                   }}
                   size="large"
                 />

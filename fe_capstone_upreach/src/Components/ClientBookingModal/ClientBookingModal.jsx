@@ -33,14 +33,14 @@ const ClientBookingModal = ({ data, setIsOpenBooking }) => {
   };
 
   const handleSend = () => {
-    var startDay = value[0].$D;
-    var startMonth = value[0].$M + 1;
-    var startYear = value[0].$y;
+    var startDay = value[0]?.$D;
+    var startMonth = value[0]?.$M + 1;
+    var startYear = value[0]?.$y;
     var formatStartDate = startDay + "/" + startMonth + "/" + startYear;
 
-    var endDay = value[1].$D;
-    var endMonth = value[1].$M + 1;
-    var endYear = value[1].$y;
+    var endDay = value[1]?.$D;
+    var endMonth = value[1]?.$M + 1;
+    var endYear = value[1]?.$y;
     var formatEndDate = endDay + "/" + endMonth + "/" + endYear;
 
     const updatedBookingJob = {
@@ -48,8 +48,8 @@ const ClientBookingModal = ({ data, setIsOpenBooking }) => {
       describes: describes,
       startDate: formatStartDate,
       endDate: formatEndDate,
-      clientId: user.Client_ID,
-      clientName: user.fullNameClient,
+      clientId: user?.Client_ID,
+      clientName: user?.fullNameClient,
     };
     setIsSending(true);
     const formData = new FormData();
@@ -79,31 +79,31 @@ const ClientBookingModal = ({ data, setIsOpenBooking }) => {
             Job Information
             <div className="content-line">
               <p className="line-title">Platform</p>
-              <p className="line-content">{bookingJob.jobPlatform}</p>
+              <p className="line-content">{bookingJob?.jobPlatform}</p>
             </div>
             <div className="content-line">
               <p className="line-title">Job Name</p>
-              <p className="line-content">{bookingJob.jobName}</p>
+              <p className="line-content">{bookingJob?.jobName}</p>
             </div>
             <div className="content-line">
               <p className="line-title">Content</p>
-              <p className="line-content">{bookingJob.formatid}</p>
+              <p className="line-content">{bookingJob?.formatid}</p>
             </div>
             <div className="content-line">
               <p className="line-title">Link</p>
-              <p className="line-content">{bookingJob.linkJob}</p>
+              <p className="line-content">{bookingJob?.linkJob}</p>
             </div>
             <div className="content-line">
               <p className="line-title">Quantities</p>
-              <p className="line-content">{bookingJob.quantityNumberWork}</p>
+              <p className="line-content">{bookingJob?.quantityNumberWork}</p>
             </div>
             <div className="content-line">
               <p className="line-title">Cost Estimate From</p>
-              <p className="line-content">{bookingJob.costForm}</p>
+              <p className="line-content">{bookingJob?.costForm}</p>
             </div>
             <div className="content-line">
               <p className="line-title">Cost Estimate To</p>
-              <p className="line-content">{bookingJob.costTo}</p>
+              <p className="line-content">{bookingJob?.costTo}</p>
             </div>
             <div className="content-line">
               <p className="line-title">Describes</p>

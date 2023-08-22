@@ -16,11 +16,13 @@ import {
   PhoneFilled,
   LockFilled,
 } from "@ant-design/icons";
+import { useUserStore } from "../../../Stores/user";
 
 const VersionInfluSideBar = ({ influInfo, profileSideBar }) => {
+  const [user] = useUserStore((state) => [state.user]);
   const [badgeColor, setBadgeColor] = React.useState("");
   React.useEffect(() => {
-    switch (profileSideBar?.influencerTypeName[0]) {
+    switch (profileSideBar?.influencerTypeName?.at(0)) {
       case "Professional":
         setBadgeColor("#C837AB");
         break;
@@ -39,14 +41,21 @@ const VersionInfluSideBar = ({ influInfo, profileSideBar }) => {
       default:
         return;
     }
-  }, [profileSideBar?.influencerTypeName[0]]);
+  }, [profileSideBar?.influencerTypeName?.at(0)]);
 
   return (
     <>
-      <div className="approve-influ-side-bar-container">
+      <div className="version-influ-side-bar-container">
         <div className="side-bar-header-body">
           <div className="influ-side-bar-header">
-            <img className="profile-avatar" src={default_img} alt="" />
+            <img
+              className="profile-avatar"
+              src={user?.avatar || default_img}
+              alt=""
+              onError={(e) => {
+                e.target.src = default_img;
+              }}
+            />
             <p className="profile-name">{profileSideBar?.influencerfullName}</p>
             <div className="badge-block">
               <div
@@ -62,7 +71,7 @@ const VersionInfluSideBar = ({ influInfo, profileSideBar }) => {
                     marginRight: "8px",
                   }}
                 />
-                {profileSideBar?.influencerTypeName[0]}
+                {profileSideBar?.influencerTypeName?.at(0)}
               </div>
             </div>
             <div className="profile-socials">

@@ -74,9 +74,9 @@ const CardHotList = () => {
           {LIST_HOTLIST.map((item, index) => (
             <RenderHotList
               key={index}
-              image={item.image}
-              name={item.name}
-              topics={item.topics}
+              image={item?.image}
+              name={item?.name}
+              topics={item?.topics}
             />
           ))}
         </Slide>

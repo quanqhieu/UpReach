@@ -4,7 +4,7 @@ import InfluencerProfileCard from "../../../../Components/InfluencerProfileCard/
 import InfluUpdateProfileModal from "../../../../Components/InfluUpdateProfileModal/InfluUpdateProfileModal";
 import InfluVersionModal from "../../../../Components/InfluencerVersionProfileModal/InfluVersionProfile";
 import { ReactComponent as IconArrow } from "../../../../Assets/Icon/IconArrow.svg";
-import { List, Modal, Dropdown, Space, Progress, Spin } from "antd";
+import { List, Modal, Dropdown, Space, Progress, Spin, message } from "antd";
 import {
   ExclamationCircleOutlined,
   DownOutlined,
@@ -17,6 +17,7 @@ import axios from "axios";
 
 const InfluencerReportLayout = () => {
   const [user] = useUserStore((state) => [state.user]);
+  const [messageApi, contextHolder] = message.useMessage();
   const [previewInflu, setPreviewInflu] = React.useState({});
   const [mokPreviewInflu, setMokPreviewInflu] = React.useState({});
   const [oldVerInflu, setOldVerInflu] = React.useState({});
@@ -37,6 +38,7 @@ const InfluencerReportLayout = () => {
   const [waitedDate, setWaitedDate] = React.useState(0);
   const [timerId, setTimerId] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoadVersion, setIsLoadVersion] = React.useState(false);
 
   const handleOpenModal = () => {
     // previewInflu={previewInflu}
@@ -89,13 +91,21 @@ const InfluencerReportLayout = () => {
     setPreviewInflu(mokPreviewInflu);
   };
 
+  // function is7DaysOrMoreAgo(storedTime) {
+  //   const currentTime = new Date();
+  //   const storedTimeAsDate = new Date(storedTime);
+  //   const timeTo = storedTimeAsDate.setDate(storedTimeAsDate.getDate() + 7);
+  //   const timeDifference = currentTime.getTime() - timeTo;
+  //   // console.log(timeDifference);
+  //   return timeDifference;
+  // }
+
   function is7DaysOrMoreAgo(storedTime) {
     const currentTime = new Date();
     const storedTimeAsDate = new Date(storedTime);
-    const timeTo = storedTimeAsDate.setDate(storedTimeAsDate.getDate() + 7);
-    const timeDifference = currentTime.getTime() - timeTo;
-
-    return timeDifference;
+    const timeTo = new Date(storedTimeAsDate);
+    timeTo.setDate(storedTimeAsDate.getDate() + 7);
+    return currentTime > timeTo;
   }
 
   // function timeLeft(storedTime) {
@@ -116,6 +126,7 @@ const InfluencerReportLayout = () => {
   // }
 
   function timeLeft(storedTime) {
+    console.log(storedTime);
     const currentTime = new Date();
     const currentMonth = currentTime.getMonth();
     const currentYear = currentTime.getFullYear();
@@ -150,9 +161,7 @@ const InfluencerReportLayout = () => {
       } else return 7;
     });
     setIsLoading(true);
-    if (is7DaysOrMoreAgo(localStorage.getItem("editDate")) > 0) {
-      setIsAllowEdit(true);
-    }
+    setIsAllowEdit(is7DaysOrMoreAgo(localStorage.getItem("editDate")));
   };
 
   useEffect(() => {
@@ -172,7 +181,6 @@ const InfluencerReportLayout = () => {
   const countTime = () => {
     if (is7DaysOrMoreAgo(localStorage.getItem("editDate")) > 0) {
       setIsAllowEdit(true);
-      // console.log("out");
     }
   };
 
@@ -213,6 +221,8 @@ const InfluencerReportLayout = () => {
   );
 
   React.useEffect(() => {
+    setIsLoadVersion(true);
+    setIsLoading(true);
     axios
       .post("http://localhost:4000/api/influ/dataReportInfluencer", {
         email: user.email,
@@ -220,6 +230,8 @@ const InfluencerReportLayout = () => {
       .then((response) => {
         const info = response?.data.Influencer;
         setProfileVersion(info);
+        setIsLoadVersion(false);
+
         setPreviewInflu(() => {
           return info?.sort(
             (a, b) =>
@@ -249,9 +261,29 @@ const InfluencerReportLayout = () => {
         setIsChange(false);
       });
   }, [force]);
+  React.useEffect(() => {
+    const editDate = new Date(oldVerInflu.dateEdit);
+    localStorage.setItem("editDate", editDate);
+  }, [oldVerInflu]);
+  // React.useEffect(() => {
+  //   setIsLoading(true);
 
+  // const editDate = new Date(oldVerInflu.dateEdit);
+  //   if (!oldVerInflu.isPublish ) {
+  //     const eightDaysAgoTimestamp = editDate - 8 * 24 * 60 * 60 * 1000;
+  //     const formattedNewDate = new Date(eightDaysAgoTimestamp);
+  //     localStorage.setItem("editDate", formattedNewDate);
+  //     setIsLoading(false);
+  //   } else {
+  //     localStorage.setItem("editDate", editDate);
+  //     setIsLoading(false);
+  //   }
+  // }, [oldVerInflu]);
+  // console.log(oldVerInflu);
+  // console.log(isAllowEdit, "allow");
   return (
     <>
+      {contextHolder}
       {/* -----------------Modal confirm---------------------- */}
       <Modal
         centered
@@ -338,14 +370,19 @@ const InfluencerReportLayout = () => {
             </div>
           </div>
         </div>
-
         <div className="update-block">
           <Progress
-            percent={(waitedDate / 7) * 100}
+            percent={
+              !oldVerInflu.dateEdit
+                ? 100
+                : isLoadVersion
+                ? 0
+                : (waitedDate / 7) * 100
+            }
             format={() => {
-              if (!isLoading) {
+              if (isLoadVersion) {
                 return <Spin indicator={antIcon} />;
-              } else if (waitedDate >= 7) {
+              } else if (waitedDate >= 7 || !oldVerInflu.dateEdit) {
                 return `Ready to update`;
               } else return `${waitedDate} Days`;
             }}
@@ -365,54 +402,57 @@ const InfluencerReportLayout = () => {
             text="Update Now"
             icon={<IconArrow />}
             onClick={() => {
-              // if (isAllowEdit) {
-              handleOpenModal();
-              // }
+              if (isAllowEdit || !oldVerInflu.dateEdit) {
+                handleOpenModal();
+              } else {
+                messageApi.error("You can not update report now!");
+              }
             }}
           />
         </div>
 
         <div className="influencer-report-list">
-          <List
-            grid={{
-              xs: 1,
-              sm: 2,
-              md: 3,
-              lg: 3,
-              xl: 3,
-              xxl: 3,
-            }}
-            pagination={{
-              onChange: (page) => {
-                console.log(page);
-              },
+          <Spin tip="Saving" size="large" spinning={isLoadVersion}>
+            <List
+              grid={{
+                xs: 1,
+                sm: 2,
+                md: 3,
+                lg: 3,
+                xl: 3,
+                xxl: 3,
+              }}
+              // pagination={{
+              //   onChange: (page) => {
+              //     console.log(page);
+              //   },
 
-              pageSize: 6,
-              position: "bottom",
-              align: "center",
-            }}
-            dataSource={profileVersion}
-            renderItem={(item) => (
-              <List.Item
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  width: "423px",
-                  height: "270px",
-                }}
-                onClick={() => {
-                  setIsOpenVersionInflu(true);
-                  setReportVersion(item);
-                }}
-              >
-                <InfluencerProfileCard
-                  profileInflu={item}
-                  previewInflu={previewInflu}
-                  oldVerInflu={oldVerInflu}
-                />
-              </List.Item>
-            )}
-          />
+              //   pageSize: 6,
+              //   position: "bottom",
+              //   align: "center",
+              // }}
+              dataSource={profileVersion}
+              renderItem={(item) => (
+                <List.Item
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    width: "423px",
+                    height: "270px",
+                  }}
+                  onClick={() => {
+                    setIsOpenVersionInflu(true);
+                    setReportVersion(item);
+                  }}
+                >
+                  <InfluencerProfileCard
+                    profileInflu={item}
+                    oldVerInflu={oldVerInflu}
+                  />
+                </List.Item>
+              )}
+            />
+          </Spin>
         </div>
       </div>
     </>

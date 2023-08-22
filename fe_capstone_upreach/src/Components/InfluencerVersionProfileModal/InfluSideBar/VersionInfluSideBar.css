@@ -1,15 +1,15 @@
-.approve-influ-side-bar-container {
+.version-influ-side-bar-container {
 	width: 100%;
 	height: 100%;
 	display: grid;
 	align-content: space-between;
 }
 
-.approve-influ-side-bar-container p {
+.version-influ-side-bar-container p {
 	margin-bottom: 0 !important;
 }
 
-.approve-influ-side-bar-container .influ-side-bar-header {
+.version-influ-side-bar-container .influ-side-bar-header {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -18,24 +18,24 @@
 	border-bottom: #ccc 1px solid;
 	padding: 18px 10px;
 }
-.approve-influ-side-bar-container .profile-avatar {
+.version-influ-side-bar-container .profile-avatar {
 	width: 130px;
 	height: 130px;
 	border-radius: 50%;
 }
 
-.approve-influ-side-bar-container .profile-name {
+.version-influ-side-bar-container .profile-name {
 	font-weight: 600;
 }
 
-.approve-influ-side-bar-container .badge-block {
+.version-influ-side-bar-container .badge-block {
 	height: fit-content;
 	width: 100%;
 	display: flex;
 	justify-content: center;
 }
 
-.approve-influ-side-bar-container .badge-text {
+.version-influ-side-bar-container .badge-text {
 	cursor: pointer;
 	font-size: 14px;
 	width: fit-content;
@@ -45,37 +45,37 @@
 	align-items: center;
 }
 
-.approve-influ-side-bar-container .profile-btn {
+.version-influ-side-bar-container .profile-btn {
 	background-color: #2195f382;
 	margin-bottom: 5px;
 }
 
-.approve-influ-side-bar-container .profile-socials {
+.version-influ-side-bar-container .profile-socials {
 	display: flex;
 	width: 100%;
 	justify-content: space-around;
 	height: 26px;
 }
 
-.approve-influ-side-bar-container .profile-social {
+.version-influ-side-bar-container .profile-social {
 	display: flex;
-	width: 70px;
+	width: 80px;
 	height: 26px;
 	align-items: center;
 }
 
-.approve-influ-side-bar-container .influ-side-bar-body {
+.version-influ-side-bar-container .influ-side-bar-body {
 	width: 100%;
 	height: fit-content;
 	padding: 20px;
 }
 
-.approve-influ-side-bar-container .profile-description {
+.version-influ-side-bar-container .profile-description {
 	font-weight: 600;
 	font-size: 16px;
 }
 
-.approve-influ-side-bar-container .profile-contents {
+.version-influ-side-bar-container .profile-contents {
 	width: 100%;
 	height: fit-content;
 	padding: 10px;
@@ -84,11 +84,11 @@
 	justify-content: space-between;
 }
 
-.approve-influ-side-bar-container .profile-contents p {
+.version-influ-side-bar-container .profile-contents p {
 	font-size: 14px;
 }
 
-.approve-influ-side-bar-container .profile-content {
+.version-influ-side-bar-container .profile-content {
 	width: 100%;
 	height: fit-content;
 	display: flex;
@@ -96,14 +96,14 @@
 	justify-content: space-between;
 }
 
-.approve-influ-side-bar-container .profile-topics {
+.version-influ-side-bar-container .profile-topics {
 	display: flex;
 	flex-wrap: wrap;
 	height: fit-content;
 	width: 100%;
 }
 
-.approve-influ-side-bar-container .profile-topic {
+.version-influ-side-bar-container .profile-topic {
 	margin-bottom: 8px;
 	margin-right: 10px;
 	background-color: #ccc;
@@ -117,65 +117,65 @@
 	padding: 2px;
 }
 
-.approve-influ-side-bar-container .profile-location {
+.version-influ-side-bar-container .profile-location {
 	display: flex;
 	align-items: center;
 }
 
-.approve-influ-side-bar-container .profile-gender {
+.version-influ-side-bar-container .profile-gender {
 	display: flex;
 }
 
-.approve-influ-side-bar-container .profile-age {
+.version-influ-side-bar-container .profile-age {
 	display: flex;
 }
 
-.approve-influ-side-bar-container .profile-marriage-status {
+.version-influ-side-bar-container .profile-marriage-status {
 	display: flex;
 	align-items: center;
 }
 
-.approve-influ-side-bar-container .profile-biography {
+.version-influ-side-bar-container .profile-biography {
 	margin-top: 10px;
 }
 
-.approve-influ-side-bar-container .profile-biography-title {
+.version-influ-side-bar-container .profile-biography-title {
 	font-weight: 600;
 }
 
-.approve-influ-side-bar-container .influ-side-bar-footer {
+.version-influ-side-bar-container .influ-side-bar-footer {
 	height: fit-content;
 	padding-bottom: 10px;
 }
 
-.approve-influ-side-bar-container .footer-content {
+.version-influ-side-bar-container .footer-content {
 	padding: 15px 30px 15px 30px;
 }
 
-.approve-influ-side-bar-container .profile-contact {
+.version-influ-side-bar-container .profile-contact {
 	font-weight: 600;
 	font-size: 14px;
 }
 
-.approve-influ-side-bar-container .contact-info {
+.version-influ-side-bar-container .contact-info {
 	padding: 15px 25px;
 	width: fit-content;
 	min-width: 250px;
 	position: relative;
 }
 
-.approve-influ-side-bar-container .contact-email,
+.version-influ-side-bar-container .contact-email,
 .contact-phone {
 	display: flex;
 	align-items: center;
 }
 
 
-.approve-influ-side-bar-container .lock-info {
+.version-influ-side-bar-container .lock-info {
 	opacity: 1;
 }
 
-.approve-influ-side-bar-container .feedback-btn {
+.version-influ-side-bar-container .feedback-btn {
 	width: 100%;
 	text-align: center;
 }

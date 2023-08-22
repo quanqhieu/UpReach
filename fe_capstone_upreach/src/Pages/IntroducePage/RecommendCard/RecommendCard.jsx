@@ -6,7 +6,13 @@ function RenderRecommendCard({ className, avatar, name, gender, social }) {
   return (
     <div className={className}>
       <div className={className + "-info"}>
-        <div className={className + "-avatar"}></div>
+        <div className={className + "-avatar"}>
+          <img
+            className={className + "-image-recommend"}
+            src={avatar}
+            alt="anh"
+          />
+        </div>
         <div className={className + "-title"}>{name}</div>
       </div>
       <ul className={className + "-social"}>

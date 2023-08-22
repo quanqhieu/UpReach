@@ -19,7 +19,7 @@ const ReportAudience = ({ influInfo }) => {
     }
   };
   //=================================================================================
-  console.log(data);
+  // console.log(data);
   useEffect(() => {
     fetchDataForChart(influInfo);
   }, []);
@@ -35,8 +35,8 @@ const ReportAudience = ({ influInfo }) => {
 
   const dataGender =
     data?.data[0]?.dataGender === undefined ||
-    data?.data[0]?.dataGender.sex === null ||
-    data?.data[0]?.dataGender.value === null
+    data?.data[0]?.dataGender?.sex === null ||
+    data?.data[0]?.dataGender?.value === null
       ? []
       : data?.data[0]?.dataGender;
 

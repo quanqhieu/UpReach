@@ -1,19 +1,26 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
-import { Button, Dropdown, Space } from "antd";
+import { Button, Dropdown, Space, Avatar } from "antd";
 import { DownOutlined } from "@ant-design/icons";
+import default_img from "../../../Assets/Image/Default/DefaultImg.jpg";
 
 import "./HeaderHomepage.css";
 import { UPREACH } from "../../Constant/Const";
 import { useUserStore } from "../../../Stores/user";
 
-function RenderLogo({ onClickIntroduce }) {
-  const [user] = useUserStore((state) => [state.user]);
+function RenderLogo({ onClickIntroduce, onClickHomeMain }) {
+  const [user] = useUserStore((state) => [state?.user]);
   return (
     <div className="headerContent">
-      {user ? (
-        <div className="logoText">{UPREACH}</div>
+      {user.roleId == 2 ? (
+        <div className="logoText" onClick={onClickHomeMain}>
+          {UPREACH}
+        </div>
+      ) : user.roleId == 3 ? (
+        <div className="logoText" onClick={onClickHomeMain}>
+          {UPREACH}
+        </div>
       ) : (
         <div className="logoText" onClick={onClickIntroduce}>
           {UPREACH}
@@ -48,8 +55,8 @@ const HeaderHomepage = (onClickIntroduce) => {
   let navigate = useNavigate();
   const [cookies, setCookie, removeCookie] = useCookies();
   const [user, setUserInfo] = useUserStore((state) => [
-    state.user,
-    state.setUserInfo,
+    state?.user,
+    state?.setUserInfo,
   ]);
 
   //click button will go to home page not logged in yet
@@ -67,7 +74,12 @@ const HeaderHomepage = (onClickIntroduce) => {
   };
 
   const navigateProfileInfluencer = () => {
-    navigate("/influencer/profile");
+    if (user.roleId == 3) {
+      navigate("/influencer/profile");
+    }
+    if (user.roleId == 2) {
+      navigate("/client-profile");
+    }
   };
 
   const handleLogout = () => {
@@ -89,14 +101,27 @@ const HeaderHomepage = (onClickIntroduce) => {
 
   return (
     <div className="HeaderHomepage">
-      <RenderLogo onClickIntroduce={navigateIntroduce} />
+      {user?.roleId == 2 ? (
+        <RenderLogo onClickHomeMain={navigateHomeMain} />
+      ) : user?.roleId == 3 ? (
+        <RenderLogo onClickHomeMain={navigateHomeMain} />
+      ) : (
+        <RenderLogo onClickIntroduce={navigateIntroduce} />
+      )}
       <div className="authBtn">
-        {user.roleId == 3 ? (
+        {user?.roleId == 3 ? (
           <div className="influencer-btn">
-            <img
-              className="influencer-avatar"
-              src="https://demoda.vn/wp-content/uploads/2022/09/hinh-anh-avatar-anime-nu.jpg"
-              alt="anh"
+            <Avatar
+              src={
+                <img
+                  src={user?.avatar || default_img}
+                  alt="avatar"
+                  onError={(e) => {
+                    e.target.src = default_img;
+                  }}
+                />
+              }
+              size={45}
             />
 
             <div className="influencer-dropdown-block">
@@ -104,8 +129,8 @@ const HeaderHomepage = (onClickIntroduce) => {
                 <p style={{ height: "45px" }}>
                   <Space>
                     <div>
-                      {user?.fullNameInfluencer?.length > 14
-                        ? `${user?.fullNameInfluencer?.slice(0, 14)}...`
+                      {user?.fullNameInfluencer?.length > 13
+                        ? `${user?.fullNameInfluencer?.slice(0, 13)}...`
                         : user?.fullNameInfluencer}
                     </div>
                   </Space>
@@ -123,19 +148,27 @@ const HeaderHomepage = (onClickIntroduce) => {
             </Link>
 
             <div className="influencer-btn">
-              <img
-                className="influencer-avatar"
-                src="https://demoda.vn/wp-content/uploads/2022/09/hinh-anh-avatar-anime-nu.jpg"
-                alt="anh"
-              />
-
+              <div>
+                <Avatar
+                  src={
+                    <img
+                      src={user?.avatar || default_img}
+                      alt="avatar"
+                      onError={(e) => {
+                        e.target.src = default_img;
+                      }}
+                    />
+                  }
+                  size={45}
+                />
+              </div>
               <div className="influencer-dropdown-block">
                 <Dropdown menu={{ items }} trigger={"click"}>
                   <p style={{ height: "45px" }}>
                     <Space>
                       <div>
-                        {user?.fullNameClient?.length > 14
-                          ? `${user?.fullNameClient?.slice(0, 14)}...`
+                        {user?.fullNameClient?.length > 13
+                          ? `${user?.fullNameClient?.slice(0, 13)}...`
                           : user?.fullNameClient}
                       </div>
                     </Space>
@@ -147,10 +180,20 @@ const HeaderHomepage = (onClickIntroduce) => {
           </div>
         ) : user.roleId == 1 ? (
           <div className="influencer-btn">
-            <img
-              className="influencer-avatar"
-              src="https://demoda.vn/wp-content/uploads/2022/09/hinh-anh-avatar-anime-nu.jpg"
-              alt="anh"
+            <Avatar
+              src={
+                <img
+                  src={
+                    "https://i.pinimg.com/originals/79/15/86/79158634d9858285c963946015f44acf.jpg" ||
+                    default_img
+                  }
+                  alt="avatar"
+                  onError={(e) => {
+                    e.target.src = default_img;
+                  }}
+                />
+              }
+              size={45}
             />
 
             <div className="influencer-dropdown-block">

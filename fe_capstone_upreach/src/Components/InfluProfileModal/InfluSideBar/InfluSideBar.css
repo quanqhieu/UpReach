@@ -59,7 +59,7 @@
 .influ-side-bar-container .profile-social {
 	display: flex;
 	justify-content: space-evenly;
-	width: 20%;
+	width: 80px;
 }
 
 .influ-side-bar-container .influ-side-bar-body {

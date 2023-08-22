@@ -9,12 +9,14 @@ const InfluImage = ({ influInfo }) => {
     <>
       <div className="approve-influ-images">
         {images
-          ?.filter((imageObj) => imageObj.url !== null && imageObj.uid !== null)
-          .map((imageObj, index) => (
+          ?.filter(
+            (imageObj) => imageObj?.url !== null && imageObj?.uid !== null
+          )
+          ?.map((imageObj, index) => (
             <img
               key={index}
               className="influ-image"
-              src={imageObj.url}
+              src={imageObj?.url}
               alt=""
             />
           ))}

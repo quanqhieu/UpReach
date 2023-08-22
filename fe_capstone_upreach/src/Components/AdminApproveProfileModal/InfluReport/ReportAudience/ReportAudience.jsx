@@ -9,15 +9,15 @@ const ReportAudience = ({ influInfo }) => {
   const [audienceLocation, setAudienceLocation] = React.useState([]);
 
   React.useEffect(() => {
-    setAudienceFollower(influInfo.audienceFollower);
-    setAudienceGender(influInfo.audienceGender);
-    setAudienceAge(influInfo.audienceAge);
-    setAudienceLocation(influInfo.audienceLocation);
+    setAudienceFollower(influInfo?.audienceFollower);
+    setAudienceGender(influInfo?.audienceGender);
+    setAudienceAge(influInfo?.audienceAge);
+    setAudienceLocation(influInfo?.audienceLocation);
   }, [
-    influInfo.audienceFollower,
-    influInfo.audienceGender,
-    influInfo.audienceAge,
-    influInfo.audienceLocation,
+    influInfo?.audienceFollower,
+    influInfo?.audienceGender,
+    influInfo?.audienceAge,
+    influInfo?.audienceLocation,
   ]);
 
   const configFollower = {
@@ -26,9 +26,9 @@ const ReportAudience = ({ influInfo }) => {
     yField: "Quantity",
   };
 
-  configFollower.data.sort((a, b) => {
-    const [aMonth, aYear] = a.AudienceFollowerMonth.split("/");
-    const [bMonth, bYear] = b.AudienceFollowerMonth.split("/");
+  configFollower?.data?.sort((a, b) => {
+    const [aMonth, aYear] = a?.AudienceFollowerMonth.split("/");
+    const [bMonth, bYear] = b?.AudienceFollowerMonth.split("/");
 
     if (parseInt(aYear, 10) !== parseInt(bYear, 10)) {
       return parseInt(aYear, 10) - parseInt(bYear, 10);
@@ -67,8 +67,8 @@ const ReportAudience = ({ influInfo }) => {
     maxBarWidth: 16,
   };
 
-  configAge.data.sort((a, b) => {
-    return a.AgeRange.localeCompare(b.AgeRange);
+  configAge?.data?.sort((a, b) => {
+    return a?.AgeRange.localeCompare(b?.AgeRange);
   });
   const configLocation = {
     data: audienceLocation,
