@@ -179,7 +179,7 @@ const InfluSideBar = ({ influInfo }) => {
                     marginRight: "8px",
                   }}
                 />
-                {console.log(influInfo)}
+                {influInfo?.influencerContentTopicName}
               </div>
             </div>
             {/* <Button

@@ -10,7 +10,7 @@ import {
   SettingOutlined,
   EditOutlined,
   RestOutlined,
-  FolderAddOutlined
+  FolderAddOutlined,
 } from "@ant-design/icons";
 import {
   Menu,
@@ -295,15 +295,20 @@ const MyListPage = ({
 
         series: [
           {
-            name: "Ratio ",
+            name: "Ratio",
             data: [
               {
                 name: "Male",
                 y:
                   object?.Table.length === 0
                     ? []
-                    : (response.data[0]?.Quantity * 100) /
-                      (response.data[0]?.Quantity + response.data[1]?.Quantity),
+                    : parseFloat(
+                        (
+                          (response.data[0]?.Quantity * 100) /
+                          (response.data[0]?.Quantity +
+                            response.data[1]?.Quantity)
+                        ).toFixed(2)
+                      ),
                 // y: null,
               },
               {
@@ -311,8 +316,13 @@ const MyListPage = ({
                 y:
                   object?.Table.length === 0
                     ? []
-                    : (response.data[1]?.Quantity * 100) /
-                      (response.data[0]?.Quantity + response.data[1]?.Quantity),
+                    : parseFloat(
+                        (
+                          (response.data[1]?.Quantity * 100) /
+                          (response.data[0]?.Quantity +
+                            response.data[1]?.Quantity)
+                        ).toFixed(2)
+                      ),
                 // y: null,
               },
             ],
