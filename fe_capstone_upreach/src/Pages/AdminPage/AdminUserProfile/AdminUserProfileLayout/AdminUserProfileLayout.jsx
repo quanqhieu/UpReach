@@ -8,7 +8,9 @@ import {
   Typography,
   message,
   Spin,
+  Avatar,
 } from "antd";
+import default_img from "../../../../Assets/Image/Default/DefaultImg.jpg";
 
 import {
   DeleteOutlined,
@@ -25,7 +27,7 @@ const AdminUserProfileLayout = () => {
   const [editingId, setEditingId] = React.useState("");
   const [openConfirm, setOpenConfirm] = React.useState(false);
   const [force, setForce] = React.useState(0);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(false);
   const [listClient, setListClient] = React.useState([]);
 
   const check = async () => {
@@ -61,15 +63,36 @@ const AdminUserProfileLayout = () => {
 
   const tags = [
     {
+      title: "Avatar",
+      dataIndex: "image",
+      width: "4%",
+      render: (_) => {
+        return (
+          <Avatar
+            src={
+              <img
+                src={_ || default_img}
+                alt="avatar"
+                onError={(e) => {
+                  e.target.src = default_img;
+                }}
+              />
+            }
+            size={45}
+          />
+        );
+      },
+    },
+    {
       title: "Full Name",
       dataIndex: "fullName",
-      width: "18%",
+      width: "17%",
       editable: true,
     },
     {
       title: "Brand Name",
       dataIndex: "brand",
-      width: "14%",
+      width: "13%",
       editable: true,
     },
     {
@@ -81,13 +104,13 @@ const AdminUserProfileLayout = () => {
     {
       title: "Phone Number",
       dataIndex: "phone",
-      width: "14%",
+      width: "11%",
       editable: true,
     },
     {
       title: "Address",
       dataIndex: "address",
-      width: "19%",
+      width: "20%",
       editable: true,
     },
 
@@ -123,7 +146,7 @@ const AdminUserProfileLayout = () => {
                 style={{ cursor: "pointer", paddingTop: "3px  " }}
                 onClick={async () => {
                   if (await check()) {
-                    console.log(true);
+                    // console.log(true);
                     setOpenConfirm(true);
                   } else {
                     setEditingId("");
@@ -230,6 +253,7 @@ const AdminUserProfileLayout = () => {
   };
 
   const handleSave = async (clientId) => {
+    setIsLoading(true);
     try {
       const row = await form.validateFields();
       const newInfoClient = [...listClient];
@@ -265,9 +289,13 @@ const AdminUserProfileLayout = () => {
             content: response?.data.message,
           });
           setForce((prev) => prev + 1);
+          setIsLoading(false);
         })
         .catch((error) => {
           console.error("Lỗi khi cập nhật thông tin:", error);
+        })
+        .finally(() => {
+          setIsLoading(false);
         });
     } catch (errInfo) {
       console.log("Validate Failed:", errInfo);
@@ -300,6 +328,7 @@ const AdminUserProfileLayout = () => {
   // };
 
   const handleAllow = (id) => {
+    setIsLoading(true);
     const formData = new FormData();
     formData.append("clientId", JSON.stringify(id));
     axios
@@ -314,13 +343,18 @@ const AdminUserProfileLayout = () => {
           content: response?.data.message,
         });
         setForce((prev) => prev + 1);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Lỗi khi cập nhật thông tin:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
   const handleLock = (id) => {
+    setIsLoading(true);
     const formData = new FormData();
     formData.append("clientId", JSON.stringify(id));
 
@@ -336,9 +370,13 @@ const AdminUserProfileLayout = () => {
           content: response?.data.message,
         });
         setForce((prev) => prev + 1);
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error("Lỗi khi cập nhật thông tin:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -386,7 +424,7 @@ const AdminUserProfileLayout = () => {
                   rowClassName="editable-row"
                   pagination={{
                     onChange: cancel,
-                    pageSize: 12,
+                    pageSize: 11,
                   }}
                   size="large"
                 />

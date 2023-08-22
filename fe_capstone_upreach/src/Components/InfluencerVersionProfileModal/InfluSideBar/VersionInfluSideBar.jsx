@@ -16,8 +16,10 @@ import {
   PhoneFilled,
   LockFilled,
 } from "@ant-design/icons";
+import { useUserStore } from "../../../Stores/user";
 
 const VersionInfluSideBar = ({ influInfo, profileSideBar }) => {
+  const [user] = useUserStore((state) => [state.user]);
   const [badgeColor, setBadgeColor] = React.useState("");
   React.useEffect(() => {
     switch (profileSideBar?.influencerTypeName?.at(0)) {
@@ -46,7 +48,14 @@ const VersionInfluSideBar = ({ influInfo, profileSideBar }) => {
       <div className="version-influ-side-bar-container">
         <div className="side-bar-header-body">
           <div className="influ-side-bar-header">
-            <img className="profile-avatar" src={default_img} alt="" />
+            <img
+              className="profile-avatar"
+              src={user?.avatar || default_img}
+              alt=""
+              onError={(e) => {
+                e.target.src = default_img;
+              }}
+            />
             <p className="profile-name">{profileSideBar?.influencerfullName}</p>
             <div className="badge-block">
               <div

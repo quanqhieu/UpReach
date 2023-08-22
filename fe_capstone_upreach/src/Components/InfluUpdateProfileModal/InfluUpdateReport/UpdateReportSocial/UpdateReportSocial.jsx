@@ -139,11 +139,11 @@ const UpdateReportSocial = ({
                   <Tooltip
                     placement="top"
                     title={Number(
-                      influInfo?.influencerFollowers
+                      influInfo?.influencerFollowers || 0
                     ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo?.influencerFollowers)}
+                      {roundNumber(influInfo?.influencerFollowers || 0)}
                     </span>
                   </Tooltip>
                 </div>
@@ -165,7 +165,7 @@ const UpdateReportSocial = ({
                     onBlur={handleSubmit}
                     type="number"
                     onPressEnter={handleSubmit}
-                    value={influInfo?.influencerEngagement}
+                    value={influInfo?.influencerEngagement || 0}
                     maxLength={16}
                     style={{ width: "100px" }}
                     autoFocus
@@ -176,11 +176,11 @@ const UpdateReportSocial = ({
                     <Tooltip
                       placement="top"
                       title={Number(
-                        influInfo?.influencerEngagement
+                        influInfo?.influencerEngagement || 0
                       ).toLocaleString("vi-VN")}
                     >
                       <span className="text-tooltip">
-                        {roundNumber(influInfo?.influencerEngagement)}%
+                        {roundNumber(influInfo?.influencerEngagement || 0)}%
                       </span>
                     </Tooltip>
                     <EditOutlined
@@ -211,7 +211,7 @@ const UpdateReportSocial = ({
                       onBlur={handleSubmit}
                       type="number"
                       onPressEnter={handleSubmit}
-                      value={influInfo.influencerCostEstimateFrom}
+                      value={influInfo?.influencerCostEstimateFrom || 0}
                       maxLength={16}
                       style={{ width: "135px" }}
                       autoFocus
@@ -222,16 +222,18 @@ const UpdateReportSocial = ({
                       <Tooltip
                         placement="top"
                         title={Number(
-                          influInfo?.influencerCostEstimateFrom
+                          influInfo?.influencerCostEstimateFrom || 0
                         ).toLocaleString("vi-VN")}
                       >
                         <span className="text-tooltip">
                           {influInfo?.influencerCostEstimateFrom?.length > 8
-                            ? `${Number(influInfo?.influencerCostEstimateFrom)
+                            ? `${Number(
+                                influInfo?.influencerCostEstimateFrom || 0
+                              )
                                 ?.toLocaleString("vi-VN")
                                 ?.slice(0, 10)}...`
                             : Number(
-                                influInfo?.influencerCostEstimateFrom
+                                influInfo?.influencerCostEstimateFrom || 0
                               )?.toLocaleString("vi-VN")}
                         </span>
                       </Tooltip>
@@ -258,7 +260,7 @@ const UpdateReportSocial = ({
                       onBlur={handleSubmit}
                       type="number"
                       onPressEnter={handleSubmit}
-                      value={influInfo?.influencerCostEstimateTo}
+                      value={influInfo?.influencerCostEstimateTo || 0}
                       maxLength={16}
                       style={{ width: "135px" }}
                       autoFocus
@@ -274,11 +276,13 @@ const UpdateReportSocial = ({
                       >
                         <span className="text-tooltip">
                           {influInfo?.influencerCostEstimateTo?.length > 8
-                            ? `${Number(influInfo?.influencerCostEstimateTo)
+                            ? `${Number(
+                                influInfo?.influencerCostEstimateTo || 0
+                              )
                                 ?.toLocaleString("vi-VN")
                                 ?.slice(0, 10)}...`
                             : Number(
-                                influInfo?.influencerCostEstimateTo
+                                influInfo?.influencerCostEstimateTo || 0
                               )?.toLocaleString("vi-VN")}
                         </span>
                       </Tooltip>
@@ -308,7 +312,7 @@ const UpdateReportSocial = ({
                     onBlur={handleSubmit}
                     type="number"
                     onPressEnter={handleSubmit}
-                    value={influInfo.influencerPostsPerWeek}
+                    value={influInfo?.influencerPostsPerWeek || 0}
                     maxLength={16}
                     style={{ width: "100px" }}
                     autoFocus
@@ -319,11 +323,11 @@ const UpdateReportSocial = ({
                     <Tooltip
                       placement="top"
                       title={Number(
-                        influInfo?.influencerPostsPerWeek
+                        influInfo?.influencerPostsPerWeek || 0
                       ).toLocaleString("vi-VN")}
                     >
                       <span className="text-tooltip">
-                        {roundNumber(influInfo?.influencerPostsPerWeek)}
+                        {roundNumber(influInfo?.influencerPostsPerWeek || 0)}
                       </span>
                     </Tooltip>
                     <EditOutlined
@@ -369,7 +373,7 @@ const UpdateReportSocial = ({
                   onBlur={handleSubmit}
                   type="number"
                   onPressEnter={handleSubmit}
-                  value={influInfo.influencerFollowFb}
+                  value={influInfo.influencerFollowFb || 0}
                   maxLength={16}
                   style={{ width: "100px" }}
                   autoFocus
@@ -379,12 +383,12 @@ const UpdateReportSocial = ({
                 <div className="interact-block">
                   <Tooltip
                     placement="top"
-                    title={Number(influInfo?.influencerFollowFb).toLocaleString(
-                      "vi-VN"
-                    )}
+                    title={Number(
+                      influInfo?.influencerFollowFb || 0
+                    ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo?.influencerFollowFb)}
+                      {roundNumber(influInfo?.influencerFollowFb || 0)}
                     </span>
                   </Tooltip>
                   <EditOutlined
@@ -410,7 +414,7 @@ const UpdateReportSocial = ({
                   onBlur={handleSubmit}
                   type="number"
                   onPressEnter={handleSubmit}
-                  value={influInfo.influencerInteractionFb}
+                  value={influInfo?.influencerInteractionFb || 0}
                   maxLength={16}
                   style={{ width: "100px" }}
                   autoFocus
@@ -421,11 +425,11 @@ const UpdateReportSocial = ({
                   <Tooltip
                     placement="top"
                     title={Number(
-                      influInfo?.influencerInteractionFb
+                      influInfo?.influencerInteractionFb || 0
                     ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo?.influencerInteractionFb)}
+                      {roundNumber(influInfo?.influencerInteractionFb || 0)}
                     </span>
                   </Tooltip>
                   <EditOutlined
@@ -468,7 +472,7 @@ const UpdateReportSocial = ({
                   onBlur={handleSubmit}
                   type="number"
                   onPressEnter={handleSubmit}
-                  value={influInfo.influencerFollowInsta}
+                  value={influInfo?.influencerFollowInsta || 0}
                   maxLength={16}
                   style={{ width: "100px" }}
                   autoFocus
@@ -479,11 +483,11 @@ const UpdateReportSocial = ({
                   <Tooltip
                     placement="top"
                     title={Number(
-                      influInfo?.influencerFollowInsta
+                      influInfo?.influencerFollowInsta || 0
                     ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo?.influencerFollowInsta)}
+                      {roundNumber(influInfo?.influencerFollowInsta || 0)}
                     </span>
                   </Tooltip>
 
@@ -509,7 +513,7 @@ const UpdateReportSocial = ({
                   onBlur={handleSubmit}
                   type="number"
                   onPressEnter={handleSubmit}
-                  value={influInfo.influencerInteractionInsta}
+                  value={influInfo?.influencerInteractionInsta || 0}
                   maxLength={16}
                   style={{ width: "100px" }}
                   autoFocus
@@ -520,11 +524,11 @@ const UpdateReportSocial = ({
                   <Tooltip
                     placement="top"
                     title={Number(
-                      influInfo?.influencerInteractionInsta
+                      influInfo?.influencerInteractionInsta || 0
                     ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo?.influencerInteractionInsta)}
+                      {roundNumber(influInfo?.influencerInteractionInsta || 0)}
                     </span>
                   </Tooltip>
                   <EditOutlined
@@ -567,7 +571,7 @@ const UpdateReportSocial = ({
                   onBlur={handleSubmit}
                   type="number"
                   onPressEnter={handleSubmit}
-                  value={influInfo.influencerFollowYoutube}
+                  value={influInfo?.influencerFollowYoutube || 0}
                   maxLength={16}
                   style={{ width: "100px" }}
                   autoFocus
@@ -578,11 +582,11 @@ const UpdateReportSocial = ({
                   <Tooltip
                     placement="top"
                     title={Number(
-                      influInfo?.influencerFollowYoutube
+                      influInfo?.influencerFollowYoutube || 0
                     ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo?.influencerFollowYoutube)}
+                      {roundNumber(influInfo?.influencerFollowYoutube || 0)}
                     </span>
                   </Tooltip>
                   <EditOutlined
@@ -607,7 +611,7 @@ const UpdateReportSocial = ({
                   onBlur={handleSubmit}
                   type="number"
                   onPressEnter={handleSubmit}
-                  value={influInfo.influencerInteractionYoutube}
+                  value={influInfo?.influencerInteractionYoutube}
                   maxLength={16}
                   style={{ width: "100px" }}
                   autoFocus
@@ -618,11 +622,13 @@ const UpdateReportSocial = ({
                   <Tooltip
                     placement="top"
                     title={Number(
-                      influInfo?.influencerInteractionYoutube
+                      influInfo?.influencerInteractionYoutube || 0
                     ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo?.influencerInteractionYoutube)}
+                      {roundNumber(
+                        influInfo?.influencerInteractionYoutube || 0
+                      )}
                     </span>
                   </Tooltip>
                   <EditOutlined
@@ -665,7 +671,7 @@ const UpdateReportSocial = ({
                   onBlur={handleSubmit}
                   type="number"
                   onPressEnter={handleSubmit}
-                  value={influInfo.influencerFollowTikTok}
+                  value={influInfo?.influencerFollowTikTok || 0}
                   maxLength={16}
                   style={{ width: "100px" }}
                   autoFocus
@@ -676,11 +682,11 @@ const UpdateReportSocial = ({
                   <Tooltip
                     placement="top"
                     title={Number(
-                      influInfo?.influencerFollowTikTok
+                      influInfo?.influencerFollowTikTok || 0
                     ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo?.influencerFollowTikTok)}
+                      {roundNumber(influInfo?.influencerFollowTikTok || 0)}
                     </span>
                   </Tooltip>
                   <EditOutlined
@@ -705,7 +711,7 @@ const UpdateReportSocial = ({
                   onBlur={handleSubmit}
                   type="number"
                   onPressEnter={handleSubmit}
-                  value={influInfo.influencerInteractionTiktok}
+                  value={influInfo?.influencerInteractionTiktok || 0}
                   maxLength={16}
                   style={{ width: "100px" }}
                   autoFocus
@@ -716,11 +722,11 @@ const UpdateReportSocial = ({
                   <Tooltip
                     placement="top"
                     title={Number(
-                      influInfo?.influencerInteractionTiktok
+                      influInfo?.influencerInteractionTiktok || 0
                     ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo?.influencerInteractionTiktok)}
+                      {roundNumber(influInfo?.influencerInteractionTiktok || 0)}
                     </span>
                   </Tooltip>
                   <EditOutlined

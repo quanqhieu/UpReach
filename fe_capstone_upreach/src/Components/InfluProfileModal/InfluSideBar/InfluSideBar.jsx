@@ -27,6 +27,8 @@ import {
   PhoneFilled,
   LockFilled,
 } from "@ant-design/icons";
+import { useUserStore } from "../../../Stores/user";
+import { useNavigate } from "react-router-dom";
 
 function RenderListCheckbox({ valueCheckbox, titleCheckbox, status }) {
   return (
@@ -39,11 +41,13 @@ function RenderListCheckbox({ valueCheckbox, titleCheckbox, status }) {
 }
 
 const InfluSideBar = ({ influInfo }) => {
+  const [user] = useUserStore((state) => [state.user]);
   const [isUpgraded, setIsUpGraded] = useState(false);
   const [badgeColor, setBadgeColor] = useState("");
   const [listSelected, setListSelected] = useState();
   const [listInfluencer, setListInfluencer] = useState([]);
   const [idAccClient, setIdAccClient] = useState("");
+  const navigate = useNavigate();
 
   const [isEnableAddBtn, setIsEnableAddBtn] = useState(true);
 
@@ -129,7 +133,7 @@ const InfluSideBar = ({ influInfo }) => {
     countDownSuccess();
   };
   useEffect(() => {
-    switch (influInfo?.influencerTypeName[0]) {
+    switch (influInfo?.influencerTypeName?.at(0)) {
       case "Professional":
         setBadgeColor("#C837AB");
         break;
@@ -154,6 +158,13 @@ const InfluSideBar = ({ influInfo }) => {
     fetchDataGetList(influInfo?.influencerId);
   }, [influInfo?.influencerId]);
 
+  useEffect(() => {
+    if (user?.planId !== "P04") {
+      setIsUpGraded(true);
+    } else {
+      setIsUpGraded(false);
+    }
+  }, [user?.planId]);
   return (
     <>
       <div className="influ-side-bar-container">
@@ -179,7 +190,7 @@ const InfluSideBar = ({ influInfo }) => {
                     marginRight: "8px",
                   }}
                 />
-                {console.log(influInfo)}
+                <p>{influInfo?.influencerTypeName?.at(0)}</p>
               </div>
             </div>
             {/* <Button
@@ -330,7 +341,9 @@ const InfluSideBar = ({ influInfo }) => {
                       alignItems: "center",
                       backgroundColor: "#000",
                     }}
-                    onClick={() => setIsUpGraded(true)}
+                    onClick={() => {
+                      navigate("/upgrade");
+                    }}
                   >
                     Upgrade
                   </Button>

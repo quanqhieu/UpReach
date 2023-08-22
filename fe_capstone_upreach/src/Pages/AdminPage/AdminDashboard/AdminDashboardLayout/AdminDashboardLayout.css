@@ -1,7 +1,7 @@
 .admin-dashboard-layout {
     width: 100%;
     height: 100%;
-    padding: 25px 20px;
+    padding: 15px 20px;
     position: relative;
     overflow: hidden;
 }
@@ -63,23 +63,27 @@
 .admin-top-income {
     width: 45%;
     height: 345px;
-    padding: 0 10px 0 30px;
+    padding: 0 10px 15px 30px;
     padding-right: 10px;
 }
 
 .admin-dashboard-layout .upgrade-packages{
-    padding: 10px 5px 5px 5px;
-    width: 100%;
-    height: 260px;
+    padding: 10px 40px;
+    margin: 0 10px;
+    height: 300px;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    border: 1px solid #ccc;
+    border-radius: 8px;
 }
 
 .admin-dashboard-layout .upgrade-package-free {
-    width: 260px;
+    background-color: #fff;
+    width: 265px;
     height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly
 }
 
 .upgrade-package-free .upgrade-package-header {
@@ -118,10 +122,12 @@
 }
 
 .admin-dashboard-layout .upgrade-package-starter {
-    width: 260px;
+    background-color: #fff;
+    width: 265px;
     height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly
 }
 
 .upgrade-package-starter .upgrade-package-header {
@@ -149,10 +155,12 @@
 }
 
 .admin-dashboard-layout .upgrade-package-business {
-    width: 260px;
+    background-color: #fff;
+    width: 265px;
     height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly
 }
 
 .upgrade-package-business .upgrade-package-header {
@@ -179,10 +187,12 @@
 }
 
 .admin-dashboard-layout .upgrade-package-gold {
-    width: 260px;
+    background-color: #fff;
+    width: 265px;
     height: 100%;
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly
 }
 
 .upgrade-package-gold .upgrade-package-header {

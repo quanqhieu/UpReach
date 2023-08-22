@@ -40,7 +40,7 @@ const AdminSidebar = () => {
         style={{ textDecoration: "none", color: "#FFF" }}
         to="/admin/user-management"
       >
-        <p>User Management</p>
+        <p>Client Management</p>
       </Link>,
       "user-management",
 

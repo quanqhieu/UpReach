@@ -8,7 +8,10 @@ import {
   Typography,
   message,
   Spin,
+  Tag,
+  Avatar,
 } from "antd";
+import default_img from "../../../../Assets/Image/Default/DefaultImg.jpg";
 
 import {
   DeleteOutlined,
@@ -26,112 +29,7 @@ const AdminUpgradeLayout = () => {
   const [openConfirm, setOpenConfirm] = React.useState(false);
   const [force, setForce] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [listPackage, setListPackage] = React.useState([
-    {
-      fullName: "Le Quang Hieu",
-      brand: "UpReach",
-      package: "Starter",
-      date: "20/8/2023",
-      report: "19",
-      search: "198",
-    },
-    {
-      fullName: "Nguyen Dac Thien",
-      brand: "FPT University",
-      package: "Free",
-      date: "21/8/2023",
-      report: "9",
-      search: "99",
-    },
-    {
-      fullName: "Truong Quang Dat",
-      brand: "FPT Software",
-      package: "Free",
-      date: "21/8/2023",
-      report: "10",
-      search: "100",
-    },
-    {
-      fullName: "Nguyen Hoang Anh",
-      brand: "Enovou",
-      package: "Free",
-      date: "21/8/2023",
-      report: "9",
-      search: "99",
-    },
-    {
-      fullName: "Nguyen Quang Huy",
-      brand: "Weport",
-      package: "Business",
-      date: "21/8/2023",
-      report: "500",
-      search: "999",
-    },
-    {
-      fullName: "Nguyen Nhat Minh",
-      brand: "Weport",
-      package: "Gold",
-      date: "17/8/2023",
-      report: "999",
-      search: "3000",
-    },
-    {
-      fullName: "Nguyen Trung Chien",
-      brand: "FPT Software",
-      package: "Gold",
-      date: "18/8/2023",
-      report: "1000",
-      search: "2989",
-    },
-    {
-      fullName: "Nguyen Trung Chien",
-      brand: "FPT Software",
-      package: "Gold",
-      date: "18/8/2023",
-      report: "1000",
-      search: "2989",
-    },
-    {
-      fullName: "Nguyen Trung Chien",
-      brand: "FPT Software",
-      package: "Gold",
-      date: "18/8/2023",
-      report: "1000",
-      search: "2989",
-    },
-    {
-      fullName: "Nguyen Trung Chien",
-      brand: "FPT Software",
-      package: "Gold",
-      date: "18/8/2023",
-      report: "1000",
-      search: "2989",
-    },
-    {
-      fullName: "Nguyen Trung Chien",
-      brand: "FPT Software",
-      package: "Gold",
-      date: "18/8/2023",
-      report: "1000",
-      search: "2989",
-    },
-    {
-      fullName: "Nguyen Trung Chien",
-      brand: "FPT Software",
-      package: "Gold",
-      date: "18/8/2023",
-      report: "1000",
-      search: "2989",
-    },
-    {
-      fullName: "Nguyen Trung Chien",
-      brand: "FPT Software",
-      package: "Gold",
-      date: "18/8/2023",
-      report: "1000",
-      search: "2989",
-    },
-  ]);
+  const [listPackage, setListPackage] = React.useState([]);
 
   const isEditing = (record) => {
     return record?.clientId === editingId;
@@ -183,10 +81,10 @@ const AdminUpgradeLayout = () => {
     form.setFieldsValue({
       fullName: "",
       brand: "",
-      package: "",
+      plan: "",
       date: "",
-      report: "",
-      search: "",
+      pointReport: "",
+      pointSearch: "",
       ...record,
     });
     setEditingId(record?.clientId);
@@ -202,39 +100,82 @@ const AdminUpgradeLayout = () => {
 
   const tags = [
     {
+      title: "Avatar",
+      dataIndex: "image",
+      width: "4%",
+      render: (_) => {
+        return (
+          <Avatar
+            src={
+              <img
+                src={_ || default_img}
+                alt="avatar"
+                onError={(e) => {
+                  e.target.src = default_img;
+                }}
+              />
+            }
+            size={45}
+          />
+        );
+      },
+    },
+    {
       title: "Full Name",
       dataIndex: "fullName",
-      width: "19%",
+      width: "17%",
       editable: true,
     },
     {
       title: "Brand Name",
       dataIndex: "brand",
-      width: "15%",
+      width: "13%",
       editable: true,
     },
     {
       title: "Package",
-      dataIndex: "package",
-      width: "10%",
+      dataIndex: "plan",
+      width: "8%",
       editable: true,
+      render: (_) => {
+        return (
+          <Tag
+            color={
+              _ === "Gold"
+                ? "gold"
+                : _ === "Business"
+                ? "magenta"
+                : _ === "Starter"
+                ? "purple"
+                : "green"
+            }
+          >
+            {_}
+          </Tag>
+        );
+      },
+    },
+    {
+      title: "Price",
+      dataIndex: "price",
+      width: "8%",
     },
     {
       title: "Date upgrade",
-      dataIndex: "date",
-      width: "15%",
+      dataIndex: "dateTransaction",
+      width: "12%",
       editable: true,
     },
     {
       title: "Report remaining",
-      dataIndex: "report",
-      width: "15%",
+      dataIndex: "pointReport",
+      width: "13%",
       editable: true,
     },
     {
       title: "Search remaining",
-      dataIndex: "search",
-      width: "15%",
+      dataIndex: "pointSearch",
+      width: "13%",
       editable: true,
     },
     {
@@ -310,6 +251,27 @@ const AdminUpgradeLayout = () => {
     };
   });
 
+  React.useEffect(() => {
+    setIsLoading(true);
+    axios
+      .get("http://localhost:4000/api/admin/get-client-account", {
+        params: {
+          // email: user.influencerEmail,
+        },
+      })
+      .then((response) => {
+        const info = response?.data?.data;
+        setListPackage(info);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error while fetching profile information:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [force]);
+
   return (
     <>
       {contextHolder}
@@ -328,7 +290,7 @@ const AdminUpgradeLayout = () => {
               rowClassName="editable-row"
               pagination={{
                 onChange: cancel,
-                pageSize: 12,
+                pageSize: 11,
               }}
               size="large"
             />
