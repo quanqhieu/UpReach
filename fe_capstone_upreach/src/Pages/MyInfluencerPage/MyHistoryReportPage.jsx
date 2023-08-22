@@ -6,20 +6,22 @@ import ApiGetInfoAndFilterInfluencer from "../../Api/ApiGetInfoAndFilterInfluenc
 import { FireFilled } from "@ant-design/icons";
 import { List, Spin, Space, Modal } from "antd";
 import PointAndHistoryReport from "../../Api/ApiPointAndHistoryReport";
+import InfluProfile from "../../Components/InfluProfileModal/InfluProfile";
 
 const MyHistoryReportPage = () => {
   const [isOpenProfileInflu, setIsOpenProfileInflu] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [influInfo, setinfluInfo] = useState();
   const handleOpenModal = async (info) => {
     try {
+      setinfluInfo(info);
       setIsOpenProfileInflu(true);
       // caculator point
     } catch (error) {
       console.log(error);
     }
   };
-  const InfluProfile = {};
-  const influInfo = {};
+
   const [historyInfluencer, setHistoryInfluencer] = useState();
   //============================= Edit Name List DB BE =============================
 

@@ -22,7 +22,7 @@ const ReportAudience = ({ influInfo }) => {
   // console.log(data);
   useEffect(() => {
     fetchDataForChart(influInfo);
-  }, [influInfo]);
+  }, []);
   const dataFollower =
     data?.data[0]?.dataFollower === undefined
       ? []
