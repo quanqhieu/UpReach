@@ -24,14 +24,14 @@ const AdminTopCard = ({ image, name, follower, gender, age }) => {
 
         <div className="admin-top-card">
           <div className="admin-top-card-contents">
-            <p>{name}</p>
+            <p style={{ fontWeight: "600" }}>{name}</p>
             <div className="admin-top-card-content">
               <div className="admin-top-card-number">
-                <p>Followers</p>
+                <p style={{ fontWeight: "600" }}>Followers</p>
                 <p>{roundNumber(follower)}</p>
               </div>
               <div className="admin-top-card-number">
-                <p>{gender}</p>
+                <p style={{ fontWeight: "600" }}>{gender}</p>
                 <p>{age}</p>
               </div>
             </div>

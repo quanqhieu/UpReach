@@ -126,7 +126,7 @@ const InfluencerReportLayout = () => {
   // }
 
   function timeLeft(storedTime) {
-    console.log(storedTime);
+    // console.log(storedTime);
     const currentTime = new Date();
     const currentMonth = currentTime.getMonth();
     const currentYear = currentTime.getFullYear();

@@ -122,7 +122,7 @@ const InfluencerBookingLayout = () => {
         <div className="influencer-booking-title">
           <p>LIST BOOKING</p>
           <div className="booking-filter">
-            <p>Sort by:</p>
+            {/* <p>Sort by:</p>
             <div className="booking-sort-by">
               <Dropdown menu={{ items }} trigger={"click"}>
                 <a>
@@ -130,7 +130,7 @@ const InfluencerBookingLayout = () => {
                 </a>
               </Dropdown>
               <DownOutlined />
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="influencer-booking-sub-title">

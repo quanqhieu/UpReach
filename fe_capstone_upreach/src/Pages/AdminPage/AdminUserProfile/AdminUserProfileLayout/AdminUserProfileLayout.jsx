@@ -32,7 +32,7 @@ const AdminUserProfileLayout = () => {
 
   const check = async () => {
     if (editingId !== "") {
-      const row = await form.validateFields();
+      const row = await form.getFieldsValue();
 
       if (
         listClient?.some(

@@ -9,7 +9,7 @@ const ReportAudience = ({ influInfo, dataReportVersion }) => {
   const [audienceLocation, setAudienceLocation] = React.useState([]);
   // console.log(audienceGender);
   // console.log(audienceAge);
-
+  console.log(dataReportVersion);
   React.useEffect(() => {
     setAudienceFollower(dataReportVersion?.dataFollower);
     setAudienceGender(dataReportVersion?.dataGender);

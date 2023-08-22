@@ -16,7 +16,7 @@ const ProfileCardComponent = ({ profileInflu }) => {
   }, [profileInflu?.dataImage]);
   return (
     <>
-      <div className="profile-layout">
+      <div className="profile-layout-card">
         <div className="profile-content-layout">
           <div className="profile-avatar-content">
             <img

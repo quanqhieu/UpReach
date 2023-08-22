@@ -31,6 +31,45 @@ const AdminUpgradeLayout = () => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [listPackage, setListPackage] = React.useState([]);
 
+  const check = async () => {
+    // console.log(form);
+    try {
+      const row = await form.getFieldsValue();
+      console.log(row);
+      if (editingId !== "") {
+        if (
+          listPackage?.some(
+            (item) => item?.clientId == editingId && item?.plan == row?.plan
+          ) &&
+          listPackage?.some((item) => {
+            return (
+              item?.clientId == editingId &&
+              item?.dateTransaction == row?.dateTransaction
+            );
+          }) &&
+          listPackage?.some(
+            (item) =>
+              item?.clientId == editingId && item?.duration == row?.duration
+          ) &&
+          listPackage?.some(
+            (item) =>
+              item?.clientId == editingId &&
+              item?.pointReport == row?.pointReport
+          ) &&
+          listPackage?.some(
+            (item) =>
+              item?.clientId == editingId &&
+              item?.pointSearch == row?.pointSearch
+          )
+        ) {
+          return false;
+        } else return true;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const isEditing = (record) => {
     return record?.clientId === editingId;
   };
@@ -79,10 +118,9 @@ const AdminUpgradeLayout = () => {
 
   const edit = (record) => {
     form.setFieldsValue({
-      fullName: "",
-      brand: "",
       plan: "",
-      date: "",
+      dateTransaction: "",
+      duration: "",
       pointReport: "",
       pointSearch: "",
       ...record,
@@ -93,6 +131,7 @@ const AdminUpgradeLayout = () => {
   const cancel = () => {
     setOpenConfirm(false);
   };
+
   const ok = () => {
     setEditingId("");
     setOpenConfirm(false);
@@ -123,14 +162,12 @@ const AdminUpgradeLayout = () => {
     {
       title: "Full Name",
       dataIndex: "fullName",
-      width: "17%",
-      editable: true,
+      width: "18%",
     },
     {
       title: "Brand Name",
       dataIndex: "brand",
-      width: "13%",
-      editable: true,
+      width: "14%",
     },
     {
       title: "Package",
@@ -156,26 +193,27 @@ const AdminUpgradeLayout = () => {
       },
     },
     {
-      title: "Price",
-      dataIndex: "price",
-      width: "8%",
-    },
-    {
       title: "Date upgrade",
       dataIndex: "dateTransaction",
-      width: "12%",
+      width: "10%",
+      editable: true,
+    },
+    {
+      title: "Duration",
+      dataIndex: "duration",
+      width: "10%",
       editable: true,
     },
     {
       title: "Report remaining",
       dataIndex: "pointReport",
-      width: "13%",
+      width: "12%",
       editable: true,
     },
     {
       title: "Search remaining",
       dataIndex: "pointSearch",
-      width: "13%",
+      width: "12%",
       editable: true,
     },
     {
@@ -193,7 +231,7 @@ const AdminUpgradeLayout = () => {
             }}
           >
             <Typography.Link
-              // onClick={() => handleSave(record?.clientId)}
+              onClick={() => handleSave(record?.clientId)}
               style={{
                 marginRight: 8,
               }}
@@ -208,14 +246,14 @@ const AdminUpgradeLayout = () => {
             >
               <p
                 style={{ cursor: "pointer", paddingTop: "3px  " }}
-                // onClick={async () => {
-                //   if (await check()) {
-                //     console.log(true);
-                //     setOpenConfirm(true);
-                //   } else {
-                //     setEditingId("");
-                //   }
-                // }}
+                onClick={async () => {
+                  if (await check()) {
+                    console.log(true);
+                    setOpenConfirm(true);
+                  } else {
+                    setEditingId("");
+                  }
+                }}
               >
                 Cancel
               </p>
@@ -224,7 +262,7 @@ const AdminUpgradeLayout = () => {
         ) : (
           <Typography.Link
             disabled={editingId !== ""}
-            // onClick={() => edit(record)}
+            onClick={() => edit(record)}
           >
             Edit
           </Typography.Link>
@@ -232,6 +270,56 @@ const AdminUpgradeLayout = () => {
       },
     },
   ];
+
+  const handleSave = async (clientId) => {
+    setIsLoading(true);
+    try {
+      const row = await form.validateFields();
+      const newInfoClient = [...listPackage];
+      const index = newInfoClient?.findIndex(
+        (item) => clientId === item?.clientId
+      );
+      if (index > -1) {
+        const item = newInfoClient[index];
+        newInfoClient?.splice(index, 1, {
+          ...item,
+          ...row,
+        });
+        setListPackage(newInfoClient);
+        setEditingId("");
+      } else {
+        newInfoClient.push(row);
+        setListPackage(newInfoClient);
+        setEditingId("");
+      }
+      const formData = new FormData();
+      formData.append("package", JSON.stringify(row));
+      formData.append("clientId", JSON.stringify(clientId));
+
+      axios
+        .put("http://localhost:4000/api/admin/edit-package", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          messageApi.open({
+            type: "success",
+            content: response?.data.message,
+          });
+          setForce((prev) => prev + 1);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          console.error("Lỗi khi cập nhật thông tin:", error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    } catch (errInfo) {
+      console.log("Validate Failed:", errInfo);
+    }
+  };
 
   const mergedTags = tags?.map((col) => {
     if (!col.editable) {
@@ -242,7 +330,10 @@ const AdminUpgradeLayout = () => {
       onCell: (record) => {
         return {
           record,
-          inputType: col.dataIndex === "report" || "search" ? "number" : "text",
+          inputType:
+            col.dataIndex === "pointReport" || col.dataIndex === "pointSearch"
+              ? "number"
+              : "text",
           dataIndex: col.dataIndex,
           title: col.title,
           editing: isEditing(record),

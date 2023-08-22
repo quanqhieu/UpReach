@@ -13,7 +13,7 @@ const InfluVersionProfile = ({ profileInflu, profileSideBar }) => {
         influencerId: profileInflu?.influencerId,
       })
       .then((response) => {
-        const info = response?.data?.data[0];
+        const info = response?.data?.data?.at(0);
         console.log(info);
         setDataReportVersion(info);
       })

@@ -96,7 +96,7 @@ const AdminReportLayout = () => {
 
       <div className="report-management-layout">
         <div className="report-management-wait">
-          Wait to approve
+          Waiting for approval
           {/* -----------------Approve List---------------------- */}
           <Spin tip="Loading" size="large" spinning={isLoading}>
             <div className="report-management-wait-items">

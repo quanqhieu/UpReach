@@ -5,15 +5,14 @@ import "./AdminDashboardLayout.css";
 import AdminTotalStatusCard from "./AdminTotalStatusCard/AdminTotalStatusCard";
 import AdminTopCards from "./AdminTopCards/AdminTopCards";
 import AdminTopIncome from "./AdminTopIncome/AdminTopIncome";
-import { Spin, Avatar } from "antd";
+import { Spin } from "antd";
 import axios from "axios";
-import default_img from "../../../../Assets/Image/Default/DefaultImg.jpg";
 
 const AdminDashboardLayout = () => {
   const [listInflu, setListInflu] = React.useState([]);
   const [listClient, setListClient] = React.useState([]);
   const [listInfluTop, setListInfluTop] = React.useState([]);
-
+  const [listClientTop, setListClientTop] = React.useState([]);
   const [force, setForce] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(false);
   // const [sortOption, setSortOption] = React.useState("Choose Option");
@@ -82,9 +81,10 @@ const AdminDashboardLayout = () => {
     listInflu.sort((a, b) => b.influencerFollowers - a.influencerFollowers);
     const topInfluencers = listInflu.slice(0, 3);
     setListInfluTop(topInfluencers);
-  }, [listInflu]);
-  // console.log(listInfluTop);
-  // console.log(isLoading);
+    const randomClients = listClient.slice(0, 3);
+    setListClientTop(randomClients);
+  }, [listInflu, listClient]);
+
   return (
     <>
       <div className="admin-dashboard-layout">
@@ -103,7 +103,7 @@ const AdminDashboardLayout = () => {
               <AdminTopCards listInfluTop={listInfluTop} />
             </div>
             <div className="admin-top-income">
-              <AdminTopIncome listClient={listClient} />
+              <AdminTopIncome listClient={listClientTop} />
             </div>
           </div>
           <div className="upgrade-packages">

@@ -173,7 +173,7 @@ const AdminInfluencerLayout = () => {
 
   const check = async () => {
     if (editingId !== "") {
-      const row = await form.validateFields();
+      const row = await form.getFieldsValue();
       if (
         listInflu.some(
           (item) =>
