@@ -1,18 +1,72 @@
-import React from "react";
+import React,{ useEffect, useRef, useState } from "react";
 import { Button, Form, Input } from "antd";
 import "./ForgotPasswordPage.css";
 import FormItem from "antd/es/form/FormItem";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-
+import ApiUser from "../../Api/ApiUser";
+import { Navigate, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 const ResetPasswordPage = () => {
+  
+  const [message, setMessage] = useState()
+  const [status, setStatus] = useState()
+  const navigate = useNavigate(); 
+  const [formValues, setFormValues] = useState({
+    newPassword: '',
+    confirmNewPassword: ''
+  });
+
+  const toastOptions = {
+    position: "bottom-right",
+    autoClose: 8000,
+    pauseOnFocusLoss: true,
+    draggable: true,
+    theme: "dark",
+  }
+  useEffect(()=>{
+  if(status ==='True'){
+    navigate('/login')
+  } 
+},[status])
+
+  const FetchUpdatePassword = async (data) => {
+    try {
+      console.log(123123)
+      const response = await ApiUser.ChangePassword(data);
+      if(response.status === "False"){
+        toast.error(response.message, toastOptions)
+        setStatus(response.status)
+        return ;
+      }
+      toast.success(response.message, toastOptions)
+      setStatus(response.status)
+      console.log(response)
+      return response;
+    } catch (error) {
+      setMessage(error)
+      console.log(error);
+    }
+  };
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({
+      ...formValues,
+      [name]: value
+    });
+  };
+  const onFinishChangePassword = (value)=>{
+    console.log(123123)
+    FetchUpdatePassword(formValues)
+  }
+  
   return (
     <>
       <div className="pwd-background">
         <div className="form-custom-bg">
           <div className="form-holder reset-form" style={{ display: "block" }}>
             <h2 className="form-title">Reset Password </h2>
-            <Form className="form">
+            <Form className="form" >
               <FormItem
                 rules={[
                   { required: true, message: "Please input your password!" },
@@ -25,7 +79,8 @@ const ResetPasswordPage = () => {
                     width: "500px",
                     height: "50px",
                   }}
-                  name="new-pwd"
+                  onChange={handleInputChange}
+                  name="newPassword"
                   className="input"
                   type="password"
                   placeholder=" Enter New Password"
@@ -61,7 +116,8 @@ const ResetPasswordPage = () => {
                     width: "500px",
                     height: "50px",
                   }}
-                  name="confirm-new-pwd"
+                  onChange={handleInputChange}
+                  name="confirmNewPassword"
                   className="input"
                   type="password"
                   placeholder="Confirm New Password"
@@ -70,17 +126,19 @@ const ResetPasswordPage = () => {
                   }
                 ></Input.Password>
               </FormItem>
-              <Link to="/login">
+              <Link >
                 <Button
                   style={{
                     width: "500px",
                     height: "50px",
                   }}
                   className="submit btn"
+                  onClick={onFinishChangePassword}
                 >
                   Reset Password
                 </Button>
               </Link>
+              <ToastContainer />
             </Form>
           </div>
         </div>
