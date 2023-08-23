@@ -290,12 +290,13 @@ const FilterSearch = ({
   };
   //===========================================
   const handleSubmitFilter = () => {
-    if (dataSearchToCheck != oldDataSearchToCheck && pointSearch - 10 > 0) {
+    if (dataSearchToCheck != oldDataSearchToCheck && pointSearch - 10 >= 0) {
       updatePointSearch(pointSearch - 10);
       setPointSearch(pointSearch - 10);
       setIsClickSearch(true);
       setLoading(true);
-    } else {
+    }
+    if (pointSearch - 10 < 0) {
       setIsShowPopupUpgrade(true);
     }
   };
