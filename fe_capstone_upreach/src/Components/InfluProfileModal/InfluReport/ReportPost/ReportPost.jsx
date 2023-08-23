@@ -3,8 +3,9 @@ import "./ReportPost.css";
 import JobItem from "./JobItem/JobItem";
 import ApiAudienceAndJobInfluencer from "../../../../Api/ApiAudienceAndJobInfluencer";
 import { Spin } from "antd";
+import "../../../../CSS/Theme.css";
 
-const ReportPost = ({ influInfo }) => {
+const ReportPost = ({ influInfo, roleClient }) => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState();
   //====================== Get Data Back End Of Audience Chart ======================
@@ -26,7 +27,11 @@ const ReportPost = ({ influInfo }) => {
 
   return (
     <>
-      <div className="report-post-layout">
+      <div
+        className={`report-post-layout ${
+          roleClient === "Free" ? "blur-data-to-payment" : ""
+        }`}
+      >
         <Spin
           size="large"
           style={{ position: "fixed", top: "45%", marginLeft: "190px" }}

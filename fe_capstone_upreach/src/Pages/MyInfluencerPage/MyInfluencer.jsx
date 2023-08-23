@@ -2,8 +2,7 @@ import FooterHome from "../../Components/Layouts/Footer/FooterHome";
 import HeaderHomepage from "../../Components/Layouts/Header/HeaderHomepage";
 import React, { useState, useEffect } from "react";
 import {
-  MailOutlined,
-  SettingOutlined,
+  FireFilled,
   UnorderedListOutlined,
   HistoryOutlined,
   FileProtectOutlined,
@@ -17,16 +16,18 @@ import { map } from "highcharts";
 import { v4 as uuid } from "uuid";
 import ApiListInfluecer from "../../Api/ApiListInfluecer";
 import { useUserStore } from "../../Stores/user";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import MyBookingPage from "./MyBookingPage/MyBookingPage";
+import ApiGetInfoAndFilterInfluencer from "../../Api/ApiGetInfoAndFilterInfluencer";
 
-function getItem(label, key, icon, children, type) {
+function getItem(label, key, icon, children, type, disabled) {
   return {
     key,
     icon,
     children,
     label,
     type,
+    disabled,
   };
 }
 
@@ -36,7 +37,6 @@ const MyInfluencer = () => {
   const [addNewList, setAddNewList] = useState(false);
   const [checkTabListPage, setCheckTabListPage] = useState(true);
   const [tabName, setTabName] = useState("new");
-
   const [object, setObject] = useState();
   const [dataOfList, setdataOfList] = useState([]);
   const [value, setValue] = useState("");
@@ -52,6 +52,8 @@ const MyInfluencer = () => {
   const [flagChangeNameList, setFlagChangeNameList] = useState(true);
   const [flagDeleteList, setFlagDeleteList] = useState(true);
   const [idAccClient, setIdAccClient] = useState("");
+  const [roleClient, setRoleClient] = useState("Free");
+  const [isShowPopupUpgrade, setIsShowPopupUpgrade] = useState(false);
 
   // // get Id account
   // function getClientID() {
@@ -66,8 +68,14 @@ const MyInfluencer = () => {
 
   var listMenu = [];
 
-  listInfluencer.forEach((item) => {
-    listMenu.push(getItem(item.Name_list, item.ClientLists_ID));
+  listInfluencer.forEach((item, index) => {
+    if (roleClient === "Free" && index !== 0) {
+      listMenu.push(
+        getItem(item.Name_list, item.ClientLists_ID, "", "", "", true)
+      );
+    } else {
+      listMenu.push(getItem(item.Name_list, item.ClientLists_ID));
+    }
   });
   listMenu.push(getItem("Add New", "new", <FolderAddOutlined />));
   const items = [
@@ -106,6 +114,21 @@ const MyInfluencer = () => {
       const response = (await ApiListInfluecer.getListMenu(dataLocalStorge))
         .data;
       setListInfluencer(response);
+    } catch (error) {
+      console.log("Error fetching data:", error);
+    }
+  };
+  const fetchGetRoleClient = async () => {
+    try {
+      const EmailUser = await JSON.parse(
+        localStorage.getItem("user-draw-storage")
+      ).state.user.email;
+      console.log(EmailUser);
+      const response = await ApiGetInfoAndFilterInfluencer.getDataClient(
+        EmailUser
+      );
+      setRoleClient(response.Client.plan);
+      console.log(response);
     } catch (error) {
       console.log("Error fetching data:", error);
     }
@@ -172,11 +195,22 @@ const MyInfluencer = () => {
       fetchDataTableKOLs(idAccClient, e.key);
       // setIdList(e.key);
     }
-    if (e.key === "new") {
+    // click add new
+    if (
+      (e.key === "new" && roleClient !== "Free") ||
+      listInfluencer.length === 0
+    ) {
       setAddNewList(true);
       form.resetFields();
       setIsEmptyInput(false);
       setIsNameListExist(false);
+    }
+    if (
+      e.key === "new" &&
+      roleClient === "Free" &&
+      listInfluencer.length !== 0
+    ) {
+      setIsShowPopupUpgrade(true);
     }
   };
 
@@ -216,6 +250,7 @@ const MyInfluencer = () => {
 
   useEffect(() => {
     fetchDataGetList(idAccClient);
+    fetchGetRoleClient();
   }, []);
 
   //Remove Influ out list
@@ -344,6 +379,39 @@ const MyInfluencer = () => {
                 Name list is exits
               </div>
             </Form>
+          </div>
+          <div className="col-1 bg-white"></div>
+        </div>
+      </Modal>
+      <Modal
+        title="Upgrade to unlock more reports"
+        className="popup-add-new"
+        open={isShowPopupUpgrade}
+        onCancel={() => {
+          setIsShowPopupUpgrade(false);
+        }}
+        destroyOnClose={true}
+        footer={null}
+      >
+        <div className="row">
+          <div className="col-1 bg-white"></div>
+          <div className="col-10">
+            You’ve used all of your available influencer reports.
+            <div></div>
+            To unlock more reports, go to your pricing page to upgrade your
+            plan.
+            <div></div>
+            <Link to="/upgrade">
+              <button className="bg-dark margin-46-per btnUpgrade">
+                <FireFilled
+                  style={{
+                    color: "orange",
+                    fontSize: "32px",
+                  }}
+                />{" "}
+                Upgrade now
+              </button>
+            </Link>
           </div>
           <div className="col-1 bg-white"></div>
         </div>

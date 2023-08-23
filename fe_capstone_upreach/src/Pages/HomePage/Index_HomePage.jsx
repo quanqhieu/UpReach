@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import ApiGetInfoAndFilterInfluencer from "../../Api/ApiGetInfoAndFilterInfluencer";
 import { FireFilled } from "@ant-design/icons";
 import { Spin, Space } from "antd";
+import { ReactComponent as Diamond } from "../../Assets/Icon/Diamond.svg";
 
 const Index_HomePage = ({ setLoadingFullPage }) => {
   const [allInfluencer, setAllInfluencer] = useState();
@@ -15,6 +16,8 @@ const Index_HomePage = ({ setLoadingFullPage }) => {
   const [pointReport, setpointReport] = useState();
   const [pointSearch, setPointSearch] = useState();
   const [isShowPopupUpgrade, setIsShowPopupUpgrade] = useState(false);
+  const [roleClient, setRoleClient] = useState("Free");
+  const [badgeColor, setBadgeColor] = useState("");
 
   // BE get Influencer
   const fetchDataGetList = async () => {
@@ -43,8 +46,24 @@ const Index_HomePage = ({ setLoadingFullPage }) => {
       console.log("Error fetching data:", error);
     }
   };
+  const fetchGetRoleClient = async () => {
+    try {
+      const EmailUser = await JSON.parse(
+        localStorage.getItem("user-draw-storage")
+      ).state.user.email;
+      console.log(EmailUser);
+      const response = await ApiGetInfoAndFilterInfluencer.getDataClient(
+        EmailUser
+      );
+      setRoleClient(response.Client.plan);
+      console.log(response);
+    } catch (error) {
+      console.log("Error fetching data:", error);
+    }
+  };
   // ======================================================
   useEffect(() => {
+    fetchGetRoleClient();
     setAllInfluencer({});
     fetchDataGetList();
   }, []);
@@ -52,6 +71,22 @@ const Index_HomePage = ({ setLoadingFullPage }) => {
   useEffect(() => {
     // console.log(allInfluencer);
   }, [allInfluencer]);
+
+  useEffect(() => {
+    switch (roleClient) {
+      case "Starter":
+        setBadgeColor("#96F0AF");
+        break;
+      case "Bussiness":
+        setBadgeColor("#C837AB");
+        break;
+      case "Gold":
+        setBadgeColor("#FFDD55");
+        break;
+      default:
+        return;
+    }
+  }, [roleClient]);
 
   return (
     <div className="contentHomePage backgroundMainPage">
@@ -78,22 +113,51 @@ const Index_HomePage = ({ setLoadingFullPage }) => {
           setIsShowPopupUpgrade={setIsShowPopupUpgrade}
         />
       </div>
-      <div className="row text-center">
-        <div className="d-inline mt-4 Upgrade pt-2">
-          Enjoy full search results with one of our paid plans
-          <Link to="/upgrade">
-            <button className="bg-dark ms-4 btnUpgrade">
-              <FireFilled
-                style={{
-                  color: "orange",
-                  fontSize: "32px",
-                }}
-              />{" "}
-              Upgrade now
-            </button>
-          </Link>
+      <Spin size="medium" spinning={loading}>
+        <div className="row text-center">
+          {roleClient === "Free" ? (
+            <div className="d-inline mt-4 Upgrade pt-2">
+              Enjoy full search results with one of our paid plans
+              <Link to="/upgrade">
+                <button className="bg-dark ms-4 btnUpgrade">
+                  <FireFilled
+                    style={{
+                      color: "orange",
+                      fontSize: "32px",
+                    }}
+                  />{" "}
+                  Upgrade now
+                </button>
+              </Link>
+            </div>
+          ) : (
+            <div className="d-inline mt-4 Upgrade pt-2">
+              <div className="badge-block">
+                <div className="title-fit-content">
+                  Enjoy full search results and report views!
+                </div>
+                <div
+                  style={{
+                    border: `2px solid ${badgeColor}`,
+                    color: `${badgeColor}`,
+                    backgroundColor: "white",
+                  }}
+                  className="badge-text"
+                >
+                  <Diamond
+                    style={{
+                      height: "15px",
+                      fill: `${badgeColor}`,
+                      marginRight: "8px",
+                    }}
+                  />
+                  <p>{roleClient}</p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
-      </div>
+      </Spin>
       <div className="result-content">
         <div className="row">
           <div className="col-3"></div>

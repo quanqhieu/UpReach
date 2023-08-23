@@ -5,16 +5,29 @@ import ReportSocial from "./ReportSocial/ReportSocial";
 import ReportAudience from "./ReportAudience/ReportAudience";
 import ReportPost from "./ReportPost/ReportPost";
 
-const InfluReport = ({ influInfo }) => {
+const InfluReport = ({ influInfo, roleClient }) => {
   const items = [
-    { title: "SOCIAL", children: <ReportSocial influInfo={influInfo} /> },
+    {
+      title: "SOCIAL",
+      children: <ReportSocial influInfo={influInfo} roleClient={roleClient} />,
+    },
     {
       title: "AUDIENCE",
-      children: <ReportAudience influInfo={influInfo?.influencerId} />,
+      children: (
+        <ReportAudience
+          influInfo={influInfo?.influencerId}
+          roleClient={roleClient}
+        />
+      ),
     },
     {
       title: "JOB",
-      children: <ReportPost influInfo={influInfo?.influencerId} />,
+      children: (
+        <ReportPost
+          influInfo={influInfo?.influencerId}
+          roleClient={roleClient}
+        />
+      ),
     },
   ];
 
