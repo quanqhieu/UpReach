@@ -14,7 +14,6 @@ import ClientHistoryBookingModal from "../ClientHistoryBookingModal/ClientHistor
 import axios from "axios";
 
 const ClientHistoryBookingCard = ({ bookingList }) => {
-  console.log(bookingList);
   // const [user] = useUserStore((state) => [state.user]);
   const { token } = theme.useToken();
   const [open, setOpen] = React.useState(false);

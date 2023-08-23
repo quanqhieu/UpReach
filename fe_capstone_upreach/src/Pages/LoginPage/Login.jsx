@@ -80,6 +80,9 @@ const Login = () => {
     }
   }, []);
 
+  const onClickForgotPasswordPage = () =>{
+    navigate("/forgot-password");
+  }
   return (
     <>
       {user?.roleId ? (
@@ -149,7 +152,7 @@ const Login = () => {
                     <span className="logInBtnText">Login</span>
                   </Button>
                   <div className="feature-block">
-                    <Button className="logInToForgotPasswordLink" type="link">
+                    <Button className="logInToForgotPasswordLink" type="link" onClick={onClickForgotPasswordPage}>
                       <p>Forgot password?</p>
                     </Button>
                   </div>

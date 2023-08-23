@@ -12,6 +12,14 @@ const ApiListClient = {
     checkClientExisted(data){
         const url = '/client/check-existed';
         return axiosClient.post(url, data)
+    },
+    checkPasswordClient(data){
+        const url = '/client/check-passsword';
+        return axiosClient.post(url, data)
+    },
+    updatePasswordClient(data){
+        const url = '/client/update-password';
+        return axiosClient.post(url, data)
     }
 }
 

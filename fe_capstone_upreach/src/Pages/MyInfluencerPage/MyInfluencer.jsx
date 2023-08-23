@@ -19,7 +19,7 @@ import { useUserStore } from "../../Stores/user";
 import { useNavigate, Link } from "react-router-dom";
 import MyBookingPage from "./MyBookingPage/MyBookingPage";
 import ApiGetInfoAndFilterInfluencer from "../../Api/ApiGetInfoAndFilterInfluencer";
-
+import Chat from "../ChatPage/Chat";
 function getItem(label, key, icon, children, type, disabled) {
   return {
     key,
@@ -100,6 +100,13 @@ const MyInfluencer = () => {
       "bkg",
       null,
       [getItem("History Booking", "booking", <FileProtectOutlined />)],
+      "group"
+    ),
+    getItem(
+      "",
+      "bkg",
+      null,
+      [getItem("Chat With Influe", "chat", <FileProtectOutlined />)],
       "group"
     ),
   ];
@@ -183,10 +190,14 @@ const MyInfluencer = () => {
   //================================================================
   //====================== click item in list=======================
   const onClick = (e) => {
+    console.log("ee", e)
     if (e.key === "history") {
       setCheckTabListPage(false);
       setTabName(e.key);
     } else if (e.key === "booking") {
+      setCheckTabListPage(false);
+      setTabName(e.key);
+    } else if (e.key === "chat") {
       setCheckTabListPage(false);
       setTabName(e.key);
     } else {
@@ -327,8 +338,8 @@ const MyInfluencer = () => {
                   flagDeleteList={flagDeleteList}
                   setFlagDeleteList={setFlagDeleteList}
                   idAccClient={idAccClient}
-                  // IdList={IdList}
-                  // DeleteList={DeleteList}
+                // IdList={IdList}
+                // DeleteList={DeleteList}
                 />
               ) : (
                 <>
@@ -338,6 +349,8 @@ const MyInfluencer = () => {
                     </div>
                   ) : tabName === "booking" ? (
                     <MyBookingPage />
+                  ) : tabName === "chat" ? (
+                    <Chat />
                   ) : (
                     ""
                   )}
