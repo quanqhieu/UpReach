@@ -26,6 +26,7 @@ import CreatInfluencerProfilePage from "./CreateInfluencer/CreatInfluencerProfil
 import ResetPasswordPage from "./ForgotPassword/ResetPasswordPage";
 import MyInfluencer from "./MyInfluencerPage/MyInfluencer";
 import Chat from "./ChatPage/Chat";
+import VerifyForgotPassword from "./ForgotPassword/VerifyForgotPassword";
 
 function Pages_Index() {
   const navigate = useNavigate();
@@ -103,6 +104,14 @@ function Pages_Index() {
         element={
           <>
             <VerifyRegisterPage />
+          </>
+        }
+      />
+      <Route
+        path="/verify-forgot-password"
+        element={
+          <>
+            <VerifyForgotPassword />
           </>
         }
       />
