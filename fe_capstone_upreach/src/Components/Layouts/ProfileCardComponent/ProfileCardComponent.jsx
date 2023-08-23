@@ -14,6 +14,7 @@ const ProfileCardComponent = ({ profileInflu }) => {
   useEffect(() => {
     setImages(profileInflu?.dataImage);
   }, [profileInflu?.dataImage]);
+  console.log(images);
   return (
     <>
       <div className="profile-layout-card">

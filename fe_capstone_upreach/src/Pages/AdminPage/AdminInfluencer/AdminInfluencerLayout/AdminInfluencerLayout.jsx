@@ -347,7 +347,8 @@ const AdminInfluencerLayout = () => {
         return {
           record,
           inputType:
-            col.dataIndex === ("influencerPhone" && "influencerAge")
+            col.dataIndex === "influencerPhone" ||
+            col.dataIndex === "influencerAge"
               ? "number"
               : "text",
           dataIndex: col.dataIndex,
@@ -451,7 +452,7 @@ const AdminInfluencerLayout = () => {
                   rowClassName="editable-row"
                   pagination={{
                     onChange: cancel,
-                    pageSize: 11,
+                    pageSize: 9,
                   }}
                   size="large"
                 />

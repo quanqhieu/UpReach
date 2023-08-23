@@ -38,7 +38,7 @@ const VersionInfluReport = ({ influInfo, dataReportVersion }) => {
           defaultActiveKey="1"
           type="card"
           size={"large"}
-          items={items.map((item, i) => {
+          items={items?.map((item, i) => {
             return {
               label: item?.title,
               key: i,

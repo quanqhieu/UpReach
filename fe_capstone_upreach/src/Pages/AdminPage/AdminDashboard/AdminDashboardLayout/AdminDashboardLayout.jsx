@@ -78,10 +78,10 @@ const AdminDashboardLayout = () => {
       });
   }, [force]);
   React.useEffect(() => {
-    listInflu.sort((a, b) => b.influencerFollowers - a.influencerFollowers);
-    const topInfluencers = listInflu.slice(0, 3);
+    listInflu?.sort((a, b) => b?.influencerFollowers - a?.influencerFollowers);
+    const topInfluencers = listInflu?.slice(0, 3);
     setListInfluTop(topInfluencers);
-    const randomClients = listClient.slice(0, 3);
+    const randomClients = listClient?.slice(0, 3);
     setListClientTop(randomClients);
   }, [listInflu, listClient]);
 
@@ -106,7 +106,7 @@ const AdminDashboardLayout = () => {
               <AdminTopIncome listClient={listClientTop} />
             </div>
           </div>
-          <div className="upgrade-packages">
+          {/* <div className="upgrade-packages">
             <div className="upgrade-package-free">
               <div className="upgrade-package-header">
                 <p>Free</p>
@@ -191,7 +191,7 @@ const AdminDashboardLayout = () => {
               </div>
               <div className="upgrade-package-footer">Edit</div>
             </div>
-          </div>
+          </div> */}
         </Spin>
       </div>
     </>

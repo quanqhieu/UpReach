@@ -10,21 +10,17 @@ import {
   Spin,
   Tag,
   Avatar,
+  Select,
 } from "antd";
 import default_img from "../../../../Assets/Image/Default/DefaultImg.jpg";
 
-import {
-  DeleteOutlined,
-  UserDeleteOutlined,
-  EditOutlined,
-  LockOutlined,
-  UnlockOutlined,
-} from "@ant-design/icons";
+import { EditOutlined } from "@ant-design/icons";
 import axios from "axios";
 
 const AdminUpgradeLayout = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [form] = Form.useForm();
+  const { Option } = Select;
   const [editingId, setEditingId] = React.useState("");
   const [openConfirm, setOpenConfirm] = React.useState(false);
   const [force, setForce] = React.useState(0);
@@ -35,22 +31,22 @@ const AdminUpgradeLayout = () => {
     // console.log(form);
     try {
       const row = await form.getFieldsValue();
-      console.log(row);
+      // console.log(row);
       if (editingId !== "") {
         if (
           listPackage?.some(
             (item) => item?.clientId == editingId && item?.plan == row?.plan
           ) &&
-          listPackage?.some((item) => {
-            return (
-              item?.clientId == editingId &&
-              item?.dateTransaction == row?.dateTransaction
-            );
-          }) &&
-          listPackage?.some(
-            (item) =>
-              item?.clientId == editingId && item?.duration == row?.duration
-          ) &&
+          // listPackage?.some((item) => {
+          //   return (
+          //     item?.clientId == editingId &&
+          //     item?.dateTransaction == row?.dateTransaction
+          //   );
+          // }) &&
+          // listPackage?.some(
+          //   (item) =>
+          //     item?.clientId == editingId && item?.duration == row?.duration
+          // ) &&
           listPackage?.some(
             (item) =>
               item?.clientId == editingId &&
@@ -85,7 +81,14 @@ const AdminUpgradeLayout = () => {
     ...restProps
   }) => {
     const inputNode =
-      inputType === "number" ? (
+      inputType === "select" ? (
+        <Select placeholder="Please select a platform">
+          <Option value="Free">Free</Option>
+          <Option value="Starter">Starter</Option>
+          <Option value="Business">Business</Option>
+          <Option value="Gold">Gold</Option>
+        </Select>
+      ) : inputType === "number" ? (
         <Input type="number" maxLength={11} style={{ width: "160px" }} />
       ) : (
         <Input />
@@ -119,8 +122,8 @@ const AdminUpgradeLayout = () => {
   const edit = (record) => {
     form.setFieldsValue({
       plan: "",
-      dateTransaction: "",
-      duration: "",
+      // dateTransaction: "",
+      // duration: "",
       pointReport: "",
       pointSearch: "",
       ...record,
@@ -135,6 +138,16 @@ const AdminUpgradeLayout = () => {
   const ok = () => {
     setEditingId("");
     setOpenConfirm(false);
+  };
+
+  const formatDate = (dateString) => {
+    const jsDate = new Date(dateString);
+    const day = jsDate.getDate();
+    const month = jsDate.getMonth() + 1;
+    const year = jsDate.getFullYear();
+    return `${day < 10 ? "0" : ""}${day}-${
+      month < 10 ? "0" : ""
+    }${month}-${year}`;
   };
 
   const tags = [
@@ -196,13 +209,15 @@ const AdminUpgradeLayout = () => {
       title: "Date upgrade",
       dataIndex: "dateTransaction",
       width: "10%",
-      editable: true,
+      render: (dateString) => (dateString ? formatDate(dateString) : ""),
+      // editable: true,
     },
     {
       title: "Duration",
       dataIndex: "duration",
       width: "10%",
-      editable: true,
+      render: (dateString) => (dateString ? formatDate(dateString) : ""),
+      // editable: true,
     },
     {
       title: "Report remaining",
@@ -305,7 +320,7 @@ const AdminUpgradeLayout = () => {
         .then((response) => {
           messageApi.open({
             type: "success",
-            content: response?.data.message,
+            content: response?.data?.message,
           });
           setForce((prev) => prev + 1);
           setIsLoading(false);
@@ -331,7 +346,10 @@ const AdminUpgradeLayout = () => {
         return {
           record,
           inputType:
-            col.dataIndex === "pointReport" || col.dataIndex === "pointSearch"
+            col.dataIndex === "plan"
+              ? "select"
+              : col.dataIndex === "pointReport" ||
+                col.dataIndex === "pointSearch"
               ? "number"
               : "text",
           dataIndex: col.dataIndex,
@@ -368,25 +386,25 @@ const AdminUpgradeLayout = () => {
       {contextHolder}
       <div className="admin-upgrade-layout">
         <div className="admin-upgrade-table">
-          <Form form={form} component={false}>
-            {/* <Spin tip="Loading" size="large" spinning={isLoading}> */}
-            <Table
-              components={{
-                body: {
-                  cell: EditableCell,
-                },
-              }}
-              columns={mergedTags}
-              dataSource={listPackage}
-              rowClassName="editable-row"
-              pagination={{
-                onChange: cancel,
-                pageSize: 11,
-              }}
-              size="large"
-            />
-            {/* </Spin> */}
-          </Form>
+          <Spin tip="Loading" size="large" spinning={isLoading}>
+            <Form form={form} component={false}>
+              <Table
+                components={{
+                  body: {
+                    cell: EditableCell,
+                  },
+                }}
+                columns={mergedTags}
+                dataSource={listPackage}
+                rowClassName="editable-row"
+                pagination={{
+                  onChange: cancel,
+                  pageSize: 9,
+                }}
+                size="large"
+              />
+            </Form>
+          </Spin>
         </div>
       </div>
     </>

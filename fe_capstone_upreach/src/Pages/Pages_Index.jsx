@@ -25,6 +25,7 @@ import VerifyInfluencerRegister from "./SignUpInfluencer/VerifyInfluencerRegiste
 import CreatInfluencerProfilePage from "./CreateInfluencer/CreatInfluencerProfilePage";
 import ResetPasswordPage from "./ForgotPassword/ResetPasswordPage";
 import MyInfluencer from "./MyInfluencerPage/MyInfluencer";
+import Chat from "./ChatPage/Chat";
 
 function Pages_Index() {
   const navigate = useNavigate();
@@ -233,7 +234,15 @@ function Pages_Index() {
           </>
         }
       />
-      
+      <Route
+        path="/chatapp"
+        element={
+          <>
+            <Chat />
+          </>
+        }
+      />
+
     </Routes>
   );
 }

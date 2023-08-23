@@ -18,6 +18,11 @@ const VerifyRegisterPage = () => {
     confirmPass: ''
   });
 
+  const [formForgotPass,setFormForgotPass ] = useState({
+    email: '',
+    newPassword: ''
+  });
+
   const toastOptions = {
     position: "bottom-right",
     autoClose: 8000,

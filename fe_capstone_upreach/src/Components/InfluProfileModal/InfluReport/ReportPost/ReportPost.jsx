@@ -22,12 +22,16 @@ const ReportPost = ({ influInfo }) => {
   //=================================================================================
   useEffect(() => {
     fetchDataForChart(influInfo);
-  }, [influInfo]);
+  }, []);
 
   return (
     <>
       <div className="report-post-layout">
-        <Spin size="large" spinning={loading}>
+        <Spin
+          size="large"
+          style={{ position: "fixed", top: "45%", marginLeft: "190px" }}
+          spinning={loading}
+        >
           {console.log(data?.data[0]?.dataJob)}
           {data?.data[0]?.dataJob === undefined ? (
             <></>

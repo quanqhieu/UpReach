@@ -5,7 +5,7 @@ import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { Upload, Modal } from "antd";
+import { Upload, Modal, message } from "antd";
 import ImgCrop from "antd-img-crop";
 import "./InfluUpdateImage.css";
 import DraggableUploadListItem from "./DraggableUploadListItem/DraggableUploadListItem";
@@ -18,6 +18,7 @@ const InfluUpdateImage = ({
   setIsChange,
   mokPreviewInflu,
 }) => {
+  const [messageApi, contextHolder] = message.useMessage();
   const [fileList, setFileList] = React.useState(() => {
     if (Array.isArray(influInfo?.dataImage)) {
       const hasNonNullImage = influInfo?.dataImage?.some(
@@ -46,7 +47,13 @@ const InfluUpdateImage = ({
       reader.onerror = (error) => reject(error);
     });
   const onChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
+    if (newFileList.length >= fileList.length) {
+      if (newFileList.at(-1).type === "image/jpeg") {
+        setFileList(newFileList);
+      } else {
+        messageApi.error("Upload error!");
+      }
+    } else setFileList(newFileList);
   };
 
   const onPreview = async (file) => {
@@ -103,6 +110,7 @@ const InfluUpdateImage = ({
 
   return (
     <>
+      {contextHolder}
       <Modal
         open={previewOpen}
         footer={null}

@@ -23,8 +23,9 @@ const ReportAudience = ({ influInfo, dataReportVersion }) => {
   ]);
 
   const dataFollower =
-    audienceFollower[0]?.monthFollow === null ||
-    audienceFollower[0]?.value === null
+    !audienceFollower?.at(0)?.monthFollow ||
+    !audienceFollower?.at(0)?.value ||
+    audienceFollower === []
       ? []
       : audienceFollower;
   const configFollower = {
@@ -34,8 +35,8 @@ const ReportAudience = ({ influInfo, dataReportVersion }) => {
   };
 
   configFollower?.data?.sort((a, b) => {
-    const [aMonth, aYear] = a.monthFollow?.split("/");
-    const [bMonth, bYear] = b.monthFollow?.split("/");
+    const [aMonth, aYear] = a?.monthFollow?.split("/");
+    const [bMonth, bYear] = b?.monthFollow?.split("/");
 
     if (parseInt(aYear, 10) !== parseInt(bYear, 10)) {
       return parseInt(aYear, 10) - parseInt(bYear, 10);
@@ -44,7 +45,9 @@ const ReportAudience = ({ influInfo, dataReportVersion }) => {
   });
 
   const dataGender =
-    audienceGender[0]?.sex === null || audienceGender[0]?.value === null
+    !audienceGender?.at(0)?.sex ||
+    !audienceGender?.at(0)?.value ||
+    audienceGender === []
       ? []
       : audienceGender;
   const configGender = {
@@ -63,7 +66,9 @@ const ReportAudience = ({ influInfo, dataReportVersion }) => {
   };
 
   const dataAge =
-    audienceAge[0]?.type === null || audienceAge[0]?.value === null
+    !audienceAge?.at(0)?.type ||
+    !audienceAge?.at(0)?.value ||
+    audienceAge === []
       ? []
       : audienceAge;
 
@@ -86,8 +91,15 @@ const ReportAudience = ({ influInfo, dataReportVersion }) => {
     return a.type.localeCompare(b.type);
   });
 
+  const dataLocation =
+    !audienceLocation?.at(0)?.type ||
+    !audienceLocation?.at(0)?.value ||
+    audienceLocation === []
+      ? []
+      : audienceLocation;
+
   const configLocation = {
-    data: audienceLocation,
+    data: dataLocation,
     xField: "value",
     yField: "type",
     meta: {
