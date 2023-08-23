@@ -5,10 +5,15 @@ import { ReactComponent as Youtube } from "../../../../Assets/Icon/Youtube.svg";
 import { ReactComponent as Tiktok } from "../../../../Assets/Icon/Tiktok.svg";
 import { Tooltip } from "antd";
 import roundNumber from "../../../InfluUpdateProfileModal/roundNumber";
-const ReportSocial = ({ influInfo }) => {
+import "../../../../CSS/Theme.css";
+const ReportSocial = ({ influInfo, roleClient }) => {
   return (
     <>
-      <div className="report-social-layout">
+      <div
+        className={`report-social-layout ${
+          roleClient === "Free" ? "blur-data-to-payment" : ""
+        }`}
+      >
         <div className="report-general">
           <p className="report-general-title">GENERAL</p>
           <div className="report-general-contents">

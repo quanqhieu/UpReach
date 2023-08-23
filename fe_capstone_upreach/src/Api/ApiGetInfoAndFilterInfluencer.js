@@ -11,6 +11,10 @@ const ApiGetInfoAndFilterInfluencer = {
         const url = "/client/homePage";
         return axiosClient.post(url,{email : Email, role: Role})
     },
+    getDataClient(Email){
+        const url = "/client/client-data";
+        return axiosClient.post(url,{email : Email})
+    },
 }
 
 export default ApiGetInfoAndFilterInfluencer
