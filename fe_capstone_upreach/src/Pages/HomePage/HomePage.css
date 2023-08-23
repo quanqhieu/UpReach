@@ -264,3 +264,23 @@
 .overflow-hidden{
 	overflow: hidden !important;
 }
+.contentHomePage .badge-block {
+	height: fit-content;
+	width: auto;
+	display: flex;
+	justify-content: center;
+}
+.contentHomePage .badge-text {
+	cursor: pointer;
+	font-size: 14px;
+	width: fit-content;
+	padding: 2px 8px;
+	border-radius: 20px;
+	display: flex;
+	align-items: center;
+	margin-left: 10px;
+}
+.contentHomePage .title-fit-content {
+	height: fit-content;
+	margin: auto 0;
+}

@@ -3,8 +3,9 @@ import { Row, Col } from "antd";
 import { Line, Pie, Bar } from "@ant-design/plots";
 import ApiAudienceAndJobInfluencer from "../../../../Api/ApiAudienceAndJobInfluencer";
 import React, { useState, useEffect } from "react";
+import "../../../../CSS/Theme.css";
 
-const ReportAudience = ({ influInfo }) => {
+const ReportAudience = ({ influInfo, roleClient }) => {
   const [data, setData] = useState();
   //====================== Get Data Back End Of Audience Chart ======================
   const fetchDataForChart = async (IdInflu) => {
@@ -95,7 +96,11 @@ const ReportAudience = ({ influInfo }) => {
   };
 
   return (
-    <div className="report-audience-layout">
+    <div
+      className={`report-audience-layout ${
+        roleClient === "Free" ? "blur-data-to-payment" : ""
+      }`}
+    >
       <Row gutter={[16, 16]}>
         <Col span={12}>
           <div className="report-audience-bg audience-follower">

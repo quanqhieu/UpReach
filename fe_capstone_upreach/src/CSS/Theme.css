@@ -113,3 +113,8 @@ p {
 .ant-modal-confirm-title{
 	font-size: 22px !important;
 }
+
+.blur-data-to-payment{
+	filter: blur(8px);
+  -webkit-filter: blur(8px);
+}

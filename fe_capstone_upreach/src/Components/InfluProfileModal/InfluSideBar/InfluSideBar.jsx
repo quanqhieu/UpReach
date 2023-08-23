@@ -1,5 +1,6 @@
 import default_img from "../../../Assets/Image/Default/DefaultImg.jpg";
 import "./InfluSideBar.css";
+import "../../../CSS/Theme.css";
 import {
   Button,
   Tooltip,
@@ -29,8 +30,14 @@ import {
 } from "@ant-design/icons";
 import { useUserStore } from "../../../Stores/user";
 import { useNavigate } from "react-router-dom";
+import ApiGetInfoAndFilterInfluencer from "../../../Api/ApiGetInfoAndFilterInfluencer";
 
-function RenderListCheckbox({ valueCheckbox, titleCheckbox, status }) {
+function RenderListCheckbox({
+  valueCheckbox,
+  titleCheckbox,
+  status,
+  roleClient,
+}) {
   return (
     <Col span={24}>
       <Checkbox disabled={status == 1 ? true : false} value={valueCheckbox}>
@@ -48,6 +55,7 @@ const InfluSideBar = ({ influInfo }) => {
   const [listInfluencer, setListInfluencer] = useState([]);
   const [idAccClient, setIdAccClient] = useState("");
   const navigate = useNavigate();
+  const [roleClient, setRoleClient] = useState("Free");
 
   const [isEnableAddBtn, setIsEnableAddBtn] = useState(true);
 
@@ -93,6 +101,21 @@ const InfluSideBar = ({ influInfo }) => {
         await ApiListInfluecer.getStatusListOfKOLs(dataLocalStorge, kOLsID)
       ).data;
       setListInfluencer(response);
+    } catch (error) {
+      console.log("Error fetching data:", error);
+    }
+  };
+  const fetchGetRoleClient = async () => {
+    try {
+      const EmailUser = await JSON.parse(
+        localStorage.getItem("user-draw-storage")
+      ).state.user.email;
+      console.log(EmailUser);
+      const response = await ApiGetInfoAndFilterInfluencer.getDataClient(
+        EmailUser
+      );
+      setRoleClient(response.Client.plan);
+      console.log(response);
     } catch (error) {
       console.log("Error fetching data:", error);
     }
@@ -155,6 +178,10 @@ const InfluSideBar = ({ influInfo }) => {
   }, [influInfo?.influencerTypeName]);
 
   useEffect(() => {
+    fetchGetRoleClient();
+  }, []);
+
+  useEffect(() => {
     fetchDataGetList(influInfo?.influencerId);
   }, [influInfo?.influencerId]);
 
@@ -191,10 +218,9 @@ const InfluSideBar = ({ influInfo }) => {
                   }}
                 />
 
-                {influInfo?.influencerContentTopicName}
+                {/* {influInfo?.influencerContentTopicName} */}
 
                 <p>{influInfo?.influencerTypeName?.at(0)}</p>
-
               </div>
             </div>
             {/* <Button
@@ -224,15 +250,27 @@ const InfluSideBar = ({ influInfo }) => {
                     value={listSelected}
                   >
                     <Row>
-                      {listInfluencer?.map((item, index) => (
-                        <RenderListCheckbox
-                          key={index}
-                          valueCheckbox={item.ClientLists_ID}
-                          titleCheckbox={item.Name_list}
-                          status={item.Status}
-                          influInfo={influInfo}
-                        />
-                      ))}
+                      {roleClient === "Free" && listInfluencer?.length > 0
+                        ? listInfluencer[0].map((item, index) => (
+                            <RenderListCheckbox
+                              key={index}
+                              valueCheckbox={item.ClientLists_ID}
+                              titleCheckbox={item.Name_list}
+                              status={item.Status}
+                              influInfo={influInfo}
+                              roleClient={roleClient}
+                            />
+                          ))
+                        : listInfluencer?.map((item, index) => (
+                            <RenderListCheckbox
+                              key={index}
+                              valueCheckbox={item.ClientLists_ID}
+                              titleCheckbox={item.Name_list}
+                              status={item.Status}
+                              influInfo={influInfo}
+                              roleClient={roleClient}
+                            />
+                          ))}
                     </Row>
                   </Checkbox.Group>
                   <Button
@@ -286,19 +324,19 @@ const InfluSideBar = ({ influInfo }) => {
             <div className="profile-contents">
               <div className="profile-content">
                 <div className="d-flex w-100">
-                  {influInfo?.influencerContentTopicName?.map(
-                    (topic, index) => (
+                  {influInfo?.influencerContentTopicName
+                    ?.slice(0, 3)
+                    .map((topic, index) => (
                       <div key={index} className="profile-topic">
                         <Tooltip placement="top" title={topic}>
                           {/* <div className="profile-topic"> */}
-                          {topic?.length > 8
-                            ? `${topic?.slice(0, 8)}...`
+                          {topic?.length > 7
+                            ? `${topic?.slice(0, 7)}...`
                             : topic}
                           {/* </div> */}
                         </Tooltip>
                       </div>
-                    )
-                  )}
+                    ))}
                 </div>
                 <div className="profile-location">
                   <Location style={{ marginRight: "8px" }} />
@@ -330,8 +368,12 @@ const InfluSideBar = ({ influInfo }) => {
         <div className="influ-side-bar-footer">
           <div className="footer-content">
             <p className="profile-contact">Contact information</p>
-            <div className="contact-info ">
-              {isUpgraded ? (
+            <div
+              className={`contact-info ${
+                roleClient === "Free" ? "blur-data-to-payment" : ""
+              }`}
+            >
+              {roleClient !== "Free" ? (
                 ""
               ) : (
                 <div className="upgrade-btn">
