@@ -9,9 +9,8 @@ import { ExclamationCircleOutlined, LoadingOutlined } from "@ant-design/icons";
 import ClientBookingModal from "../../../../../Components/ClientBookingModal/ClientBookingModal";
 import { useUserStore } from "../../../../../Stores/user";
 
-const JobItem = ({ data }) => {
+const JobItem = ({ data, idMonogDB }) => {
   // const [user] = useUserStore((state) => [state.user]);
-
   const [isChange, setIsChange] = React.useState(false);
   const [openConfirmForm, setOpenConfirmForm] = React.useState(false);
   const [isOpenBooking, setIsOpenBooking] = React.useState(false);
@@ -74,6 +73,7 @@ const JobItem = ({ data }) => {
         bodyStyle={{ borderRadius: "30px" }}
       >
         <ClientBookingModal
+          idMonogDB={idMonogDB}
           setIsChange={setIsChange}
           data={data}
           setIsOpenBooking={setIsOpenBooking}
@@ -112,7 +112,7 @@ const JobItem = ({ data }) => {
             className="booking-btn"
             type="primary"
             onClick={handleOpenModal}
-            // disabled={data?.clientId?.includes(user?.Client_ID)}
+          // disabled={data?.clientId?.includes(user?.Client_ID)}
           >
             Booking
           </Button>

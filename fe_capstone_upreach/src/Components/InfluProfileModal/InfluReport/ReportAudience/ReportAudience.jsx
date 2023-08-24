@@ -8,14 +8,14 @@ import { Link } from "react-router-dom";
 import { LockFilled } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 
-const ReportAudience = ({ influInfo, roleClient }) => {
+const ReportAudience = ({ influInfo, roleClient, influInfoEmail }) => {
   const [data, setData] = useState();
   const navigate = useNavigate();
   //====================== Get Data Back End Of Audience Chart ======================
   const fetchDataForChart = async (IdInflu) => {
     try {
       const response = await ApiAudienceAndJobInfluencer.getDataForChart(
-        IdInflu
+        IdInflu, influInfoEmail
       );
 
       setData(response);
@@ -24,7 +24,7 @@ const ReportAudience = ({ influInfo, roleClient }) => {
     }
   };
   //=================================================================================
-  // console.log(data);
+  console.log(data);
   useEffect(() => {
     fetchDataForChart(influInfo);
   }, []);
@@ -40,8 +40,8 @@ const ReportAudience = ({ influInfo, roleClient }) => {
 
   const dataGender =
     data?.data[0]?.dataGender === undefined ||
-    data?.data[0]?.dataGender?.sex === null ||
-    data?.data[0]?.dataGender?.value === null
+      data?.data[0]?.dataGender?.sex === null ||
+      data?.data[0]?.dataGender?.value === null
       ? []
       : data?.data[0]?.dataGender;
 

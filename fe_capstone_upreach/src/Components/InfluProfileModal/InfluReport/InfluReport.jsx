@@ -17,6 +17,7 @@ const InfluReport = ({ influInfo, roleClient }) => {
         <ReportAudience
           influInfo={influInfo?.influencerId}
           roleClient={roleClient}
+          influInfoEmail={influInfo?.influencerEmail}
         />
       ),
     },
@@ -26,6 +27,7 @@ const InfluReport = ({ influInfo, roleClient }) => {
         <ReportPost
           influInfo={influInfo?.influencerId}
           roleClient={roleClient}
+          influInfoEmail={influInfo?.influencerEmail}
         />
       ),
     },

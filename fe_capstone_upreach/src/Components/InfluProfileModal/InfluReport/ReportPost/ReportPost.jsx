@@ -7,18 +7,20 @@ import "../../../../CSS/Theme.css";
 import { useNavigate } from "react-router-dom";
 import { LockFilled } from "@ant-design/icons";
 
-const ReportPost = ({ influInfo, roleClient }) => {
+const ReportPost = ({ influInfo, influInfoEmail, roleClient }) => {
   const [data, setData] = useState();
+  const [idMonogDB, setIdMonogDB] = useState();
   const [loading, setLoading] = useState();
   const navigate = useNavigate();
   //====================== Get Data Back End Of Audience Chart ======================
   const fetchDataForChart = async (IdInflu) => {
     try {
       const response = await ApiAudienceAndJobInfluencer.getDataForChart(
-        IdInflu
+        IdInflu, influInfoEmail
       );
       setLoading(false);
       setData(response);
+      setIdMonogDB(response._idInflue)
     } catch (error) {
       console.log("Error fetching data:", error);
     }
@@ -64,7 +66,7 @@ const ReportPost = ({ influInfo, roleClient }) => {
             ) : (
               data?.data[0]?.dataJob.map((item) =>
                 item.jobId != null && item.isPublish === true ? (
-                  <JobItem data={item} />
+                  <JobItem data={item} idMonogDB={idMonogDB} />
                 ) : (
                   <></>
                 )
