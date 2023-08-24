@@ -106,7 +106,7 @@ const AdminDashboardLayout = () => {
               <AdminTopIncome listClient={listClientTop} />
             </div>
           </div>
-          {/* <div className="upgrade-packages">
+          <div className="upgrade-packages">
             <div className="upgrade-package-free">
               <div className="upgrade-package-header">
                 <p>Free</p>
@@ -126,7 +126,6 @@ const AdminDashboardLayout = () => {
                   <p>20</p>
                 </div>
               </div>
-              <div className="upgrade-package-footer">Edit</div>
             </div>
             <div className="upgrade-package-starter">
               <div className="upgrade-package-header">
@@ -147,7 +146,6 @@ const AdminDashboardLayout = () => {
                   <p>200</p>
                 </div>
               </div>
-              <div className="upgrade-package-footer">Edit</div>
             </div>
             <div className="upgrade-package-business">
               <div className="upgrade-package-header">
@@ -168,7 +166,6 @@ const AdminDashboardLayout = () => {
                   <p>1000</p>
                 </div>
               </div>
-              <div className="upgrade-package-footer">Edit</div>
             </div>
             <div className="upgrade-package-gold">
               <div className="upgrade-package-header">
@@ -189,9 +186,8 @@ const AdminDashboardLayout = () => {
                   <p>3000</p>
                 </div>
               </div>
-              <div className="upgrade-package-footer">Edit</div>
             </div>
-          </div> */}
+          </div>
         </Spin>
       </div>
     </>

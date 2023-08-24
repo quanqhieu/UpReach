@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./ReportPost.css";
+import { Spin } from "antd";
 import JobItem from "./JobItem/ApproveJobItem";
 
-const ReportPost = ({ influInfo, dataReportVersion }) => {
+const ReportPost = ({ influInfo, dataReportVersion, isLoading }) => {
   const [jobItems, setJobItems] = useState([]);
   // console.log(dataReportVersion.dataJob);
 
@@ -12,13 +13,15 @@ const ReportPost = ({ influInfo, dataReportVersion }) => {
 
   return (
     <div className="report-post-layout">
-      {jobItems
-        ?.filter((item) => item?.jobId !== null && item?.isPublish !== false)
-        .map((item, index) => (
-          <div key={index}>
-            <JobItem jobInfo={item} />
-          </div>
-        ))}
+      <Spin tip="Loading" size="large" spinning={isLoading}>
+        {jobItems
+          ?.filter((item) => item?.jobId !== null && item?.isPublish !== false)
+          .map((item, index) => (
+            <div key={index}>
+              <JobItem jobInfo={item} />
+            </div>
+          ))}
+      </Spin>
     </div>
   );
 };

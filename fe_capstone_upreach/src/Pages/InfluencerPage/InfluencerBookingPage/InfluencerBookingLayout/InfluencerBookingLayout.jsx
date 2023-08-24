@@ -2,13 +2,16 @@ import React from "react";
 import "./InfluencerBookingLayout.css";
 import InfluencerBookingCard from "../../../../Components/InfluencerBookingCard/InfluencerBookingCard";
 import { DownOutlined } from "@ant-design/icons";
-import { Dropdown, Space, Modal } from "antd";
+import { Dropdown, Space, Spin, Skeleton } from "antd";
 import axios from "axios";
 import { useUserStore } from "../../../../Stores/user";
 
 const InfluencerBookingLayout = () => {
   const [user] = useUserStore((state) => [state.user]);
   const [sortOption, setSortOption] = React.useState("Choose Option");
+  const [bookingList, setBookingList] = React.useState([]);
+  console.log();
+  const [isLoading, setIsLoading] = React.useState(false);
   const items = [
     {
       label: (
@@ -17,7 +20,7 @@ const InfluencerBookingLayout = () => {
             setSortOption(e.target.innerText);
           }}
         >
-          Name
+          Status
         </p>
       ),
       key: "0",
@@ -29,7 +32,7 @@ const InfluencerBookingLayout = () => {
             setSortOption(e.target.innerText);
           }}
         >
-          Date
+          Start Date
         </p>
       ),
       key: "1",
@@ -41,45 +44,44 @@ const InfluencerBookingLayout = () => {
             setSortOption(e.target.innerText);
           }}
         >
-          Cost
+          Quantity
         </p>
       ),
       key: "2",
     },
   ];
-  const [bookingList, setBookingList] = React.useState([]);
 
   const hanldeSort = (bookingList) => {
     let sortedList = [...bookingList];
-    if (sortOption === "Name") {
-      return sortedList.sort((a, b) => {
-        const nameA = a?.clientName.toUpperCase();
-        const nameB = b?.clientName.toUpperCase();
+    if (sortOption === "Status") {
+      return sortedList?.sort((a, b) => {
+        const statusOrder = {
+          Pending: 1,
+          Processing: 2,
+          Done: 3,
+          Rejected: 4,
+        };
 
-        if (nameA < nameB) {
-          return -1;
-        }
-        if (nameA > nameB) {
-          return 1;
-        }
-        return 0;
+        const orderA = statusOrder[a?.status];
+        const orderB = statusOrder[b?.status];
+
+        return orderA - orderB;
       });
-    } else if (sortOption === "Date") {
-      return sortedList.sort((a, b) => {
-        const dateA = new Date(a.startDate);
-        const dateB = new Date(b.startDate);
+    } else if (sortOption === "Start Date") {
+      return sortedList?.sort((a, b) => {
+        const dateA = new Date(a?.startDate.split("/").reverse().join("/"));
+        const dateB = new Date(b?.startDate.split("/").reverse().join("/"));
         return dateA - dateB;
       });
-    }
-    // else if (sortOption === "Cost") {
-    //   return bookingList.sort((a, b) => {
-    //     return a.cost - b.cost;
-    //   });
-    // }
-    else return bookingList;
+    } else if (sortOption === "Quantity") {
+      return bookingList?.sort((a, b) => {
+        return b?.quantity - a?.quantity;
+      });
+    } else return bookingList;
   };
 
   React.useEffect(() => {
+    setIsLoading(true);
     axios
       .get("http://localhost:4000/api/influ/get-booking-jobs", {
         params: {
@@ -113,6 +115,9 @@ const InfluencerBookingLayout = () => {
           "Error while fetching previewBooking information:",
           error
         );
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, []);
 
@@ -122,7 +127,7 @@ const InfluencerBookingLayout = () => {
         <div className="influencer-booking-title">
           <p>LIST BOOKING</p>
           <div className="booking-filter">
-            {/* <p>Sort by:</p>
+            <p>Sort by:</p>
             <div className="booking-sort-by">
               <Dropdown menu={{ items }} trigger={"click"}>
                 <a>
@@ -130,7 +135,7 @@ const InfluencerBookingLayout = () => {
                 </a>
               </Dropdown>
               <DownOutlined />
-            </div> */}
+            </div>
           </div>
         </div>
         <div className="influencer-booking-sub-title">
@@ -143,11 +148,13 @@ const InfluencerBookingLayout = () => {
           <p style={{ width: "15%" }}>End Date</p>
         </div>
         <div className="influencer-booking-list">
-          {hanldeSort(bookingList)?.map((booking, index) => (
-            <div className="mb-3" key={index}>
-              <InfluencerBookingCard bookingList={booking} />
-            </div>
-          ))}
+          <Skeleton size="large" loading={isLoading} active>
+            {hanldeSort(bookingList)?.map((booking, index) => (
+              <div className="mb-3" key={index}>
+                <InfluencerBookingCard bookingList={booking} />
+              </div>
+            ))}
+          </Skeleton>
         </div>
       </div>
     </>

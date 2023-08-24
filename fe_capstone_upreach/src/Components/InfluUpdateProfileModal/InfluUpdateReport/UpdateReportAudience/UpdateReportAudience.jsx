@@ -222,17 +222,26 @@ const UpdateReportAudience = ({ influInfo, setPreviewChart, setIsChange }) => {
     <>
       {contextHolder}
       <div className="update-report-audience-layout">
-        <Button onClick={handleExportFollower} className="export-follower-btn">
-          Export
+        <Button
+          onClick={handleExportFollower}
+          className="export-follower-btn export-btn"
+        >
+          Sample
         </Button>
-        <Button onClick={handleExportGender} className="export-gender-btn">
-          Export
+        <Button
+          onClick={handleExportGender}
+          className="export-gender-btn export-btn"
+        >
+          Sample
         </Button>
-        <Button onClick={handleExportAge} className="export-age-btn">
-          Export
+        <Button onClick={handleExportAge} className="export-age-btn export-btn">
+          Sample
         </Button>
-        <Button onClick={handleExportLocation} className="export-location-btn">
-          Export
+        <Button
+          onClick={handleExportLocation}
+          className="export-location-btn export-btn"
+        >
+          Sample
         </Button>
         <Row gutter={[16, 16]}>
           <Col style={{ position: "relative" }} span={12}>

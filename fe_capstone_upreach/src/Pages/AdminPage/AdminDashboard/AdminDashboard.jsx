@@ -17,20 +17,24 @@ const AdminDashboard = () => {
     } else if (user.roleId == 3) {
       navigate("/influencer/my-report");
     } else {
-      navigate("/");
+      navigate("/login");
     }
   }, []);
   return (
     <>
-      <div className="dashboard-page-bg">
-        <HeaderHomePage />
-        <div className="dashboard-page-sidebar">
-          <AdminSidebar />
+      {user?.roleId == 1 ? (
+        <div className="dashboard-page-bg">
+          <HeaderHomePage />
+          <div className="dashboard-page-sidebar">
+            <AdminSidebar />
+          </div>
+          <div className="dashboard-page-content">
+            <AdminDashboardLayout />
+          </div>
         </div>
-        <div className="dashboard-page-content">
-          <AdminDashboardLayout />
-        </div>
-      </div>
+      ) : (
+        ""
+      )}
     </>
   );
 };

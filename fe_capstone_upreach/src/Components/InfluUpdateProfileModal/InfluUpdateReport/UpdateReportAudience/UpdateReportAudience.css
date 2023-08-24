@@ -35,36 +35,44 @@
 	background: #858585;
 }
 
+
+.update-report-audience-layout .export-btn {
+	position: absolute;
+    width: fit-content;
+    z-index: 1;
+	border-radius: 8px 8px 0 0;
+    height: 29px;
+	border: none;
+	background-color: #bdbdbd;
+}
+
+.update-report-audience-layout .export-btn:hover {
+	color: #000;
+	opacity: 0.8;
+}
+
+.update-report-audience-layout .ant-btn-default:not(:disabled):not(.ant-btn-disabled):hover {
+	color: #000;
+}
+
 .update-report-audience-layout .export-follower-btn {
-position: absolute;
-width: fit-content;
-z-index: 1;
-left: 171px;
-top: 18px;
+	left: 171px;
+	top: 20px;
 }
 
 .update-report-audience-layout .export-age-btn {
-	position: absolute;
-	width: fit-content;
-	z-index: 1;
 	left: 171px;
-	top: 384px;
-	}
+	top: 386px;
+}
 
 .update-report-audience-layout .export-gender-btn {
-	position: absolute;
-	width: fit-content;
-	z-index: 1;
-	right: 268px;
-	top: 18px;
+    right: 257px;
+    top: 20px;
 }
 
 .update-report-audience-layout .export-location-btn {
-	position: absolute;
-	width: fit-content;
-	z-index: 1;
-	right: 268px;
-	top: 384px;
+	right: 257px;
+	top: 386px;
 }
 
 .update-report-audience-layout .report-audience-bg {
@@ -139,6 +147,11 @@ top: 18px;
 	text-align: center;
 	border-radius: 8px 8px 0 0;
   }
+
+  .update-report-audience-layout .file-label:hover {
+	opacity: 0.8;
+  }
+
   .update-report-audience-layout .import-excel-follower + .file-label * {
 	pointer-events: none;
   }
