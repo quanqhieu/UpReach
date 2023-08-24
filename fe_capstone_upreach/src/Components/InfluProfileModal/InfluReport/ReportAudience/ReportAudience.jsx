@@ -1,12 +1,16 @@
 import "./ReportAudience.css";
-import { Row, Col } from "antd";
+import { Row, Col, Button } from "antd";
 import { Line, Pie, Bar } from "@ant-design/plots";
 import ApiAudienceAndJobInfluencer from "../../../../Api/ApiAudienceAndJobInfluencer";
 import React, { useState, useEffect } from "react";
 import "../../../../CSS/Theme.css";
+import { Link } from "react-router-dom";
+import { LockFilled } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 const ReportAudience = ({ influInfo, roleClient }) => {
   const [data, setData] = useState();
+  const navigate = useNavigate();
   //====================== Get Data Back End Of Audience Chart ======================
   const fetchDataForChart = async (IdInflu) => {
     try {
@@ -96,46 +100,68 @@ const ReportAudience = ({ influInfo, roleClient }) => {
   };
 
   return (
-    <div
-      className={`report-audience-layout ${
-        roleClient === "Free" ? "blur-data-to-payment" : ""
-      }`}
-    >
-      <Row gutter={[16, 16]}>
-        <Col span={12}>
-          <div className="report-audience-bg audience-follower">
-            <div className="audience-follower-chart">
-              Followers
-              <Line {...configFollower} className="follower-chart" />
-            </div>
+    <>
+      <div className={`report-audience-layout`}>
+        {roleClient !== "Free" ? (
+          ""
+        ) : (
+          <div className="upgrade-btn">
+            <Button
+              type="primary"
+              shape="round"
+              icon={<LockFilled />}
+              size={"large"}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                backgroundColor: "#000",
+              }}
+              onClick={() => {
+                navigate("/upgrade");
+              }}
+            >
+              Upgrade
+            </Button>
           </div>
-        </Col>
-        <Col span={12}>
-          <div className="report-audience-bg audience-gender">
-            <div className="audience-gender-chart">
-              Gender
-              <Pie {...configGender} className="gender-chart" />
-            </div>
-          </div>
-        </Col>
-        <Col span={12}>
-          <div className="report-audience-bg audience-age">
-            <div className="audience-age-chart">
-              Age
-              <Bar {...configAge} className="age-chart" />
-            </div>
-          </div>
-        </Col>
-        <Col span={12}>
-          <div className="report-audience-bg audience-location">
-            <div className="audience-location-chart">
-              Location
-              <Bar {...configLocation} className="location-chart" />
-            </div>
-          </div>
-        </Col>
-      </Row>
-    </div>
+        )}
+        <div className={roleClient === "Free" ? "blur-data-to-payment" : ""}>
+          <Row gutter={[16, 16]}>
+            <Col span={12}>
+              <div className="report-audience-bg audience-follower">
+                <div className="audience-follower-chart">
+                  Followers
+                  <Line {...configFollower} className="follower-chart" />
+                </div>
+              </div>
+            </Col>
+            <Col span={12}>
+              <div className="report-audience-bg audience-gender">
+                <div className="audience-gender-chart">
+                  Gender
+                  <Pie {...configGender} className="gender-chart" />
+                </div>
+              </div>
+            </Col>
+            <Col span={12}>
+              <div className="report-audience-bg audience-age">
+                <div className="audience-age-chart">
+                  Age
+                  <Bar {...configAge} className="age-chart" />
+                </div>
+              </div>
+            </Col>
+            <Col span={12}>
+              <div className="report-audience-bg audience-location">
+                <div className="audience-location-chart">
+                  Location
+                  <Bar {...configLocation} className="location-chart" />
+                </div>
+              </div>
+            </Col>
+          </Row>
+        </div>
+      </div>
+    </>
   );
 };
 

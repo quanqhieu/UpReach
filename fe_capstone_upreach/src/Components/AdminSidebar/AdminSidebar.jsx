@@ -99,6 +99,18 @@ const AdminSidebar = () => {
         />
       </div>
     ),
+    getItem(
+      <Link
+        style={{ textDecoration: "none", color: "#FFF" }}
+        to="/admin/plan-management"
+      >
+        <p>Plan Management</p>
+      </Link>,
+      "plan-management",
+      <div style={{ width: "20px", height: "20px" }}>
+        <Icon icon="tdesign:money" color="white" width="20" height="20" />
+      </div>
+    ),
   ];
   return (
     <>
@@ -120,6 +132,8 @@ const AdminSidebar = () => {
             ? "report-management"
             : currentPath?.includes("upgrade-management")
             ? "upgrade-management"
+            : currentPath?.includes("plan-management")
+            ? "plan-management"
             : "dashboard"
         }
         mode={"inline"}

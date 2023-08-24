@@ -180,7 +180,6 @@ const MyInfluencer = () => {
         Interactions: totalInteractions,
         Table: response.Table,
       };
-      console.log("aa");
       setObject(dataObject);
     } catch (error) {
       console.log("Error fetching data:", error);
@@ -190,7 +189,6 @@ const MyInfluencer = () => {
   //================================================================
   //====================== click item in list=======================
   const onClick = (e) => {
-    console.log("ee", e);
     if (e.key === "history") {
       setCheckTabListPage(false);
       setTabName(e.key);
@@ -262,6 +260,7 @@ const MyInfluencer = () => {
   useEffect(() => {
     fetchDataGetList(idAccClient);
     fetchGetRoleClient();
+    // setRoleClient("Bussiness");
   }, []);
 
   //Remove Influ out list

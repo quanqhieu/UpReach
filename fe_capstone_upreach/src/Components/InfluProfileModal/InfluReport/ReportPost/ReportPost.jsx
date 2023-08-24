@@ -2,12 +2,15 @@ import React, { useState, useEffect } from "react";
 import "./ReportPost.css";
 import JobItem from "./JobItem/JobItem";
 import ApiAudienceAndJobInfluencer from "../../../../Api/ApiAudienceAndJobInfluencer";
-import { Spin } from "antd";
+import { Spin, Button } from "antd";
 import "../../../../CSS/Theme.css";
+import { useNavigate } from "react-router-dom";
+import { LockFilled } from "@ant-design/icons";
 
 const ReportPost = ({ influInfo, roleClient }) => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState();
+  const navigate = useNavigate();
   //====================== Get Data Back End Of Audience Chart ======================
   const fetchDataForChart = async (IdInflu) => {
     try {
@@ -27,28 +30,47 @@ const ReportPost = ({ influInfo, roleClient }) => {
 
   return (
     <>
-      <div
-        className={`report-post-layout ${
-          roleClient === "Free" ? "blur-data-to-payment" : ""
-        }`}
-      >
+      <div className={`report-post-layout`}>
+        {roleClient !== "Free" ? (
+          ""
+        ) : (
+          <div className="upgrade-btn">
+            <Button
+              type="primary"
+              shape="round"
+              icon={<LockFilled />}
+              size={"large"}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                backgroundColor: "#000",
+              }}
+              onClick={() => {
+                navigate("/upgrade");
+              }}
+            >
+              Upgrade
+            </Button>
+          </div>
+        )}
         <Spin
           size="large"
           style={{ position: "fixed", top: "45%", marginLeft: "190px" }}
           spinning={loading}
         >
-          {console.log(data?.data[0]?.dataJob)}
-          {data?.data[0]?.dataJob === undefined ? (
-            <></>
-          ) : (
-            data?.data[0]?.dataJob.map((item) =>
-              item.jobId != null && item.isPublish === true ? (
-                <JobItem data={item} />
-              ) : (
-                <></>
+          <div className={roleClient === "Free" ? "blur-data-to-payment" : ""}>
+            {data?.data[0]?.dataJob === undefined ? (
+              <></>
+            ) : (
+              data?.data[0]?.dataJob.map((item) =>
+                item.jobId != null && item.isPublish === true ? (
+                  <JobItem data={item} />
+                ) : (
+                  <></>
+                )
               )
-            )
-          )}
+            )}
+          </div>
         </Spin>
       </div>
     </>
