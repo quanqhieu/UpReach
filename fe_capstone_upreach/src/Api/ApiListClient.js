@@ -20,6 +20,10 @@ const ApiListClient = {
     updatePasswordClient(data){
         const url = '/client/update-password';
         return axiosClient.post(url, data)
+    },
+    zaloPayment(data){
+        const url = '/zalopay';
+        return axiosClient.post(url, data)
     }
 }
 

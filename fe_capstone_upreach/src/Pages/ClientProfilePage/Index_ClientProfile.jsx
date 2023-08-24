@@ -15,7 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Navigate, useNavigate } from "react-router-dom";
 
 const Index_ClientProfile = () => {
- const [isSubModel, setSubModel] = useState(false);
+  const [isSubModel, setSubModel] = useState(false);
   const [isModalOpenChangePassword, setIsModalOpenChangePassword] =useState(false);
   const [message, setMessage] = useState()
   const [status, setStatus] = useState()
@@ -35,35 +35,42 @@ const Index_ClientProfile = () => {
     emailContact: '',
     clientDetail: null,
   });
+  const [formData, setFormData] = useState({
+    clientData: null,
+  });
 
+  console.log(formData)
 
   useEffect(() =>{
-    const newClient = localStorage.getItem('formData');
-    if(localStorage.getItem('user-draw-storage') !== null){
-      const oldClient = localStorage.getItem('user-draw-storage');
-      const formDataOldClientJson = JSON.parse(oldClient);
-      const data = formDataOldClientJson.state.user
-      console.log(data)
-      setFormValues(prevDetails => ({ ...prevDetails, clientDetail: data }));
-      FetchDataCheckProfile(data)
-      return
-    }
-    const formDataNewClientJson = JSON.parse(newClient);
-    setFormValues(prevDetails => ({ ...prevDetails, clientDetail: formDataNewClientJson }));
-    console.log(formDataNewClientJson)
-    FetchDataCheckProfile(formDataNewClientJson)
+    checkUpdateOrRegister();
+  },[])
+
+  useEffect(() =>{
     if(status ==='True'){
       navigate('/homepage')
     } 
   },[status])
 
+  const checkUpdateOrRegister = ()=>{
+    if(localStorage.getItem('user-draw-storage') !== null){
+      const oldClient = localStorage.getItem('user-draw-storage');
+      const formDataOldClientJson = JSON.parse(oldClient);
+      const data = formDataOldClientJson.state.user
+      setFormValues(prevDetails => ({ ...prevDetails, clientDetail: data }));
+      FetchDataCheckProfile(data)
+      return
+    }
+    const newClient = localStorage.getItem('formData');
+    const formDataNewClientJson = JSON.parse(newClient);
+    setFormValues(prevDetails => ({ ...prevDetails, clientDetail: formDataNewClientJson }));
+    FetchDataCheckProfile(formDataNewClientJson)
+  }
+
   const onFinishInsertClient = () => {
-    console.log(formValues)
     FetchInsertClientProfile(formValues)
   }
 
   const onFinishUpdateClient = () => {
-    console.log(formValues)
     FetchUpdateClientProfile(formValues)
   }
 
@@ -73,7 +80,7 @@ const Index_ClientProfile = () => {
       if(response.status === "True"){
         setCheckClientExist(true)
       }
-      console.log(response)
+      setFormData(prevDetails => ({ ...prevDetails, clientData: response.data }));
       return response;
     } catch (error) {
       setMessage(error)
@@ -224,6 +231,7 @@ const Index_ClientProfile = () => {
                 style={{
                   maxWidth: 800,
                 }}
+
               >
                 <div>
                   <Form.Item>
@@ -233,6 +241,7 @@ const Index_ClientProfile = () => {
                     fileList={fileList}
                     onPreview={handlePreview}
                     onChange={handleChange}
+                    
                   >
                     {fileList ? null : uploadButton}
                   </Upload>
@@ -253,10 +262,15 @@ const Index_ClientProfile = () => {
                         message: "Please input your Full Name!",
                       },
                     ]}
-                    name="fullname"
+                    name="fullName"
                     label="Full Name"
                   >
-                    <Input name="fullName" onChange={handleInputChange} style={{ border: "1px solid #9B9A9A" }} />
+                    <Input 
+                      defaultValue={formData?.clientData?.fullName !== undefined? formData?.clientData?.fullName: " "}
+                      name="fullName" 
+                      onChange={handleInputChange} 
+                      style={{ border: "1px solid #9B9A9A" }}
+                    />
                   </Form.Item>
                   <Form.Item
                     rules={[
@@ -285,7 +299,7 @@ const Index_ClientProfile = () => {
                         message: "Please input your phone number",
                       },
                     ]}
-                    name="phonenumber"
+                    name="phonenumber" 
                     label="Phone Number"
                   >
                     <Input name="phoneNumber" onChange={handleInputChange} style={{ border: "1px solid #9B9A9A" }} />
