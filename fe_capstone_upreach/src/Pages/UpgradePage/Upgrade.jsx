@@ -30,7 +30,7 @@ const Upgrade = () => {
     } else if (user.roleId == 3) {
       navigate("/influencer/my-report");
     } else {
-      navigate("/");
+      navigate("/login");
     }
   }, []);
 

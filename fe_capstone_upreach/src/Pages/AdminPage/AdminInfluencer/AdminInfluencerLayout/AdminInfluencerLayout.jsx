@@ -173,7 +173,7 @@ const AdminInfluencerLayout = () => {
 
   const check = async () => {
     if (editingId !== "") {
-      const row = await form.validateFields();
+      const row = await form.getFieldsValue();
       if (
         listInflu.some(
           (item) =>
@@ -347,7 +347,8 @@ const AdminInfluencerLayout = () => {
         return {
           record,
           inputType:
-            col.dataIndex === ("influencerPhone" && "influencerAge")
+            col.dataIndex === "influencerPhone" ||
+            col.dataIndex === "influencerAge"
               ? "number"
               : "text",
           dataIndex: col.dataIndex,
@@ -451,7 +452,7 @@ const AdminInfluencerLayout = () => {
                   rowClassName="editable-row"
                   pagination={{
                     onChange: cancel,
-                    pageSize: 11,
+                    pageSize: 9,
                   }}
                   size="large"
                 />

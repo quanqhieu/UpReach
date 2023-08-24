@@ -1,5 +1,5 @@
-.profile-layout {
-	width: 90%;
+.approve-profile-layout {
+	width: 395px;
 	height: 270px;
 	background-color: #fff;
 	border-radius: 15px;
@@ -7,11 +7,11 @@
 	cursor: pointer;
 }
 
-.profile-layout p {
+.approve-profile-layout p {
 	margin-bottom: 0 !important;
 }
 
-.profile-layout .profile-content-layout {
+.approve-profile-layout .profile-content-layout {
 	width: 100%;
 	height: 90px;
 	display: flex;
@@ -19,20 +19,20 @@
 	padding: 0 15px;
 }
 
-.profile-layout .approve-profile-avatar-content {
+.approve-profile-layout .approve-profile-avatar-content {
 	height: 80px;
 	display: flex;
 	align-items: flex-start;
 }
 
-.profile-layout .profile-avatar {
+.approve-profile-layout .profile-avatar {
 	width: 80px;
 	height: 80px;
 	border-radius: 50%;
 	margin-right: 10px;
 }
 
-.profile-layout .approve-profile-avatar-content .profile-content {
+.approve-profile-layout .approve-profile-avatar-content .profile-content {
 	width: fit-content;
 	height: 80px;
 	display: flex;
@@ -41,20 +41,20 @@
 	justify-content: space-evenly;
 }
 
-.profile-layout .profile-name {
+.approve-profile-layout .profile-name {
 	font-weight: 600;
 }
 
-.profile-layout .profile-location {
+.approve-profile-layout .profile-location {
 	display: flex;
 	align-items: center;
 }
 
-.profile-layout .profile-topics {
+.approve-profile-layout .profile-topics {
 	display: flex;
 }
 
-.profile-layout .profile-topic {
+.approve-profile-layout .profile-topic {
 	margin-right: 5px;
 	padding: 2px 10px;
 	width: fit-content;
@@ -63,7 +63,7 @@
 	border-radius: 20px;
 }
 
-.profile-layout .profile-socials {
+.approve-profile-layout .profile-socials {
 	width: 100%;
 	height: 40px;
 	display: flex;
@@ -73,7 +73,7 @@
 	border-top: #ccc 1px solid;
 }
 
-.profile-layout .profile-social {
+.approve-profile-layout .profile-social {
 	display: flex;
 	align-items: center;
 	justify-content: space-evenly;
@@ -81,7 +81,7 @@
 	height: 25px;
 }
 
-.profile-layout .profile-images {
+.approve-profile-layout .profile-images {
 	width: 100%;
 	height: 100px;
 	display: flex;
@@ -90,7 +90,7 @@
 	padding: 10px 15px 0;
 }
 
-.profile-layout .profile-image {
+.approve-profile-layout .profile-image {
 	width: 27%;
 	height: 100px;
 	border-radius: 20px;

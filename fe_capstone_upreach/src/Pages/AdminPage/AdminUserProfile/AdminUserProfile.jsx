@@ -17,20 +17,24 @@ const AdminUserProfile = () => {
     } else if (user.roleId == 3) {
       navigate("/influencer/my-report");
     } else {
-      navigate("/");
+      navigate("/login");
     }
   }, []);
   return (
     <>
-      <div className="user-profile-page-bg">
-        <HeaderHomePage />
-        <div className="user-profile-page-sidebar">
-          <AdminSidebar />
+      {user?.roleId == 1 ? (
+        <div className="user-profile-page-bg">
+          <HeaderHomePage />
+          <div className="user-profile-page-sidebar">
+            <AdminSidebar />
+          </div>
+          <div className="user-profile-page-content">
+            <AdminUserProfileLayout />
+          </div>
         </div>
-        <div className="user-profile-page-content">
-          <AdminUserProfileLayout />
-        </div>
-      </div>
+      ) : (
+        ""
+      )}
     </>
   );
 };

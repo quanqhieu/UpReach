@@ -1,22 +1,25 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Button, Form, Input, InputNumber } from "antd";
 import { useNavigate } from "react-router-dom";
-import "./VerifyRegisterPage.css";
+// import "./VerifyRegisterPage.css";
+import "../VerifyRegister/VerifyRegisterPage.css"
 import ApiUser from "../../Api/ApiUser"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-const VerifyRegisterPage = () => {
+const VerifyForgotPassword = () => {
 
   const navigate = useNavigate();
   const [message, setMessage] = useState()
   const [otp, setOtp] = useState(new Array(6).fill(""))
   const inputRefs = useRef([]);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    confirmPass: ''
-  });
+  const [status, setStatus] = useState()
+  const [formForgotPass,setFormForgotPass ] = useState({});
+
+  useEffect(()=>{
+    if(status === 'True'){
+      navigate('/reset-password')
+    }
+  },[status])
 
   const toastOptions = {
     position: "bottom-right",
@@ -26,26 +29,17 @@ const VerifyRegisterPage = () => {
     theme: "dark",
   }
 
-  useEffect(() => {
-    const data = localStorage.getItem('formData');
-    if (!data) {
-      navigate("/sign-up")
-    }
-    const formDataJson = JSON.parse(data);
-    setFormData(formDataJson)
-
-  }, [navigate]);
-
-  const confirmUser = async (data) => {
+  const confirmUserForgotPass = async (data) => {
     try {
-      const response = await ApiUser.conFirmUser(data);
+      const response = await ApiUser.confirmForgotPassword(data);
       console.log(response)
-
       if (response.status === "False") {
         toast.error(response.message, toastOptions)
+        setStatus(response.status)
         return false;
       }
       toast.success(response.message, toastOptions)
+      setStatus(response.status)
       return response
     } catch (error) {
       setMessage(error)
@@ -77,20 +71,8 @@ const VerifyRegisterPage = () => {
 
   const handleSubmit = async () => {
     const dataOtp = otp.join("");
-    formData.otp = '' + dataOtp
-    const result = await confirmUser(formData)
-    if (result) {
-      if (message) {
-        navigate('/verify-register')
-      }
-      if (formData.role === '2') {
-        navigate('/client-profile')
-      }
-      else if (formData.role === '3') {
-        navigate('/create-influencer-page')
-      }
-    }
-
+    formForgotPass.otp = '' + dataOtp
+    confirmUserForgotPass(formForgotPass)
   }
 
   return (
@@ -101,7 +83,7 @@ const VerifyRegisterPage = () => {
             <h2 className="form-title">Verify your email </h2>
             <div className="sub-title">
               <p>
-                We sent an email to {formData.email} Check your inbox and
+                We sent an email to your email, Please check your inbox and
                 enter the 6-digit code to verify your email.
               </p>
             </div>
@@ -148,4 +130,4 @@ const VerifyRegisterPage = () => {
   );
 };
 
-export default VerifyRegisterPage;
+export default VerifyForgotPassword;

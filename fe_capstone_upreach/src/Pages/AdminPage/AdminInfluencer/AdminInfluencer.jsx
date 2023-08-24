@@ -18,20 +18,24 @@ const AdminInfluencer = () => {
     } else if (user.roleId == 3) {
       navigate("/influencer/my-report");
     } else {
-      navigate("/");
+      navigate("/login");
     }
   }, []);
   return (
     <>
-      <div className="admin-influencer-page-bg">
-        <HeaderHomePage />
-        <div className="admin-influencer-page-sidebar">
-          <AdminSidebar />
+      {user?.roleId == 1 ? (
+        <div className="admin-influencer-page-bg">
+          <HeaderHomePage />
+          <div className="admin-influencer-page-sidebar">
+            <AdminSidebar />
+          </div>
+          <div className="admin-influencer-page-content">
+            <AdminInfluencerLayout />
+          </div>
         </div>
-        <div className="admin-influencer-page-content">
-          <AdminInfluencerLayout />
-        </div>
-      </div>
+      ) : (
+        ""
+      )}
     </>
   );
 };

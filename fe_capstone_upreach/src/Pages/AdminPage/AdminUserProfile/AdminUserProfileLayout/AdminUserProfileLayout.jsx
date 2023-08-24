@@ -32,7 +32,7 @@ const AdminUserProfileLayout = () => {
 
   const check = async () => {
     if (editingId !== "") {
-      const row = await form.validateFields();
+      const row = await form.getFieldsValue();
 
       if (
         listClient?.some(
@@ -424,7 +424,7 @@ const AdminUserProfileLayout = () => {
                   rowClassName="editable-row"
                   pagination={{
                     onChange: cancel,
-                    pageSize: 11,
+                    pageSize: 9,
                   }}
                   size="large"
                 />
