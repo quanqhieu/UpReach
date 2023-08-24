@@ -9,11 +9,12 @@ import "../../../../CSS/Theme.css";
 const ReportSocial = ({ influInfo, roleClient }) => {
   return (
     <>
-      <div
+      {/* <div
         className={`report-social-layout ${
           roleClient === "Free" ? "blur-data-to-payment" : ""
         }`}
-      >
+      > */}
+      <div className="report-social-layout">
         <div className="report-general">
           <p className="report-general-title">GENERAL</p>
           <div className="report-general-contents">
