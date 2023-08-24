@@ -25,7 +25,6 @@ const InfluUpdateProfileModal = ({
 }) => {
   const [api, contextHolder] = notification.useNotification();
 
-  console.log(oldVerInflu);
   const openNotification = (placement) => {
     api.info({
       message: `Notification about booking`,
@@ -40,7 +39,6 @@ const InfluUpdateProfileModal = ({
     setIsSaving(true);
     var dateUTC = new Date();
 
-    console.log(previewInflu);
     const formData = new FormData();
     formData.append("influ", JSON.stringify(previewInflu));
     formData.append("chart", JSON.stringify(previewChart));

@@ -190,7 +190,7 @@ const MyInfluencer = () => {
   //================================================================
   //====================== click item in list=======================
   const onClick = (e) => {
-    console.log("ee", e)
+    console.log("ee", e);
     if (e.key === "history") {
       setCheckTabListPage(false);
       setTabName(e.key);
@@ -300,7 +300,7 @@ const MyInfluencer = () => {
     } else if (user.roleId == 3) {
       navigate("/influencer/my-report");
     } else {
-      navigate("/");
+      navigate("/login");
     }
   }, []);
 
@@ -338,8 +338,8 @@ const MyInfluencer = () => {
                   flagDeleteList={flagDeleteList}
                   setFlagDeleteList={setFlagDeleteList}
                   idAccClient={idAccClient}
-                // IdList={IdList}
-                // DeleteList={DeleteList}
+                  // IdList={IdList}
+                  // DeleteList={DeleteList}
                 />
               ) : (
                 <>

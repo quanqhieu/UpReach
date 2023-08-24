@@ -1,5 +1,5 @@
 import "./UpdateReportAudience.css";
-import { Row, Col, Button } from "antd";
+import { Row, Col, Button, message } from "antd";
 import { Line, Pie, Bar } from "@ant-design/plots";
 import React from "react";
 import { ExcelRenderer } from "react-excel-renderer";
@@ -11,6 +11,7 @@ import getDataLocation from "../../mockLocationExcel";
 import XLSX from "xlsx";
 
 const UpdateReportAudience = ({ influInfo, setPreviewChart, setIsChange }) => {
+  const [messageApi, contextHolder] = message.useMessage();
   const [dataFollower, setDataFollower] = React.useState([]);
   const [dataGender, setDataGender] = React.useState([]);
   const [dataAge, setDataAge] = React.useState([]);
@@ -87,68 +88,82 @@ const UpdateReportAudience = ({ influInfo, setPreviewChart, setIsChange }) => {
   }
 
   const fileHandler = (event, chartName) => {
-    if (event?.target?.files[0]) {
-      let fileObj = event?.target?.files[0];
-      ExcelRenderer(fileObj, (err, resp) => {
-        if (err) {
-          console.log(err);
+    try {
+      if (event?.target?.files[0]) {
+        let fileObj = event?.target?.files[0];
+        console.log("fileObj", fileObj);
+
+        if (
+          fileObj.type ==
+          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        ) {
+          ExcelRenderer(fileObj, (err, resp) => {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log(fileObj.type);
+              if (chartName === "follower") {
+                const rows = resp?.rows?.slice(2, 8);
+                const data = rows.map((row) => {
+                  return {
+                    date: row[1],
+                    // date: row[1],
+                    value: row[2],
+                  };
+                });
+                setDataFollower(data);
+                setPreviewChart((prevChart) => ({
+                  ...prevChart,
+                  dataFollower: data,
+                }));
+              } else if (chartName === "gender") {
+                const rows = resp?.rows?.slice(2, 4);
+                const data = rows?.map((row) => {
+                  return {
+                    sex: row[1],
+                    value: row[2],
+                  };
+                });
+                setDataGender(data);
+                setPreviewChart((prevChart) => ({
+                  ...prevChart,
+                  dataGender: data,
+                }));
+              } else if (chartName === "age") {
+                const rows = resp?.rows?.slice(2, 6);
+                const data = rows?.map((row) => {
+                  return {
+                    age: row[1],
+                    value: row[2],
+                  };
+                });
+                setDataAge(data);
+                setPreviewChart((prevChart) => ({
+                  ...prevChart,
+                  dataAge: data,
+                }));
+              } else if (chartName === "location") {
+                const rows = resp?.rows?.slice(2, 8);
+                const data = rows?.map((row) => {
+                  return {
+                    location: row[1],
+                    value: row[2],
+                  };
+                });
+                setDataLocation(data);
+                setPreviewChart((prevChart) => ({
+                  ...prevChart,
+                  dataLocation: data,
+                }));
+              }
+            }
+          });
         } else {
-          if (chartName === "follower") {
-            const rows = resp?.rows?.slice(2, 8);
-            const data = rows.map((row) => {
-              return {
-                date: row[1],
-                // date: row[1],
-                value: row[2],
-              };
-            });
-            setDataFollower(data);
-            setPreviewChart((prevChart) => ({
-              ...prevChart,
-              dataFollower: data,
-            }));
-          } else if (chartName === "gender") {
-            const rows = resp?.rows?.slice(2, 4);
-            const data = rows?.map((row) => {
-              return {
-                sex: row[1],
-                value: row[2],
-              };
-            });
-            setDataGender(data);
-            setPreviewChart((prevChart) => ({
-              ...prevChart,
-              dataGender: data,
-            }));
-          } else if (chartName === "age") {
-            const rows = resp?.rows?.slice(2, 6);
-            const data = rows?.map((row) => {
-              return {
-                age: row[1],
-                value: row[2],
-              };
-            });
-            setDataAge(data);
-            setPreviewChart((prevChart) => ({
-              ...prevChart,
-              dataAge: data,
-            }));
-          } else if (chartName === "location") {
-            const rows = resp?.rows?.slice(2, 8);
-            const data = rows?.map((row) => {
-              return {
-                location: row[1],
-                value: row[2],
-              };
-            });
-            setDataLocation(data);
-            setPreviewChart((prevChart) => ({
-              ...prevChart,
-              dataLocation: data,
-            }));
-          }
+          messageApi.error("Import error!");
         }
-      });
+      }
+    } catch (error) {
+      messageApi.error("Import error!");
     }
   };
 
@@ -204,90 +219,104 @@ const UpdateReportAudience = ({ influInfo, setPreviewChart, setIsChange }) => {
   };
 
   return (
-    <div className="update-report-audience-layout">
-      <Button onClick={handleExportFollower} className="export-follower-btn">
-        Export
-      </Button>
-      <Button onClick={handleExportGender} className="export-gender-btn">
-        Export
-      </Button>
-      <Button onClick={handleExportAge} className="export-age-btn">
-        Export
-      </Button>
-      <Button onClick={handleExportLocation} className="export-location-btn">
-        Export
-      </Button>
-      <Row gutter={[16, 16]}>
-        <Col style={{ position: "relative" }} span={12}>
-          <input
-            type="file"
-            id="import-follower"
-            className="import-excel-follower"
-            onChange={(e) => fileHandler(e, "follower")}
-          />
-          <label className="file-label" htmlFor="import-follower">
-            Import data
-          </label>
-          <div className="report-audience-bg audience-follower">
-            <div className="audience-follower-chart">
-              Followers
-              <Line {...configFollower} className="follower-chart" />
+    <>
+      {contextHolder}
+      <div className="update-report-audience-layout">
+        <Button
+          onClick={handleExportFollower}
+          className="export-follower-btn export-btn"
+        >
+          Sample
+        </Button>
+        <Button
+          onClick={handleExportGender}
+          className="export-gender-btn export-btn"
+        >
+          Sample
+        </Button>
+        <Button onClick={handleExportAge} className="export-age-btn export-btn">
+          Sample
+        </Button>
+        <Button
+          onClick={handleExportLocation}
+          className="export-location-btn export-btn"
+        >
+          Sample
+        </Button>
+        <Row gutter={[16, 16]}>
+          <Col style={{ position: "relative" }} span={12}>
+            <input
+              type="file"
+              id="import-follower"
+              className="import-excel-follower"
+              onChange={(e) => fileHandler(e, "follower")}
+            />
+            <label className="file-label" htmlFor="import-follower">
+              Import data
+            </label>
+            <div className="report-audience-bg audience-follower">
+              <div className="audience-follower-chart">
+                Followers
+                <Line {...configFollower} className="follower-chart" />
+              </div>
             </div>
-          </div>
-        </Col>
-        <Col style={{ position: "relative" }} span={12}>
-          <input
-            type="file"
-            id="import-gender"
-            className="import-excel-follower"
-            onChange={(e) => fileHandler(e, "gender")}
-          />
-          <label className="file-label" htmlFor="import-gender">
-            Import data
-          </label>
-          <div className="report-audience-bg audience-gender">
-            <div className="audience-gender-chart">
-              Gender
-              <Pie {...configGender} className="gender-chart" />
+          </Col>
+          <Col style={{ position: "relative" }} span={12}>
+            <input
+              type="file"
+              id="import-gender"
+              className="import-excel-follower"
+              onChange={(e) => {
+                fileHandler(e, "gender");
+              }}
+            />
+            <label className="file-label" htmlFor="import-gender">
+              Import data
+            </label>
+            <div className="report-audience-bg audience-gender">
+              <div className="audience-gender-chart">
+                Gender
+                <Pie {...configGender} className="gender-chart" />
+              </div>
             </div>
-          </div>
-        </Col>
-        <Col style={{ position: "relative" }} span={12}>
-          <input
-            type="file"
-            id="import-age"
-            className="import-excel-follower"
-            onChange={(e) => fileHandler(e, "age")}
-          />
-          <label className="file-label" htmlFor="import-age">
-            Import data
-          </label>
-          <div className="report-audience-bg audience-age">
-            <div className="audience-age-chart">
-              Age
-              <Bar {...configAge} className="age-chart" />
+          </Col>
+          <Col style={{ position: "relative" }} span={12}>
+            <input
+              type="file"
+              id="import-age"
+              className="import-excel-follower"
+              onChange={(e) => fileHandler(e, "age")}
+            />
+            <label className="file-label" htmlFor="import-age">
+              Import data
+            </label>
+            <div className="report-audience-bg audience-age">
+              <div className="audience-age-chart">
+                Age
+                <Bar {...configAge} className="age-chart" />
+              </div>
             </div>
-          </div>
-        </Col>
-        <Col style={{ position: "relative" }} span={12}>
-          <input
-            type="file"
-            id="import-location"
-            className="import-excel-follower"
-            onChange={(e) => fileHandler(e, "location")}
-          />
-          <label className="file-label" htmlFor="import-location">
-            Import data
-          </label>
-          <div className="report-audience-bg audience-location">
-            <div className="audience-location-chart">
-              Location
-              <Bar {...configLocation} className="location-chart" />
+          </Col>
+          <Col style={{ position: "relative" }} span={12}>
+            <input
+              type="file"
+              id="import-location"
+              className="import-excel-follower"
+              onChange={(e) => fileHandler(e, "location")}
+            />
+            <label className="file-label" htmlFor="import-location">
+              Import data
+            </label>
+            <div className="report-audience-bg audience-location">
+              <div className="audience-location-chart">
+                Location
+                <Bar {...configLocation} className="location-chart" />
+              </div>
             </div>
-          </div>
-        </Col>
-      </Row>
-    </div>
+          </Col>
+        </Row>
+      </div>
+    </>
   );
 };
 

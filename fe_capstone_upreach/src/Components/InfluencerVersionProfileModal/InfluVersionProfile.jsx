@@ -4,20 +4,27 @@ import InfluImage from "./InfluImage/VersionInfluImage";
 import InfluReport from "./InfluReport/VersionInfluReport";
 import React from "react";
 import axios from "axios";
+import { Spin } from "antd";
+
 const InfluVersionProfile = ({ profileInflu, profileSideBar }) => {
   const [dataReportVersion, setDataReportVersion] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
+    setIsLoading(true);
     axios
-      .post("http://localhost:4000/api/influ/data-version", {
+      .post("http://localhost:4000/api/influ/data-versionn", {
         influencerId: profileInflu?.influencerId,
       })
       .then((response) => {
-        const info = response?.data?.data[0];
+        const info = response?.data?.data?.at(0);
         setDataReportVersion(info);
       })
       .catch((error) => {
         console.error("Error while fetching profile information:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, [profileInflu]);
 
