@@ -21,6 +21,10 @@ const ApiListClient = {
         const url = '/client/update-password';
         return axiosClient.post(url, data)
     },
+    zaloPayment(data){
+        const url = '/zalopay';
+        return axiosClient.post(url, data)
+    },
     addInflueToBookingInClient(_idClient, _idInflue) {
         const url = '/client/addInflueToBooking';
         return axiosClient.post(url, { _idClient: _idClient, _idInflue: _idInflue })

@@ -23,7 +23,7 @@ const Index_InfluencerProfile = () => {
   const [previewImage, setPreviewImage] = useState('');
   const [previewTitle, setPreviewTitle] = useState('');
   const [fileList, setFileList] = useState()
-
+  const [form] = Form.useForm();
   const [formValues, setFormValues] = useState({
     image: '',
     fullName: '',
@@ -38,7 +38,6 @@ const Index_InfluencerProfile = () => {
     phoneContact: "",
     influencerDetail: null,
   });
-
   function handleClickShowDialogChangePassword() {
     setIsModalOpenChangePassword(true);
   }
@@ -46,8 +45,26 @@ const Index_InfluencerProfile = () => {
     const influencerData = localStorage.getItem('user-draw-storage');
     const formDataInfluencer = JSON.parse(influencerData);
     const data = formDataInfluencer.state.user
-    setFormValues(prevDetails => ({ ...prevDetails, influencerDetail: data }));
+    
+    FetchDataForInfluencer(data)
   },[])
+  console.log(formValues)
+  useEffect(() =>{
+    form.setFieldsValue({
+      image: formValues?.influencerDetail?.data?.Avatar,
+    fullName: formValues?.influencerDetail?.data?.influencerfullName,
+    nickName: formValues?.influencerDetail?.data?.influencerNickName,
+    location: formValues?.influencerDetail?.data?.influencerAddress,
+    gender: formValues?.influencerDetail?.data?.influencerGender,
+    age: formValues?.influencerDetail?.data?.influencerAge,
+    bio:formValues?.influencerDetail?.data?.influencerBio,
+    influencerType: formValues?.influencerDetail?.data?.influencerTypeName,
+    relationship: formValues?.influencerDetail?.data?.influencerRelationship,
+    emailContact: formValues?.influencerDetail?.data?.influencerEmail,
+    phoneContact: formValues?.influencerDetail?.data?.influencerPhone,
+      }
+    )
+  },[formValues])
   const toastOptions = {
     position: "bottom-right",
     autoClose: 8000,
@@ -88,6 +105,7 @@ const Index_InfluencerProfile = () => {
         console.log(response)
         return response;
       }
+      
       toast.success(response.message, toastOptions)
       setStatus(response.status)
       console.log(response)
@@ -97,6 +115,26 @@ const Index_InfluencerProfile = () => {
       console.log(error);
     }
   };
+
+  const FetchDataForInfluencer = async (data) =>{
+    try {
+      const response = await ApiInfluencer.getDataInfluencer(data);
+      if(response.status === "False"){
+        toast.error(response.message, toastOptions)
+        setStatus(response.status)
+        console.log(response)
+        return response;
+      }
+      setFormValues(prevDetails => ({ ...prevDetails, influencerDetail: response }));
+      toast.success(response.message, toastOptions)
+      setStatus(response.status)
+      console.log(response)
+      return response;
+    } catch (error) {
+      setMessage(error)
+      console.log(error);
+    }
+  }
 
   const items = [
     {
@@ -178,6 +216,7 @@ const Index_InfluencerProfile = () => {
           <Col span={16} style={{ borderLeft: "1px solid black" }}>
             <div>
               <Form
+              form={form}
                 className="client-form"
                 name="validateOnly"
                 layout="vertical"
@@ -228,7 +267,7 @@ const Index_InfluencerProfile = () => {
                     <Input name="fullName" onChange={handleInputChange} style={{ border: "1px solid #9B9A9A" }} />
                   </Form.Item>
                   <Form.Item
-                name="nickname"
+                name="nickName"
                 className="information-btn"
                 rules={[
                   {
@@ -286,7 +325,7 @@ const Index_InfluencerProfile = () => {
                 <InputNumber name="age" onChange={(value) => handleInputNumberChange(value, 'age')} placeholder="Age" />
               </Form.Item>
               <Form.Item
-                name="intro"
+                name="bio"
                 className="information-btn"
                 rules={[
                   {
@@ -303,7 +342,7 @@ const Index_InfluencerProfile = () => {
                 />
               </Form.Item>
               <Form.Item
-                name="typeId"
+                name="influencerType"
                 className="information-btn"
                 rules={[
                   {
@@ -357,7 +396,7 @@ const Index_InfluencerProfile = () => {
                   />
                 </Form.Item>
                 <Form.Item
-                  name="phone"
+                  name="phoneContact"
                   rules={[
                     {
                       min: 10,

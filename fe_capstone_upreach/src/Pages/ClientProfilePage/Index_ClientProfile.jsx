@@ -26,16 +26,17 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 const Index_ClientProfile = () => {
   const [isSubModel, setSubModel] = useState(false);
-  const [isModalOpenChangePassword, setIsModalOpenChangePassword] =
-    useState(false);
-  const [message, setMessage] = useState();
-  const [status, setStatus] = useState();
-  const navigate = useNavigate();
-
+  const [isModalOpenChangePassword, setIsModalOpenChangePassword] =useState(false);
+  const [message, setMessage] = useState()
+  const [status, setStatus] = useState()
+  const navigate = useNavigate(); 
+  const [form] = Form.useForm();
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState();
+  const [fileList, setFileList] = useState([{
+    
+  }]);
   const [checkClientExist, setCheckClientExist] = useState(false);
   const [formValues, setFormValues] = useState({
     image: "",
@@ -46,47 +47,66 @@ const Index_ClientProfile = () => {
     emailContact: "",
     clientDetail: null,
   });
+  const [formData, setFormData] = useState({
+    clientData: null,
+  });
 
-  useEffect(() => {
-    const newClient = localStorage.getItem("formData");
-    if (localStorage.getItem("user-draw-storage") !== null) {
-      const oldClient = localStorage.getItem("user-draw-storage");
+  useEffect(() =>{
+    checkUpdateOrRegister();
+  },[])
+console.log(formData)
+  useEffect(() =>{
+    form.setFieldsValue({
+        image: formData?.clientData?.image,
+        fullName: formData?.clientData?.fullName,
+        brandName: formData?.clientData?.brand,
+        phoneNumber: formData?.clientData?.phone,
+        location: formData?.clientData?.address,
+        emailContact:formData?.clientData?.emailContact,
+      }
+    )
+  },[formData])
+
+  useEffect(() =>{
+    if(status ==='True'){
+      navigate('/homepage')
+    } 
+  },[status])
+
+  const checkUpdateOrRegister = ()=>{
+    
+    if(localStorage.getItem('user-draw-storage') !== null){
+      const oldClient = localStorage.getItem('user-draw-storage');
       const formDataOldClientJson = JSON.parse(oldClient);
-      const data = formDataOldClientJson.state.user;
-      console.log(data);
-      setFormValues((prevDetails) => ({ ...prevDetails, clientDetail: data }));
-      FetchDataCheckProfile(data);
-      return;
+      const data = formDataOldClientJson.state.user
+      setFormValues(prevDetails => ({ ...prevDetails, clientDetail: data }));
+      FetchDataCheckProfile(data)
+      return
     }
+    const newClient = localStorage.getItem('formData');
     const formDataNewClientJson = JSON.parse(newClient);
-    setFormValues((prevDetails) => ({
-      ...prevDetails,
-      clientDetail: formDataNewClientJson,
-    }));
-    console.log(formDataNewClientJson);
-    FetchDataCheckProfile(formDataNewClientJson);
-    if (status === "True") {
-      navigate("/homepage");
-    }
-  }, [status]);
+    setFormValues(prevDetails => ({ ...prevDetails, clientDetail: formDataNewClientJson }));
+    FetchDataCheckProfile(formDataNewClientJson)
+  }
 
   const onFinishInsertClient = () => {
-    console.log(formValues);
-    FetchInsertClientProfile(formValues);
-  };
+    FetchInsertClientProfile(formValues)
+  }
 
   const onFinishUpdateClient = () => {
-    console.log(formValues);
-    FetchUpdateClientProfile(formValues);
-  };
+    FetchUpdateClientProfile(formValues)
+  }
 
   const FetchDataCheckProfile = async (data) => {
     try {
+      console.log(data)
       const response = await ApiListClient.checkClientExisted(data);
+      console.log(response)
       if (response.status === "True") {
         setCheckClientExist(true);
+        setFormData(prevDetails => ({ ...prevDetails, clientData: response.data }));
       }
-      console.log(response);
+      
       return response;
     } catch (error) {
       setMessage(error);
@@ -137,6 +157,7 @@ const Index_ClientProfile = () => {
       [name]: value,
     });
   };
+
   const updateImageValue = (newValue) => {
     setFormValues({
       ...formValues, // Sao chép tất cả các giá trị hiện tại của formValues
@@ -167,6 +188,7 @@ const Index_ClientProfile = () => {
         style={{
           marginTop: 8,
         }}
+        name = "image"
       >
         Upload
       </div>
@@ -212,6 +234,7 @@ const Index_ClientProfile = () => {
       reader.onerror = (error) => reject(error);
     });
 
+console.log(checkClientExist)
   return (
     <Row style={{ marginTop: "4%" }}>
       <Col span={6}>
@@ -228,6 +251,7 @@ const Index_ClientProfile = () => {
                 onFinish={
                   checkClientExist ? onFinishUpdateClient : onFinishInsertClient
                 }
+                form={form}
                 name="validateOnly"
                 layout="vertical"
                 autoComplete="off"
@@ -240,6 +264,7 @@ const Index_ClientProfile = () => {
                 style={{
                   maxWidth: 800,
                 }}
+
               >
                 <div>
                   <Form.Item>
@@ -249,6 +274,7 @@ const Index_ClientProfile = () => {
                       fileList={fileList}
                       onPreview={handlePreview}
                       onChange={handleChange}
+                      name = "image"
                     >
                       {fileList ? null : uploadButton}
                     </Upload>
@@ -274,12 +300,12 @@ const Index_ClientProfile = () => {
                         message: "Please input your Full Name!",
                       },
                     ]}
-                    name="fullname"
+                    name="fullName"
                     label="Full Name"
                   >
                     <Input
-                      name="fullName"
-                      onChange={handleInputChange}
+                      name="fullName" 
+                      onChange={handleInputChange} 
                       style={{ border: "1px solid #9B9A9A" }}
                     />
                   </Form.Item>
@@ -290,7 +316,7 @@ const Index_ClientProfile = () => {
                         message: "Please input your Brand Name!",
                       },
                     ]}
-                    name="brandname"
+                    name="brandName"
                     label="Brand Name"
                   >
                     <Input
@@ -322,7 +348,7 @@ const Index_ClientProfile = () => {
                         message: "Please input your phone number",
                       },
                     ]}
-                    name="phonenumber"
+                    name="phoneNumber"
                     label="Phone Number"
                   >
                     <Input
