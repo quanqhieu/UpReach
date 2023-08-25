@@ -30,7 +30,7 @@ const Index_ClientProfile = () => {
   const [message, setMessage] = useState()
   const [status, setStatus] = useState()
   const navigate = useNavigate(); 
-  
+  const [form] = Form.useForm();
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
@@ -49,11 +49,21 @@ const Index_ClientProfile = () => {
     clientData: null,
   });
 
-  console.log(formData)
-
   useEffect(() =>{
     checkUpdateOrRegister();
   },[])
+console.log(formData)
+  useEffect(() =>{
+    form.setFieldsValue({
+      image: formData?.clientData?.image,
+      fullName: formData?.clientData?.fullName,
+      brandName: formData?.clientData?.brandName,
+      phoneNumber: formData?.clientData?.phoneNumber,
+      location: formData?.clientData?.location,
+      emailContact:formData?.clientData?.emailContact,
+    }
+    )
+  },[formData])
 
   useEffect(() =>{
     if(status ==='True'){
@@ -62,7 +72,9 @@ const Index_ClientProfile = () => {
   },[status])
 
   const checkUpdateOrRegister = ()=>{
+    
     if(localStorage.getItem('user-draw-storage') !== null){
+      console.log(123123)
       const oldClient = localStorage.getItem('user-draw-storage');
       const formDataOldClientJson = JSON.parse(oldClient);
       const data = formDataOldClientJson.state.user
@@ -70,6 +82,7 @@ const Index_ClientProfile = () => {
       FetchDataCheckProfile(data)
       return
     }
+    console.log(456456456)
     const newClient = localStorage.getItem('formData');
     const formDataNewClientJson = JSON.parse(newClient);
     setFormValues(prevDetails => ({ ...prevDetails, clientDetail: formDataNewClientJson }));
@@ -86,11 +99,14 @@ const Index_ClientProfile = () => {
 
   const FetchDataCheckProfile = async (data) => {
     try {
+      console.log(data)
       const response = await ApiListClient.checkClientExisted(data);
+      console.log(response)
       if (response.status === "True") {
         setCheckClientExist(true);
+        setFormData(prevDetails => ({ ...prevDetails, clientData: response.data }));
       }
-      setFormData(prevDetails => ({ ...prevDetails, clientData: response.data }));
+      
       return response;
     } catch (error) {
       setMessage(error);
@@ -141,6 +157,7 @@ const Index_ClientProfile = () => {
       [name]: value,
     });
   };
+
   const updateImageValue = (newValue) => {
     setFormValues({
       ...formValues, // Sao chép tất cả các giá trị hiện tại của formValues
@@ -216,6 +233,7 @@ const Index_ClientProfile = () => {
       reader.onerror = (error) => reject(error);
     });
 
+console.log(checkClientExist)
   return (
     <Row style={{ marginTop: "4%" }}>
       <Col span={6}>
@@ -232,6 +250,7 @@ const Index_ClientProfile = () => {
                 onFinish={
                   checkClientExist ? onFinishUpdateClient : onFinishInsertClient
                 }
+                form={form}
                 name="validateOnly"
                 layout="vertical"
                 autoComplete="off"
@@ -295,7 +314,7 @@ const Index_ClientProfile = () => {
                         message: "Please input your Brand Name!",
                       },
                     ]}
-                    name="brandname"
+                    name="brandName"
                     label="Brand Name"
                   >
                     <Input
@@ -327,7 +346,7 @@ const Index_ClientProfile = () => {
                         message: "Please input your phone number",
                       },
                     ]}
-                    name="phonenumber" 
+                    name="phoneNumber"
                     label="Phone Number"
                   >
                     <Input
