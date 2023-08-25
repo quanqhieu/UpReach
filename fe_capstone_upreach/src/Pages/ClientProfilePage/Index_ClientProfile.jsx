@@ -34,7 +34,9 @@ const Index_ClientProfile = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState();
+  const [fileList, setFileList] = useState([{
+    
+  }]);
   const [checkClientExist, setCheckClientExist] = useState(false);
   const [formValues, setFormValues] = useState({
     image: "",
@@ -55,13 +57,13 @@ const Index_ClientProfile = () => {
 console.log(formData)
   useEffect(() =>{
     form.setFieldsValue({
-      image: formData?.clientData?.image,
-      fullName: formData?.clientData?.fullName,
-      brandName: formData?.clientData?.brandName,
-      phoneNumber: formData?.clientData?.phoneNumber,
-      location: formData?.clientData?.location,
-      emailContact:formData?.clientData?.emailContact,
-    }
+        image: formData?.clientData?.image,
+        fullName: formData?.clientData?.fullName,
+        brandName: formData?.clientData?.brand,
+        phoneNumber: formData?.clientData?.phone,
+        location: formData?.clientData?.address,
+        emailContact:formData?.clientData?.emailContact,
+      }
     )
   },[formData])
 
@@ -74,7 +76,6 @@ console.log(formData)
   const checkUpdateOrRegister = ()=>{
     
     if(localStorage.getItem('user-draw-storage') !== null){
-      console.log(123123)
       const oldClient = localStorage.getItem('user-draw-storage');
       const formDataOldClientJson = JSON.parse(oldClient);
       const data = formDataOldClientJson.state.user
@@ -82,7 +83,6 @@ console.log(formData)
       FetchDataCheckProfile(data)
       return
     }
-    console.log(456456456)
     const newClient = localStorage.getItem('formData');
     const formDataNewClientJson = JSON.parse(newClient);
     setFormValues(prevDetails => ({ ...prevDetails, clientDetail: formDataNewClientJson }));
@@ -188,6 +188,7 @@ console.log(formData)
         style={{
           marginTop: 8,
         }}
+        name = "image"
       >
         Upload
       </div>
@@ -273,6 +274,7 @@ console.log(checkClientExist)
                       fileList={fileList}
                       onPreview={handlePreview}
                       onChange={handleChange}
+                      name = "image"
                     >
                       {fileList ? null : uploadButton}
                     </Upload>
