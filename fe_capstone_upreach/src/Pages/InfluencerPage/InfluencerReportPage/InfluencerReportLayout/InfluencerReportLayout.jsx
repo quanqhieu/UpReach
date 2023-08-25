@@ -402,11 +402,11 @@ const InfluencerReportLayout = () => {
             text="Update Now"
             icon={<IconArrow />}
             onClick={() => {
-              if (isAllowEdit || !oldVerInflu.dateEdit) {
-                handleOpenModal();
-              } else {
-                messageApi.error("You can not update report now!");
-              }
+              // if (isAllowEdit || !oldVerInflu.dateEdit) {
+              handleOpenModal();
+              // } else {
+              //   messageApi.error("You can not update report now!");
+              // }
             }}
           />
         </div>

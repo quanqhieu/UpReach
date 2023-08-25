@@ -4,7 +4,7 @@ import React from "react";
 import { useEffect } from "react";
 import ApiListClient from "../../Api/ApiListClient";
 import { useState } from "react";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 const ChangePassword = ({
   isModalOpenChangePassword,
   setIsModalOpenChangePassword,
@@ -13,36 +13,33 @@ const ChangePassword = ({
     setIsModalOpenChangePassword(false);
   };
 
-  const [status, setStatus] = useState()
-  const [message, setMessage] = useState()
+  const [status, setStatus] = useState();
+  const [message, setMessage] = useState();
 
-  
   const [formValues, setFormValues] = useState({
-      oldPassword: '',
-      newPassword: '',
-      clientDetail: null,
+    oldPassword: "",
+    newPassword: "",
+    userDetail: null,
   });
-  useEffect(() =>{
-    const oldClient = localStorage.getItem('user-draw-storage');
+  useEffect(() => {
+    const oldClient = localStorage.getItem("user-draw-storage");
     const formDataOldClientJson = JSON.parse(oldClient);
-    const data = formDataOldClientJson.state.user
-    setFormValues(prevDetails => ({ ...prevDetails, clientDetail: data }));
-   
-  },[status]);
+    const data = formDataOldClientJson.state.user;
+    setFormValues((prevDetails) => ({ ...prevDetails, userDetail: data }));
+  }, [status]);
 
-  useEffect(() =>{
-    if(status === "True"){
-      console.log("Change Password ! ")
-      FetchDataUpdatePassword(formValues)
+  useEffect(() => {
+    if (status === "True") {
+      console.log("Change Password ! ");
+      FetchDataUpdatePassword(formValues);
     }
-  },[status])
-  
+  }, [status]);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValues({
       ...formValues,
-      [name]: value
-      
+      [name]: value,
     });
   };
 
@@ -52,50 +49,49 @@ const ChangePassword = ({
     pauseOnFocusLoss: true,
     draggable: true,
     theme: "dark",
-  }
-  const onFinishChangePassword = async () =>{
-    console.log(formValues)
-    await FetchDataCheckPassword(formValues)
-  }
-  
+  };
+  const onFinishChangePassword = async () => {
+    console.log(formValues);
+    await FetchDataCheckPassword(formValues);
+  };
 
   const FetchDataCheckPassword = async (data) => {
     try {
       const response = await ApiListClient.checkPasswordClient(data);
-      if(response.status === "False"){
-        toast.error(response.message, toastOptions)
-        setStatus(response.status)
-        console.log(response)
+      if (response.status === "False") {
+        toast.error(response.message, toastOptions);
+        setStatus(response.status);
+        console.log(response);
         return response;
       }
-      toast.success(response.message, toastOptions)
-      setStatus(response.status)
-      console.log(response)
+      toast.success(response.message, toastOptions);
+      setStatus(response.status);
+      console.log(response);
       return response;
     } catch (error) {
-      setMessage(error)
+      setMessage(error);
       console.log(error);
     }
   };
 
-  const FetchDataUpdatePassword = async (data) =>{
+  const FetchDataUpdatePassword = async (data) => {
     try {
       const response = await ApiListClient.updatePasswordClient(data);
-      if(response.status === "False"){
-        toast.error(response.message, toastOptions)
-        setStatus(response.status)
-        console.log(response)
+      if (response.status === "False") {
+        toast.error(response.message, toastOptions);
+        setStatus(response.status);
+        console.log(response);
         return response;
       }
-      toast.success(response.message, toastOptions)
-      setStatus(response.status)
-      console.log(response)
+      toast.success(response.message, toastOptions);
+      setStatus(response.status);
+      console.log(response);
       return response;
     } catch (error) {
-      setMessage(error)
+      setMessage(error);
       console.log(error);
     }
-  }
+  };
 
   return (
     <>
@@ -116,9 +112,9 @@ const ChangePassword = ({
             autoComplete="off"
           >
             <div>
-            <Form.Item name="oldpassword">
+              <Form.Item name="oldpassword">
                 <Input
-                  name = "oldPassword"
+                  name="oldPassword"
                   type="password"
                   className="btn_input"
                   style={{ border: "1px solid #9B9A9A" }}
@@ -126,12 +122,12 @@ const ChangePassword = ({
                   onChange={handleInputChange}
                 />
               </Form.Item>
-              <Form.Item name="newPassword"
-              
-              rules={[
-                { required: true, message: "Please input your password!" },
-                { min: 8, message: "Enter as least 8 characters" },
-              ]}
+              <Form.Item
+                name="newPassword"
+                rules={[
+                  { required: true, message: "Please input your password!" },
+                  { min: 8, message: "Enter as least 8 characters" },
+                ]}
               >
                 <Input
                   name="newPassword"
@@ -142,7 +138,8 @@ const ChangePassword = ({
                   placeholder="Enter New Password"
                 />
               </Form.Item>
-              <Form.Item name="confirmNewPassword"
+              <Form.Item
+                name="confirmNewPassword"
                 rules={[
                   {
                     required: true,
@@ -173,7 +170,10 @@ const ChangePassword = ({
             </div>
             <div className="btn-button">
               <FormItem>
-                <Button onClick={onFinishChangePassword} className="btn_verification">
+                <Button
+                  onClick={onFinishChangePassword}
+                  className="btn_verification"
+                >
                   Change Password
                 </Button>
               </FormItem>
