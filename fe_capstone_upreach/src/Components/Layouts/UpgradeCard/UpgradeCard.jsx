@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import "./UpgradeCard.css";
-// import { ReactComponent as Facebook } from "../../../Assets/Icon/Facebook.svg";
-// import { ReactComponent as Instagram } from "../../../Assets/Icon/Instagram.svg";
-// import { ReactComponent as Youtube } from "../../../Assets/Icon/Youtube.svg";
-// import { ReactComponent as Tiktok } from "../../../Assets/Icon/Tiktok.svg";
-// import { ReactComponent as Question } from "../../../Assets/Icon/QuestionIcon.svg";
+import "./UpgradeCard.css";
+import { ReactComponent as Facebook } from "../../../Assets/Icon/Facebook.svg";
+import { ReactComponent as Instagram } from "../../../Assets/Icon/Instagram.svg";
+import { ReactComponent as Youtube } from "../../../Assets/Icon/Youtube.svg";
+import { ReactComponent as Tiktok } from "../../../Assets/Icon/Tiktok.svg";
+import { ReactComponent as Question } from "../../../Assets/Icon/QuestionIcon.svg";
 import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
 const UpgradeCard = ({ upgradeCards }) => {
@@ -20,7 +20,7 @@ const UpgradeCard = ({ upgradeCards }) => {
           <div className="upgrade-card-tag-socials">
             <div className="upgrade-card-tag">{upgradeCards?.tag}</div>
             <div className="upgrade-card-socials">
-              {/* <div className="upgrade-card-social">
+              <div className="upgrade-card-social">
                 <Facebook />
               </div>
               <div className="upgrade-card-social">
@@ -31,7 +31,7 @@ const UpgradeCard = ({ upgradeCards }) => {
               </div>
               <div className="upgrade-card-social">
                 <Tiktok />
-              </div> */}
+              </div>
             </div>
           </div>
           <div className="upgrade-card-cost">
@@ -66,7 +66,7 @@ const UpgradeCard = ({ upgradeCards }) => {
                   {upgradeCards?.sub1[1]}
                 </span>
               </div>
-              {/* <Question />
+              <Question />
             </div>
 
             <div className="upgrade-card-content-line-item">
@@ -166,7 +166,7 @@ const UpgradeCard = ({ upgradeCards }) => {
                   {upgradeCards?.sub11[1]}
                 </span>
               </div>
-              <Question /> */}
+              <Question />
             </div>
           </div>
         </div>
