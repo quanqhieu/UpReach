@@ -132,8 +132,6 @@ const AdminSidebar = () => {
             ? "report-management"
             : currentPath?.includes("upgrade-management")
             ? "upgrade-management"
-            : currentPath?.includes("plan-management")
-            ? "plan-management"
             : "dashboard"
         }
         mode={"inline"}

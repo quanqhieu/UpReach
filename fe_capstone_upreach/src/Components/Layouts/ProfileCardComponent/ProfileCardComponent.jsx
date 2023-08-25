@@ -35,11 +35,11 @@ const ProfileCardComponent = ({ profileInflu }) => {
                 <Location style={{ marginRight: "8px" }} />
                 <p>{profileInflu?.influencerAddress}</p>
               </div>
-              <div className="profile-topics">
-                {profileInflu?.influencerContentTopicName?.length === 0 ? (
-                  <></>
-                ) : (
-                  profileInflu?.influencerContentTopicName
+              {profileInflu?.influencerContentTopicName?.length === 0 ? (
+                <></>
+              ) : (
+                <div className="profile-topics">
+                  {profileInflu?.influencerContentTopicName
                     ?.slice(0, 2)
                     ?.map((topic, index) => (
                       <div key={index} className="profile-topic">
@@ -51,14 +51,12 @@ const ProfileCardComponent = ({ profileInflu }) => {
                           </div>
                         </Tooltip>
                       </div>
-                    ))
-                )}
-              </div>
+                    ))}
+                </div>
+              )}
             </div>
           </div>
-          <div className="profile-add-list">
-            <Addlist />
-          </div>
+          <div className="profile-add-list">{/* <Addlist /> */}</div>
         </div>
         <div className="profile-socials">
           <div className="profile-social">

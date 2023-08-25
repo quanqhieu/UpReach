@@ -309,8 +309,8 @@ const MyInfluencer = () => {
       {user?.roleId == 2 ? (
         <div className="coverMain">
           <HeaderHomepage />
-          <div className="row pt-5">
-            <div className="col-2 pt-2 menuList padding-0">
+          <div className="row padding-top-60">
+            <div className="col-2 pt-3 menuList padding-0">
               <Menu
                 onClick={onClick}
                 className="menu"
