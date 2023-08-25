@@ -47,8 +47,9 @@
     position: absolute;
     right: 60px;
     bottom: -8px;
+    display: none;
 }
 
 .admin-top-income-bg .admin-top-income-contents .ant-table-wrapper .ant-table-thead>tr>th,.admin-top-income-bg .admin-top-income-contents .ant-table-wrapper .ant-table-tbody>tr>th,.admin-top-income-bg .admin-top-income-contents .ant-table-wrapper .ant-table-tbody>tr>td,.admin-top-income-bg .admin-top-income-contents .ant-table-wrapper tfoot>tr>th,.admin-top-income-bg .admin-top-income-contents .ant-table-wrapper tfoot>tr>td {
-    padding: 9px;
+    padding: 11px;
 }

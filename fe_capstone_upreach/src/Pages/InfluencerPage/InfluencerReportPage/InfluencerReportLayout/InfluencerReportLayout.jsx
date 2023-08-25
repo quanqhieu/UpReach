@@ -126,7 +126,7 @@ const InfluencerReportLayout = () => {
   // }
 
   function timeLeft(storedTime) {
-    console.log(storedTime);
+    // console.log(storedTime);
     const currentTime = new Date();
     const currentMonth = currentTime.getMonth();
     const currentYear = currentTime.getFullYear();
@@ -160,7 +160,6 @@ const InfluencerReportLayout = () => {
         return timeLeft(localStorage.getItem("editDate"));
       } else return 7;
     });
-    setIsLoading(true);
     setIsAllowEdit(is7DaysOrMoreAgo(localStorage.getItem("editDate")));
   };
 
@@ -259,12 +258,20 @@ const InfluencerReportLayout = () => {
       })
       .finally(() => {
         setIsChange(false);
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 1000);
       });
   }, [force]);
   React.useEffect(() => {
-    const editDate = new Date(oldVerInflu.dateEdit);
-    localStorage.setItem("editDate", editDate);
-  }, [oldVerInflu]);
+    if (oldVerInflu?.isPublish) {
+      const editDate = new Date(previewInflu.dateEdit);
+      localStorage.setItem("editDate", editDate);
+    } else {
+      const editDate = new Date(oldVerInflu.dateEdit);
+      localStorage.setItem("editDate", editDate);
+    }
+  }, [oldVerInflu, previewInflu]);
   // React.useEffect(() => {
   //   setIsLoading(true);
 
@@ -373,16 +380,16 @@ const InfluencerReportLayout = () => {
         <div className="update-block">
           <Progress
             percent={
-              !oldVerInflu.dateEdit
+              !oldVerInflu?.dateEdit
                 ? 100
                 : isLoadVersion
                 ? 0
                 : (waitedDate / 7) * 100
             }
             format={() => {
-              if (isLoadVersion) {
+              if (isLoading) {
                 return <Spin indicator={antIcon} />;
-              } else if (waitedDate >= 7 || !oldVerInflu.dateEdit) {
+              } else if (waitedDate >= 7 || !oldVerInflu?.dateEdit) {
                 return `Ready to update`;
               } else return `${waitedDate} Days`;
             }}
@@ -401,6 +408,7 @@ const InfluencerReportLayout = () => {
             className="update-btn"
             text="Update Now"
             icon={<IconArrow />}
+            disabled={isLoading}
             onClick={() => {
               if (isAllowEdit || !oldVerInflu.dateEdit) {
                 handleOpenModal();
@@ -412,7 +420,7 @@ const InfluencerReportLayout = () => {
         </div>
 
         <div className="influencer-report-list">
-          <Spin tip="Saving" size="large" spinning={isLoadVersion}>
+          <Spin tip="Loading" size="large" spinning={isLoadVersion}>
             <List
               grid={{
                 xs: 1,

@@ -56,9 +56,7 @@ const InfluSideBar = ({ influInfo }) => {
   const [idAccClient, setIdAccClient] = useState("");
   const navigate = useNavigate();
   const [roleClient, setRoleClient] = useState("Free");
-
   const [isEnableAddBtn, setIsEnableAddBtn] = useState(true);
-
   const [valueRate, setValueRate] = React.useState(3.7);
 
   // coundown popup success
@@ -250,27 +248,26 @@ const InfluSideBar = ({ influInfo }) => {
                     value={listSelected}
                   >
                     <Row>
-                      {roleClient === "Free" && listInfluencer?.length > 0
-                        ? listInfluencer[0].map((item, index) => (
-                            <RenderListCheckbox
-                              key={index}
-                              valueCheckbox={item.ClientLists_ID}
-                              titleCheckbox={item.Name_list}
-                              status={item.Status}
-                              influInfo={influInfo}
-                              roleClient={roleClient}
-                            />
-                          ))
-                        : listInfluencer?.map((item, index) => (
-                            <RenderListCheckbox
-                              key={index}
-                              valueCheckbox={item.ClientLists_ID}
-                              titleCheckbox={item.Name_list}
-                              status={item.Status}
-                              influInfo={influInfo}
-                              roleClient={roleClient}
-                            />
-                          ))}
+                      {roleClient === "Free" && listInfluencer?.length > 0 ? (
+                        <RenderListCheckbox
+                          valueCheckbox={listInfluencer[0].ClientLists_ID}
+                          titleCheckbox={listInfluencer[0].Name_list}
+                          status={listInfluencer[0].Status}
+                          influInfo={influInfo}
+                          roleClient={roleClient}
+                        />
+                      ) : (
+                        listInfluencer?.map((item, index) => (
+                          <RenderListCheckbox
+                            key={index}
+                            valueCheckbox={item.ClientLists_ID}
+                            titleCheckbox={item.Name_list}
+                            status={item.Status}
+                            influInfo={influInfo}
+                            roleClient={roleClient}
+                          />
+                        ))
+                      )}
                     </Row>
                   </Checkbox.Group>
                   <Button
@@ -368,11 +365,7 @@ const InfluSideBar = ({ influInfo }) => {
         <div className="influ-side-bar-footer">
           <div className="footer-content">
             <p className="profile-contact">Contact information</p>
-            <div
-              className={`contact-info ${
-                roleClient === "Free" ? "blur-data-to-payment" : ""
-              }`}
-            >
+            <div className={`contact-info`}>
               {roleClient !== "Free" ? (
                 ""
               ) : (
@@ -397,17 +390,17 @@ const InfluSideBar = ({ influInfo }) => {
               )}
 
               <div
-                className={
-                  isUpgraded ? "contact-email" : "contact-email lock-info"
-                }
+                className={`contact-email ${
+                  roleClient === "Free" ? "blur-data-to-payment" : ""
+                }`}
               >
                 <MailFilled style={{ marginRight: "8px" }} />
                 <p className="contact-text">{influInfo?.influencerEmail}</p>
               </div>
               <div
-                className={
-                  isUpgraded ? "contact-phone" : "contact-phone lock-info"
-                }
+                className={`contact-phone ${
+                  roleClient === "Free" ? "blur-data-to-payment" : ""
+                }`}
               >
                 <PhoneFilled style={{ marginRight: "8px" }} />
                 <p className="contact-text">{influInfo?.influencerPhone}</p>

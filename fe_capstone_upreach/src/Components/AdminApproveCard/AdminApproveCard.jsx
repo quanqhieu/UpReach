@@ -11,7 +11,7 @@ import roundNumber from "../../Components/InfluUpdateProfileModal/roundNumber";
 const AdminApproveCard = ({ reportApprove }) => {
   return (
     <>
-      <div className="profile-layout">
+      <div className="approve-profile-layout">
         <div className="profile-content-layout">
           <div className="approve-profile-avatar-content">
             <Avatar

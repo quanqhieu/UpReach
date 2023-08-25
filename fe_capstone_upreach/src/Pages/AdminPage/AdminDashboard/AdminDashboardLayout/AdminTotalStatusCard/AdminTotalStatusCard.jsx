@@ -12,7 +12,7 @@ const AdminTotalStatusCard = ({ listClient, listInflu }) => {
   const [force, setForce] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(false);
   React.useEffect(() => {
-    const totalUsers = listInflu.length + listClient.length;
+    const totalUsers = listInflu?.length + listClient?.length;
     setListUser(totalUsers);
   }, [listInflu, listClient]);
   React.useEffect(() => {
