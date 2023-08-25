@@ -6,7 +6,7 @@ import {
   TagOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Button, Form, Input, Steps } from "antd";
+import { Button, Form, Input, Steps, Upload } from "antd";
 import React, { useState, useEffect } from "react";
 import InformationForm from "./InformationForm";
 import "./CreateInfluencerPage.css";
@@ -18,11 +18,13 @@ import ApiUser from "../../Api/ApiUser";
 import ApiListInfluecer from "../../Api/ApiListInfluecer";
 import FailForm from "./FailForm";
 import ApiInfluencer from "../../Api/ApiInfluencer";
+import UploadImage from "./UploadImage";
 
 const CreatInfluencerProfilePage = () => {
   const [form] = Form.useForm();
   const [current, setCurrent] = useState(0);
   const [informationDetails, setInformationDetails] = useState(null);
+  const [image, setImage] = useState(null);
   const [overviewDetails, setOverviewDetails] = useState(null);
   const [contentDetails, setContentFormDetails] = useState([null]);
   const [checkDataAddSuccess, setCheckDataAddSuccess] = useState(false);
@@ -30,6 +32,7 @@ const CreatInfluencerProfilePage = () => {
   const [allDetails, setAllDetails] = useState({
     informationDetails: null,
     overviewDetails: null,
+    image: null,
     contentDetails: null,
     influencerDetail: null,
   });
@@ -55,21 +58,31 @@ const CreatInfluencerProfilePage = () => {
     setCurrent(2);
   };
 
+  const onFinishUploadImage = (values) => {
+    console.log("Overview Form");
+    // setOverviewDetails(values); // vẫn chưa lưu value OverviewDetails
+    setAllDetails((prevDetails) => ({
+      ...prevDetails,
+      image: values,
+    }));
+    setCurrent(3);
+  };
+
   const onFinishContentForm = (values) => {
     console.log("Content Form");
-    console.log(contentDetails) 
+    console.log(contentDetails);
     setAllDetails((prevDetails) => ({
       ...prevDetails,
       contentDetails: contentDetails,
     }));
-    setCurrent(3); // khi bấm continue chuyển qua tab 3
+    setCurrent(4); // khi bấm continue chuyển qua tab 3
   };
 
   const areAllStepsCompleted = () => {
     return (
       allDetails.informationDetails !== null &&
       allDetails.overviewDetails !== null &&
-      allDetails.contentDetails !== null 
+      allDetails.contentDetails !== null
     );
   };
 
@@ -110,6 +123,7 @@ const CreatInfluencerProfilePage = () => {
       onFinish={onFinishOverviewForm}
       initialValues={overviewDetails}
     />,
+    <UploadImage onFinish={onFinishUploadImage} initialValues={image} />,
     <ContentForm
       onFinish={onFinishContentForm}
       setContentFormDetails={setContentFormDetails}
@@ -119,7 +133,7 @@ const CreatInfluencerProfilePage = () => {
   ];
   const isStepDisabled = (stepNumber) => {
     if (stepNumber === 0) {
-      return false;
+      return informationDetails === null;
     }
     if (stepNumber === 1) {
       return informationDetails === null;
@@ -153,11 +167,16 @@ const CreatInfluencerProfilePage = () => {
             />
             <Steps.Step
               disabled={isStepDisabled(2)}
+              title="Image"
+              icon={<CheckCircleOutlined />}
+            />
+            <Steps.Step
+              disabled={isStepDisabled(3)}
               title="Content Topic"
               icon={<TagOutlined />}
             />
             <Steps.Step
-              disabled={isStepDisabled(4)}
+              disabled={isStepDisabled(3)}
               title="Finish"
               icon={<CheckCircleOutlined />}
             />

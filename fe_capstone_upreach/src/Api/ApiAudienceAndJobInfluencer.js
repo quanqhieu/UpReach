@@ -1,9 +1,9 @@
 import axiosClient from "./AxiosClient"
 
 const ApiAudienceAndJobInfluencer = {
-    getDataForChart(IdInflu){
+    getDataForChart(IdInflu, influInfoEmail) {
         const url = '/influ/data-chart';
-        return axiosClient.post(url, {influencerId : IdInflu})
+        return axiosClient.post(url, { influencerId: IdInflu, influInfoEmail: influInfoEmail })
     },
 }
 

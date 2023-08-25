@@ -3,15 +3,19 @@ import React from "react";
 import { Button, Input, DatePicker } from "antd";
 import axios from "axios";
 import { useUserStore } from "../../Stores/user";
+import { useNavigate } from "react-router-dom";
 
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import ApiListClient from "../../Api/ApiListClient";
 dayjs.extend(customParseFormat);
 
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
 
-const ClientBookingModal = ({ data, setIsOpenBooking }) => {
+const ClientBookingModal = ({ data, setIsOpenBooking, idMonogDB }) => {
+  console.log("ffff", idMonogDB)
+  const navigate = useNavigate();
   const [user] = useUserStore((state) => [state.user]);
   const [bookingJob, setBookingJob] = React.useState(data);
   const [isSending, setIsSending] = React.useState(false);
@@ -32,7 +36,7 @@ const ClientBookingModal = ({ data, setIsOpenBooking }) => {
     }
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     var startDay = value[0]?.$D;
     var startMonth = value[0]?.$M + 1;
     var startYear = value[0]?.$y;
@@ -68,8 +72,14 @@ const ClientBookingModal = ({ data, setIsOpenBooking }) => {
       .catch((error) => {
         console.error("Lỗi khi cập nhật thông tin:", error);
       });
+    const idClient = await JSON.parse(localStorage.getItem("user-draw-storage")).state._idMonogDB;
+    const responseData = await ApiListClient.addInflueToBookingInClient(idClient, idMonogDB);
+    console.log("responseData", responseData)
+    if (responseData.status) {
+      console.log("aaa")
+      navigate("/myinfluencer")
+    }
   };
-
   return (
     <>
       <div className="client-booking-modal">
