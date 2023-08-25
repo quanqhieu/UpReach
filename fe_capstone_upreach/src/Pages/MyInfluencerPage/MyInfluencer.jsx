@@ -38,13 +38,13 @@ const MyInfluencer = () => {
   const navigate = useNavigate();
   const [addNewList, setAddNewList] = useState(false);
   const [checkTabListPage, setCheckTabListPage] = useState(false);
-  const [tabName, setTabName] = useState("chat");
+  const [tabName, setTabName] = useState();
 
   const [object, setObject] = useState();
   const [dataOfList, setdataOfList] = useState([]);
   const [value, setValue] = useState("");
   const [IdList, setIdList] = useState("");
-  const [listSelected, setListSelected] = useState("chat");
+  const [listSelected, setListSelected] = useState();
   const [form] = Form.useForm();
   const [listInfluencer, setListInfluencer] = useState([]);
   const [editnamelist, setEditNameList] = useState();
@@ -102,14 +102,32 @@ const MyInfluencer = () => {
       "",
       "bkg",
       null,
-      [getItem("History Booking", "booking", <FileProtectOutlined />)],
+      [
+        getItem(
+          "History Booking",
+          "booking",
+          <FileProtectOutlined />,
+          "",
+          "",
+          roleClient == "Free" ? true : false
+        ),
+      ],
       "group"
     ),
     getItem(
       "",
       "bkg",
       null,
-      [getItem("Chat With Influe", "chat", <MailBoxIcon />)],
+      [
+        getItem(
+          "Chat With Influe",
+          "chat",
+          <FileProtectOutlined />,
+          "",
+          "",
+          roleClient == "Free" ? true : false
+        ),
+      ],
       "group"
     ),
   ];
@@ -312,8 +330,8 @@ const MyInfluencer = () => {
       {user?.roleId == 2 ? (
         <div className="coverMain">
           <HeaderHomepage />
-          <div className="row pt-5">
-            <div className="col-2 pt-2 menuList padding-0">
+          <div className="row padding-top-60">
+            <div className="col-2 pt-3 menuList padding-0">
               <Menu
                 onClick={onClick}
                 className="menu"

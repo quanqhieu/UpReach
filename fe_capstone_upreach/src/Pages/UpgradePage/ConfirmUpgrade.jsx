@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import "./UpgradeCard.css";
 import { ReactComponent as Facebook } from "../../../Assets/Icon/Facebook.svg";
@@ -7,48 +7,7 @@ import { ReactComponent as Youtube } from "../../../Assets/Icon/Youtube.svg";
 import { ReactComponent as Tiktok } from "../../../Assets/Icon/Tiktok.svg";
 import { ReactComponent as Question } from "../../../Assets/Icon/QuestionIcon.svg";
 import { Button } from "antd";
-import ApiListClient from "../../../Api/ApiListClient";
-import { Navigate, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
-const UpgradeCard = ({ upgradeCards }) => {
-
-  const [message, setMessage] = useState()
-  const [status, setStatus] = useState()
-
-  const toastOptions = {
-    position: "bottom-right",
-    autoClose: 8000,
-    pauseOnFocusLoss: true,
-    draggable: true,
-    theme: "dark",
-  }
-  const [formValues, setFormValues] = useState({
-    
-  });
-
-  const fetchDataForPayment = async (data) =>{
-    try {
-      const response = await ApiListClient.zaloPayment(data);
-      if(response.status === "False"){
-        toast.error(response.message, toastOptions)
-        setStatus(response.status)
-        return ;
-      }
-      toast.success(response.message, toastOptions)
-      setStatus(response.status)
-      console.log(response)
-      return response;
-    } catch (error) {
-      setMessage(error)
-      console.log(error);
-    }
-  }
-
-  const handleUpgradeClick = (selectedPackage) => {
-    console.log(selectedPackage); // In ra dữ liệu của gói nâng cấp khi người dùng nhấp vào nút mua gói
-    fetchDataForPayment(selectedPackage)
-  };
-
+const ConfirmUpgrade = ({ upgradeCards }) => {
   return (
     <>
       <div className="upgrade-card-bg">
@@ -76,16 +35,15 @@ const UpgradeCard = ({ upgradeCards }) => {
             </p>
             <p style={{ fontSize: "14px", fontWeight: "600" }}>VND/month</p>
           </div>
-          <Link to="/confirmplan">
-            <Button
-              className="upgrade-card-btn"
-              type="primary"
-              shape="round"
-              size="large"
-            >
-              {upgradeCards?.btnTag}
-            </Button>
-          </Link>
+
+          <Button
+            className="upgrade-card-btn"
+            type="primary"
+            shape="round"
+            size="large"
+          >
+            <Link to={upgradeCards?.link}>{upgradeCards?.btnTag}</Link>
+          </Button>
         </div>
         <div className="upgrade-card-content">
           <p
@@ -204,11 +162,10 @@ const UpgradeCard = ({ upgradeCards }) => {
               </div>
               <Question />
             </div>
-            <ToastContainer />
           </div>
         </div>
       </div>
     </>
   );
 };
-export default UpgradeCard;
+export default ConfirmUpgrade;
