@@ -38,13 +38,13 @@ const MyInfluencer = () => {
   const navigate = useNavigate();
   const [addNewList, setAddNewList] = useState(false);
   const [checkTabListPage, setCheckTabListPage] = useState(false);
-  const [tabName, setTabName] = useState("chat");
+  const [tabName, setTabName] = useState();
 
   const [object, setObject] = useState();
   const [dataOfList, setdataOfList] = useState([]);
   const [value, setValue] = useState("");
   const [IdList, setIdList] = useState("");
-  const [listSelected, setListSelected] = useState("chat");
+  const [listSelected, setListSelected] = useState();
   const [form] = Form.useForm();
   const [listInfluencer, setListInfluencer] = useState([]);
   const [editnamelist, setEditNameList] = useState();

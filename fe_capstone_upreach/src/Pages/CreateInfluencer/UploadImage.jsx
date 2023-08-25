@@ -10,7 +10,7 @@ const getBase64 = (file) =>
     reader.onerror = (error) => reject(error);
   });
 
-const UploadImage = ({ onFinish, initialValues }) => {
+const UploadImage = ({ onFinish, initialValues,setImage }) => {
   const [size] = useState("small");
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
@@ -34,7 +34,10 @@ const UploadImage = ({ onFinish, initialValues }) => {
       file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
     );
   };
-  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+  const handleChange = ({ fileList: newFileList }) => {
+    setImage(fileList);
+    setFileList(newFileList);
+  };
   const uploadButton = (
     <div>
       <PlusOutlined />
@@ -61,7 +64,7 @@ const UploadImage = ({ onFinish, initialValues }) => {
                 onChange={handleChange}
               >
                 {fileList.length >= 1 ? null : uploadButton}
-              </Upload>a
+              </Upload>
               <Modal
                 open={previewOpen}
                 title={previewTitle}

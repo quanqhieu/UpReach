@@ -1,11 +1,9 @@
 import { Button, Form, Input, InputNumber, Select } from "antd";
-import React, {useRef, useState} from "react";
+import React, { useRef, useState } from "react";
 import "./CreateInfluencerPage.css";
 import { Option } from "antd/es/mentions";
 import ApiUser from "../../Api/ApiUser";
 const InformationForm = ({ onFinish, initialValues }) => {
-
-  
   return (
     <>
       <div id="content">
@@ -38,7 +36,7 @@ const InformationForm = ({ onFinish, initialValues }) => {
                 ]}
               >
                 <Select placeholder="Select Your Location">
-                  <Option value="location1">TP Hồ Chí MInh</Option>
+                  <Option value="location1">TP Hồ Chí Minh</Option>
                   <Option value="location2">TP Hà Nội</Option>
                   <Option value="location3">TP Hà Nội</Option>
                 </Select>

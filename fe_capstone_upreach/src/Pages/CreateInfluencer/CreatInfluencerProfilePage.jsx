@@ -59,11 +59,11 @@ const CreatInfluencerProfilePage = () => {
   };
 
   const onFinishUploadImage = (values) => {
-    console.log("Overview Form");
+    console.log("Image");
     // setOverviewDetails(values); // vẫn chưa lưu value OverviewDetails
     setAllDetails((prevDetails) => ({
       ...prevDetails,
-      image: values,
+      image: image,
     }));
     setCurrent(3);
   };
@@ -108,8 +108,8 @@ const CreatInfluencerProfilePage = () => {
       ...prevDetails,
       influencerDetail: formDataJson,
     }));
-
-    if (current === 3) {
+    console.log(allDetails);
+    if (current === 4) {
       handleFinishAllForms();
     }
   }, [current]);
@@ -123,13 +123,18 @@ const CreatInfluencerProfilePage = () => {
       onFinish={onFinishOverviewForm}
       initialValues={overviewDetails}
     />,
-    <UploadImage onFinish={onFinishUploadImage} initialValues={image} />,
+    <UploadImage
+      onFinish={onFinishUploadImage}
+      initialValues={image}
+      setImage={setImage}
+    />,
     <ContentForm
       onFinish={onFinishContentForm}
       setContentFormDetails={setContentFormDetails}
       contentDetails={contentDetails}
     />,
-    <>{checkDataAddSuccess ? <FinishForm /> : <FailForm />}</>,
+    // <>{checkDataAddSuccess ? <FinishForm /> : <FailForm />}</>,
+    <FinishForm />,
   ];
   const isStepDisabled = (stepNumber) => {
     if (stepNumber === 0) {
