@@ -76,7 +76,7 @@ const InfluencerProfileCard = ({ profileInflu, oldVerInflu }) => {
           </div>
           <div className="profile-date-view">
             <div className="profile-date">
-              {profileInflu?.isPublish ? "Available" : "Waiting"}
+              {profileInflu?.isPublish ? "Approved" : "Waiting"}
             </div>
             {/* <div className="profile-view">
               <Tooltip

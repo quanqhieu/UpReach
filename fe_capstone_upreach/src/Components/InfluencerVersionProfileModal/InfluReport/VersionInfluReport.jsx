@@ -5,7 +5,7 @@ import ReportSocial from "./ReportSocial/ReportSocial";
 import ReportAudience from "./ReportAudience/ReportAudience";
 import ReportPost from "./ReportPost/ReportPost";
 
-const VersionInfluReport = ({ influInfo, dataReportVersion }) => {
+const VersionInfluReport = ({ influInfo, dataReportVersion, isLoading }) => {
   const items = [
     {
       title: "SOCIAL",
@@ -17,6 +17,7 @@ const VersionInfluReport = ({ influInfo, dataReportVersion }) => {
         <ReportAudience
           influInfo={influInfo}
           dataReportVersion={dataReportVersion}
+          isLoading={isLoading}
         />
       ),
     },
@@ -26,6 +27,7 @@ const VersionInfluReport = ({ influInfo, dataReportVersion }) => {
         <ReportPost
           influInfo={influInfo}
           dataReportVersion={dataReportVersion}
+          isLoading={isLoading}
         />
       ),
     },
@@ -38,7 +40,7 @@ const VersionInfluReport = ({ influInfo, dataReportVersion }) => {
           defaultActiveKey="1"
           type="card"
           size={"large"}
-          items={items.map((item, i) => {
+          items={items?.map((item, i) => {
             return {
               label: item?.title,
               key: i,

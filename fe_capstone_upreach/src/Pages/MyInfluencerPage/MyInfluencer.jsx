@@ -20,6 +20,8 @@ import { useNavigate, Link } from "react-router-dom";
 import MyBookingPage from "./MyBookingPage/MyBookingPage";
 import ApiGetInfoAndFilterInfluencer from "../../Api/ApiGetInfoAndFilterInfluencer";
 import Chat from "../ChatPage/Chat";
+import { ReactComponent as MailBoxIcon } from "../../Assets/Icon/MailBox.svg";
+
 function getItem(label, key, icon, children, type, disabled) {
   return {
     key,
@@ -35,13 +37,14 @@ const MyInfluencer = () => {
   const [user] = useUserStore((state) => [state.user]);
   const navigate = useNavigate();
   const [addNewList, setAddNewList] = useState(false);
-  const [checkTabListPage, setCheckTabListPage] = useState(true);
-  const [tabName, setTabName] = useState("new");
+  const [checkTabListPage, setCheckTabListPage] = useState(false);
+  const [tabName, setTabName] = useState("chat");
+
   const [object, setObject] = useState();
   const [dataOfList, setdataOfList] = useState([]);
   const [value, setValue] = useState("");
   const [IdList, setIdList] = useState("");
-  const [listSelected, setListSelected] = useState("");
+  const [listSelected, setListSelected] = useState("chat");
   const [form] = Form.useForm();
   const [listInfluencer, setListInfluencer] = useState([]);
   const [editnamelist, setEditNameList] = useState();
@@ -106,7 +109,7 @@ const MyInfluencer = () => {
       "",
       "bkg",
       null,
-      [getItem("Chat With Influe", "chat", <FileProtectOutlined />)],
+      [getItem("Chat With Influe", "chat", <MailBoxIcon />)],
       "group"
     ),
   ];
@@ -180,7 +183,6 @@ const MyInfluencer = () => {
         Interactions: totalInteractions,
         Table: response.Table,
       };
-      console.log("aa");
       setObject(dataObject);
     } catch (error) {
       console.log("Error fetching data:", error);
@@ -190,7 +192,6 @@ const MyInfluencer = () => {
   //================================================================
   //====================== click item in list=======================
   const onClick = (e) => {
-    console.log("ee", e)
     if (e.key === "history") {
       setCheckTabListPage(false);
       setTabName(e.key);
@@ -262,6 +263,7 @@ const MyInfluencer = () => {
   useEffect(() => {
     fetchDataGetList(idAccClient);
     fetchGetRoleClient();
+    // setRoleClient("Bussiness");
   }, []);
 
   //Remove Influ out list
@@ -272,7 +274,7 @@ const MyInfluencer = () => {
   //Change Name List
   useEffect(() => {
     fetchDataGetList();
-    setCheckTabListPage(true);
+    // setCheckTabListPage(true);
     setListSelected(listSelected);
   }, [flagChangeNameList]);
 
@@ -300,13 +302,13 @@ const MyInfluencer = () => {
     } else if (user.roleId == 3) {
       navigate("/influencer/my-report");
     } else {
-      navigate("/");
+      navigate("/login");
     }
   }, []);
 
   return (
     <>
-      {console.log(tabName)}
+      {console.log(tabName === "chat")}
       {user?.roleId == 2 ? (
         <div className="coverMain">
           <HeaderHomepage />

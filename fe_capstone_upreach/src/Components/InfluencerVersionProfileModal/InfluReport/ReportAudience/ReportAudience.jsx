@@ -1,15 +1,15 @@
 import "./ReportAudience.css";
-import { Row, Col } from "antd";
+import { Row, Col, Spin } from "antd";
 import { Line, Pie, Bar } from "@ant-design/plots";
 import React from "react";
-const ReportAudience = ({ influInfo, dataReportVersion }) => {
+const ReportAudience = ({ influInfo, dataReportVersion, isLoading }) => {
   const [audienceFollower, setAudienceFollower] = React.useState([]);
   const [audienceGender, setAudienceGender] = React.useState([]);
   const [audienceAge, setAudienceAge] = React.useState([]);
   const [audienceLocation, setAudienceLocation] = React.useState([]);
   // console.log(audienceGender);
   // console.log(audienceAge);
-
+  console.log(dataReportVersion);
   React.useEffect(() => {
     setAudienceFollower(dataReportVersion?.dataFollower);
     setAudienceGender(dataReportVersion?.dataGender);
@@ -23,8 +23,9 @@ const ReportAudience = ({ influInfo, dataReportVersion }) => {
   ]);
 
   const dataFollower =
-    audienceFollower[0]?.monthFollow === null ||
-    audienceFollower[0]?.value === null
+    !audienceFollower?.at(0)?.monthFollow ||
+    !audienceFollower?.at(0)?.value ||
+    audienceFollower === []
       ? []
       : audienceFollower;
   const configFollower = {
@@ -34,8 +35,8 @@ const ReportAudience = ({ influInfo, dataReportVersion }) => {
   };
 
   configFollower?.data?.sort((a, b) => {
-    const [aMonth, aYear] = a.monthFollow?.split("/");
-    const [bMonth, bYear] = b.monthFollow?.split("/");
+    const [aMonth, aYear] = a?.monthFollow?.split("/");
+    const [bMonth, bYear] = b?.monthFollow?.split("/");
 
     if (parseInt(aYear, 10) !== parseInt(bYear, 10)) {
       return parseInt(aYear, 10) - parseInt(bYear, 10);
@@ -44,7 +45,9 @@ const ReportAudience = ({ influInfo, dataReportVersion }) => {
   });
 
   const dataGender =
-    audienceGender[0]?.sex === null || audienceGender[0]?.value === null
+    !audienceGender?.at(0)?.sex ||
+    !audienceGender?.at(0)?.value ||
+    audienceGender === []
       ? []
       : audienceGender;
   const configGender = {
@@ -63,7 +66,9 @@ const ReportAudience = ({ influInfo, dataReportVersion }) => {
   };
 
   const dataAge =
-    audienceAge[0]?.type === null || audienceAge[0]?.value === null
+    !audienceAge?.at(0)?.type ||
+    !audienceAge?.at(0)?.value ||
+    audienceAge === []
       ? []
       : audienceAge;
 
@@ -86,8 +91,15 @@ const ReportAudience = ({ influInfo, dataReportVersion }) => {
     return a.type.localeCompare(b.type);
   });
 
+  const dataLocation =
+    !audienceLocation?.at(0)?.type ||
+    !audienceLocation?.at(0)?.value ||
+    audienceLocation === []
+      ? []
+      : audienceLocation;
+
   const configLocation = {
-    data: audienceLocation,
+    data: dataLocation,
     xField: "value",
     yField: "type",
     meta: {
@@ -104,40 +116,42 @@ const ReportAudience = ({ influInfo, dataReportVersion }) => {
 
   return (
     <div className="report-audience-layout">
-      <Row gutter={[16, 16]}>
-        <Col span={12}>
-          <div className="report-audience-bg audience-follower">
-            <div className="audience-follower-chart">
-              Followers
-              <Line {...configFollower} className="follower-chart" />
+      <Spin tip="Loading" size="large" spinning={isLoading}>
+        <Row gutter={[16, 16]}>
+          <Col span={12}>
+            <div className="report-audience-bg audience-follower">
+              <div className="audience-follower-chart">
+                Followers
+                <Line {...configFollower} className="follower-chart" />
+              </div>
             </div>
-          </div>
-        </Col>
-        <Col span={12}>
-          <div className="report-audience-bg audience-gender">
-            <div className="audience-gender-chart">
-              Gender
-              <Pie {...configGender} className="gender-chart" />
+          </Col>
+          <Col span={12}>
+            <div className="report-audience-bg audience-gender">
+              <div className="audience-gender-chart">
+                Gender
+                <Pie {...configGender} className="gender-chart" />
+              </div>
             </div>
-          </div>
-        </Col>
-        <Col span={12}>
-          <div className="report-audience-bg audience-age">
-            <div className="audience-age-chart">
-              Age
-              <Bar {...configAge} className="age-chart" />
+          </Col>
+          <Col span={12}>
+            <div className="report-audience-bg audience-age">
+              <div className="audience-age-chart">
+                Age
+                <Bar {...configAge} className="age-chart" />
+              </div>
             </div>
-          </div>
-        </Col>
-        <Col span={12}>
-          <div className="report-audience-bg audience-location">
-            <div className="audience-location-chart">
-              Location
-              <Bar {...configLocation} className="location-chart" />
+          </Col>
+          <Col span={12}>
+            <div className="report-audience-bg audience-location">
+              <div className="audience-location-chart">
+                Location
+                <Bar {...configLocation} className="location-chart" />
+              </div>
             </div>
-          </div>
-        </Col>
-      </Row>
+          </Col>
+        </Row>
+      </Spin>
     </div>
   );
 };

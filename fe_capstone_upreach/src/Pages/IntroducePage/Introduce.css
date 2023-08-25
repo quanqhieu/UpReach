@@ -316,7 +316,7 @@
   
   #discover-stars::after {
 	background-image: radial-gradient(#ffffff 1px, transparent 1%);
-	background-size: 50px 50px;
+	background-size: 49px 49px;
   }
   
   #discover-stars::before {
@@ -331,7 +331,7 @@
   
   #discover-stars::before {
 	background-image: radial-gradient(#ffffff 1px, transparent 1%);
-	background-size: 50px 50px;
+	background-size: 49px 49px;
 	opacity: 0.5;
   }
   

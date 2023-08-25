@@ -18,7 +18,7 @@ const InfluencerBookingPage = () => {
     } else if (user.roleId == 3) {
       navigate("/influencer/my-booking");
     } else {
-      navigate("/");
+      navigate("/login");
     }
   }, []);
 

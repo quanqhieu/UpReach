@@ -1,7 +1,9 @@
 import "./InfluencerBookingModal.css";
 import React from "react";
 import { Button } from "antd";
+import { useNavigate } from "react-router-dom";
 const InfluencerBookingModal = ({ bookingItem }) => {
+  const navigate = useNavigate();
   const getFormatContent = (id) => {
     switch (id) {
       case "CF01":
@@ -14,6 +16,11 @@ const InfluencerBookingModal = ({ bookingItem }) => {
         return null;
     }
   };
+
+  const handleClickChat = () => {
+    navigate("/chatapp")
+  }
+
   return (
     <>
       <div className="influ-booking-modal">
@@ -81,7 +88,8 @@ const InfluencerBookingModal = ({ bookingItem }) => {
             <Button
               className="mail-box-btn"
               type="primary"
-              // htmlType="submit"
+              onClick={handleClickChat}
+            // htmlType="submit"
             >
               Chat with Client
             </Button>
