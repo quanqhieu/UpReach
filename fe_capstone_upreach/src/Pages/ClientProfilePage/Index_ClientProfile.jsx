@@ -1,4 +1,14 @@
-import { Avatar, Button, Col, Collapse, Form, Input, Row,Modal,Upload } from "antd";
+import {
+  Avatar,
+  Button,
+  Col,
+  Collapse,
+  Form,
+  Input,
+  Row,
+  Modal,
+  Upload,
+} from "antd";
 import FormItem from "antd/es/form/FormItem";
 import React, { useEffect, useRef, useState } from "react";
 import "./ClientProfilePage.css";
@@ -10,8 +20,8 @@ import {
 import UpdateEmail from "./UpdateEmail";
 import ChangePassword from "./ChangePassword";
 import ApiListClient from "../../Api/ApiListClient";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Navigate, useNavigate } from "react-router-dom";
 
 const Index_ClientProfile = () => {
@@ -22,17 +32,17 @@ const Index_ClientProfile = () => {
   const navigate = useNavigate(); 
   
   const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState('');
-  const [previewTitle, setPreviewTitle] = useState('');
-  const [fileList, setFileList] = useState()
-  const [checkClientExist, setCheckClientExist] = useState(false)
+  const [previewImage, setPreviewImage] = useState("");
+  const [previewTitle, setPreviewTitle] = useState("");
+  const [fileList, setFileList] = useState();
+  const [checkClientExist, setCheckClientExist] = useState(false);
   const [formValues, setFormValues] = useState({
-    image: '',
-    fullName: '',
-    brandName: '',
-    phoneNumber: '',
-    location: '',
-    emailContact: '',
+    image: "",
+    fullName: "",
+    brandName: "",
+    phoneNumber: "",
+    location: "",
+    emailContact: "",
     clientDetail: null,
   });
   const [formData, setFormData] = useState({
@@ -77,65 +87,64 @@ const Index_ClientProfile = () => {
   const FetchDataCheckProfile = async (data) => {
     try {
       const response = await ApiListClient.checkClientExisted(data);
-      if(response.status === "True"){
-        setCheckClientExist(true)
+      if (response.status === "True") {
+        setCheckClientExist(true);
       }
       setFormData(prevDetails => ({ ...prevDetails, clientData: response.data }));
       return response;
     } catch (error) {
-      setMessage(error)
+      setMessage(error);
       console.log(error);
     }
-    
-  }
+  };
 
   const FetchInsertClientProfile = async (data) => {
     try {
       const response = await ApiListClient.addProfileClient(data);
-      if(response.status === "False"){
-        toast.error(response.message, toastOptions)
-        setStatus(response.status)
-        return ;
+      if (response.status === "False") {
+        toast.error(response.message, toastOptions);
+        setStatus(response.status);
+        return;
       }
-      toast.success(response.message, toastOptions)
-      setStatus(response.status)
-      console.log(response)
+      toast.success(response.message, toastOptions);
+      setStatus(response.status);
+      console.log(response);
       return response;
     } catch (error) {
-      setMessage(error)
+      setMessage(error);
       console.log(error);
     }
   };
-  
+
   const FetchUpdateClientProfile = async (data) => {
     try {
       const response = await ApiListClient.updateProfileClient(data);
-      if(response.status === "False"){
-        toast.error(response.message, toastOptions)
-        setStatus(response.status)
-        return ;
+      if (response.status === "False") {
+        toast.error(response.message, toastOptions);
+        setStatus(response.status);
+        return;
       }
-      toast.success(response.message, toastOptions)
-      setStatus(response.status)
-      console.log(response)
+      toast.success(response.message, toastOptions);
+      setStatus(response.status);
+      console.log(response);
       return response;
     } catch (error) {
-      setMessage(error)
+      setMessage(error);
       console.log(error);
     }
-  }; 
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValues({
       ...formValues,
-      [name]: value
+      [name]: value,
     });
   };
   const updateImageValue = (newValue) => {
     setFormValues({
       ...formValues, // Sao chép tất cả các giá trị hiện tại của formValues
-      image: newValue // Thay đổi giá trị của image thành newValue
+      image: newValue, // Thay đổi giá trị của image thành newValue
     });
   };
 
@@ -146,17 +155,19 @@ const Index_ClientProfile = () => {
     }
     setPreviewImage(file.url || file.preview);
     setPreviewOpen(true);
-    setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
+    setPreviewTitle(
+      file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
+    );
   };
   const handleChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
-    updateImageValue(newFileList)
-  }
+    updateImageValue(newFileList);
+  };
   const uploadButton = (
     <div>
       <PlusOutlined />
       <div
-      className="ant-upload"
+        className="ant-upload"
         style={{
           marginTop: 8,
         }}
@@ -195,15 +206,15 @@ const Index_ClientProfile = () => {
     pauseOnFocusLoss: true,
     draggable: true,
     theme: "dark",
-  }
+  };
 
   const getBase64 = (file) =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = (error) => reject(error);
-  });
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
 
   return (
     <Row style={{ marginTop: "4%" }}>
@@ -218,7 +229,9 @@ const Index_ClientProfile = () => {
             <div>
               <Form
                 className="client-form"
-                onFinish= {checkClientExist ? onFinishUpdateClient : onFinishInsertClient}
+                onFinish={
+                  checkClientExist ? onFinishUpdateClient : onFinishInsertClient
+                }
                 name="validateOnly"
                 layout="vertical"
                 autoComplete="off"
@@ -235,25 +248,29 @@ const Index_ClientProfile = () => {
               >
                 <div>
                   <Form.Item>
-                  <Upload
-                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                    listType="picture-card"
-                    fileList={fileList}
-                    onPreview={handlePreview}
-                    onChange={handleChange}
-                    
-                  >
-                    {fileList ? null : uploadButton}
-                  </Upload>
-                  <Modal open={previewOpen} title={previewTitle} footer={null} onCancel={handleCancel}>
-                    <img
-                      alt="example"
-                      style={{
-                        width: '100%',
-                      }}
-                      src={previewImage}
-                    />
-                  </Modal>
+                    <Upload
+                      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                      listType="picture-card"
+                      fileList={fileList}
+                      onPreview={handlePreview}
+                      onChange={handleChange}
+                    >
+                      {fileList ? null : uploadButton}
+                    </Upload>
+                    <Modal
+                      open={previewOpen}
+                      title={previewTitle}
+                      footer={null}
+                      onCancel={handleCancel}
+                    >
+                      <img
+                        alt="example"
+                        style={{
+                          width: "100%",
+                        }}
+                        src={previewImage}
+                      />
+                    </Modal>
                   </Form.Item>
                   <Form.Item
                     rules={[
@@ -265,8 +282,7 @@ const Index_ClientProfile = () => {
                     name="fullName"
                     label="Full Name"
                   >
-                    <Input 
-                      defaultValue={formData?.clientData?.fullName !== undefined? formData?.clientData?.fullName: " "}
+                    <Input
                       name="fullName" 
                       onChange={handleInputChange} 
                       style={{ border: "1px solid #9B9A9A" }}
@@ -282,13 +298,25 @@ const Index_ClientProfile = () => {
                     name="brandname"
                     label="Brand Name"
                   >
-                    <Input name="brandName" onChange={handleInputChange} style={{ border: "1px solid #9B9A9A" }} />
+                    <Input
+                      name="brandName"
+                      onChange={handleInputChange}
+                      style={{ border: "1px solid #9B9A9A" }}
+                    />
                   </Form.Item>
                   <Form.Item name="location" label="Location">
-                    <Input name="location" onChange={handleInputChange} style={{ border: "1px solid #9B9A9A" }} />
+                    <Input
+                      name="location"
+                      onChange={handleInputChange}
+                      style={{ border: "1px solid #9B9A9A" }}
+                    />
                   </Form.Item>
                   <Form.Item name="emailContact" label="Email">
-                    <Input name="emailContact" onChange={handleInputChange} style={{ border: "1px solid #9B9A9A" }} />
+                    <Input
+                      name="emailContact"
+                      onChange={handleInputChange}
+                      style={{ border: "1px solid #9B9A9A" }}
+                    />
                   </Form.Item>
                   <Form.Item
                     rules={[
@@ -302,7 +330,11 @@ const Index_ClientProfile = () => {
                     name="phonenumber" 
                     label="Phone Number"
                   >
-                    <Input name="phoneNumber" onChange={handleInputChange} style={{ border: "1px solid #9B9A9A" }} />
+                    <Input
+                      name="phoneNumber"
+                      onChange={handleInputChange}
+                      style={{ border: "1px solid #9B9A9A" }}
+                    />
                   </Form.Item>
                 </div>
                 <div></div>
@@ -313,7 +345,6 @@ const Index_ClientProfile = () => {
                     </Button>
                   </FormItem>
                 </div>
-                
               </Form>
             </div>
             <ToastContainer />
@@ -336,7 +367,6 @@ const Index_ClientProfile = () => {
         </Row>
       </Col>
     </Row>
-    
   );
 };
 
