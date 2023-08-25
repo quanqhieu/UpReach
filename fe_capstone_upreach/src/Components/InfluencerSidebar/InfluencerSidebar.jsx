@@ -40,10 +40,7 @@ const InfluencerSidebar = () => {
       <MyBookingIcon />
     ),
     getItem(
-      <Link
-        style={{ textDecoration: "none", color: "#FFF" }}
-        to="/chatapp"
-      >
+      <Link style={{ textDecoration: "none", color: "#FFF" }} to="/chatappKol">
         <p>Mail box</p>
       </Link>,
       "mail box",
@@ -59,10 +56,10 @@ const InfluencerSidebar = () => {
           currentPath?.includes("my-report")
             ? "my report"
             : currentPath?.includes("my-booking")
-              ? "my booking"
-              : currentPath?.includes("mail-box")
-                ? "mail box"
-                : "my-report"
+            ? "my booking"
+            : currentPath?.includes("mail-box")
+            ? "mail box"
+            : "my-report"
         }
         mode={"inline"}
         theme={"light"}

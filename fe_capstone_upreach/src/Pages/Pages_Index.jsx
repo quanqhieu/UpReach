@@ -25,6 +25,8 @@ import VerifyInfluencerRegister from "./SignUpInfluencer/VerifyInfluencerRegiste
 import CreatInfluencerProfilePage from "./CreateInfluencer/CreatInfluencerProfilePage";
 import ResetPasswordPage from "./ForgotPassword/ResetPasswordPage";
 import MyInfluencer from "./MyInfluencerPage/MyInfluencer";
+import HeaderHomePage from "../Components/Layouts/Header/HeaderHomepage";
+import InfluencerSidebar from "../Components/InfluencerSidebar/InfluencerSidebar";
 import Chat from "./ChatPage/Chat";
 import VerifyForgotPassword from "./ForgotPassword/VerifyForgotPassword";
 
@@ -251,7 +253,22 @@ function Pages_Index() {
           </>
         }
       />
-
+      <Route
+        path="/chatappKol"
+        element={
+          <>
+            <div className="booking-page-bg">
+              <HeaderHomePage />
+              <div className="booking-page-sidebar">
+                <InfluencerSidebar />
+              </div>
+              <div className="booking-page-content">
+                <Chat />
+              </div>
+            </div>
+          </>
+        }
+      />
     </Routes>
   );
 }

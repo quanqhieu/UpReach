@@ -17,8 +17,8 @@ const ReportAudience = ({ influInfo, roleClient }) => {
       const response = await ApiAudienceAndJobInfluencer.getDataForChart(
         IdInflu
       );
-
       setData(response);
+      console.log(response);
     } catch (error) {
       console.log("Error fetching data:", error);
     }

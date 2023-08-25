@@ -99,14 +99,32 @@ const MyInfluencer = () => {
       "",
       "bkg",
       null,
-      [getItem("History Booking", "booking", <FileProtectOutlined />)],
+      [
+        getItem(
+          "History Booking",
+          "booking",
+          <FileProtectOutlined />,
+          "",
+          "",
+          roleClient == "Free" ? true : false
+        ),
+      ],
       "group"
     ),
     getItem(
       "",
       "bkg",
       null,
-      [getItem("Chat With Influe", "chat", <FileProtectOutlined />)],
+      [
+        getItem(
+          "Chat With Influe",
+          "chat",
+          <FileProtectOutlined />,
+          "",
+          "",
+          roleClient == "Free" ? true : false
+        ),
+      ],
       "group"
     ),
   ];
