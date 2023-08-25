@@ -6,6 +6,7 @@ import SignUp from "./SignUpPage/SignUp";
 import Introduce from "./IntroducePage/Introduce";
 import HomePage from "./HomePage/HomePage";
 import Upgrade from "./UpgradePage/Upgrade";
+// import ConfirmUpgrade from "./UpgradePage/ConfirmUpgrade";
 
 import AdminDashboard from "./AdminPage/AdminDashboard/AdminDashboard";
 import AdminUserProfile from "./AdminPage/AdminUserProfile/AdminUserProfile";
@@ -251,7 +252,14 @@ function Pages_Index() {
           </>
         }
       />
-
+      {/* <Route
+        path="/confirmplan"
+        element={
+          <>
+            <ConfirmUpgrade />
+          </>
+        }
+      /> */}
     </Routes>
   );
 }

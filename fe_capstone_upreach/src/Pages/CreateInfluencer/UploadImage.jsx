@@ -61,7 +61,7 @@ const UploadImage = ({ onFinish, initialValues }) => {
                 onChange={handleChange}
               >
                 {fileList.length >= 1 ? null : uploadButton}
-              </Upload>
+              </Upload>a
               <Modal
                 open={previewOpen}
                 title={previewTitle}
