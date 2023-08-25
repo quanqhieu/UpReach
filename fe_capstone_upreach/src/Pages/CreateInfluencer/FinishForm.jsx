@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+import { Button } from "antd";
 
 const FinishForm = () => {
   return (
@@ -16,6 +18,14 @@ const FinishForm = () => {
               We will email you that you have access to the UpReach system.
             </h5>
           </div>
+          <Button
+            className="upgrade-card-btn"
+            type="primary"
+            shape="round"
+            size="large"
+          >
+            <Link to="/login">Come back</Link>
+          </Button>
         </div>
       </div>
     </>
