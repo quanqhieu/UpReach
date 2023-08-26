@@ -21,34 +21,37 @@ const Invoices = ({ formPlan }) => {
     ],
   });
 
-const  Invoices = ({formPlan}) => {
-    
+  const Invoices = ({ formPlan }) => {
     const [formValues, setFormValues] = useState({
-        clientDetail: null,
-        planPackageDetail : formPlan.planPackageDetail
-      });
+      clientDetail: null,
+      planPackageDetail: formPlan.planPackageDetail,
+    });
     const [invoiceData, setInvoiceData] = useState({
-        Package : formPlan.planPackageDetail.describe,
-        date: '2023-08-26',
-        totalAmount: 1000.0,
-        items: [
-            { name: formPlan.planPackageDetail.Tag,  price: formPlan.planPackageDetail.cost },
-        ]
+      Package: formPlan.planPackageDetail.describe,
+      date: "2023-08-26",
+      totalAmount: 1000.0,
+      items: [
+        {
+          name: formPlan.planPackageDetail.Tag,
+          price: formPlan.planPackageDetail.cost,
+        },
+      ],
     });
 
-    
-    console.log(formValues)
-    useEffect(() =>{
-        
-        localStorage.setItem("Plan-Package", JSON.stringify(formValues));
-        const newClient = localStorage.getItem('user-draw-storage');
-        const formDataNewClientJson = JSON.parse(newClient);
-        setFormValues(prevDetails => ({ ...prevDetails, clientDetail: formDataNewClientJson.state.user }));
-    },[])
-    
-    const onClickToUpdatePlanPackage = () =>{
-        localStorage.setItem("Plan-Package", JSON.stringify(formValues));
-    }
+    console.log(formValues);
+    useEffect(() => {
+      localStorage.setItem("Plan-Package", JSON.stringify(formValues));
+      const newClient = localStorage.getItem("user-draw-storage");
+      const formDataNewClientJson = JSON.parse(newClient);
+      setFormValues((prevDetails) => ({
+        ...prevDetails,
+        clientDetail: formDataNewClientJson.state.user,
+      }));
+    }, []);
+
+    const onClickToUpdatePlanPackage = () => {
+      localStorage.setItem("Plan-Package", JSON.stringify(formValues));
+    };
   };
   console.log(formValues);
   useEffect(() => {
@@ -59,9 +62,7 @@ const  Invoices = ({formPlan}) => {
       clientDetail: formDataNewClientJson.state.user,
     }));
   }, []);
-  const onClickToUpdatePlanPackage = () => {
-    FetchDataPayment(formValues);
-  };
+
   return (
     <div className="auth-background">
       <div className="verify-background">
@@ -96,7 +97,6 @@ const  Invoices = ({formPlan}) => {
                     type="primary"
                     shape="round"
                     size="large"
-                    onClick={onClickToUpdatePlanPackage}
                   >
                     Pay Now
                   </Button>
