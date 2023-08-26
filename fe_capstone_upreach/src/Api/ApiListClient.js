@@ -28,6 +28,10 @@ const ApiListClient = {
     addInflueToBookingInClient(_idClient, _idInflue) {
         const url = '/client/addInflueToBooking';
         return axiosClient.post(url, { _idClient: _idClient, _idInflue: _idInflue })
+    },
+    updateAfterScanQR(data){
+        const url = '/update-plan-package';
+        return axiosClient.post(url, data)
     }
 }
 

@@ -30,6 +30,8 @@ import HeaderHomePage from "../Components/Layouts/Header/HeaderHomepage";
 import InfluencerSidebar from "../Components/InfluencerSidebar/InfluencerSidebar";
 import Chat from "./ChatPage/Chat";
 import VerifyForgotPassword from "./ForgotPassword/VerifyForgotPassword";
+import Invoices from "./UpgradePage/Invoice";
+import ConfirmPayment from "./UpgradePage/ConfirmPayment";
 
 function Pages_Index() {
   const navigate = useNavigate();
@@ -251,6 +253,22 @@ function Pages_Index() {
         element={
           <>
             <Chat />
+          </>
+        }
+      />
+      <Route
+        path="/invoices"
+        element={
+          <>
+            <Invoices />
+          </>
+        }
+      />
+      <Route
+        path="/confirm-payment"
+        element={
+          <>
+            <ConfirmPayment />
           </>
         }
       />
