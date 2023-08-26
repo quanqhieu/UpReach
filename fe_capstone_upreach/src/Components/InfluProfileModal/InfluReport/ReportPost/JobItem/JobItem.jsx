@@ -99,7 +99,7 @@ const JobItem = ({ data, idMonogDB }) => {
             <p>{data?.jobName === undefined ? "" : data?.jobName}</p>
             <div>{data?.formatid}</div>
             <Tooltip placement="top" title={data?.linkJob}>
-              <a href={data?.linkJob} target="_blank">
+              <a href={data?.linkJob} target="_blank" rel="noreferrer">
                 {data?.linkJob?.length > 29
                   ? `${data?.linkJob?.slice(0, 29)}...`
                   : data?.linkJob}
