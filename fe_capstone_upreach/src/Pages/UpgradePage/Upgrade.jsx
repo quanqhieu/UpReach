@@ -26,7 +26,6 @@ const Upgrade = () => {
   const [formPlan,setFormPlan] = useState({
     infoPaySuccess : null,
     planPackageDetail : null
-
   })
 
   React.useEffect(() => {
