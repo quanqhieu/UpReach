@@ -37,7 +37,7 @@
 	-webkit-text-fill-color: transparent;
 }
 .create-page .submit-information-btn {
-    background: black;
+    background-color: black;
     color: white !important;
     width: 100%;
     padding: 20px;

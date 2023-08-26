@@ -244,11 +244,11 @@ function RenderFilter({
             setDataSearch={setDataSearch}
           />
         </div>
-        {/* Filter of Audience
+        {/* Filter of Audience */}
         <div className=" mt-4 backgroundMainPage">
-          <DropdownOfAudience checkClearAll={checkClearAll} />
-        </div> */}
-        <div className=" mt-4 backgroundMainPage">
+          {/* <DropdownOfAudience checkClearAll={checkClearAll} />
+        </div>
+        <div className=" mt-4 backgroundMainPage"> */}
           <Button onClick={handleClearAll} className="dropdownSlider bg-white">
             Clear All
           </Button>
