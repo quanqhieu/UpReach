@@ -23,20 +23,20 @@ import ApiListClient from "../../Api/ApiListClient";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useUserStore } from "../../Stores/user";
 
 const Index_ClientProfile = () => {
   const [isSubModel, setSubModel] = useState(false);
-  const [isModalOpenChangePassword, setIsModalOpenChangePassword] =useState(false);
-  const [message, setMessage] = useState()
-  const [status, setStatus] = useState()
-  const navigate = useNavigate(); 
+  const [isModalOpenChangePassword, setIsModalOpenChangePassword] =
+    useState(false);
+  const [message, setMessage] = useState();
+  const [status, setStatus] = useState();
+  const navigate = useNavigate();
   const [form] = Form.useForm();
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState([{
-    
-  }]);
+  const [fileList, setFileList] = useState([{}]);
   const [checkClientExist, setCheckClientExist] = useState(false);
   const [formValues, setFormValues] = useState({
     image: "",
@@ -51,62 +51,70 @@ const Index_ClientProfile = () => {
     clientData: null,
   });
 
-  useEffect(() =>{
+  const [user, setUserInfo] = useUserStore((state) => [
+    state.user,
+    state.setUserInfo,
+  ]);
+
+  useEffect(() => {
     checkUpdateOrRegister();
-  },[])
-console.log(formData)
-  useEffect(() =>{
+  }, []);
+  console.log(formData);
+  useEffect(() => {
     form.setFieldsValue({
-        image: formData?.clientData?.image,
-        fullName: formData?.clientData?.fullName,
-        brandName: formData?.clientData?.brand,
-        phoneNumber: formData?.clientData?.phone,
-        location: formData?.clientData?.address,
-        emailContact:formData?.clientData?.emailContact,
-      }
-    )
-  },[formData])
+      fullName: formData?.clientData?.fullName,
+      brandName: formData?.clientData?.brand,
+      phoneNumber: formData?.clientData?.phone,
+      location: formData?.clientData?.address,
+      emailContact: formData?.clientData?.emailContact,
+    });
+  }, [formData]);
 
-  useEffect(() =>{
-    if(status ==='True'){
-      navigate('/homepage')
-    } 
-  },[status])
-
-  const checkUpdateOrRegister = ()=>{
-    
-    if(localStorage.getItem('user-draw-storage') !== null){
-      const oldClient = localStorage.getItem('user-draw-storage');
-      const formDataOldClientJson = JSON.parse(oldClient);
-      const data = formDataOldClientJson.state.user
-      setFormValues(prevDetails => ({ ...prevDetails, clientDetail: data }));
-      FetchDataCheckProfile(data)
-      return
+  useEffect(() => {
+    if (status === "True") {
+      navigate("/homepage");
     }
-    const newClient = localStorage.getItem('formData');
+  }, [status]);
+
+  const checkUpdateOrRegister = () => {
+    if (localStorage.getItem("user-draw-storage") !== null) {
+      const oldClient = localStorage.getItem("user-draw-storage");
+      const formDataOldClientJson = JSON.parse(oldClient);
+      const data = formDataOldClientJson.state.user;
+      setFormValues((prevDetails) => ({ ...prevDetails, clientDetail: data }));
+      FetchDataCheckProfile(data);
+      return;
+    }
+    const newClient = localStorage.getItem("formData");
     const formDataNewClientJson = JSON.parse(newClient);
-    setFormValues(prevDetails => ({ ...prevDetails, clientDetail: formDataNewClientJson }));
-    FetchDataCheckProfile(formDataNewClientJson)
-  }
+    setFormValues((prevDetails) => ({
+      ...prevDetails,
+      clientDetail: formDataNewClientJson,
+    }));
+    FetchDataCheckProfile(formDataNewClientJson);
+  };
 
   const onFinishInsertClient = () => {
-    FetchInsertClientProfile(formValues)
-  }
+    FetchInsertClientProfile(formValues);
+  };
 
   const onFinishUpdateClient = () => {
-    FetchUpdateClientProfile(formValues)
-  }
+    FetchUpdateClientProfile(formValues);
+  };
 
   const FetchDataCheckProfile = async (data) => {
     try {
-      console.log(data)
+      console.log(data);
       const response = await ApiListClient.checkClientExisted(data);
-      console.log(response)
+      console.log(response);
       if (response.status === "True") {
         setCheckClientExist(true);
-        setFormData(prevDetails => ({ ...prevDetails, clientData: response.data }));
+        setFormData((prevDetails) => ({
+          ...prevDetails,
+          clientData: response.data,
+        }));
       }
-      
+
       return response;
     } catch (error) {
       setMessage(error);
@@ -124,6 +132,7 @@ console.log(formData)
       }
       toast.success(response.message, toastOptions);
       setStatus(response.status);
+      setUserInfo(response.data, response._idMongodb);
       console.log(response);
       return response;
     } catch (error) {
@@ -165,6 +174,22 @@ console.log(formData)
     });
   };
 
+  const getBase64 = (img, callback) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => callback(reader.result));
+    reader.readAsDataURL(img);
+  };
+  const beforeUpload = (file) => {
+    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+    if (!isJpgOrPng) {
+      message.error("You can only upload JPG/PNG file!");
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      message.error("Image must smaller than 2MB!");
+    }
+    return isJpgOrPng && isLt2M;
+  };
   const handleCancel = () => setPreviewOpen(false);
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -188,7 +213,6 @@ console.log(formData)
         style={{
           marginTop: 8,
         }}
-        name = "image"
       >
         Upload
       </div>
@@ -226,15 +250,7 @@ console.log(formData)
     theme: "dark",
   };
 
-  const getBase64 = (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
-
-console.log(checkClientExist)
+  console.log(checkClientExist);
   return (
     <Row style={{ marginTop: "4%" }}>
       <Col span={6}>
@@ -264,7 +280,6 @@ console.log(checkClientExist)
                 style={{
                   maxWidth: 800,
                 }}
-
               >
                 <div>
                   <Form.Item>
@@ -274,7 +289,7 @@ console.log(checkClientExist)
                       fileList={fileList}
                       onPreview={handlePreview}
                       onChange={handleChange}
-                      name = "image"
+                      beforeUpload={beforeUpload}
                     >
                       {fileList ? null : uploadButton}
                     </Upload>
@@ -304,8 +319,8 @@ console.log(checkClientExist)
                     label="Full Name"
                   >
                     <Input
-                      name="fullName" 
-                      onChange={handleInputChange} 
+                      name="fullName"
+                      onChange={handleInputChange}
                       style={{ border: "1px solid #9B9A9A" }}
                     />
                   </Form.Item>
