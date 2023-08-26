@@ -5,6 +5,9 @@ const dataLocationArr = [
     ["","" , ""],
     ["","" , ""],
     ["","" , ""],
+    ["","" , ""],
+    ["","" , ""],
+    ["","*Input 6 city that have biggest follower" , ""],
 ];
 
 const getDataLocation = () => {

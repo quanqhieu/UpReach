@@ -8,6 +8,7 @@ const useUserStore = create()(
       user: {},
 
       setUserInfo: (user, _idMonogDB) => {
+        console.log(user);
         set(() => ({
           user: user,
           _idMonogDB: _idMonogDB
