@@ -4,6 +4,7 @@ import ApiListClient from '../../Api/ApiListClient';
 
 
 const  Invoices = ({formPlan}) => {
+    
     const [formValues, setFormValues] = useState({
         clientDetail: null,
         planPackageDetail : formPlan.planPackageDetail
@@ -17,24 +18,18 @@ const  Invoices = ({formPlan}) => {
         ]
     });
 
-    const FetchDataPayment = async (data) =>{
-        try {
-            const respone = await ApiListClient.updateAfterScanQR(data)
-            console.log(respone)
-            return respone
-        } catch (error) {
-            console.log(error);
-        }
-    }
+    
     console.log(formValues)
     useEffect(() =>{
+        
+        localStorage.setItem("Plan-Package", JSON.stringify(formValues));
         const newClient = localStorage.getItem('user-draw-storage');
         const formDataNewClientJson = JSON.parse(newClient);
         setFormValues(prevDetails => ({ ...prevDetails, clientDetail: formDataNewClientJson.state.user }));
     },[])
+    
     const onClickToUpdatePlanPackage = () =>{
-        
-        FetchDataPayment(formValues)
+        localStorage.setItem("Plan-Package", JSON.stringify(formValues));
     }
     return (
         <div className="App">
