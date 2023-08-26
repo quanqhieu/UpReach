@@ -10,11 +10,14 @@ import { Button } from "antd";
 import ApiListClient from "../../../Api/ApiListClient";
 import { Navigate, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
+import { useEffect } from "react";
 const UpgradeCard = ({ upgradeCards }) => {
 
   const [message, setMessage] = useState()
   const [status, setStatus] = useState()
-
+  const [formPlan,setFormPlan] = useState({
+    planPackageDetail : null
+  })
   const toastOptions = {
     position: "bottom-right",
     autoClose: 8000,
@@ -22,11 +25,9 @@ const UpgradeCard = ({ upgradeCards }) => {
     draggable: true,
     theme: "dark",
   }
-  const [formValues, setFormValues] = useState({
-    
-  });
-
+console.log(formPlan)
   const fetchDataForPayment = async (data) =>{
+    // console.log(data)
     try {
       const response = await ApiListClient.zaloPayment(data);
       if(response.status === "False"){
@@ -36,6 +37,7 @@ const UpgradeCard = ({ upgradeCards }) => {
       }
       toast.success(response.message, toastOptions)
       setStatus(response.status)
+      setFormPlan(prevDetails => ({ ...prevDetails, planPackageDetail: response }));
       console.log(response)
       return response;
     } catch (error) {
@@ -43,9 +45,11 @@ const UpgradeCard = ({ upgradeCards }) => {
       console.log(error);
     }
   }
-
+// console.log(formPlan)
   const handleUpgradeClick = (selectedPackage) => {
     console.log(selectedPackage); // In ra dữ liệu của gói nâng cấp khi người dùng nhấp vào nút mua gói
+    
+   
     fetchDataForPayment(selectedPackage)
   };
 
@@ -76,12 +80,14 @@ const UpgradeCard = ({ upgradeCards }) => {
             </p>
             <p style={{ fontSize: "14px", fontWeight: "600" }}>VND/month</p>
           </div>
-          <Link to="/confirmplan">
+          {/* <Link to="/confirmplan"> */}
+          <Link >
             <Button
               className="upgrade-card-btn"
               type="primary"
               shape="round"
               size="large"
+              onClick={() => handleUpgradeClick(upgradeCards)} 
             >
               {upgradeCards?.btnTag}
             </Button>
