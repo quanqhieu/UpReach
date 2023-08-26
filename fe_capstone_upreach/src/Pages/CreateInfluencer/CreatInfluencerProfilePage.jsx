@@ -18,7 +18,8 @@ import ApiListInfluecer from "../../Api/ApiListInfluecer";
 import FailForm from "./FailForm";
 import ApiInfluencer from "../../Api/ApiInfluencer";
 import UploadImage from "./UploadImage";
-
+import { useNavigate } from "react-router-dom";
+import { useUserStore } from "../../Stores/user";
 const CreatInfluencerProfilePage = () => {
   const [form] = Form.useForm();
   const [current, setCurrent] = useState(0);
@@ -27,7 +28,7 @@ const CreatInfluencerProfilePage = () => {
   const [overviewDetails, setOverviewDetails] = useState(null);
   const [contentDetails, setContentFormDetails] = useState([null]);
   const [checkDataAddSuccess, setCheckDataAddSuccess] = useState(false);
-
+  const navigate = useNavigate();
   const [allDetails, setAllDetails] = useState({
     informationDetails: null,
     overviewDetails: null,
@@ -36,9 +37,14 @@ const CreatInfluencerProfilePage = () => {
     influencerDetail: null,
   });
 
+  const [user, setUserInfo] = useUserStore((state) => [
+    state.user,
+    state.setUserInfo,
+  ]);
+
   const onFinishInformationForm = (values) => {
-    console.log("Information Form");
-    console.log(values);
+    // console.log("Information Form");
+    // console.log(values);
     // setInformationDetails(values);
     setAllDetails((prevDetails) => ({
       ...prevDetails,
@@ -91,8 +97,10 @@ const CreatInfluencerProfilePage = () => {
         const result = await ApiInfluencer.addNewInfluencer(allDetails);
         console.log(allDetails);
         console.log(result);
-        if (result) {
+        if (result.status === "True") {
           setCheckDataAddSuccess(true);
+          setUserInfo(result.data, result._idMongodb);
+          navigate("/influencer/my-report");
         }
       }
     } catch (error) {
