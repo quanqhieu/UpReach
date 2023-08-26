@@ -11,12 +11,12 @@ const InfluProfile = ({ profileInflu }) => {
       const EmailUser = await JSON.parse(
         localStorage.getItem("user-draw-storage")
       ).state.user.email;
-      console.log(EmailUser);
+      // console.log(EmailUser);
       const response = await ApiGetInfoAndFilterInfluencer.getDataClient(
         EmailUser
       );
       setRoleClient(response.Client.plan);
-      console.log(response);
+      // console.log(response);
     } catch (error) {
       console.log("Error fetching data:", error);
     }

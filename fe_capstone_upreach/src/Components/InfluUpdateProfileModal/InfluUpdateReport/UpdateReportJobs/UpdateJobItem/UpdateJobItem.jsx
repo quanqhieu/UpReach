@@ -46,7 +46,7 @@ const UpdateJobItem = ({ bookingItem }) => {
               {getFormatContent(bookingItem?.formatContent)}
             </div>
             <Tooltip placement="top" title={bookingItem?.jobLink}>
-              <a>
+              <a href={bookingItem?.jobLink} target="_blank">
                 {bookingItem?.jobLink?.length > 29
                   ? `${bookingItem?.jobLink?.slice(0, 29)}...`
                   : bookingItem?.jobLink}

@@ -4,7 +4,7 @@ import { ReactComponent as Facebook } from "../../../../../Assets/Icon/Facebook.
 import { ReactComponent as Instagram } from "../../../../../Assets/Icon/Instagram.svg";
 import { ReactComponent as Youtube } from "../../../../../Assets/Icon/Youtube.svg";
 import { ReactComponent as TikTok } from "../../../../../Assets/Icon/Tiktok.svg";
-import { Button, Modal } from "antd";
+import { Button, Modal, Tooltip } from "antd";
 import { ExclamationCircleOutlined, LoadingOutlined } from "@ant-design/icons";
 import ClientBookingModal from "../../../../../Components/ClientBookingModal/ClientBookingModal";
 import { useUserStore } from "../../../../../Stores/user";
@@ -98,13 +98,42 @@ const JobItem = ({ data, idMonogDB }) => {
           <div className="post-item-sub-title">
             <p>{data?.jobName === undefined ? "" : data?.jobName}</p>
             <div>{data?.formatid}</div>
-            <a>{data?.linkJob}</a>
+            <Tooltip placement="top" title={data?.linkJob}>
+              <a href={data?.linkJob} target="_blank" rel="noreferrer">
+                {data?.linkJob?.length > 29
+                  ? `${data?.linkJob?.slice(0, 29)}...`
+                  : data?.linkJob}
+              </a>
+            </Tooltip>
           </div>
         </div>
         <div className="cover-quantity-cost">
           <p>Quantity: {data?.quantityNumberWork}</p>
+
           <p>
-            Cost Estimate: {data?.costForm} ~ {data?.costTo} VND
+            Cost Estimate:{" "}
+            <Tooltip
+              placement="top"
+              title={Number(data?.costForm)?.toLocaleString("vi-VN")}
+            >
+              {data?.costForm?.length > 8
+                ? `${Number(data?.costForm)
+                    ?.toLocaleString("vi-VN")
+                    ?.slice(0, 8)}...`
+                : Number(data?.costForm)?.toLocaleString("vi-VN")}
+            </Tooltip>{" "}
+            ~{" "}
+            <Tooltip
+              placement="top"
+              title={Number(data?.costTo)?.toLocaleString("vi-VN")}
+            >
+              {data?.costTo?.length > 8
+                ? `${Number(data?.costTo)
+                    ?.toLocaleString("vi-VN")
+                    ?.slice(0, 8)}...`
+                : Number(data?.costTo)?.toLocaleString("vi-VN")}
+            </Tooltip>{" "}
+            VND
           </p>
         </div>
         <div className="post-item-btn">
@@ -112,7 +141,7 @@ const JobItem = ({ data, idMonogDB }) => {
             className="booking-btn"
             type="primary"
             onClick={handleOpenModal}
-          // disabled={data?.clientId?.includes(user?.Client_ID)}
+            // disabled={data?.clientId?.includes(user?.Client_ID)}
           >
             Booking
           </Button>

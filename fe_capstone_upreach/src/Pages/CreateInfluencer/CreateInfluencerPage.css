@@ -107,6 +107,9 @@
     margin-bottom: 8%;
    color: green;
 }
+.create-page .finish-sign-up-btn a {
+    text-decoration: none;
+}
 :where(.css-dev-only-do-not-override-14wwjjs).ant-steps {
     margin: 20px auto !important;
     width: 40%;

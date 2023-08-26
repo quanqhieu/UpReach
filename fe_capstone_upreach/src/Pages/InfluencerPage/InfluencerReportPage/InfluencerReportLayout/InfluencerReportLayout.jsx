@@ -410,11 +410,11 @@ const InfluencerReportLayout = () => {
             icon={<IconArrow />}
             disabled={isLoading}
             onClick={() => {
-              // if (isAllowEdit || !oldVerInflu.dateEdit) {
-              handleOpenModal();
-              // } else {
-              //   messageApi.error("You can not update report now!");
-              // }
+              if (isAllowEdit || !oldVerInflu.dateEdit) {
+                handleOpenModal();
+              } else {
+                messageApi.error("You can not update report now!");
+              }
             }}
           />
         </div>
