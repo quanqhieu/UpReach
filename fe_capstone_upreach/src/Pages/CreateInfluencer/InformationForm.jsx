@@ -1,9 +1,27 @@
 import { Button, Form, Input, InputNumber, Select } from "antd";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import "./CreateInfluencerPage.css";
 import { Option } from "antd/es/mentions";
 import ApiUser from "../../Api/ApiUser";
+import axios from "axios";
 const InformationForm = ({ onFinish, initialValues }) => {
+  const [city, setCity] = useState();
+  //func call api tỉnh thành Việt Nam
+  const fetchDataCity = async () => {
+    try {
+      const response = await axios.get("https://provinces.open-api.vn/api/p/");
+      const newDataCity = response.data.map((item) => ({
+        value: item.name,
+        label: item.name,
+      }));
+      setCity(newDataCity);
+    } catch (error) {
+      console.log("Error fetching data:", error);
+    }
+  };
+  useEffect(() => {
+    fetchDataCity();
+  }, []);
   return (
     <>
       <div id="content">
@@ -35,11 +53,10 @@ const InformationForm = ({ onFinish, initialValues }) => {
                   },
                 ]}
               >
-                <Select placeholder="Select Your Location">
-                  <Option value="location1">TP Hồ Chí Minh</Option>
-                  <Option value="location2">TP Hà Nội</Option>
-                  <Option value="location3">TP Hà Nội</Option>
-                </Select>
+                <Select
+                  placeholder="Select Your Location"
+                  options={city}
+                ></Select>
               </Form.Item>
               <Form.Item
                 name="gender"

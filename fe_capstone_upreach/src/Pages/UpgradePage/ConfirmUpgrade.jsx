@@ -8,6 +8,11 @@ import { ReactComponent as Tiktok } from "../../../Assets/Icon/Tiktok.svg";
 import { ReactComponent as Question } from "../../../Assets/Icon/QuestionIcon.svg";
 import { Button } from "antd";
 const ConfirmUpgrade = ({ upgradeCards }) => {
+
+  const onClickToGetDataPlan = (selectedPackage) =>{
+    console.log(selectedPackage);
+  }
+
   return (
     <>
       <div className="upgrade-card-bg">
@@ -41,7 +46,9 @@ const ConfirmUpgrade = ({ upgradeCards }) => {
             type="primary"
             shape="round"
             size="large"
+            onClick={() => onClickToGetDataPlan(upgradeCards)} 
           >
+            {/* <Link to={upgradeCards?.link}>{upgradeCards?.btnTag}</Link> */}
             <Link to={upgradeCards?.link}>{upgradeCards?.btnTag}</Link>
           </Button>
         </div>

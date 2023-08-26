@@ -23,6 +23,7 @@ import ApiListClient from "../../Api/ApiListClient";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useUserStore } from "../../Stores/user";
 
 const Index_ClientProfile = () => {
   const [isSubModel, setSubModel] = useState(false);
@@ -49,6 +50,11 @@ const Index_ClientProfile = () => {
   const [formData, setFormData] = useState({
     clientData: null,
   });
+
+  const [user, setUserInfo] = useUserStore((state) => [
+    state.user,
+    state.setUserInfo,
+  ]);
 
   useEffect(() => {
     checkUpdateOrRegister();
@@ -127,6 +133,7 @@ const Index_ClientProfile = () => {
       }
       toast.success(response.message, toastOptions);
       setStatus(response.status);
+      setUserInfo(response.data, response._idMongodb);
       console.log(response);
       return response;
     } catch (error) {
@@ -168,6 +175,22 @@ const Index_ClientProfile = () => {
     });
   };
 
+  const getBase64 = (img, callback) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => callback(reader.result));
+    reader.readAsDataURL(img);
+  };
+  const beforeUpload = (file) => {
+    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+    if (!isJpgOrPng) {
+      message.error("You can only upload JPG/PNG file!");
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      message.error("Image must smaller than 2MB!");
+    }
+    return isJpgOrPng && isLt2M;
+  };
   const handleCancel = () => setPreviewOpen(false);
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -229,13 +252,13 @@ const Index_ClientProfile = () => {
     theme: "dark",
   };
 
-  const getBase64 = (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = (error) => reject(error);
-    });
+  // const getBase64 = (file) =>
+  //   new Promise((resolve, reject) => {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(file);
+  //     reader.onload = () => resolve(reader.result);
+  //     reader.onerror = (error) => reject(error);
+  //   });
 
   console.log(checkClientExist);
   return (
@@ -280,6 +303,7 @@ const Index_ClientProfile = () => {
                       onPreview={handlePreview}
                       onChange={handleChange}
                       name="image"
+                      beforeUpload={beforeUpload}
                     >
                       {!fileList
                         ? "+ Upload"

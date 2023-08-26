@@ -50,6 +50,7 @@ const Index_InfluencerProfile = () => {
     emailContact: "",
     phoneContact: "",
     influencerDetail: null,
+    idInflu: "",
   });
   function handleClickShowDialogChangePassword() {
     setIsModalOpenChangePassword(true);
@@ -58,6 +59,8 @@ const Index_InfluencerProfile = () => {
     const influencerData = localStorage.getItem("user-draw-storage");
     const formDataInfluencer = JSON.parse(influencerData);
     const data = formDataInfluencer.state.user;
+    const idInflu = formDataInfluencer.state._idMonogDB;
+    setFormValues({ ...formValues, idInflu: idInflu });
 
     FetchDataForInfluencer(data);
   }, []);
@@ -128,7 +131,7 @@ const Index_InfluencerProfile = () => {
     }
   };
 
-  const FetchDataForInfluencer = async (data) => {
+  const FetchDataForInfluencer = async (data, _idMongodb) => {
     try {
       const response = await ApiInfluencer.getDataInfluencer(data);
       if (response.status === "False") {

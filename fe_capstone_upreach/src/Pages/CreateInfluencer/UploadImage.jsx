@@ -84,7 +84,8 @@ const UploadImage = ({ onFinish, initialValues, setImage }) => {
                   src={previewImage}
                 />
               </Modal>
-              <div className="m-3">
+
+              <div className="mt-3">
                 <Button
                   className="submit-information-btn"
                   type="primary"
