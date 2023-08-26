@@ -24,7 +24,7 @@ const ReportSocial = ({ influInfo }) => {
                     )}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo?.profile?.Followers)}
+                      {roundNumber(influInfo?.profile?.Followers) || 0}
                     </span>
                   </Tooltip>
                 </div>
@@ -40,7 +40,7 @@ const ReportSocial = ({ influInfo }) => {
                     ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo?.platform?.Engagement)}%
+                      {roundNumber(influInfo?.platform?.Engagement) || 0}%
                     </span>
                   </Tooltip>
                 </div>
@@ -129,7 +129,7 @@ const ReportSocial = ({ influInfo }) => {
                   )}
                 >
                   <span className="text-tooltip">
-                    {roundNumber(influInfo?.platform?.Follow_FB)}
+                    {roundNumber(influInfo?.platform?.Follow_FB) || 0}
                   </span>
                 </Tooltip>
               </div>
@@ -145,7 +145,7 @@ const ReportSocial = ({ influInfo }) => {
                   ).toLocaleString("vi-VN")}
                 >
                   <span className="text-tooltip">
-                    {roundNumber(influInfo?.platform?.Interaction_FB)}
+                    {roundNumber(influInfo?.platform?.Interaction_FB) || 0}
                   </span>
                 </Tooltip>
               </div>
@@ -169,7 +169,7 @@ const ReportSocial = ({ influInfo }) => {
                   )?.toLocaleString("vi-VN")}
                 >
                   <span className="text-tooltip">
-                    {roundNumber(influInfo?.platform?.Follow_Insta)}
+                    {roundNumber(influInfo?.platform?.Follow_Insta) || 0}
                   </span>
                 </Tooltip>
               </div>
@@ -185,7 +185,7 @@ const ReportSocial = ({ influInfo }) => {
                   )?.toLocaleString("vi-VN")}
                 >
                   <span className="text-tooltip">
-                    {roundNumber(influInfo?.platform?.Interaction_Insta)}
+                    {roundNumber(influInfo?.platform?.Interaction_Insta) || 0}
                   </span>
                 </Tooltip>
               </div>
@@ -209,7 +209,7 @@ const ReportSocial = ({ influInfo }) => {
                   ).toLocaleString("vi-VN")}
                 >
                   <span className="text-tooltip">
-                    {roundNumber(influInfo?.platform?.Follow_Youtube)}
+                    {roundNumber(influInfo?.platform?.Follow_Youtube) || 0}
                   </span>
                 </Tooltip>
               </div>
@@ -225,7 +225,7 @@ const ReportSocial = ({ influInfo }) => {
                   ).toLocaleString("vi-VN")}
                 >
                   <span className="text-tooltip">
-                    {roundNumber(influInfo?.platform?.Interaction_Youtube)}
+                    {roundNumber(influInfo?.platform?.Interaction_Youtube) || 0}
                   </span>
                 </Tooltip>
               </div>
@@ -249,7 +249,7 @@ const ReportSocial = ({ influInfo }) => {
                   ).toLocaleString("vi-VN")}
                 >
                   <span className="text-tooltip">
-                    {roundNumber(influInfo?.platform?.Follow_TikTok)}
+                    {roundNumber(influInfo?.platform?.Follow_TikTok) || 0}
                   </span>
                 </Tooltip>
               </div>
@@ -264,7 +264,7 @@ const ReportSocial = ({ influInfo }) => {
                   ).toLocaleString("vi-VN")}
                 >
                   <span className="text-tooltip">
-                    {roundNumber(influInfo?.platform?.Interaction_Tiktok)}
+                    {roundNumber(influInfo?.platform?.Interaction_Tiktok) || 0}
                   </span>
                 </Tooltip>
               </div>

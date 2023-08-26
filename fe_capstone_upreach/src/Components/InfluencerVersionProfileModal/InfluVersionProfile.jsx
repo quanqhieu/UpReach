@@ -13,7 +13,7 @@ const InfluVersionProfile = ({ profileInflu, profileSideBar }) => {
   React.useEffect(() => {
     setIsLoading(true);
     axios
-      .post("http://localhost:4000/api/influ/data-versionn", {
+      .post("http://localhost:4000/api/influ/data-version", {
         influencerId: profileInflu?.influencerId,
       })
       .then((response) => {
@@ -45,6 +45,7 @@ const InfluVersionProfile = ({ profileInflu, profileSideBar }) => {
             <InfluReport
               influInfo={profileInflu}
               dataReportVersion={dataReportVersion}
+              isLoading={isLoading}
             />
           </div>
         </div>
