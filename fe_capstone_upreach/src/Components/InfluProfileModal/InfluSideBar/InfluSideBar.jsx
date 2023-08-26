@@ -407,15 +407,7 @@ const InfluSideBar = ({ influInfo }) => {
               </div>
             </div>
           </div>
-          <div className="feedback-btn">
-            <Link to="/login">
-              <Button type="link">
-                <p style={{ fontWeight: "600", marginTop: "-2px" }}>
-                  Feedback influencer
-                </p>
-              </Button>
-            </Link>
-          </div>
+          <div className="feedback-btn"></div>
         </div>
       </div>
     </>
