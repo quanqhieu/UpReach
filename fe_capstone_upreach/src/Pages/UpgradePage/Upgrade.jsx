@@ -16,11 +16,18 @@ import UpgradeCard from "../../Components/Layouts/UpgradeCard/UpgradeCard";
 import HeaderHomepage from "../../Components/Layouts/Header/HeaderHomepage";
 import { useUserStore } from "../../Stores/user";
 import { useNavigate } from "react-router-dom";
+import Invoices from "../../Pages/UpgradePage/Invoice"
 
 const Upgrade = () => {
   const [user] = useUserStore((state) => [state.user]);
   const navigate = useNavigate();
   const [upgradeCards, setUpgradeCards] = useState(UPGRADE_CARDS);
+  const [isInvoice, setIsInvoice] = useState(true);
+  const [formPlan,setFormPlan] = useState({
+    infoPaySuccess : null,
+    planPackageDetail : null
+
+  })
 
   React.useEffect(() => {
     if (user.roleId == 1) {
@@ -35,8 +42,7 @@ const Upgrade = () => {
   }, []);
 
   return (
-    <>
-      {user?.roleId == 2 ? (
+    <>{isInvoice? <>{user?.roleId == 2 ? (
         <div>
           <HeaderHomepage />
           <div className="upgrade-bg backgroundMainPage">
@@ -54,7 +60,7 @@ const Upgrade = () => {
                 dataSource={upgradeCards}
                 renderItem={(item) => (
                   <List.Item style={{ display: "flex" }}>
-                    <UpgradeCard upgradeCards={item} />
+                    <UpgradeCard upgradeCards={item} setIsInvoice={setIsInvoice} setFormPlan={setFormPlan} />
                   </List.Item>
                 )}
               />
@@ -89,7 +95,8 @@ const Upgrade = () => {
         </div>
       ) : (
         ""
-      )}
+      )}</>: <Invoices formPlan={formPlan}/>}
+      
     </>
   );
 };

@@ -16,7 +16,7 @@ const Login = () => {
     state.user,
     state.setUserInfo,
   ]);
-
+  console.log(user);
   const [isLoading, setIsLoading] = React.useState(false);
   const [validateMess, setValidateMess] = React.useState("");
   const [messageApi, contextHolder] = message.useMessage();
@@ -80,9 +80,9 @@ const Login = () => {
     }
   }, []);
 
-  const onClickForgotPasswordPage = () =>{
+  const onClickForgotPasswordPage = () => {
     navigate("/forgot-password");
-  }
+  };
   return (
     <>
       {user?.roleId ? (
@@ -102,7 +102,11 @@ const Login = () => {
                 onFinish={handleSubmit}
               >
                 <Spin tip="Loading" size="large" spinning={isLoading}>
-                  <Button type="primary" className="login-google">
+                  <Button
+                    type="primary"
+                    className="login-google"
+                    style={{ display: "none" }}
+                  >
                     <div className="GoogleIcon">{<IconGoogle />}</div>
                     <p style={{ fontWeight: "600" }}>Login with Google</p>
                   </Button>
@@ -152,7 +156,11 @@ const Login = () => {
                     <span className="logInBtnText">Login</span>
                   </Button>
                   <div className="feature-block">
-                    <Button className="logInToForgotPasswordLink" type="link" onClick={onClickForgotPasswordPage}>
+                    <Button
+                      className="logInToForgotPasswordLink"
+                      type="link"
+                      onClick={onClickForgotPasswordPage}
+                    >
                       <p>Forgot password?</p>
                     </Button>
                   </div>

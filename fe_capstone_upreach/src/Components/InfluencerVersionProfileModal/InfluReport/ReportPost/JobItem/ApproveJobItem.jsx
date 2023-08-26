@@ -37,7 +37,7 @@ const ApproveJobItem = ({ jobInfo }) => {
               <p>{jobInfo?.formatid || ""}</p>
             </div>
             <Tooltip placement="top" title={jobInfo?.linkJob}>
-              <a>
+              <a href={jobInfo?.linkJob} target="_blank" rel="noreferrer">
                 {jobInfo?.linkJob?.length > 29
                   ? `${jobInfo?.linkJob?.slice(0, 29)}...`
                   : jobInfo?.linkJob}
