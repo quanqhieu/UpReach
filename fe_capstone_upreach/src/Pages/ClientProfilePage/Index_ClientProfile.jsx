@@ -26,17 +26,16 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 const Index_ClientProfile = () => {
   const [isSubModel, setSubModel] = useState(false);
-  const [isModalOpenChangePassword, setIsModalOpenChangePassword] =useState(false);
-  const [message, setMessage] = useState()
-  const [status, setStatus] = useState()
-  const navigate = useNavigate(); 
+  const [isModalOpenChangePassword, setIsModalOpenChangePassword] =
+    useState(false);
+  const [message, setMessage] = useState();
+  const [status, setStatus] = useState();
+  const navigate = useNavigate();
   const [form] = Form.useForm();
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState([{
-    
-  }]);
+  const [fileList, setFileList] = useState([]);
   const [checkClientExist, setCheckClientExist] = useState(false);
   const [formValues, setFormValues] = useState({
     image: "",
@@ -51,62 +50,66 @@ const Index_ClientProfile = () => {
     clientData: null,
   });
 
-  useEffect(() =>{
+  useEffect(() => {
     checkUpdateOrRegister();
-  },[])
-console.log(formData)
-  useEffect(() =>{
+  }, []);
+  console.log(formData);
+  useEffect(() => {
     form.setFieldsValue({
-        image: formData?.clientData?.image,
-        fullName: formData?.clientData?.fullName,
-        brandName: formData?.clientData?.brand,
-        phoneNumber: formData?.clientData?.phone,
-        location: formData?.clientData?.address,
-        emailContact:formData?.clientData?.emailContact,
-      }
-    )
-  },[formData])
+      image: formData?.clientData?.image,
+      fullName: formData?.clientData?.fullName,
+      brandName: formData?.clientData?.brand,
+      phoneNumber: formData?.clientData?.phone,
+      location: formData?.clientData?.address,
+      emailContact: formData?.clientData?.emailContact,
+    });
+  }, [formData]);
 
-  useEffect(() =>{
-    if(status ==='True'){
-      navigate('/homepage')
-    } 
-  },[status])
-
-  const checkUpdateOrRegister = ()=>{
-    
-    if(localStorage.getItem('user-draw-storage') !== null){
-      const oldClient = localStorage.getItem('user-draw-storage');
-      const formDataOldClientJson = JSON.parse(oldClient);
-      const data = formDataOldClientJson.state.user
-      setFormValues(prevDetails => ({ ...prevDetails, clientDetail: data }));
-      FetchDataCheckProfile(data)
-      return
+  useEffect(() => {
+    if (status === "True") {
+      navigate("/homepage");
     }
-    const newClient = localStorage.getItem('formData');
+  }, [status]);
+
+  const checkUpdateOrRegister = () => {
+    if (localStorage.getItem("user-draw-storage") !== null) {
+      const oldClient = localStorage.getItem("user-draw-storage");
+      const formDataOldClientJson = JSON.parse(oldClient);
+      const data = formDataOldClientJson.state.user;
+      setFormValues((prevDetails) => ({ ...prevDetails, clientDetail: data }));
+      FetchDataCheckProfile(data);
+      return;
+    }
+    const newClient = localStorage.getItem("formData");
     const formDataNewClientJson = JSON.parse(newClient);
-    setFormValues(prevDetails => ({ ...prevDetails, clientDetail: formDataNewClientJson }));
-    FetchDataCheckProfile(formDataNewClientJson)
-  }
+    setFormValues((prevDetails) => ({
+      ...prevDetails,
+      clientDetail: formDataNewClientJson,
+    }));
+    FetchDataCheckProfile(formDataNewClientJson);
+  };
 
   const onFinishInsertClient = () => {
-    FetchInsertClientProfile(formValues)
-  }
+    FetchInsertClientProfile(formValues);
+  };
 
   const onFinishUpdateClient = () => {
-    FetchUpdateClientProfile(formValues)
-  }
+    FetchUpdateClientProfile(formValues);
+  };
 
   const FetchDataCheckProfile = async (data) => {
     try {
-      console.log(data)
+      console.log(data);
       const response = await ApiListClient.checkClientExisted(data);
-      console.log(response)
+      console.log(response);
       if (response.status === "True") {
         setCheckClientExist(true);
-        setFormData(prevDetails => ({ ...prevDetails, clientData: response.data }));
+        setFormData((prevDetails) => ({
+          ...prevDetails,
+          clientData: response.data,
+        }));
       }
-      
+
       return response;
     } catch (error) {
       setMessage(error);
@@ -188,7 +191,7 @@ console.log(formData)
         style={{
           marginTop: 8,
         }}
-        name = "image"
+        name="image"
       >
         Upload
       </div>
@@ -234,7 +237,7 @@ console.log(formData)
       reader.onerror = (error) => reject(error);
     });
 
-console.log(checkClientExist)
+  console.log(checkClientExist);
   return (
     <Row style={{ marginTop: "4%" }}>
       <Col span={6}>
@@ -264,19 +267,25 @@ console.log(checkClientExist)
                 style={{
                   maxWidth: 800,
                 }}
-
               >
                 <div>
                   <Form.Item>
                     <Upload
+                      customRequest={({ file, onSuccess }) => {
+                        onSuccess("ok");
+                      }}
                       action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                       listType="picture-card"
                       fileList={fileList}
                       onPreview={handlePreview}
                       onChange={handleChange}
-                      name = "image"
+                      name="image"
                     >
-                      {fileList ? null : uploadButton}
+                      {!fileList
+                        ? "+ Upload"
+                        : fileList?.length < 1
+                        ? "+ Upload"
+                        : null}
                     </Upload>
                     <Modal
                       open={previewOpen}
@@ -304,8 +313,8 @@ console.log(checkClientExist)
                     label="Full Name"
                   >
                     <Input
-                      name="fullName" 
-                      onChange={handleInputChange} 
+                      name="fullName"
+                      onChange={handleInputChange}
                       style={{ border: "1px solid #9B9A9A" }}
                     />
                   </Form.Item>
