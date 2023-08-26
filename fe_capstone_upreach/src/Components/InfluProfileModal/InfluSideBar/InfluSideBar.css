@@ -171,6 +171,8 @@
 	left: 45%;
 	transform: translate(-50%, -50%);
 	z-index: 2;
+	filter: blur(0px);
+  -webkit-filter: blur(0px);
 }
 
 .influ-side-bar-container .lock-info {

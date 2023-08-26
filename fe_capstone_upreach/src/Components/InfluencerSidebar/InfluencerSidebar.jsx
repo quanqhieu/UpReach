@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./InfluencerSidebar.css";
 import { ReactComponent as MyReportIcon } from "../../Assets/Icon/MyReport.svg";
 import { ReactComponent as MyBookingIcon } from "../../Assets/Icon/MyBooking.svg";
@@ -6,9 +6,11 @@ import { ReactComponent as MailBoxIcon } from "../../Assets/Icon/MailBox.svg";
 import { Link } from "react-router-dom";
 import { Menu } from "antd";
 import { useLocation } from "react-router-dom";
+import Chat from "../../Pages/ChatPage/Chat";
 const InfluencerSidebar = () => {
   const location = useLocation();
   const currentPath = location.pathname;
+  const [tabName, setTabName] = useState("new");
 
   function getItem(label, key, icon, children) {
     return {
@@ -40,16 +42,19 @@ const InfluencerSidebar = () => {
       <MyBookingIcon />
     ),
     getItem(
-      <Link
-        style={{ textDecoration: "none", color: "#FFF" }}
-        to="/chatapp"
-      >
+      <Link style={{ textDecoration: "none", color: "#FFF" }} to="/chatappKol">
         <p>Mail box</p>
       </Link>,
       "mail box",
       <MailBoxIcon />
     ),
   ];
+  function handleClickMenu(e) {
+    if (e.key === "mail box") {
+      // setCheckTabListPage(false);
+      setTabName(e.key);
+    }
+  }
   return (
     <>
       <Menu
@@ -59,16 +64,20 @@ const InfluencerSidebar = () => {
           currentPath?.includes("my-report")
             ? "my report"
             : currentPath?.includes("my-booking")
-              ? "my booking"
-              : currentPath?.includes("mail-box")
-                ? "mail box"
-                : "my-report"
+            ? "my booking"
+            : currentPath?.includes("mail-box")
+            ? "mail box"
+            : "my-report"
         }
         mode={"inline"}
         theme={"light"}
         items={items}
+        onClick={handleClickMenu}
+
       />
+      {tabName === "mail box" ? <Chat /> : <></>}
     </>
+
   );
 };
 

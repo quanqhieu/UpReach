@@ -7,12 +7,7 @@ import { ReactComponent as Youtube } from "../../../Assets/Icon/Youtube.svg";
 import { ReactComponent as Tiktok } from "../../../Assets/Icon/Tiktok.svg";
 import { ReactComponent as Question } from "../../../Assets/Icon/QuestionIcon.svg";
 import { Button } from "antd";
-import { useNavigate } from "react-router-dom";
-const UpgradeCard = ({ upgradeCards }) => {
-  const navigate = useNavigate();
-  React.useEffect(() => {
-    navigate("/confirmplan");
-  }, []);
+const ConfirmUpgrade = ({ upgradeCards }) => {
   return (
     <>
       <div className="upgrade-card-bg">
@@ -40,16 +35,15 @@ const UpgradeCard = ({ upgradeCards }) => {
             </p>
             <p style={{ fontSize: "14px", fontWeight: "600" }}>VND/month</p>
           </div>
-          <Link to="/confirmplan">
-            <Button
-              className="upgrade-card-btn"
-              type="primary"
-              shape="round"
-              size="large"
-            >
-              {upgradeCards?.btnTag}
-            </Button>
-          </Link>
+
+          <Button
+            className="upgrade-card-btn"
+            type="primary"
+            shape="round"
+            size="large"
+          >
+            <Link to={upgradeCards?.link}>{upgradeCards?.btnTag}</Link>
+          </Button>
         </div>
         <div className="upgrade-card-content">
           <p
@@ -174,4 +168,4 @@ const UpgradeCard = ({ upgradeCards }) => {
     </>
   );
 };
-export default UpgradeCard;
+export default ConfirmUpgrade;

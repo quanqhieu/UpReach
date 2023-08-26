@@ -9,11 +9,12 @@ import "../../../../CSS/Theme.css";
 const ReportSocial = ({ influInfo, roleClient }) => {
   return (
     <>
-      <div
+      {/* <div
         className={`report-social-layout ${
           roleClient === "Free" ? "blur-data-to-payment" : ""
         }`}
-      >
+      > */}
+      <div className="report-social-layout">
         <div className="report-general">
           <p className="report-general-title">GENERAL</p>
           <div className="report-general-contents">
@@ -28,7 +29,7 @@ const ReportSocial = ({ influInfo, roleClient }) => {
                     ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo?.influencerFollowers)}
+                      {roundNumber(influInfo?.influencerFollowers) || 0}
                     </span>
                   </Tooltip>
                 </div>
@@ -44,7 +45,7 @@ const ReportSocial = ({ influInfo, roleClient }) => {
                     ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo?.influencerEngagement)}%
+                      {roundNumber(influInfo?.influencerEngagement) || 0}%
                     </span>
                   </Tooltip>
                 </div>
@@ -109,7 +110,7 @@ const ReportSocial = ({ influInfo, roleClient }) => {
                     ).toLocaleString("vi-VN")}
                   >
                     <span className="text-tooltip">
-                      {roundNumber(influInfo?.influencerPostsPerWeek)}
+                      {roundNumber(influInfo?.influencerPostsPerWeek) || 0}
                     </span>
                   </Tooltip>
                 </div>
@@ -134,14 +135,13 @@ const ReportSocial = ({ influInfo, roleClient }) => {
           </div>
           <div className="cover-follower-interaction">
             <div className="follower-interaction">
-              {(parseInt(influInfo?.influencerFollowFb) / 1000).toFixed(1) +
-                "K"}
+              {roundNumber(influInfo?.influencerFollowFb) || 0}
+
               <p>Followers</p>
             </div>
             <div className="follower-interaction">
-              {(parseInt(influInfo?.influencerInteractionFb) / 1000).toFixed(
-                1
-              ) + "K"}
+              {roundNumber(influInfo?.influencerInteractionFb) || 0}
+
               <p>Interactions</p>
             </div>
           </div>
@@ -163,14 +163,13 @@ const ReportSocial = ({ influInfo, roleClient }) => {
           </div>
           <div className="cover-follower-interaction">
             <div className="follower-interaction">
-              {(parseInt(influInfo?.influencerFollowInsta) / 1000).toFixed(1) +
-                "K"}
+              {roundNumber(influInfo?.influencerFollowInsta) || 0}
+
               <p>Followers</p>
             </div>
             <div className="follower-interaction">
-              {(parseInt(influInfo?.influencerInteractionInsta) / 1000).toFixed(
-                1
-              ) + "K"}
+              {roundNumber(influInfo?.influencerInteractionInsta) || 0}
+
               <p>Interactions</p>
             </div>
           </div>
@@ -192,15 +191,13 @@ const ReportSocial = ({ influInfo, roleClient }) => {
           </div>
           <div className="cover-follower-interaction">
             <div className="follower-interaction">
-              {(parseInt(influInfo?.influencerFollowYoutube) / 1000).toFixed(
-                1
-              ) + "K"}
+              {roundNumber(influInfo?.influencerFollowYoutube) || 0}
+
               <p>Followers</p>
             </div>
             <div className="follower-interaction">
-              {(
-                parseInt(influInfo?.influencerInteractionYoutube) / 1000
-              ).toFixed(1) + "K"}
+              {roundNumber(influInfo?.influencerInteractionYoutube) || 0}
+
               <p>Interactions</p>
             </div>
           </div>
@@ -222,14 +219,13 @@ const ReportSocial = ({ influInfo, roleClient }) => {
           </div>
           <div className="cover-follower-interaction">
             <div className="follower-interaction">
-              {(parseInt(influInfo?.influencerFollowTikTok) / 1000).toFixed(1) +
-                "K"}
+              {roundNumber(influInfo?.influencerFollowTikTok) || 0}
+
               <p>Followers</p>
             </div>
             <div className="follower-interaction">
-              {(
-                parseInt(influInfo?.influencerInteractionTiktok) / 1000
-              ).toFixed(1) + "K"}
+              {roundNumber(influInfo?.influencerInteractionTiktok) || 0}
+
               <p>Interactions</p>
             </div>
           </div>
