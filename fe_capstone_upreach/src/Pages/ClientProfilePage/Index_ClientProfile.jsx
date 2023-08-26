@@ -36,7 +36,7 @@ const Index_ClientProfile = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState([{}]);
+  const [fileList, setFileList] = useState([]);
   const [checkClientExist, setCheckClientExist] = useState(false);
   const [formValues, setFormValues] = useState({
     image: "",
@@ -62,6 +62,7 @@ const Index_ClientProfile = () => {
   console.log(formData);
   useEffect(() => {
     form.setFieldsValue({
+      image: formData?.clientData?.image,
       fullName: formData?.clientData?.fullName,
       brandName: formData?.clientData?.brand,
       phoneNumber: formData?.clientData?.phone,
@@ -213,6 +214,7 @@ const Index_ClientProfile = () => {
         style={{
           marginTop: 8,
         }}
+        name="image"
       >
         Upload
       </div>
@@ -250,6 +252,14 @@ const Index_ClientProfile = () => {
     theme: "dark",
   };
 
+  // const getBase64 = (file) =>
+  //   new Promise((resolve, reject) => {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(file);
+  //     reader.onload = () => resolve(reader.result);
+  //     reader.onerror = (error) => reject(error);
+  //   });
+
   console.log(checkClientExist);
   return (
     <Row style={{ marginTop: "4%" }}>
@@ -284,14 +294,22 @@ const Index_ClientProfile = () => {
                 <div>
                   <Form.Item>
                     <Upload
+                      customRequest={({ file, onSuccess }) => {
+                        onSuccess("ok");
+                      }}
                       action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                       listType="picture-card"
                       fileList={fileList}
                       onPreview={handlePreview}
                       onChange={handleChange}
+                      name="image"
                       beforeUpload={beforeUpload}
                     >
-                      {fileList ? null : uploadButton}
+                      {!fileList
+                        ? "+ Upload"
+                        : fileList?.length < 1
+                        ? "+ Upload"
+                        : null}
                     </Upload>
                     <Modal
                       open={previewOpen}
