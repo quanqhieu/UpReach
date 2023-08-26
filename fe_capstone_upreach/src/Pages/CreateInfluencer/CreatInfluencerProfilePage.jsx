@@ -12,7 +12,6 @@ import InformationForm from "./InformationForm";
 import "./CreateInfluencerPage.css";
 import OverviewForm from "./OverviewForm";
 import ContentForm from "./ContentForm";
-import SocialForm from "./SocialForm";
 import FinishForm from "./FinishForm";
 import ApiUser from "../../Api/ApiUser";
 import ApiListInfluecer from "../../Api/ApiListInfluecer";

@@ -13,6 +13,10 @@ const ApiInfluencer = {
     updateAvatarInfluencer(data){
         const url = '/influ/updateInfluencer'
         return axiosClient.post(url,  data )
+    },
+    getDataInfluencer(data){
+        const url = '/influ/get-data-influencer'
+        return axiosClient.post(url,  data )
     }
 }
 
