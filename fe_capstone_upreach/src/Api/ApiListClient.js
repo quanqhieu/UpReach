@@ -29,8 +29,8 @@ const ApiListClient = {
         const url = '/client/addInflueToBooking';
         return axiosClient.post(url, { _idClient: _idClient, _idInflue: _idInflue })
     },
-    statusPaymentCheck(data){
-        const url = '/status-check';
+    updateAfterScanQR(data){
+        const url = '/update-plan-package';
         return axiosClient.post(url, data)
     }
 }

@@ -1,33 +1,58 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import ApiListClient from '../../Api/ApiListClient';
 
 
-const  Invoices = () => {
+const  Invoices = ({formPlan}) => {
+    const [formValues, setFormValues] = useState({
+        clientDetail: null,
+        planPackageDetail : formPlan.planPackageDetail
+      });
     const [invoiceData, setInvoiceData] = useState({
-        invoiceNumber: 'INV-001',
+        Package : formPlan.planPackageDetail.describe,
         date: '2023-08-26',
         totalAmount: 1000.0,
         items: [
-        { name: 'Item 1', quantity: 2, price: 300.0 },
-        { name: 'Item 2', quantity: 1, price: 400.0 },
-        { name: 'Item 3', quantity: 3, price: 100.0 }
+            { name: formPlan.planPackageDetail.Tag,  price: formPlan.planPackageDetail.cost },
         ]
     });
 
+    const FetchDataPayment = async (data) =>{
+        try {
+            const respone = await ApiListClient.updateAfterScanQR(data)
+            console.log(respone)
+            return respone
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    console.log(formValues)
+    useEffect(() =>{
+        const newClient = localStorage.getItem('user-draw-storage');
+        const formDataNewClientJson = JSON.parse(newClient);
+        setFormValues(prevDetails => ({ ...prevDetails, clientDetail: formDataNewClientJson.state.user }));
+    },[])
+    const onClickToUpdatePlanPackage = () =>{
+        
+        FetchDataPayment(formValues)
+    }
     return (
         <div className="App">
         <h1>Invoice</h1>
-        <p>Invoice Number: {invoiceData.invoiceNumber}</p>
+        <p>Invoice Plan Package: {formPlan.planPackageDetail.describe}</p>
         <p>Date: {invoiceData.date}</p>
-        <h2>Items:</h2>
+        <h2>Plan Package</h2>
         <ul>
             {invoiceData.items.map((item, index) => (
             <li key={index}>
-                {item.name} - Quantity: {item.quantity} - Price: {item.price}
+                {item.name} - Price: {item.price}
             </li>
             ))}
         </ul>
-        <p>Total Amount: {invoiceData.totalAmount}</p>
-        <button onClick={() => alert('Invoice Printed')}>Pay Order</button>
+        <p>Total Amount: {formPlan.planPackageDetail.cost}</p>
+        <Link to={formPlan?.infoPaySuccess?.data?.order_url}>
+            <button onClick={onClickToUpdatePlanPackage} type="button" className="btn btn-info">Button</button>
+        </Link>
         </div>
     );
 }
