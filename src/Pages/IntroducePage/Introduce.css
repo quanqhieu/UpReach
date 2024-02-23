@@ -1,0 +1,425 @@
+.cover-main-introduce-page {
+	overflow: hidden;
+}
+.cover-main-introduce-page .homePageTextTitle {
+	font-size: 50px;
+	font-family: "Volkhov", serif;
+	background: #222222;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	margin: 0;
+	display: inline;
+}
+
+.cover-main-introduce-page .homePageTextTitleHighlight {
+	font-size: 50px;
+	font-family: "Volkhov", serif;
+	background: #cd41b5;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	margin: 0;
+}
+
+.cover-main-introduce-page .contentSubTitle {
+	color: white;
+	line-height: 35px;
+	font-size: 20px;
+}
+.cover-main-introduce-page .card-bg {
+	height: 80vh;
+	background: transparent;
+	position: relative;
+	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.438);
+	overflow: hidden;
+	border-radius: 50px;
+}
+.cover-main-introduce-page .card-custom {
+	cursor: default;
+	width: 100%;
+	height: 100%;
+	position: relative;
+	z-index: 2;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 34px;
+	text-transform: uppercase;
+	letter-spacing: 2px;
+	color: #212121;
+	background-color: rgba(255, 255, 255, 0.074);
+	border: 1px solid rgba(255, 255, 255, 0.222);
+	-webkit-backdrop-filter: blur(20px);
+	backdrop-filter: blur(20px);
+	border-radius: 50px;
+	transition: all ease 0.3s;
+}
+.cover-main-introduce-page .card-bg::after,
+.cover-main-introduce-page .card-bg::before {
+	width: 20%;
+	padding-top: 20%;
+	content: "";
+	position: absolute;
+	border-radius: 100%;
+	transition: 0.8s linear;
+}
+
+.cover-main-introduce-page .card-bg::after {
+	top: -10%;
+	left: -5%;
+	background: rgb(255, 255, 255,0.3);
+	filter: blur(34.5px);
+	animation: animFirst 5s linear infinite;
+	z-index: 2;
+}
+
+.cover-main-introduce-page .card-bg::before {
+	background-color: rgb(255, 255, 255,0.3);
+	filter: blur(34.5px);
+	bottom: -10%;
+	right: -5%;
+	animation: animSecond 5s linear infinite;
+	animation-delay: 3s;
+}
+
+.cover-main-introduce-page .card-bg:hover {
+	box-shadow: 0px 0px 10px rgba(0, 77, 32, 0.432);
+}
+
+.cover-main-introduce-page .card-bg:hover::after {
+	left: 52%;
+	transform: scale(1.5);
+}
+
+.cover-main-introduce-page .card-bg:hover::before {
+	right: 80%;
+	transform: scale(1.5);
+}
+.cover-main-introduce-page .imageSVG svg {
+	position: absolute;
+}
+
+.cover-main-introduce-page .imageIconApplication svg {
+	z-index: 999;
+	animation: rot 2s infinite ease;
+}
+@keyframes rot {
+	0% {
+		transform: rotateX(-15deg) translateY(0px);
+	}
+
+	50% {
+		transform: rotateX(-15deg) translateY(-10px);
+	}
+
+	100% {
+		transform: rotateX(-15deg) translateY(0px);
+	}
+}
+.cover-main-introduce-page .button-block {
+	position: relative;
+}
+.cover-main-introduce-page .row {
+	margin: 0px !important;
+}
+
+.cover-main-introduce-page .searchBtns {
+	display: flex;
+}
+
+.cover-main-introduce-page .contentIntroducePage .searchCategoryBtn,
+.cover-main-introduce-page .contentIntroducePage .searchPlatformBtn {
+	height: 65px;
+	--width: 375px;
+	line-height: 10px;
+	background-color: #fff;
+	border-radius: 0;
+	min-width: 380px;
+	display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+	padding: 6px 19px;
+}
+
+.cover-main-introduce-page .searchPlatformBtn:first-child {
+	border-top-left-radius: 80px 80px;
+	border-bottom-left-radius: 80px 80px;
+}
+
+.cover-main-introduce-page .searchTitle {
+	text-align: initial;
+	font-size: 16px;
+}
+
+.cover-main-introduce-page .searchDescription {
+	text-align: initial;
+	font-size: 12px;
+	
+}
+
+.cover-main-introduce-page .iconSearchBtn {
+	background-color: white;
+	align-items: center;
+	--width: 65px;
+	min-width: 65px;
+	border-top-right-radius: 80px 80px;
+	border-bottom-right-radius: 80px 80px;
+}
+
+.cover-main-introduce-page .iconSearch {
+	margin-top: 16px;
+	margin-left: 12px;
+}
+
+/* .cover-main-introduce-page .discoverBtn {
+	height: 50px;
+	color: #cd41b5;
+	padding: 14px;
+	display: flex;
+	width: fit-content;
+	flex-direction: row-reverse;
+	align-items: center;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+.cover-main-introduce-page .discoverBtn svg {
+	margin-top: 2px;
+}
+.cover-main-introduce-page .discoverBtn:hover {
+	color: #cd41b5 !important;
+	border-color: #cd41b5 !important;
+}
+.cover-main-introduce-page .discoverBtn:hover svg {
+	animation: rot-svg 2s infinite;
+}
+@keyframes rot-svg {
+	0% {
+		transform: translateX(0px);
+	}
+
+	50% {
+		transform: translateX(10px);
+	}
+
+	100% {
+		transform: translateX(0px);
+	}
+} */
+
+.cover-main-introduce-page .button-block {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.cover-main-introduce-page .button-block .discoverBtn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 15.7rem;
+	height: 3.8rem;
+	background-size: 300% 300%;
+	backdrop-filter: blur(1rem);
+	border-radius: 5rem;
+	transition: 0.5s;
+	animation: gradient_301 5s ease infinite;
+	border: double 4px transparent;
+	background-image: linear-gradient(#212121, #212121),  linear-gradient(137.48deg, #ffdb3b 10%,#FE53BB 45%, #8F51EA 67%, #0044ff 87%);
+	background-origin: border-box;
+	background-clip: content-box, border-box;
+	font-size: 18px;
+  }
+
+  .cover-main-introduce-page .button-block a {
+	text-decoration: none;
+  }
+  
+  #discover-container-stars {
+	position: absolute;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	transition: 0.5s;
+	backdrop-filter: blur(1rem);
+	border-radius: 5rem;
+  }
+  
+  strong {
+	z-index: 2;
+	font-family: 'Poppins';
+	font-size: 15px;
+	letter-spacing: 5px;
+	color: #FFFFFF;
+	text-shadow: 0 0 4px white;
+	text-decoration: none;
+  }
+  
+  #discover-glow {
+	position: absolute;
+	display: flex;
+	width: 12rem;
+  }
+  
+  .discover-circle {
+	width: 100%;
+	height: 30px;
+	filter: blur(2rem);
+	animation: pulse_3011 4s infinite;
+	z-index: -1;
+  }
+  
+  .discover-circle:nth-of-type(1) {
+	background: rgba(254, 83, 186, 0.636);
+  }
+  
+  .discover-circle:nth-of-type(2) {
+	background: rgba(142, 81, 234, 0.704);
+  }
+  
+  .discoverBtn:hover #discover-container-stars {
+	z-index: 1;
+	background-color: #212121;
+  }
+  
+  .discoverBtn:hover {
+	transform: scale(1.1)
+  }
+  
+  .discoverBtn:active {
+	border: double 4px #FE53BB;
+	background-origin: border-box;
+	background-clip: content-box, border-box;
+	animation: none;
+  }
+  
+  .discoverBtn:active .discover-circle {
+	background: #FE53BB;
+  }
+  
+  #discover-stars {
+	position: relative;
+	background: transparent;
+	width: 200rem;
+	height: 200rem;
+  }
+  
+  #discover-stars::after {
+	content: "";
+	position: absolute;
+	top: -10rem;
+	left: -100rem;
+	width: 100%;
+	height: 100%;
+	animation: animStarRotate 90s linear infinite;
+  }
+  
+  #discover-stars::after {
+	background-image: radial-gradient(#ffffff 1px, transparent 1%);
+	background-size: 50px 50px;
+  }
+  
+  #discover-stars::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: -50%;
+	width: 170%;
+	height: 500%;
+	animation: animStar 60s linear infinite;
+  }
+  
+  #discover-stars::before {
+	background-image: radial-gradient(#ffffff 1px, transparent 1%);
+	background-size: 50px 50px;
+	opacity: 0.5;
+  }
+  
+  @keyframes animStar {
+	from {
+	  transform: translateY(0);
+	}
+  
+	to {
+	  transform: translateY(-135rem);
+	}
+  }
+  
+  @keyframes animStarRotate {
+	from {
+	  transform: rotate(360deg);
+	}
+  
+	to {
+	  transform: rotate(0);
+	}
+  }
+  
+  @keyframes gradient_301 {
+	0% {
+	  background-position: 0% 50%;
+	}
+  
+	50% {
+	  background-position: 100% 50%;
+	}
+  
+	100% {
+	  background-position: 0% 50%;
+	}
+  }
+  
+  @keyframes pulse_3011 {
+	0% {
+	  transform: scale(0.75);
+	  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7);
+	}
+  
+	70% {
+	  transform: scale(1);
+	  box-shadow: 0 0 0 10px rgba(0, 0, 0, 0);
+	}
+  
+	100% {
+	  transform: scale(0.75);
+	  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+	}
+  }
+
+
+.cover-main-introduce-page .cardInfo {
+	height: 200px;
+	background-color: white;
+	border-radius: 30px;
+}
+
+.cover-main-introduce-page .subTitle {
+	font-size: 40px;
+	background: -webkit-linear-gradient(33deg, #091e3a, #2f80ed, #2d9ee0);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.cover-main-introduce-page .searching svg {
+	display: none;
+}
+
+.cover-main-introduce-page .imageSVG {
+	width: 20%;
+}
+.cover-main-introduce-page .recommendCard {
+	position: absolute;
+	top: 59%;
+	left: 20px;
+	width: 100%;
+}
+
+.cover-main-introduce-page .ant-dropdown-menu-title-content a {
+	text-decoration: none;
+}
+
+.custom-modal .ant-modal-content{
+	padding: 0px !important;
+	background-color: transparent !important;
+	border-radius: 30px !important;
+}

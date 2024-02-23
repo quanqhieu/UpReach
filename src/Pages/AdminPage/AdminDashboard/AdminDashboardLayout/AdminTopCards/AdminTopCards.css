@@ -1,0 +1,129 @@
+.admin-top-cards-bg {
+    width: 100%;
+    height: 100%;
+    padding: 0 16px;
+    position: relative;
+}
+
+.admin-top-card1 {
+    position: absolute;
+    left: 310px;
+}
+.admin-top-card1 .admin-top-card-contents p{
+    z-index: 1;
+    transition: 0.5s;
+}
+
+.admin-top-card1 .admin-top-card-contents::before {
+    content: "";
+    width: 100%;
+    padding-top: 100%;
+    border-radius: 50%;
+    background-image: linear-gradient(to top right, #fdbfc6, #9e1919);
+    position: absolute;
+    right: 50%;
+    top: 50px;
+    transform: scale(0);
+    transition: transform 0.8s ease 0s;
+  }
+.admin-top-card1 .admin-top-card-contents:hover::before {
+    transform: scale(3);
+}
+
+.admin-top-card1 .admin-top-card-contents:hover p {
+    color: #FFF;
+}
+
+
+.admin-top-card2 {
+    position: absolute;
+    top: 65px;;
+}
+
+.admin-top-card2 .admin-top-card-contents p{
+    z-index: 1;
+    transition: 0.5s;
+}
+
+.admin-top-card2 .admin-top-card-contents::before {
+    content: "";
+    width: 100%;
+    padding-top: 100%;
+    border-radius: 50%;
+    background-image: linear-gradient(to top right, #d4e0fa, #3f79bb);
+    position: absolute;
+    right: 50%;
+    top: 50px;
+    transform: scale(0);
+    transition: transform 0.8s ease 0s;
+  }
+.admin-top-card2 .admin-top-card-contents:hover::before {
+    transform: scale(3);
+}
+
+.admin-top-card2 .admin-top-card-contents:hover p {
+    color: #FFF;
+}
+
+.admin-top-card3 {
+    position: absolute;
+    left: 605px;
+    top: 95px;
+}
+
+.admin-top-card3 .admin-top-card-contents p{
+    z-index: 1;
+    transition: 0.5s;
+}
+
+.admin-top-card3 .admin-top-card-contents::before {
+    content: "";
+    width: 100%;
+    padding-top: 100%;
+    border-radius: 50%;
+    background-image: linear-gradient(to top right, #fbf8d3, #FFB330);
+    position: absolute;
+    right: 50%;
+    top: 50px;
+    transform: scale(0);
+    transition: transform 0.8s ease 0s;
+  }
+.admin-top-card3 .admin-top-card-contents:hover::before {
+    transform: scale(3);
+}
+
+.admin-top-card3 .admin-top-card-contents:hover p {
+    color: #FFF;
+}
+
+.admin-top-cards-bg .ant-ribbon-wrapper .ant-ribbon {
+    --display: none;
+    position: absolute;
+    top: 55px;
+}
+
+.ant-ribbon.ant-ribbon-color-volcano {
+    background: #ff8f69;
+    color: #ff8f69;
+}
+
+/* .admin-top-cards-bg .admin-top-card2:hover .ant-ribbon-wrapper .ant-ribbon {
+    position: absolute;
+    top: 55px;
+    display: block;
+}
+
+.admin-top-cards-bg .admin-top-card1:hover .ant-ribbon-wrapper .ant-ribbon {
+    position: absolute;
+    top: 55px;
+    display: block;
+}
+
+.admin-top-cards-bg .admin-top-card3:hover .ant-ribbon-wrapper .ant-ribbon {
+    position: absolute;
+    top: 55px;
+    display: block;
+} */
+
+
+

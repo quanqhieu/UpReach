@@ -1,0 +1,54 @@
+.admin-top-income-bg {
+    width: 100%;
+    height: 100%;
+    padding: 15px 25px;
+    background-color: #fff;
+    border-radius: 10px;
+    position: relative;
+}
+
+.admin-top-income-bg .admin-top-income-title {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: space-between;
+}
+
+.admin-top-income-bg .admin-top-income-sub-title {
+    font-size: 17px;
+    font-weight: 600;
+}
+
+.admin-top-income-bg .admin-top-income-btn{
+    color: #9098AC;
+    font-weight: 600;
+}
+
+.admin-top-income-bg .admin-top-income-btn:hover {
+
+    opacity: 0.8;
+    font-size: 15px;
+}
+
+.admin-top-income-bg .admin-top-income-contents{
+    width: 100%;
+    height: 280px;
+}
+
+.admin-top-income-bg .ant-spin-nested-loading {
+    position: unset;
+}
+
+.admin-top-income-bg .ant-spin-container {
+    position: unset;
+}
+
+.admin-top-income-bg .ant-table-wrapper .ant-table-pagination.ant-pagination {
+    position: absolute;
+    right: 60px;
+    bottom: -8px;
+}
+
+.admin-top-income-bg .admin-top-income-contents .ant-table-wrapper .ant-table-thead>tr>th,.admin-top-income-bg .admin-top-income-contents .ant-table-wrapper .ant-table-tbody>tr>th,.admin-top-income-bg .admin-top-income-contents .ant-table-wrapper .ant-table-tbody>tr>td,.admin-top-income-bg .admin-top-income-contents .ant-table-wrapper tfoot>tr>th,.admin-top-income-bg .admin-top-income-contents .ant-table-wrapper tfoot>tr>td {
+    padding: 9px;
+}

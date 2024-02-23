@@ -1,0 +1,19 @@
+.admin-sidebar-bg {
+    width: 250px;
+    height: 100vh;
+    padding-top: 80px;
+    background-color: #FF5986;
+    overflow: hidden;
+}
+
+.admin-sidebar-bg .ant-menu-light .ant-menu-item-selected,.ant-menu-light>.ant-menu .ant-menu-item-selected{
+    background-color: #d9d9d92b;
+}
+
+.admin-sidebar-bg > ul > li {
+    padding-left: 0;
+}
+
+.admin-sidebar-bg .ant-menu-item p {
+    font-size: 14px;
+}
