@@ -108,8 +108,7 @@ const AdminUpgradeLayout = () => {
                 // message: `Error!`,
                 message: `Input ${title}!`,
               },
-            ]}
-          >
+            ]}>
             {inputNode}
           </Form.Item>
         ) : (
@@ -175,17 +174,17 @@ const AdminUpgradeLayout = () => {
     {
       title: "Full Name",
       dataIndex: "fullName",
-      width: "20%",
+      width: "18%",
     },
     {
       title: "Brand Name",
       dataIndex: "brand",
-      width: "15%",
+      width: "14%",
     },
     {
       title: "Package",
       dataIndex: "plan",
-      width: "9%",
+      width: "8%",
       editable: true,
       render: (_) => {
         return (
@@ -198,8 +197,7 @@ const AdminUpgradeLayout = () => {
                 : _ === "Starter"
                 ? "purple"
                 : "green"
-            }
-          >
+            }>
             {_}
           </Tag>
         );
@@ -208,27 +206,27 @@ const AdminUpgradeLayout = () => {
     {
       title: "Date upgrade",
       dataIndex: "dateTransaction",
-      width: "12%",
+      width: "10%",
       render: (dateString) => (dateString ? formatDate(dateString) : ""),
       // editable: true,
     },
-    // {
-    //   title: "Duration",
-    //   dataIndex: "duration",
-    //   width: "10%",
-    //   render: (dateString) => (dateString ? formatDate(dateString) : ""),
-    //   // editable: true,
-    // },
+    {
+      title: "Duration",
+      dataIndex: "duration",
+      width: "10%",
+      render: (dateString) => (dateString ? formatDate(dateString) : ""),
+      // editable: true,
+    },
     {
       title: "Report remaining",
       dataIndex: "pointReport",
-      width: "14%",
+      width: "12%",
       editable: true,
     },
     {
       title: "Search remaining",
       dataIndex: "pointSearch",
-      width: "14%",
+      width: "12%",
       editable: true,
     },
     {
@@ -243,22 +241,19 @@ const AdminUpgradeLayout = () => {
             style={{
               display: "flex",
               alignItems: "center",
-            }}
-          >
+            }}>
             <Typography.Link
               onClick={() => handleSave(record?.clientId)}
               style={{
                 marginRight: 8,
-              }}
-            >
+              }}>
               Save
             </Typography.Link>
             <Popconfirm
               open={openConfirm}
               title="Sure to cancel?"
               onCancel={cancel}
-              onConfirm={ok}
-            >
+              onConfirm={ok}>
               <p
                 style={{ cursor: "pointer", paddingTop: "3px  " }}
                 onClick={async () => {
@@ -268,8 +263,7 @@ const AdminUpgradeLayout = () => {
                   } else {
                     setEditingId("");
                   }
-                }}
-              >
+                }}>
                 Cancel
               </p>
             </Popconfirm>
@@ -277,8 +271,7 @@ const AdminUpgradeLayout = () => {
         ) : (
           <Typography.Link
             disabled={editingId !== ""}
-            onClick={() => edit(record)}
-          >
+            onClick={() => edit(record)}>
             Edit
           </Typography.Link>
         );
