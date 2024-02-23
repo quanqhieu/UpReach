@@ -9,17 +9,17 @@ const AdminUserProfile = () => {
   const [user] = useUserStore((state) => [state.user]);
   const navigate = useNavigate();
 
-  React.useEffect(() => {
-    if (user.roleId == 1) {
-      navigate("/admin/user-management");
-    } else if (user.roleId == 2) {
-      navigate("/homepage");
-    } else if (user.roleId == 3) {
-      navigate("/influencer/my-report");
-    } else {
-      navigate("/login");
-    }
-  }, []);
+  // React.useEffect(() => {
+  //   if (user.roleId == 1) {
+  //     navigate("/admin/user-management");
+  //   } else if (user.roleId == 2) {
+  //     navigate("/homepage");
+  //   } else if (user.roleId == 3) {
+  //     navigate("/influencer/my-report");
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // }, []);
   return (
     <>
       {user?.roleId == 1 ? (

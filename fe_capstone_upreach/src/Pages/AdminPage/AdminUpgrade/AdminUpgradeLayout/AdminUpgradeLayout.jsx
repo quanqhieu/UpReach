@@ -175,17 +175,17 @@ const AdminUpgradeLayout = () => {
     {
       title: "Full Name",
       dataIndex: "fullName",
-      width: "18%",
+      width: "20%",
     },
     {
       title: "Brand Name",
       dataIndex: "brand",
-      width: "14%",
+      width: "15%",
     },
     {
       title: "Package",
       dataIndex: "plan",
-      width: "8%",
+      width: "9%",
       editable: true,
       render: (_) => {
         return (
@@ -208,27 +208,27 @@ const AdminUpgradeLayout = () => {
     {
       title: "Date upgrade",
       dataIndex: "dateTransaction",
-      width: "10%",
+      width: "12%",
       render: (dateString) => (dateString ? formatDate(dateString) : ""),
       // editable: true,
     },
-    {
-      title: "Duration",
-      dataIndex: "duration",
-      width: "10%",
-      render: (dateString) => (dateString ? formatDate(dateString) : ""),
-      // editable: true,
-    },
+    // {
+    //   title: "Duration",
+    //   dataIndex: "duration",
+    //   width: "10%",
+    //   render: (dateString) => (dateString ? formatDate(dateString) : ""),
+    //   // editable: true,
+    // },
     {
       title: "Report remaining",
       dataIndex: "pointReport",
-      width: "12%",
+      width: "14%",
       editable: true,
     },
     {
       title: "Search remaining",
       dataIndex: "pointSearch",
-      width: "12%",
+      width: "14%",
       editable: true,
     },
     {
